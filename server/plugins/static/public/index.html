@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="brainConnectivity" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="stylesheet" href="style/BrainConnectivityStyle.css">
+  <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <title>D3 example application</title>
+
+</head>
+<body ng-app="brainConnectivity">
+</span>
+
+  <div ng-include src="'header/appHeader.html'"></div>
+  <div ng-view></div>
+
+  <!-- In production use: -->
+  <!-- <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-route/angular.min.js"></script> -->
+  
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="bower_components/d3/d3.min.js"></script>
+
+  <!-- Application scripts -->
+  <script src="app.js"></script>
+  <script src="home/home.js"></script>
+  <script src="data/connectivity.json"></script>
+
+
+</body>
+</html>

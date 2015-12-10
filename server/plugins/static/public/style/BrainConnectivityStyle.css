@@ -1,0 +1,55 @@
+
+.node {
+  font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.link {
+  stroke-opacity: .6;
+  fill: none;
+}
+    
+div.tooltip {	
+    position: absolute;			
+    text-align: center;			
+    width: 80px;					
+    height: 30px;					
+    padding: 2px;				
+    font: 12px sans-serif;		
+    background: lightsteelblue;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;			
+}
+    
+.link:hover{
+        stroke-opacity:1;
+    }
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+.rect{
+  fill-opacity: 0.6;
+}
+
+.rect:hover{
+  fill-opacity: 1;
+}
+
+#tooltipColor{
+      position: absolute;			
+    text-align: center;			
+    width: 250px;					
+    height: 18px;					
+    padding: 2px;				
+    font: 12px sans-serif;		
+    background: lightsteelblue;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;		
+}

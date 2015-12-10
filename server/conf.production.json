@@ -1,0 +1,7 @@
+{
+	"host": "localhost",
+	"port": 4000,
+	"plugins": {
+		"./plugins/static": {"env": "production"}
+	}
+}
