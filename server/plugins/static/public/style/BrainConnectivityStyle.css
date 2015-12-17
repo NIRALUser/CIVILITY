@@ -1,3 +1,43 @@
+#tensionBar {
+     height:10px;
+    width:50%px;
+}
+
+#tensionBar {
+     height:10px;
+    width:50%px;
+}
+
+#title{
+  font-size: 22px;
+  color: #0066FF;
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.infoText{
+  font-size: 18px;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+
+.infoTextNotes{
+  font-size: 16px;
+  text-align: center;
+  font-family: sans-serif;
+  font-style:italic;
+  line-height: 1.5;
+}
+
+.btn{
+  margin:10px;
+}
+
+.active {
+   background-color: #ff0000;
+ }
 
 .node {
   font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -52,4 +92,35 @@ div.tooltip {
     border: 0px;		
     border-radius: 8px;			
     pointer-events: none;		
+}
+
+
+body {
+  font: 10px sans-serif;
+  shape-rendering: crispEdges;
+}
+
+.grid-background {
+  fill: #ddd;
+}
+
+.grid line {
+  stroke: #fff;
+}
+
+.grid .minor line {
+  stroke-opacity: .5;
+}
+
+.grid text {
+  display: none;
+}
+
+.axis line {
+  stroke: #000;
+}
+
+.axis path,
+.grid path {
+  display: none;
 }

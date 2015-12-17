@@ -1,11 +1,11 @@
 {
-  "name": "Papaya",
+  "name": "ProbtrackBrainConnectivity",
   "version": "1.0.0",
-  "description": "This is the main server of Papaya",
+  "description": "This is the main server of ProbtrackBrainConnectivity",
   "main": "server.js",
   "directories": {
-    "doc": "Documents related to papaya.",
-    "server": "The server application of papaya."
+    "doc": "Documents related to ProbtrackBrainConnectivity.",
+    "server": "The server application of ProbtrackBrainConnectivity."
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

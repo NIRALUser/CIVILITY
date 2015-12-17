@@ -9,5 +9,11 @@ config(['$routeProvider', function($routeProvider) {
   .when('/home', {
     templateUrl: 'home/home.html'
   })
+  .when('/createJSON', {
+    templateUrl: 'home/createJSON.html'
+  })
+  .when('/plotMatrix', {
+    templateUrl: 'home/plotMatrix.html'
+  })
   .otherwise({redirectTo: '/home'});
 }]);

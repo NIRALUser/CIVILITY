@@ -16,7 +16,7 @@ exports.register = function (server, options, next) {
 			handler: {
 				directory: { path: './public', listing: false, index: true }
 			},
-			description: 'This route serves the static website of Papaya. Everything inside the plugins/static/public/ directory will be directly accessible under this route.'
+			description: 'This route serves the static website of ProbtrackBrainConnectivity. Everything inside the plugins/static/public/ directory will be directly accessible under this route.'
 		}
 	});
     next();
