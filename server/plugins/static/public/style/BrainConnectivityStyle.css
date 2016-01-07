@@ -1,12 +1,16 @@
-#tensionBar {
+div.TensionSlide {
      height:10px;
-    width:50%px;
+    width:50%;
+    margin-left: 170px;
+    margin-top:1px;
 }
 
-#tensionBar {
-     height:10px;
-    width:50%px;
-}
+div.TensionText {
+    height:10px;
+    width:200px;
+   margin-left: 110px;
+    margin-top:5px;}
+
 
 #title{
   font-size: 22px;

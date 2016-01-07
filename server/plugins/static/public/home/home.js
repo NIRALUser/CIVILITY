@@ -96,14 +96,20 @@ $scope.Plot = function(){
 
 $scope.plotVisible = true ;
 
+var TensionText = d3.select("body").append("div")
+        .attr("class", "TensionText") 
+        .append("text")
+        .text("Tension :");
 
-
-var tension = d3.select("body").append("input")
+var Tension = d3.select("body").append("div")
+        .attr("class", "TensionSlide") 
+        .append("input")
                   .attr("type","range")
                   .attr("class","tensionBar")
                   .attr("min",0)
                   .attr("max",100)
                   .attr("value",85);
+
 
 var diameter = 960,
     radius = diameter / 2,
