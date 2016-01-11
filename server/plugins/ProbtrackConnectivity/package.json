@@ -1,0 +1,11 @@
+{
+  "name": "probtrackconnectivity",
+  "version": "1.0.0",
+  "description": "receives and transforms requests from client application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

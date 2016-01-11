@@ -15,43 +15,52 @@ angular.module('brainConnectivity')
 		arr: [1,2]
 	}
 
-	$scope.readMatrixFile = function (){
-		var file = document.getElementById('file1').files[0];
-	    if(!file) {  alert ("No matrix file selected "); }
-	    var reader = new FileReader();
-	    reader.onload = function(progressEvent){
-		    // Entire file
-		    console.log(this.result);
-		    // By lines
-		    var lines = this.result.split('\n');
-		    var matrix = [];            
-
-		    //console.log(lines.length);
-		    for(var line = 0; line < lines.length; line++){      
-		        //console.log(lines[line]);
-		        var rows = [];
-		        var values = lines[line].split(' ');
-		        for(var val = 0; val < values.length; val++){
-		            //console.log(values[val]);
-		            rows.push(values[val]);
-		        }
-		        //console.log(rows.length);
-		        if( rows.length != lines.length )
-		        {
-		            //console.log("Matrix dimension wrong");
-		        }
-		        matrix.push(rows);
-		    }
-		    //console.log(matrix);
-	        return matrix;
-	  };
-	  reader.readAsText(file);
-	}
-
   $scope.plotVisible = false ;
 
   $scope.clickCreateJSON = false;
   $scope.clickIHaveJSON = false;
+
+$scope.submit = function(){
+
+$http({
+  method: 'GET',
+  url:'/probtrackMatrix'
+}).then(function(response){
+  console.log(response.data);
+}).catch(console.error);
+  
+// var file = document.getElementById('file1').files[0];
+//     if(!file) {  alert ("No matrix file selected "); }
+//     var reader = new FileReader();
+//     reader.onload = function(progressEvent){
+//     // Entire file
+//     console.log(this.result);
+//     // By lines
+//     var lines = this.result.split('\n');
+//     var matrix = [];   
+
+    
+//     //console.log(lines.length);
+//     for(var line = 0; line < lines.length; line++){      
+//         console.log(lines[line]);
+//         var rows = [];
+//         var values = lines[line].split(' ');
+//         for(var val = 0; val < values.length; val++){
+//             //console.log(values[val]);
+//             rows.push(values[val]);
+//         }
+//         console.log(rows.length);
+//         if( rows.length != lines.length )
+//         {
+//             console.log("Matrix dimension wrong");
+//         }
+//         matrix.push(rows);
+//     }
+//     console.log(matrix);
+//         return matrix;
+//   };
+//   reader.readAsText(file);
+}
 
 
 $scope.readMatrix = function(){
