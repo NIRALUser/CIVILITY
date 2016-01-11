@@ -5,26 +5,23 @@ module.exports = function(server,options)
 {
     
     var handler = {};
-    handler.getMatrix = function (request, reply){
-   	 	//console.log("hello");
-    	fs.readFile("/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/mat.txt",'utf8',
-    		function (error,data){
-    	if (error) throw error;
-    	//console.log(data);
-    	fs.readFile("/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/seedname.txt",'utf8',
-    		function (error,seedname){
-		if (error) throw error;
-    	//console.log(seedname);
+    handler.getMatrix = function (request, reply)
+    {
+     	fs.readFile("/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/mat.txt",'utf8',function (error,data){
+     	if (error) throw error;
+     	console.log(data);
+     	fs.readFile("/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/seedname.txt",'utf8',function (error,seedname){
+ 		if (error) throw error;
+     	console.log(seedname);
 
-    	var seeds = seedname.split('\n');
-    	//console.log(seeds);
-    	var lines = data.split('\n');
+     	var seeds = seedname.split('\n');
+     	var lines = data.split('\n');
 
-    	if( seeds.length != lines.length )
-         {
-             console.log("Seeds name list and Matrix file have wrong dimensions");
-         }
-    	var matrix = [];
+     	if( seeds.length != lines.length )
+          {
+              console.log("Seeds name list and Matrix file have wrong dimensions");
+          }
+     	var matrix = [];
 		for(var line = 0; line < lines.length; line++){      
 //         console.log(lines[line]);
          var rows = [];
@@ -35,64 +32,69 @@ module.exports = function(server,options)
          }
 //         console.log(rows.length);
          if( rows.length != lines.length )
-//         {
-             console.log("Matrix dimension wrong");
-//         }
+         {
+             console.log("Matrix dimension wrong");        
+         }
          matrix.push(rows);
-//     }
+     }
      
-}
 
-    	var wstream = fs.createWriteStream('/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/myOutput.txt');
-    	wstream.write("[\n");
-    	for (var nbseed = 0; nbseed<seeds.length; nbseed++)
-    	{
-    		console.log(seeds[nbseed]);
 
-    		var jsonLine = {'name': seeds[nbseed] };
-    		var size = [];
-    		var imports = [];
+     	var wstream = fs.createWriteStream('/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/myOutput.txt');
+     	wstream.write("[\n");
+        var sizeMat = seeds.length;
+     	for (var nbseed = 0; nbseed<sizeMat; nbseed++)
+     	{
+//     		console.log(seeds[nbseed]);
 
-    		for (var j = 0; j<seeds.length; j++)
+     		var jsonLine = {"name": seeds[nbseed] };
+     		var size = [];
+     		var imports = [];
+
+    		for (var j = 0; j<sizeMat; j++)
     		{
     			if(j != nbseed )
     			{
     				if(matrix[nbseed][j] > 0)
     				{
-    					size.push(matrix[nbseed][j]);
+    					size.push(parseInt(matrix[nbseed][j]));
     					imports.push(seeds[j]);
     				}
     			}
 
     		}
-    		// if(matrix[nbseed][j] != 0)
-    		// {
-    		// }
 
-    		jsonLine.size = size;
-    		jsonLine.imports = imports;
-    		console.log("jsonLine :");
-    		console.log(jsonLine);
+     		jsonLine.size = size;
+     		jsonLine.imports = imports;
+    		
 		
-    		var lineTest = JSON.stringify(jsonLine);
-    		wstream.write(lineTest+ ",\n");
-    	}
-    	wstream.write("]");
-    	wstream.end();
+     		var lineTest = JSON.stringify(jsonLine);
+//             //console.log("jsonLine :" + lineTest);
+     		wstream.write(lineTest+ ",\n");
+            console.log("hello:"+(sizeMat-1));
+            if(nbseed != (sizeMat-1))
+            {
+                wstream.write(lineTest+ ",\n");
+                console.log("inside");
+            }
+            else
+            {
+                wstream.write(lineTest+ "\n");
+            }
+     	}
+     	wstream.write("]");
+     	wstream.end();
     	
-);
-
-    	wstream.write("[");
-		console.log(matrix);  
-		console.log("matrix compo : ");
-		console.log(matrix[1][1]);  
-    	//console.log(lines);
-    	reply({name : data, size : seedname, imports : data});
-    });
+// //);
+ 		console.log(matrix);  
+ 		console.log("matrix compo : ");
+ 		console.log(matrix[1][1]);  
+     	reply("hello");
+     });
     	});
 
     	
-    }
+    };
     return handler; 
     
 }

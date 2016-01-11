@@ -1,5 +1,10 @@
 [
-{"name":"Seed1","size":["1","2"],"imports":["Seed2","Seed3"]},
-{"name":"Seed2","size":["3","5"],"imports":["Seed1","Seed3"]},
-{"name":"Seed3","size":["6","7"],"imports":["Seed1","Seed2"]},
+{"name":"Seed1","size":[1,2],"imports":["Seed2","Seed3"]},
+{"name":"Seed1","size":[1,2],"imports":["Seed2","Seed3"]},
+{"name":"Seed2","size":[3,5,1],"imports":["Seed1","Seed3","Seed4"]},
+{"name":"Seed2","size":[3,5,1],"imports":["Seed1","Seed3","Seed4"]},
+{"name":"Seed3","size":[6,7,2],"imports":["Seed1","Seed2","Seed4"]},
+{"name":"Seed3","size":[6,7,2],"imports":["Seed1","Seed2","Seed4"]},
+{"name":"Seed4","size":[10,10,10],"imports":["Seed1","Seed2","Seed3"]},
+{"name":"Seed4","size":[10,10,10],"imports":["Seed1","Seed2","Seed3"]}
 ]
