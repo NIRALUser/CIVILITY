@@ -220,7 +220,7 @@ svgColorbar.append("g")
       .enter()
         .append("path")
       .attr("class", "link")
-      .attr("stroke-width", function(d, i) { return (size[i]*25) + "px"; })
+      .attr("stroke-width", function(d, i) { return (size[i]*35) + "px"; })
       .attr("stroke",  function(d, i) { return colorHSV(size[i]); })            
       .attr("d", line)
       .on("mouseover", function(d,i) {    
