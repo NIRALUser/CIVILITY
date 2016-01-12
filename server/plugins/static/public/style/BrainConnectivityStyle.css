@@ -1,15 +1,20 @@
+.circlePlot{
+  margin-left : 5%;
+}
+
 div.TensionSlide {
      height:10px;
     width:50%;
-    margin-left: 170px;
-    margin-top:1px;
+    margin: 0 auto;
+    margin-top: 1%;
 }
 
 div.TensionText {
     height:10px;
     width:200px;
-   margin-left: 110px;
-    margin-top:5px;}
+   margin: 0 auto;
+   margin-left: 25%;
+}
 
 
 #title{

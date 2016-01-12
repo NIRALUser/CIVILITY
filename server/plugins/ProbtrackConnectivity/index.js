@@ -6,6 +6,12 @@ exports.register = function (server, options, next) {
         path:'/probtrackMatrix',
         handler: handlers.getMatrix
     });
+
+     server.route({
+        method: 'GET',
+        path:'/probtrackConnectivityDescription',
+        handler: handlers.getConnectivityDescription
+    });
         
     next();
 };
