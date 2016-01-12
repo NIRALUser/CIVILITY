@@ -148,7 +148,7 @@ var svg = d3.select("body").append("svg")
     .attr("height", diameter)
     .append("g")
     .attr("transform", "translate(" + radius + "," + radius + ")");
-d3.json("data/connectivity.json", function(error, classes) {
+d3.json("data/myOutput.json", function(error, classes) {
   if (error) throw error;
 
 var margin = {top: 10, right: 10, bottom: 170, left: 50},
@@ -220,7 +220,7 @@ svgColorbar.append("g")
       .enter()
         .append("path")
       .attr("class", "link")
-      .attr("stroke-width", function(d, i) { return (size[i]*17) + "px"; })
+      .attr("stroke-width", function(d, i) { return (size[i]*25) + "px"; })
       .attr("stroke",  function(d, i) { return colorHSV(size[i]); })            
       .attr("d", line)
       .on("mouseover", function(d,i) {    

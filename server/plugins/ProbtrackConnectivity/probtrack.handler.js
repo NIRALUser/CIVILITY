@@ -7,10 +7,10 @@ module.exports = function(server,options)
     var handler = {};
     handler.getMatrix = function (request, reply)
     {
-     	fs.readFile("/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/mat.txt",'utf8',function (error,data){
+     	fs.readFile("/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/Average_triangularMatrix.txt",'utf8',function (error,data){
      	if (error) throw error;
      	console.log(data);
-     	fs.readFile("/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/seedname.txt",'utf8',function (error,seedname){
+     	fs.readFile("/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/seedlist.txt",'utf8',function (error,seedname){
  		if (error) throw error;
      	console.log(seedname);
 
@@ -40,7 +40,7 @@ module.exports = function(server,options)
      
 
 
-     	var wstream = fs.createWriteStream('/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/myOutput.txt');
+     	var wstream = fs.createWriteStream('/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/myOutput.json');
      	wstream.write("[\n");
         var sizeMat = seeds.length;
      	for (var nbseed = 0; nbseed<sizeMat; nbseed++)
@@ -57,7 +57,7 @@ module.exports = function(server,options)
     			{
     				if(matrix[nbseed][j] > 0)
     				{
-    					size.push(parseInt(matrix[nbseed][j]));
+    					size.push(parseFloat(matrix[nbseed][j]));
     					imports.push(seeds[j]);
     				}
     			}
@@ -70,7 +70,6 @@ module.exports = function(server,options)
 		
      		var lineTest = JSON.stringify(jsonLine);
 //             //console.log("jsonLine :" + lineTest);
-     		wstream.write(lineTest+ ",\n");
             console.log("hello:"+(sizeMat-1));
             if(nbseed != (sizeMat-1))
             {
