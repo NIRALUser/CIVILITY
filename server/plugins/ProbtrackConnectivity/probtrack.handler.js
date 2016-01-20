@@ -82,7 +82,8 @@ module.exports = function(server,options)
                 
                     matrixDescription.push(jsonLine);
                 }
-
+                //var wstream = fs.createWriteStream('/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/myJSONOutput.json');
+                //wstream.write(matrixDescription);
                 console.log(arrayData);
 
                 reply(matrixDescription);
