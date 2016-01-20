@@ -1,28 +1,23 @@
-.circlePlot{
+.circlePlot, .colorBar{
   margin-left : 5%;
+  margin : 0 auto;
 }
 
-div.TensionSlide {
+#tensionBar, #diameterBar {
      height:10px;
     width:50%;
     margin: 0 auto;
-    margin-top: 1%;
-}
-
-div.DiameterSlide {
-     height:10px;
-    width:50%;
-    margin: 0 auto;
-    margin-top: 1%;
 }
 
 .ValueThreshold {
      height:50px;
     width:50px;
     margin: 0 auto;
-    margin-top: 1%;
 }
 
+.buttons{
+  margin-left: 1%;
+}
 div.TensionText {
     height:10px;
     width:200px;

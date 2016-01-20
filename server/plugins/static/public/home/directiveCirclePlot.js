@@ -8,6 +8,7 @@ angular.module('brainConnectivity')
 		$scope.plotParameters.threshold = 0;
 		$scope.plotParameters.diameter = 960;
 		$scope.plotParameters.tension = 0.85;
+		$scope.plotParameters.upperValue = 1;
 
 		 $scope.thresholdValue = function(){
     
@@ -40,6 +41,16 @@ angular.module('brainConnectivity')
 		    }
 		  }
 
+		  $scope.upperValue = function(){
+    
+		    if($scope.plotData){
+		    	$scope.removeOldPlot();
+		       	$scope.plotVisible = true  ;
+		      	$scope.Plot();
+
+		    }
+		  }
+
 		  $scope.removeOldPlot = function()
 		  {
 		  	console.log("REMOVE");
@@ -55,68 +66,24 @@ angular.module('brainConnectivity')
 
 		  $scope.Plot = function(){
 
-		  	
-
 		    var classes = $scope.plotData;
 		    var thresholdDefaultValue = $scope.plotParameters.threshold;
 		    var diameter = $scope.plotParameters.diameter;
-		    console.log(diameter);
 		    var tensionSplines = $scope.plotParameters.tension;
+		    var upperValue = $scope.plotParameters.upperValue;
+
+		    if(upperValue != 0)
+		    {
+		    	if(upperValue <= thresholdDefaultValue) alert("The maximum upper value should be superior to the threshold value");
+
+		    }
 
 		    console.log(thresholdDefaultValue);
 
 		    $scope.plotVisible = true ;
-
-		    // var TensionText = d3.select("body").append("div")
-		    //         .attr("class", "TensionText") 
-		    //         .append("text")
-		    //         .text("Tension :");
-
-		    // var Tension = d3.select("body").append("div")
-		    //         .attr("class", "TensionSlide") 
-		    //         .append("input")
-		    //                   .attr("type","range")
-		    //                   .attr("class","tensionBar")
-		    //                   .attr("min",0)
-		    //                   .attr("max",100)
-		    //                   .attr("value",85);
-
-		    // var DiameterText = d3.select("body").append("div")
-		    //         .attr("class", "TensionText") 
-		    //         .append("text")
-		    //         .text("Diameter :");
-
-
-		    // var Diameter = d3.select("body").append("div")
-		    //         .attr("class", "DiameterSlide") 
-		    //         .append("input")
-		    //                   .attr("type","range")
-		    //                   .attr("class","diameterBar")
-		    //                   .attr("min",100)
-		    //                   .attr("max",360)
-		    //                   .attr("value",360);
-
-		    //   var ThresholdText = d3.select("body").append("div")
-		    //         .attr("class", "TensionText") 
-		    //         .append("text")
-		    //         .text("Threshold :");
 		    
-		    // var Threshold = d3.select("body").append("div")
-		    //         .attr("class", "ValueThreshold") 
-		    //         .append("input")
-		    //                  .attr("type","number")
-		    //                   .attr("step",0.1)
-		    //                   .attr("class","valueThreshold")
-		    //                   .attr("min",0)
-		    //                   .attr("max",1)
-		    //                   .attr("value",thresholdDefaultValue);
-		                     
-		    //var diameter = 960,
-		        var radius = diameter / 2,
+		    var radius = diameter / 2,
 		        innerRadius = radius - 120;
-		        //innerRadius = 120;
-
-
 
 		    var cluster = d3.layout.cluster()
 		        .size([360, innerRadius])
@@ -152,12 +119,14 @@ angular.module('brainConnectivity')
 		        height = diameter;
 
 		    var y = d3.scale.linear()
-		        .range([height, 0]);
+		        .range([height, 0])
+		        .domain([thresholdDefaultValue, upperValue]);
 
 		    var svgColorbar = d3.select("body").append("svg")
 		        .attr("width", width + margin.right + margin.left)
 		        .attr("height", diameter)
 		        .attr("id", "colorBar")
+		        .attr("class", "colorBar")
 		      .append("g")
 		        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -213,13 +182,26 @@ angular.module('brainConnectivity')
 		     splines = bundle(links);
 		      var size = $scope.sizeMap(nodes,thresholdDefaultValue);
 
+		      var sizeOfLinksRatio = diameter/27;
+
+		      var MinMax = upperValue - thresholdDefaultValue; 
+
 		      var path = svg.selectAll(".link")
 		          .data(splines)
 		          .enter()
 		            .append("path")
 		          .attr("class", "link")
-		          .attr("stroke-width", function(d, i) { return (size[i]*35) + "px"; })
-		          .attr("stroke",  function(d, i) { return $scope.colorHSV(size[i]); })            
+		          .attr("stroke-width", function(d, i) { return (size[i]*sizeOfLinksRatio) + "px"; })
+		          .attr("stroke",  function(d, i) { 
+		          			if(size[i] >= upperValue)
+		          			{
+		          				return $scope.colorHSV("max",0,1);
+		          			}
+		          			else
+		          			{
+		          				return $scope.colorHSV(size[i],thresholdDefaultValue,upperValue); 	
+		          			}
+		          	})            
 		          .attr("d", line)
 		          .on("mouseover", function(d,i) {    
 		                div.transition()    
@@ -277,11 +259,24 @@ angular.module('brainConnectivity')
 
 		  }
 
-		  $scope.colorHSV = function(size,threshold){
-		        var val = threshold / 240 ; 
+		  $scope.colorHSV = function(size,Min,Max){
 
-		        var hue = size*240;
-		        var color = d3.hsl(240-hue,1,0.5);
+		  		if(size == "max")
+		  		{
+		  			var color = d3.hsl(0,1,0.5);
+		  		} 
+		  		else
+		  		{
+		  			var range = Max - Min; 
+		  			var temp = size - Min;
+		  			var alpha = temp/range ; 
+
+		        	var hue = 240 * alpha ;
+		        
+		        	var color = d3.hsl(240-hue,1,0.5);
+		        	console.log(hue);
+		  		}
+		  		
 		        return color;
 		    }
 		       
@@ -360,6 +355,11 @@ $scope.packageImports = function (nodes, threshold) {
 		$scope.$watch("plotParameters.tension", function(){
 		    console.log("HelloWatch tension", $scope.plotParameters.tension);
 		    $scope.tensionValue();
+		  });
+
+		$scope.$watch("plotParameters.upperValue", function(){
+		    console.log("HelloWatch upper", $scope.plotParameters.upperValue);
+		    $scope.upperValue();
 		  });
 
 		$scope.$watch("plotData", function()
