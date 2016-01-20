@@ -6,21 +6,63 @@ angular.module('brainConnectivity')
 
 		$scope.plotParameters = {};
 		$scope.plotParameters.threshold = 0;
+		$scope.plotParameters.diameter = 960;
+		$scope.plotParameters.tension = 0.85;
 
 		 $scope.thresholdValue = function(){
     
 		    if($scope.plotData){
-		       $scope.plotVisible = true  ;
-		      $scope.Plot();
+		    	$scope.removeOldPlot();
+		       	$scope.plotVisible = true  ;
+		      	$scope.Plot();
 
 		    }
 		  }
 
+		  $scope.diameterValue = function(){
+    
+		    if($scope.plotData){
+		    	
+		    	$scope.removeOldPlot();
+		       	$scope.plotVisible = true  ;
+		       	$scope.Plot();
+
+		    }
+		  }
+
+		  $scope.tensionValue = function(){
+    
+		    if($scope.plotData){
+		    	$scope.removeOldPlot();
+		       	$scope.plotVisible = true  ;
+		      	$scope.Plot();
+
+		    }
+		  }
+
+		  $scope.removeOldPlot = function()
+		  {
+		  	console.log("REMOVE");
+		  	var circlePlot = document.getElementById("circlePlot");
+		  	circlePlot.parentNode.removeChild(circlePlot);
+		  	
+		  	var colorBar = document.getElementById("colorBar");
+		  	colorBar.parentNode.removeChild(colorBar);
+		  		
+		  	var tooltip = document.getElementById("tooltip");
+		  	tooltip.parentNode.removeChild(tooltip);
+		  }
+
 		  $scope.Plot = function(){
 
+		  	
 
 		    var classes = $scope.plotData;
 		    var thresholdDefaultValue = $scope.plotParameters.threshold;
+		    var diameter = $scope.plotParameters.diameter;
+		    console.log(diameter);
+		    var tensionSplines = $scope.plotParameters.tension;
+
 		    console.log(thresholdDefaultValue);
 
 		    $scope.plotVisible = true ;
@@ -69,8 +111,8 @@ angular.module('brainConnectivity')
 		    //                   .attr("max",1)
 		    //                   .attr("value",thresholdDefaultValue);
 		                     
-		    var diameter = 960,
-		        radius = diameter / 2,
+		    //var diameter = 960,
+		        var radius = diameter / 2,
 		        innerRadius = radius - 120;
 		        //innerRadius = 120;
 
@@ -86,33 +128,36 @@ angular.module('brainConnectivity')
 
 		    var line = d3.svg.line.radial()
 		        .interpolate("bundle")
-		        .tension(.85)
+		        .tension(tensionSplines)
 		        .radius(function(d) { return d.y; })
 		        .angle(function(d) { return d.x / 180 * Math.PI; });
 
 		    // Define the div for the tooltip
 		    var div = d3.select("body").append("div") 
-		        .attr("class", "tooltip")       
+		        .attr("class", "tooltip")
+		        .attr("id", "tooltip")        
 		        .style("opacity", 0);
 
 		    var splines = [];    
 		    var svg = d3.select("body").append("svg")
 		        .attr("width", diameter)
 		        .attr("height", diameter)
-		        .attr("class", "circlePlot")   
+		        .attr("class", "circlePlot")
+		        .attr("id", "circlePlot")   
 		        .append("g")
 		        .attr("transform", "translate(" + radius + "," + radius + ")");
 
 		    var margin = {top: 10, right: 10, bottom: 190, left: 50},
 		        width = 100 - margin.right - margin.left,
-		        height = 800 - margin.top - margin.bottom;
+		        height = diameter;
 
 		    var y = d3.scale.linear()
 		        .range([height, 0]);
 
 		    var svgColorbar = d3.select("body").append("svg")
 		        .attr("width", width + margin.right + margin.left)
-		        .attr("height", height + margin.top + margin.bottom)
+		        .attr("height", diameter)
+		        .attr("id", "colorBar")
 		      .append("g")
 		        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -204,11 +249,11 @@ angular.module('brainConnectivity')
 
 
 
-		          d3.select("input[class=tensionBar").on("change", function() {
-		          	console.log("change");
-		        line.tension(this.value / 100);
-		        path.attr("d", function(d, i) { return line(splines[i]); });          
-		      });
+		      //     d3.select("input[class=tensionBar").on("change", function() {
+		      //     	console.log("change");
+		      //   line.tension(this.value / 100);
+		      //   path.attr("d", function(d, i) { return line(splines[i]); });          
+		      // });
 
 
 
@@ -303,8 +348,18 @@ $scope.packageImports = function (nodes, threshold) {
 }
 
 		$scope.$watch("plotParameters.threshold", function(){
-		    console.log("HelloWatch", $scope.plotParameters.threshold);
+		    console.log("HelloWatch thres", $scope.plotParameters.threshold);
 		    $scope.thresholdValue();
+		  });
+
+		$scope.$watch("plotParameters.diameter", function(){
+		    console.log("HelloWatch diam", $scope.plotParameters.diameter);
+		    $scope.diameterValue();
+		  });
+
+		$scope.$watch("plotParameters.tension", function(){
+		    console.log("HelloWatch tension", $scope.plotParameters.tension);
+		    $scope.tensionValue();
 		  });
 
 		$scope.$watch("plotData", function()
@@ -329,4 +384,18 @@ $scope.packageImports = function (nodes, threshold) {
 
 
   }
-})
+});
+// angular.module('brainConnectivity').directive("replaceComma", function() {
+// 	console.log("replace coma");
+//     return {
+//         restrict: "A",
+//         link: function(scope, element) {
+//             element.on("keydown", function(e) {
+//                 if(e.keyCode === 188) {
+//                     this.value += ".";
+//                     e.preventDefault();
+//                 }
+//             });
+//         }
+//     };
+// });

@@ -21,6 +21,8 @@ angular.module('brainConnectivity')
     probtrack.getMatrix()
     .then(function(response){
       $scope.plotParameters.threshold = 0.1;
+      $scope.plotParameters.tension = 85;
+      $scope.plotParameters.diameter = 960;
       $scope.plotParameters.data = response.data;
       $scope.Plot;
     }).catch(console.error);
