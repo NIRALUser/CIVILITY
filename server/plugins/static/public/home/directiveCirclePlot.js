@@ -16,7 +16,6 @@ angular.module('brainConnectivity')
 		    	$scope.removeOldPlot();
 		       	$scope.plotVisible = true  ;
 		      	$scope.Plot();
-
 		    }
 		  }
 
@@ -27,7 +26,6 @@ angular.module('brainConnectivity')
 		    	$scope.removeOldPlot();
 		       	$scope.plotVisible = true  ;
 		       	$scope.Plot();
-
 		    }
 		  }
 
@@ -37,7 +35,6 @@ angular.module('brainConnectivity')
 		    	$scope.removeOldPlot();
 		       	$scope.plotVisible = true  ;
 		      	$scope.Plot();
-
 		    }
 		  }
 
@@ -47,7 +44,6 @@ angular.module('brainConnectivity')
 		    	$scope.removeOldPlot();
 		       	$scope.plotVisible = true  ;
 		      	$scope.Plot();
-
 		    }
 		  }
 
@@ -105,30 +101,40 @@ angular.module('brainConnectivity')
 		        .attr("id", "tooltip")        
 		        .style("opacity", 0);
 
+		      var margin = {top: 15, right: 10, bottom: 15, left: 50},
+		        width = 100 - margin.right - margin.left,
+		        height = diameter;
+
+		    var divPlot = d3.select("body").append("div")
+		     	.attr("width", diameter + 100)
+		        .attr("height", diameter + margin.bottom)
+		        .attr("class", "divPlot");
+
+
 		    var splines = [];    
-		    var svg = d3.select("body").append("svg")
-		        .attr("width", diameter)
-		        .attr("height", diameter)
+		    var svg = d3.select(".divPlot").append("svg")
+		         .attr("width", diameter)
+		         .attr("height", diameter + margin.bottom)
 		        .attr("class", "circlePlot")
 		        .attr("id", "circlePlot")   
 		        .append("g")
 		        .attr("transform", "translate(" + radius + "," + radius + ")");
 
-		    var margin = {top: 10, right: 10, bottom: 190, left: 50},
-		        width = 100 - margin.right - margin.left,
-		        height = diameter;
+		  
 
 		    var y = d3.scale.linear()
 		        .range([height, 0])
 		        .domain([thresholdDefaultValue, upperValue]);
 
-		    var svgColorbar = d3.select("body").append("svg")
+		     
+
+		    var svgColorbar = d3.select(".divPlot").append("svg")
 		        .attr("width", width + margin.right + margin.left)
-		        .attr("height", diameter)
+		        .attr("height", diameter + margin.bottom)//+ margin.top + margin.bottom )
 		        .attr("id", "colorBar")
 		        .attr("class", "colorBar")
 		      .append("g")
-		        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		        .attr("transform", "translate(" + margin.left + "," + margin.top/2 + ")");
 
 		    var gradient = svgColorbar.append("defs")
 		      .append("linearGradient")
@@ -196,6 +202,7 @@ angular.module('brainConnectivity')
 		          			if(size[i] >= upperValue)
 		          			{
 		          				return $scope.colorHSV("max",0,1);
+
 		          			}
 		          			else
 		          			{
@@ -274,7 +281,6 @@ angular.module('brainConnectivity')
 		        	var hue = 240 * alpha ;
 		        
 		        	var color = d3.hsl(240-hue,1,0.5);
-		        	console.log(hue);
 		  		}
 		  		
 		        return color;

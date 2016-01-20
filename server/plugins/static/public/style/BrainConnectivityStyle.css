@@ -1,3 +1,15 @@
+.text{
+  display: inline; 
+}
+
+#textMargin{
+  margin-left:15px;
+}
+
+.divPlot{
+  text-align: center;
+}
+
 .circlePlot, .colorBar{
   margin-left : 5%;
   margin : 0 auto;
@@ -5,11 +17,11 @@
 
 #tensionBar, #diameterBar {
      height:10px;
-    width:50%;
+    width:60%;
     margin: 0 auto;
 }
 
-.ValueThreshold {
+.ValueThreshold, .upperValue {
      height:50px;
     width:50px;
     margin: 0 auto;
