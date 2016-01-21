@@ -126,16 +126,17 @@ angular.module('brainConnectivity')
 		        .attr("transform", "translate(" + radius + "," + radius + ")");
 		  
 		    var y = d3.scale.linear()
-		        .range([height, 0])
+		        .range([height/2, 0])
 		        .domain([thresholdDefaultValue, upperValue]);	     
 		        
+
 		    var svgColorbar = d3.select(".divPlot").append("svg")
 		        .attr("width", 100)
-		        .attr("height", newHeight)//+ margin.top + margin.bottom )
+		        .attr("height", newHeight+10)//+ margin.top + margin.bottom )
 		        .attr("id", "colorBar")
 		        .attr("class", "colorBar")
 		      .append("g")
-		        .attr("transform", "translate(" + margin.left + "," + margin.top/2 + ")");
+		        .attr("transform", "translate(" + margin.left + "," + newHeight/4 + ")");
 
 		    var gradient = svgColorbar.append("defs")
 		      .append("linearGradient")
@@ -173,8 +174,8 @@ angular.module('brainConnectivity')
 		        
 		    svgColorbar.append("rect")
 		        .attr("class", "grid-background")
-		        .attr("width", width)
-		        .attr("height", height)
+		        .attr("width", width/1.5)
+		        .attr("height", height/2)
 		        .style("fill", "url(#gradient)");
 
 		    svgColorbar.append("g")
