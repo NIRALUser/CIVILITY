@@ -50,14 +50,11 @@ angular.module('brainConnectivity')
 		  $scope.removeOldPlot = function()
 		  {
 		  	console.log("REMOVE");
-		  	var circlePlot = document.getElementById("circlePlot");
+		  	var circlePlot = document.getElementById("divPlot");
 		  	circlePlot.parentNode.removeChild(circlePlot);
+		  	var tooltipPlot = document.getElementById("tooltip");
+		  	tooltipPlot.parentNode.removeChild(tooltipPlot);
 		  	
-		  	var colorBar = document.getElementById("colorBar");
-		  	colorBar.parentNode.removeChild(colorBar);
-		  		
-		  	var tooltip = document.getElementById("tooltip");
-		  	tooltip.parentNode.removeChild(tooltip);
 		  }
 
 		  $scope.Plot = function(){
@@ -65,6 +62,7 @@ angular.module('brainConnectivity')
 		    var classes = $scope.plotData;
 		    var thresholdDefaultValue = $scope.plotParameters.threshold;
 		    var diameter = $scope.plotParameters.diameter;
+
 		    var tensionSplines = $scope.plotParameters.tension;
 		    var upperValue = $scope.plotParameters.upperValue;
 
@@ -80,6 +78,7 @@ angular.module('brainConnectivity')
 		    
 		    var radius = diameter / 2,
 		        innerRadius = radius - 120;
+
 
 		    var cluster = d3.layout.cluster()
 		        .size([360, innerRadius])
@@ -101,36 +100,38 @@ angular.module('brainConnectivity')
 		        .attr("id", "tooltip")        
 		        .style("opacity", 0);
 
-		      var margin = {top: 15, right: 10, bottom: 15, left: 50},
+		      var margin = {top: 30, right: 10, bottom: 15, left: 50},
 		        width = 100 - margin.right - margin.left,
 		        height = diameter;
 
-		    var divPlot = d3.select("body").append("div")
-		     	.attr("width", diameter + 100)
-		        .attr("height", diameter + margin.bottom)
-		        .attr("class", "divPlot");
+		    var intDiameter = parseInt(diameter);
+		    var diamMargin = intDiameter + 100;
 
+		    var bottom = margin.bottom;
+		    var newHeight = intDiameter +  bottom;
+
+		    var divPlot = d3.select("body").append("div")
+		     	.attr("width", diamMargin)
+		        .attr("height", newHeight)
+		        .attr("class", "divPlot")
+		        .attr("id", "divPlot");;
 
 		    var splines = [];    
 		    var svg = d3.select(".divPlot").append("svg")
-		         .attr("width", diameter)
-		         .attr("height", diameter + margin.bottom)
+		         .attr("width", intDiameter)
+		         .attr("height", newHeight)
 		        .attr("class", "circlePlot")
 		        .attr("id", "circlePlot")   
 		        .append("g")
 		        .attr("transform", "translate(" + radius + "," + radius + ")");
-
 		  
-
 		    var y = d3.scale.linear()
 		        .range([height, 0])
-		        .domain([thresholdDefaultValue, upperValue]);
-
-		     
-
+		        .domain([thresholdDefaultValue, upperValue]);	     
+		        
 		    var svgColorbar = d3.select(".divPlot").append("svg")
-		        .attr("width", width + margin.right + margin.left)
-		        .attr("height", diameter + margin.bottom)//+ margin.top + margin.bottom )
+		        .attr("width", 100)
+		        .attr("height", newHeight)//+ margin.top + margin.bottom )
 		        .attr("id", "colorBar")
 		        .attr("class", "colorBar")
 		      .append("g")
@@ -191,13 +192,14 @@ angular.module('brainConnectivity')
 		      var sizeOfLinksRatio = diameter/27;
 
 		      var MinMax = upperValue - thresholdDefaultValue; 
+		      var invMinMax = 1 / MinMax
 
 		      var path = svg.selectAll(".link")
 		          .data(splines)
 		          .enter()
 		            .append("path")
 		          .attr("class", "link")
-		          .attr("stroke-width", function(d, i) { return (size[i]*sizeOfLinksRatio) + "px"; })
+		          .attr("stroke-width", function(d, i) { return (size[i]*sizeOfLinksRatio+MinMax) + "px"; })
 		          .attr("stroke",  function(d, i) { 
 		          			if(size[i] >= upperValue)
 		          			{
@@ -237,33 +239,8 @@ angular.module('brainConnectivity')
 		          .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })          .text(function(d) { return d.key; });
 
 
-
-		      //     d3.select("input[class=tensionBar").on("change", function() {
-		      //     	console.log("change");
-		      //   line.tension(this.value / 100);
-		      //   path.attr("d", function(d, i) { return line(splines[i]); });          
-		      // });
-
-
-
-		//      console.log(eachNode);
-
 		      d3.select(self.frameElement).style("height", diameter + "px");  
-
-		      // d3.select("input[class=diameterBar]").on("change", function(){
-
-		      //   console.log("change");
-		      //   console.log(this.value);
-		      //   cluster.size([360, this.value]);
-		      //   var nodes = cluster.nodes(packageHierarchy(classes)),
-		      //   links = packageImports(nodes,thresholdDefaultValue);
-		      //   splines = bundle(links);
-		      //   var newInnerRadius = this.value;
-		      //   svg.selectAll("g").attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + newInnerRadius + ")"; });
-		      //   path.attr("d",  function(d, i) { return line(splines[i]); });  
-
-		      //  });
-
+ 
 		  }
 
 		  $scope.colorHSV = function(size,Min,Max){
