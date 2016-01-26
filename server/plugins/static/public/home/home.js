@@ -29,6 +29,22 @@ angular.module('brainConnectivity')
     }).catch(console.error);
 
   }
+
+  $scope.arrayTest = {};
+
+  $scope.test1 = function(){
+
+    probtrack.getConnectivityDescription()
+    .then(function(response){
+
+      $scope.arrayTest=response.data;
+      console.log("Hello");
+      console.log($scope.arrayTest);
+
+    }).catch(console.error);
+
+  }
+  
   
 
   

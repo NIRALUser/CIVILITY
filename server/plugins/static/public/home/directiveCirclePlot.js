@@ -190,7 +190,7 @@ angular.module('brainConnectivity')
 		     splines = bundle(links);
 		      var size = $scope.sizeMap(nodes,thresholdDefaultValue);
 
-		      var sizeOfLinksRatio = diameter/27;
+		      var sizeOfLinksRatio = diameter/30;
 
 		      var MinMax = upperValue - thresholdDefaultValue; 
 		      var invMinMax = 1 / MinMax

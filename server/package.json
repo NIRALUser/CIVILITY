@@ -16,6 +16,7 @@
     "good": "^5.1.1",
     "good-console": "^4.1.0",
     "hapi": "^8.1.0",
-    "jsonfile": "^2.2.3"
+    "jsonfile": "^2.2.3",
+    "papaparse": "^4.1.2"
   }
 }
