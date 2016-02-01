@@ -93,6 +93,101 @@ module.exports = function(server,options)
 
     };
 
+    handler.getFDTMatrix = function (request, reply)
+    {
+
+        var array = ["/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/fdt_network_matrix", "/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/JSON_TABLE_AAL.json"];
+
+        Promise.map(array, readFile)
+        .then(function(arrayData){
+
+                var data = arrayData[0];
+  
+                var lines = data.split('\n');
+
+                //GET MATRIX    
+                var matrix = [];
+                for(var line = 0; line < lines.length; line++){      
+        //         console.log(lines[line]);
+                     var rows = [];
+                     var values = lines[line].split('  ');
+                     for(var val = 0; val < values.length; val++){
+                        if(values[val] != ""){
+                          //console.log(values[val]);
+                         rows.push(values[val]);
+                        }           
+                     }
+                     if(rows.length>0)
+                     {
+                      matrix.push(rows);
+                    }
+                 }
+
+                 for(var blabla in matrix)
+                 {
+                  //console.log(matrix[blabla]);
+                  if(matrix.length != matrix[blabla].length)
+                  {
+                    console.log("Error dimension matrix");
+                  }
+                 }
+
+                 var matrix_norm = [];
+                 var waytotal = [];
+                 //Matrix Normalization  
+                 for(var i in matrix)
+                 {
+                    var sum = 0.0;
+                    for(var j in matrix[i])
+                    {
+                        sum = sum + parseFloat(matrix[i][j]);
+                    }
+                    waytotal.push(sum);
+                 }
+
+                 for(var i in matrix)
+                 {
+                    var vals = [];
+                    for(var j in matrix[i])
+                    {
+                        vals.push(parseFloat(matrix[i][j])/waytotal[i]);
+                    }
+                    matrix_norm.push(vals);
+                 }
+
+                var table = arrayData[1];
+
+                var AALObject = JSON.parse(table);
+                console.log(AALObject);
+
+                var lists = []
+                 //Get list matrix fdt
+                 // name
+
+                for(var i = 0; i < matrix_norm.length; i++)
+                  {
+                    
+                  }
+                for ( var seed in AALObject)
+                {
+                  var listFDT, listOrdered;
+
+                  if(AALObject[seed]["MatrixRow"] != "-1")
+                  {
+                    console.log(AALObject[seed]["name"]);
+                  }
+                  
+                }
+
+
+                 //Get list matrix ordered 
+                 // VisuHierarchy + name 
+
+                reply(matrix_norm);
+        })
+        .catch(reply);
+
+    };
 
     handler.getConnectivityDescription = function (request, reply)
     {
@@ -206,13 +301,10 @@ module.exports = function(server,options)
                                 imports.push(ListOrdered[j]);
                             }
                         }
-
                     }
 
                     jsonLine.size = size;
-                    jsonLine.imports = imports;
-                    
-                
+                    jsonLine.imports = imports;        
                     matrixDescription.push(jsonLine);
                 }
                 console.log(matrixDescription);
@@ -227,10 +319,8 @@ module.exports = function(server,options)
 
           
            })
-        .catch(reply);
-
-        
-    }
+        .catch(reply);     
+    };
     return handler; 
     
 }

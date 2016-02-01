@@ -14,6 +14,12 @@ angular.module('brainConnectivity')
 			  method: 'GET',
 			  url:'/probtrackMatrix'
 			});
+		},
+		getFDTMatrix: function(){
+			return $http({
+			  method: 'GET',
+			  url:'/probtrackFDTMatrix'
+			});
 		}
 			
 	};

@@ -44,6 +44,19 @@ angular.module('brainConnectivity')
     }).catch(console.error);
 
   }
+
+    $scope.test2 = function(){
+
+    probtrack.getFDTMatrix()
+    .then(function(response){
+
+      $scope.arrayTest=response.data;
+      console.log("Hello2");
+      console.log($scope.arrayTest);
+
+    }).catch(console.error);
+
+  }
   
   
 

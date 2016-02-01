@@ -7,6 +7,12 @@ exports.register = function (server, options, next) {
         handler: handlers.getMatrix
     });
 
+    server.route({
+        method: 'GET',
+        path:'/probtrackFDTMatrix',
+        handler: handlers.getFDTMatrix
+    });
+
      server.route({
         method: 'GET',
         path:'/probtrackConnectivityDescription',
