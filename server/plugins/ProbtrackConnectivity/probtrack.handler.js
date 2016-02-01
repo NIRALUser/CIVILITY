@@ -190,14 +190,14 @@ module.exports = function(server,options)
                   else
                   {
                    //console.log(AALObject[seed]["MatrixRow"]);
-                    listFDT[matrixRow-1] = AALObject[seed]["name"];
+                    listFDT[matrixRow-1] = AALObject[seed]["VisuHierarchy"] + AALObject[seed]["name"];
                     var visuorder = AALObject[seed]["VisuOrder"];
                     //console.log(visuorder);
                     if(visuorder > MaxvisuOrder )
                     {
                       MaxvisuOrder = visuorder;
                     }
-                     table_Matrix.push(AALObject[seed]);
+                    table_Matrix.push(AALObject[seed]);
                     // if(visuOrder != "-1")
                     // {
                     //   listVisuOrder[visuOrder-1] = AALObject[seed]["VisuHierarchy"] + AALObject[seed]["name"]
@@ -214,20 +214,75 @@ module.exports = function(server,options)
                 for ( var seed in table_Matrix)
                 {
                   
-                  var visuOrder = AALObject[seed]["VisuOrder"];
+                  var visuOrder = table_Matrix[seed]["VisuOrder"];
                   if(visuOrder != "-1")
                   {
                     //console.log("hello");
                     console.log(visuOrder);
-                    listVisuOrder[visuOrder-1] = AALObject[seed]["VisuHierarchy"] + AALObject[seed]["name"];
+                    listVisuOrder[visuOrder-1] = table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
                   }   
                 }
+
+                console.log("List visu order" + listVisuOrder);
+                console.log("List fdt" + listFDT);
+
+                var NewMat = [];
+                matrix_norm.forEach(function(line,i)
+                {
+                var indexLine = listFDT.indexOf(listVisuOrder[i])  //1
+                if(indexLine != -1)
+                {
+                  var row=matrix_norm[indexLine];
+                  var NewRow =[];
+                  row.forEach(function(val,j)
+                  {
+                  var indexRow = listFDT.indexOf(listVisuOrder[j]);
+                  if(indexRow  != -1)
+                  {
+                    NewRow.push(row[indexRow]);
+                  }      
+                //row.push(ListProceed.indexOf(ListOrderedArray[i]))
+                  });
+                NewMat.push(NewRow); 
+                }
+                       
+             });
+            
+            console.log("Matrix ordered");
+            console.log(NewMat.length);
+
+            reply(NewMat);
+
+        //     var matrixDescription = [];
                 
+        //     var sizeMat = NewMat.length;
+        //     for (var nbseed = 0; nbseed<sizeMat; nbseed++)
+        //      {
+        // //    console.log(seeds[nbseed]);
 
-                 //Get list matrix ordered 
-                 // VisuHierarchy + name 
+        //       var jsonLine = {"name": seeds[nbseed] };
+        //       var size = [];
+        //       var imports = [];
 
-                reply(listVisuOrder);
+        //       for (var j = 0; j<sizeMat; j++)
+        //        {
+        //         if(j != nbseed )
+        //          {
+        //           if(matrix[nbseed][j] > "0")
+        //            {
+        //                size.push(parseFloat(matrix[nbseed][j]));
+        //                imports.push(seeds[j]);
+        //            }
+        //           }
+
+        //             }
+
+        //             jsonLine.size = size;
+        //             jsonLine.imports = imports;
+                    
+                
+        //             matrixDescription.push(jsonLine);
+        //         }
         })
         .catch(reply);
 
