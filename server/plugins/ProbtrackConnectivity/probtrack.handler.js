@@ -158,9 +158,8 @@ module.exports = function(server,options)
                 var table = arrayData[1];
 
                 var AALObject = JSON.parse(table);
-                console.log(AALObject);
+                //console.log(AALObject);
 
-                var lists = []
                  //Get list matrix fdt
                  // name
 
@@ -168,22 +167,67 @@ module.exports = function(server,options)
                   {
                     
                   }
+
+                var table_Matrix = [];
+
+                var listFDT = [];
+                var listVisuOrder = [];
+                var MaxvisuOrder = 0;
+
+                for(var i=0 ; i < matrix.length ; i++)
+                {
+                  listFDT.push("");
+                }
+
                 for ( var seed in AALObject)
                 {
-                  var listFDT, listOrdered;
-
-                  if(AALObject[seed]["MatrixRow"] != "-1")
+                  var matrixRow = AALObject[seed]["MatrixRow"];
+                  if(matrixRow == "-1")
                   {
-                    console.log(AALObject[seed]["name"]);
+                    //console.log(AALObject[seed]["name"]);
+                   
+                  }
+                  else
+                  {
+                   //console.log(AALObject[seed]["MatrixRow"]);
+                    listFDT[matrixRow-1] = AALObject[seed]["name"];
+                    var visuorder = AALObject[seed]["VisuOrder"];
+                    //console.log(visuorder);
+                    if(visuorder > MaxvisuOrder )
+                    {
+                      MaxvisuOrder = visuorder;
+                    }
+                     table_Matrix.push(AALObject[seed]);
+                    // if(visuOrder != "-1")
+                    // {
+                    //   listVisuOrder[visuOrder-1] = AALObject[seed]["VisuHierarchy"] + AALObject[seed]["name"]
+                    // }
                   }
                   
                 }
+                console.log(MaxvisuOrder);
 
+                for(var i=0 ; i < MaxvisuOrder ; i++)
+                {
+                  listVisuOrder.push("");
+                }
+                for ( var seed in table_Matrix)
+                {
+                  
+                  var visuOrder = AALObject[seed]["VisuOrder"];
+                  if(visuOrder != "-1")
+                  {
+                    //console.log("hello");
+                    console.log(visuOrder);
+                    listVisuOrder[visuOrder-1] = AALObject[seed]["VisuHierarchy"] + AALObject[seed]["name"];
+                  }   
+                }
+                
 
                  //Get list matrix ordered 
                  // VisuHierarchy + name 
 
-                reply(matrix_norm);
+                reply(listVisuOrder);
         })
         .catch(reply);
 
