@@ -1,3 +1,8 @@
+input.box{
+  margin-top: -12px;
+}
+
+
 .text{
   display: inline; 
 }
@@ -19,16 +24,34 @@
      height:10px;
     width:60%;
     margin: 0 auto;
+    margin-left: 0px;
 }
 
 .ValueThreshold, .upperValue {
-     height:50px;
-    width:50px;
+     height:40px;
+    width:40px;
     margin: 0 auto;
 }
 
+.slides{
+  margin-bottom: 6px;
+}
+
+.matProc{
+  text-decoration: underline;
+}
+
+.mainButton{
+  text-align: center;
+}
+
+.checkgroup{
+  margin-bottom: 15px;
+}
+
 .buttons{
-  margin-left: 1%;
+  margin-left: 1%; 
+  font-size: 15px;
 }
 div.TensionText {
     height:10px;
@@ -62,7 +85,7 @@ div.TensionText {
 }
 
 .btn{
-  margin:10px;
+  margin: auto;
 }
 
 .active {

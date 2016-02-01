@@ -1,6 +1,23 @@
 
 <div class="buttons">
 
+<div class="checkgroup">
+	<p class="matProc"> Matrix processing : </p>
+  <label class="checkbox-inline">  Maximum values <input type="checkbox" class="box"/>  </label>
+  <label class="checkbox-inline">  Minimum values <input type="checkbox" class="box"/>  </label>
+  <label class="checkbox-inline">  Average values <input type="checkbox" class="box"/>  </label>
+</div>
+
+<div class="slides">
+<p ng-if="plotVisible"> Tension splines value : </p>
+<input type="range" class="tensionBar" id="tensionBar" min="0" max="1" step="0.05" value="0.85" ng-if="plotVisible" ng-model="plotParameters.tension" ng-change="tensionValue"/> 
+</div>
+
+<div class="slides">
+<p ng-if="plotVisible"> Diameter of circle : </p>
+<input type="range" class="diameterBar" class="diameterBar" id="diameterBar" min="300" max="1000" value="960" step="10" ng-if="plotVisible" ng-model="plotParameters.diameter" ng-change="diameterValue"/> 
+</div>
+
 <p ng-if="plotVisible"> <div class="text" ng-if="plotVisible"> Maximum upper value : </div>
 <input type="text" pattern="[0-9]+([,\.][0-9]+)?" value="1"
  ng-model="plotParameters.upperValue" ng-change="tupperValue" class="upperValue" ng-if="plotVisible" /> 
@@ -9,12 +26,10 @@
 <input type="text" pattern="[0-9]+([,\.][0-9]+)?" value="0"
  ng-model="plotParameters.threshold" ng-change="thresholdValue" class="ValueThreshold" ng-if="plotVisible" /> </p>
 
-<p ng-if="plotVisible"> Tension splines value :
-<input type="range" class="tensionBar" id="tensionBar" min="0" max="1" step="0.05" value="0.85" ng-if="plotVisible" ng-model="plotParameters.tension" ng-change="tensionValue"/> </p>
-
-<p ng-if="plotVisible"> Diameter of circle : 
-<input type="range" class="diameterBar" class="diameterBar" id="diameterBar" min="300" max="1000" value="960" step="10" ng-if="plotVisible" ng-model="plotParameters.diameter" ng-change="diameterValue"/> </p>
 
 </div>
+
+
+
 
 

@@ -3,12 +3,12 @@ seed.right.frontal.Frontal_Sup_R
 seed.right.frontal.Frontal_Sup_Orb_R
 seed.right.frontal.Frontal_Mid_R
 seed.right.frontal.Frontal_Mid_Orb_R
-seed.right.prefrontal.Frontal_Inf_Oper_R
+seed.right.frontal.Frontal_Inf_Oper_R
 seed.right.frontal.Frontal_Inf_Tri_R
 seed.right.frontal.Frontal_Inf_Orb_R
 seed.right.frontal.Rolandic_Oper_R
 seed.right.frontal.Supp_Motor_Area_R
-seed.right.prefrontal.Olfactory_R
+seed.right.frontal.Olfactory_R
 seed.right.frontal.Frontal_Sup_Medial_R
 seed.right.frontal.Frontal_Med_Orb_R
 seed.right.frontal.Rectus_R
