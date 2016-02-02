@@ -50,9 +50,46 @@ angular.module('brainConnectivity')
     probtrack.getFDTMatrix()
     .then(function(response){
 
-      $scope.arrayTest=response.data;
+      $scope.arrayTest = response.data;
       console.log("Hello2");
       console.log($scope.arrayTest);
+
+      var matrix = $scope.arrayTest["matrix"];
+      var listOrdered = $scope.arrayTest["listOrdered"];
+
+       var matrixDescription = [];
+                
+        var sizeMat = matrix.length;
+        console.log(sizeMat);
+            for (var nbseed = 0; nbseed<sizeMat; nbseed++)
+             {
+        //    console.log(seeds[nbseed]);
+
+              var jsonLine = {"name": seeds[nbseed] };
+              var size = [];
+              var imports = [];
+
+              for (var j = 0; j<sizeMat; j++)
+               {
+                if(j != nbseed )
+                 {
+                  if(matrix[nbseed][j] > "0")
+                   {
+                       size.push(parseFloat(matrix[nbseed][j]));
+                       imports.push(seeds[j]);
+                   }
+                  }
+
+                    }
+
+                    jsonLine.size = size;
+                    jsonLine.imports = imports;
+                    
+                
+                    matrixDescription.push(jsonLine);
+                }
+
+
 
     }).catch(console.error);
 

@@ -87,6 +87,8 @@ module.exports = function(server,options)
                 //wstream.write(matrixDescription);
                // console.log(arrayData);
 
+
+
                 reply(matrixDescription);
         })
         .catch(reply);
@@ -236,14 +238,13 @@ module.exports = function(server,options)
                   var NewRow =[];
                   row.forEach(function(val,j)
                   {
-                  var indexRow = listFDT.indexOf(listVisuOrder[j]);
-                  if(indexRow  != -1)
-                  {
-                    NewRow.push(row[indexRow]);
-                  }      
-                //row.push(ListProceed.indexOf(ListOrderedArray[i]))
+                    var indexRow = listFDT.indexOf(listVisuOrder[j]);
+                    if(indexRow  != -1)
+                    {
+                      NewRow.push(row[indexRow]);
+                    }      
                   });
-                NewMat.push(NewRow); 
+                  NewMat.push(NewRow); 
                 }
                        
              });
@@ -251,38 +252,9 @@ module.exports = function(server,options)
             console.log("Matrix ordered");
             console.log(NewMat.length);
 
-            reply(NewMat);
+            var returnJSONobject = {"matrix" : NewMat, "listOrdered" : listVisuOrder}
 
-        //     var matrixDescription = [];
-                
-        //     var sizeMat = NewMat.length;
-        //     for (var nbseed = 0; nbseed<sizeMat; nbseed++)
-        //      {
-        // //    console.log(seeds[nbseed]);
-
-        //       var jsonLine = {"name": seeds[nbseed] };
-        //       var size = [];
-        //       var imports = [];
-
-        //       for (var j = 0; j<sizeMat; j++)
-        //        {
-        //         if(j != nbseed )
-        //          {
-        //           if(matrix[nbseed][j] > "0")
-        //            {
-        //                size.push(parseFloat(matrix[nbseed][j]));
-        //                imports.push(seeds[j]);
-        //            }
-        //           }
-
-        //             }
-
-        //             jsonLine.size = size;
-        //             jsonLine.imports = imports;
-                    
-                
-        //             matrixDescription.push(jsonLine);
-        //         }
+            reply(returnJSONobject);
         })
         .catch(reply);
 
