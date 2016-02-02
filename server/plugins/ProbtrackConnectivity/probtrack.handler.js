@@ -74,7 +74,6 @@ module.exports = function(server,options)
                                 imports.push(seeds[j]);
                             }
                         }
-
                     }
 
                     jsonLine.size = size;
@@ -162,16 +161,7 @@ module.exports = function(server,options)
                 var AALObject = JSON.parse(table);
                 //console.log(AALObject);
 
-                 //Get list matrix fdt
-                 // name
-
-                for(var i = 0; i < matrix_norm.length; i++)
-                  {
-                    
-                  }
-
                 var table_Matrix = [];
-
                 var listFDT = [];
                 var listVisuOrder = [];
                 var MaxvisuOrder = 0;
@@ -184,14 +174,9 @@ module.exports = function(server,options)
                 for ( var seed in AALObject)
                 {
                   var matrixRow = AALObject[seed]["MatrixRow"];
-                  if(matrixRow == "-1")
+                  if(matrixRow != "-1")
                   {
-                    //console.log(AALObject[seed]["name"]);
-                   
-                  }
-                  else
-                  {
-                   //console.log(AALObject[seed]["MatrixRow"]);
+                    //console.log(AALObject[seed]["MatrixRow"]);
                     listFDT[matrixRow-1] = AALObject[seed]["VisuHierarchy"] + AALObject[seed]["name"];
                     var visuorder = AALObject[seed]["VisuOrder"];
                     //console.log(visuorder);
@@ -200,10 +185,10 @@ module.exports = function(server,options)
                       MaxvisuOrder = visuorder;
                     }
                     table_Matrix.push(AALObject[seed]);
-                    // if(visuOrder != "-1")
-                    // {
-                    //   listVisuOrder[visuOrder-1] = AALObject[seed]["VisuHierarchy"] + AALObject[seed]["name"]
-                    // }
+                  }
+                  else
+                  {
+                    //Don't use
                   }
                   
                 }
@@ -220,13 +205,16 @@ module.exports = function(server,options)
                   if(visuOrder != "-1")
                   {
                     //console.log("hello");
-                    console.log(visuOrder);
                     listVisuOrder[visuOrder-1] = table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
-                  }   
+                  } 
+                  else
+                  {
+                    //Don't use
+                  }  
                 }
 
-                console.log("List visu order" + listVisuOrder);
-                console.log("List fdt" + listFDT);
+                //console.log("List visu order" + listVisuOrder);
+                //console.log("List fdt" + listFDT);
 
                 var NewMat = [];
                 matrix_norm.forEach(function(line,i)
@@ -245,8 +233,7 @@ module.exports = function(server,options)
                     }      
                   });
                   NewMat.push(NewRow); 
-                }
-                       
+                }                       
              });
             
             console.log("Matrix ordered");

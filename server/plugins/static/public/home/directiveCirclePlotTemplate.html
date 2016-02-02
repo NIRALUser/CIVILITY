@@ -3,10 +3,15 @@
 
 <div class="checkgroup" ng-if="plotVisible">
 	<p class="matProc"> Matrix processing : </p>
-  <label class="checkbox-inline">  Average values <input type="checkbox" class="box" checked/>  </label>
-  <label class="checkbox-inline">  Maximum values <input type="checkbox" class="box"/>  </label>
-  <label class="checkbox-inline">  Minimum values <input type="checkbox" class="box"/>  </label>  
-</div>
+
+  <ng-form name="myForm">
+  <span ng-repeat="choice in choices">
+    <label class="checkbox-inline" for="{{choice.id}}">
+      <input type="checkbox" value="{{choice.id}}" ng-model="plotParameters.method[$index]" name="group-one" id="{{choice.id}}" ng-checked="choice.checked" ng-change="selectMethodMatrixProcess"/>
+{{choice.label}}
+    </label>
+  </span>
+  </div>
 
 <div class="slides">
 <p ng-if="plotVisible"> Tension splines value : </p>
@@ -20,7 +25,7 @@
 
 <p ng-if="plotVisible"> <div class="text" ng-if="plotVisible"> Maximum upper value : </div>
 <input type="text" pattern="[0-9]+([,\.][0-9]+)?" value="1"
- ng-model="plotParameters.upperValue" ng-change="tupperValue" class="upperValue" ng-if="plotVisible" /> 
+ ng-model="plotParameters.upperValue" ng-change="upperValue" class="upperValue" ng-if="plotVisible" /> 
 
  <div class="text" id="textMargin" ng-if="plotVisible"> Threshold value :  </div>
 <input type="text" pattern="[0-9]+([,\.][0-9]+)?" value="0"
@@ -28,7 +33,6 @@
 
 
 </div>
-
 
 
 
