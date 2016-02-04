@@ -10,58 +10,44 @@ angular.module('brainConnectivity')
 		$scope.plotParameters.diameter = 960;
 		$scope.plotParameters.tension = 0.85;
 		$scope.plotParameters.upperValue = 1;
-
-
-		$scope.answers = ["average","max","min"];
-    
     	$scope.choices = [{"id":"average", "value":"1", "label":"Average", "checked":true}, {"id":"max", "value":"2","label":"Maximum","checked":false},{"id":"min", "value":"3","label":"Minumum","checked":false}];
 		 
 		$scope.selectMethodMatrixProcess = function(){
 
-        console.log("HELLOOOO");
-		var method = $scope.plotParameters.method;
-		console.log(method);
-		var returnMethod;
-		if(method[0] == true)
-		{
-			returnMethod = "average";
-			console.log("Average");
-		}
-		else if ( method[1] == true )
-		{
-			returnMethod = "max";
-			console.log("Max");
-		}
-		else if( method[2] == true )
-		{
-			returnMethod = "min";
-			console.log("Min");
-		}
-		else if(method[0] == false && method[1] == false && method[2] == false)
-		{	
-			$scope.choices[0]["checked"]=true;
-			$scope.plotParameters.method[0]=true;
-			returnMethod = "average";
+			var method = $scope.plotParameters.method;
+			console.log(method);
+			var returnMethod;
+			if(method[0] == true)
+			{	
+				returnMethod = "average";
+			}
+			else if ( method[1] == true )
+			{
+				returnMethod = "max";
+			}
+			else if( method[2] == true )
+			{
+				returnMethod = "min";
+			}
+			else if(method[0] == false && method[1] == false && method[2] == false)
+			{	
+				$scope.choices[0]["checked"]=true;
+				$scope.plotParameters.method[0]=true;
+				returnMethod = "average";
 
-		}
-		return returnMethod;
-
-		};
+			}
+			return returnMethod;
+			};
 		
-    
-
 		 $scope.CreateDescription = function(JSONInfo, checkbox){
 				 if($scope.plotData)
-		 		 {
-		 		 	
+		 		 {		 		 	
 		 		 	console.log("valueCheck" + checkbox);
 		 		 	var matrix = JSONInfo["matrix"];
 		 		 	var MatrixProc = [];
-
 		 		 	//Process matrix 
 		 		 	if(checkbox == "average")
 		 		 	{
-						console.log("HERE average");
 						matrix.forEach(function(line,i){
 							var row = [];
 							line.forEach(function(val,j)
@@ -80,17 +66,14 @@ angular.module('brainConnectivity')
 								{
 									row.push(-1);
 								}
-
 							})
 							MatrixProc.push(row);
 						})
-						console.log(MatrixProc)
 
 
 		 		 	}
 		 		 	else if (checkbox == "max")
 		 		 	{
-		 		 		console.log("HERE max");
 		 		 		matrix.forEach(function(line,i){
 						var row = [];
 						line.forEach(function(val,j)
@@ -115,16 +98,12 @@ angular.module('brainConnectivity')
 								{
 									row.push(-1);
 								}
-
 							})
 							MatrixProc.push(row);
 						})
-						console.log(MatrixProc)
 		 		 	}
 		 		 	else
 		 		 	{
-		 		 		console.log("HERE min");
-		 		 		console.log("HERE max");
 		 		 		matrix.forEach(function(line,i){
 						var row = [];
 						line.forEach(function(val,j)
@@ -149,21 +128,16 @@ angular.module('brainConnectivity')
 								{
 									row.push(-1);
 								}
-
 							})
 							MatrixProc.push(row);
 						})
-						console.log(MatrixProc)
 		 		 	}
-
 		 			var seeds = JSONInfo["listOrdered"];
 		 			var matrixDescription = [];
                 
                 	var sizeMat = seeds.length;
                 	for (var nbseed = 0; nbseed<sizeMat; nbseed++)
                 	{
-        //          console.log(seeds[nbseed]);
-
                     	var jsonLine = {"name": seeds[nbseed] };
                     	var size = [];
                     	var imports = [];
@@ -179,7 +153,6 @@ angular.module('brainConnectivity')
                             	}
                         	}
                     	}
-
                     	jsonLine.size = size;
                     	jsonLine.imports = imports;
                     	matrixDescription.push(jsonLine);
@@ -187,9 +160,6 @@ angular.module('brainConnectivity')
                		 
 		 			return matrixDescription;
 		 		}
-		 		
-		 	//}
-
 		 }
 
 		 $scope.MatrixProcess = function(){
@@ -251,12 +221,9 @@ angular.module('brainConnectivity')
 		  $scope.Plot = function(){
 
 		  	var method = $scope.selectMethodMatrixProcess();
-		  	console.log("method" + method);
 		    var JSONInfo = $scope.plotData;
 		    var classes = $scope.CreateDescription(JSONInfo,$scope.selectMethodMatrixProcess());
 		    
-		    //var classes = $scope.CreateDescription(JSONInfo);
-
 		    var thresholdDefaultValue = $scope.plotParameters.threshold;
 		    var diameter = $scope.plotParameters.diameter;
 
@@ -268,9 +235,6 @@ angular.module('brainConnectivity')
 		    	if(upperValue <= thresholdDefaultValue) alert("The maximum upper value should be superior to the threshold value");
 
 		    }
-
-		    //console.log(thresholdDefaultValue);
-
 		    $scope.plotVisible = true ;
 		    
 		    var radius = diameter / 2,
@@ -382,9 +346,11 @@ angular.module('brainConnectivity')
 
 
 		     var nodes = cluster.nodes($scope.packageHierarchy(classes));
+		      
 		     //console.log(thresholdDefaultValue);
 		     var links = $scope.packageImports(nodes,thresholdDefaultValue);
 		     splines = bundle(links);
+		     console.log("splines" + splines.source);
 		      var size = $scope.sizeMap(nodes,thresholdDefaultValue);
 
 		      var sizeOfLinksRatio = diameter/35;
@@ -410,11 +376,11 @@ angular.module('brainConnectivity')
 		          			}
 		          	})            
 		          .attr("d", line)
-		          .on("mouseover", function(d,i) {    
+		          .on("mouseover", function(d,i) {  
 		                div.transition()    
 		                    .duration(200)    
 		                    .style("opacity", .9);    
-		                div.html( "Connectivity value : " + size[i] ) 
+		                div.html( "Connectivity value : " + size[i].toFixed(5) ) 
 		                    .style("left", (d3.event.pageX) + "px")   
 		                    .style("top", (d3.event.pageY + 28) + "px");  
 		                })          
@@ -426,7 +392,10 @@ angular.module('brainConnectivity')
 		          ;
 
 		       svg.selectAll(".node")
-		          .data(nodes.filter(function(n) { return !n.children; }))
+		          .data(nodes.filter(function(n) { 
+		          	//if(n.parent["depth"]==1)
+		          	console.log(!n.children) ;
+		          	return !n.children; }))
 		        .enter().append("g")
 		          .attr("class", "node")
 		          .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
@@ -582,30 +551,13 @@ $scope.packageImports = function (nodes, threshold) {
 		    console.log("HelloWatch processvalue", $scope.plotParameters.method);
 		  });
 
-		// $scope.$watch("plotParameters.method", function(){
-		//     if($scope.plotParameters.method[0]==false && $scope.plotParameters.method[1]==false && $scope.plotParameters.method[2]==false)
-		//     {
-		//     	$scope.choices[1]["checked"]=false;
-		//     	$scope.choices[2]["checked"]=false;
-		//     	$scope.choices[0]["checked"]=true;
-		//     	$scope.plotParameters.method[0]=true;
-		//     	$scope.plotParameters.method[1]=false;
-		//     	$scope.plotParameters.method[2]=false;
-		//     }
-		//     console.log("HelloWatch processvalue", $scope.plotParameters.method);
-		//     $scope.MatrixProcess();
-		//   });
-
 		$scope.$watch("plotData", function()
 			{
 			if($scope.plotData){
 				$scope.plotParameters.plotData = $scope.plotData;
 				$scope.Plot();
 			}
-			});
-
-		
-		
+			});		
 	}
 
   return {
@@ -619,17 +571,3 @@ $scope.packageImports = function (nodes, threshold) {
 
   }
 });
-// angular.module('brainConnectivity').directive("replaceComma", function() {
-// 	console.log("replace coma");
-//     return {
-//         restrict: "A",
-//         link: function(scope, element) {
-//             element.on("keydown", function(e) {
-//                 if(e.keyCode === 188) {
-//                     this.value += ".";
-//                     e.preventDefault();
-//                 }
-//             });
-//         }
-//     };
-// });

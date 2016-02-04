@@ -11,6 +11,15 @@
 {{choice.label}}
     </label>
   </span>
+
+  <p ng-if="plotVisible"> <div class="text" ng-if="plotVisible"> Maximum upper value : </div>
+<input type="text" pattern="[0-9]+([,\.][0-9]+)?" value="1"
+ ng-model="plotParameters.upperValue" ng-change="upperValue" class="upperValue" ng-if="plotVisible" /> 
+
+ <div class="text" id="textMargin" ng-if="plotVisible"> Threshold value :  </div>
+<input type="text" pattern="[0-9]+([,\.][0-9]+)?" value="0"
+ ng-model="plotParameters.threshold" ng-change="thresholdValue" class="ValueThreshold" ng-if="plotVisible" /> </p>
+ 
   </div>
 
 <div class="slides">
@@ -22,15 +31,6 @@
 <p ng-if="plotVisible"> Diameter of circle : </p>
 <input type="range" class="diameterBar" class="diameterBar" id="diameterBar" min="300" max="1000" value="960" step="10" ng-if="plotVisible" ng-model="plotParameters.diameter" ng-change="diameterValue"/> 
 </div>
-
-<p ng-if="plotVisible"> <div class="text" ng-if="plotVisible"> Maximum upper value : </div>
-<input type="text" pattern="[0-9]+([,\.][0-9]+)?" value="1"
- ng-model="plotParameters.upperValue" ng-change="upperValue" class="upperValue" ng-if="plotVisible" /> 
-
- <div class="text" id="textMargin" ng-if="plotVisible"> Threshold value :  </div>
-<input type="text" pattern="[0-9]+([,\.][0-9]+)?" value="0"
- ng-model="plotParameters.threshold" ng-change="thresholdValue" class="ValueThreshold" ng-if="plotVisible" /> </p>
-
 
 </div>
 
