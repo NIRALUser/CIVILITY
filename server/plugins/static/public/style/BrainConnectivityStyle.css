@@ -16,8 +16,10 @@ input.boxMin, input.boxMax, input.boxAverage{
 }
 
 .circlePlot, .colorBar{
-  margin-left : 5%;
   margin : 0 auto;
+}
+.circlePlot{
+  padding-left: 2.3%;
 }
 
 #tensionBar, #diameterBar {

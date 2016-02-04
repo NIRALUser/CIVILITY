@@ -10,6 +10,9 @@ angular.module('brainConnectivity')
 		$scope.plotParameters.diameter = 960;
 		$scope.plotParameters.tension = 0.85;
 		$scope.plotParameters.upperValue = 1;
+		$scope.plotParameters.link1 = "";
+		$scope.plotParameters.link2 = "";
+
     	$scope.choices = [{"id":"average", "value":"1", "label":"Average", "checked":true}, {"id":"max", "value":"2","label":"Maximum","checked":false},{"id":"min", "value":"3","label":"Minumum","checked":false}];
 		 
 		$scope.selectMethodMatrixProcess = function(){
@@ -190,6 +193,15 @@ angular.module('brainConnectivity')
 		    }
 		  }
 
+		  $scope.Tooltip = function(){
+    
+		    if($scope.plotData){
+		    	$scope.removeOldPlot();
+		       	$scope.plotVisible = true  ;
+		      	$scope.Plot();
+		    }
+		  }
+
 		 $scope.thresholdValue = function(){
     
 		    if($scope.plotData){
@@ -284,7 +296,7 @@ angular.module('brainConnectivity')
 		        width = 100 - margin.right - margin.left,
 		        height = diameter;
 
-		    var intDiameter = parseInt(diameter);
+		    var intDiameter = parseInt(diameter) + 50;
 		    var diamMargin = intDiameter + 100;
 
 		    var bottom = margin.bottom;
@@ -298,7 +310,7 @@ angular.module('brainConnectivity')
 
 		    var splines = [];    
 		    var svg = d3.select(".divPlot").append("svg")
-		         .attr("width", intDiameter)
+		         .attr("width", intDiameter )
 		         .attr("height", newHeight)
 		        .attr("class", "circlePlot")
 		        .attr("id", "circlePlot")   
@@ -369,7 +381,7 @@ angular.module('brainConnectivity')
 		     //console.log(thresholdDefaultValue);
 		     var links = $scope.packageImports(nodes,thresholdDefaultValue);
 		     splines = bundle(links);
-		     console.log("splines" + splines.sources);
+		     //console.log(splines);
 		      var size = $scope.sizeMap(nodes,thresholdDefaultValue);
 
 		      var sizeOfLinksRatio = diameter/35;
@@ -377,6 +389,9 @@ angular.module('brainConnectivity')
 		      var MinMax = upperValue - thresholdDefaultValue; 
 		      var invMinMax = 1 / MinMax
 
+
+		      var valLink1=$scope.plotParameters.link1;
+		      var valLink2=$scope.plotParameters.link2;
 		      var path = svg.selectAll(".link")
 		          .data(splines)
 		          .enter()
@@ -396,6 +411,16 @@ angular.module('brainConnectivity')
 		          	})            
 		          .attr("d", line)
 		          .on("mouseover", function(d,i) {  
+		          		var sized = d.length;
+		          		valLink1=d[0].key;
+		          		valLink2=d[sized-1].key;
+		          		var Text1 = document.getElementById(valLink1);
+		          		var Text2 = document.getElementById(valLink2);
+		          		Text1.setAttribute("font-weight", "bold");
+		          		Text2.setAttribute("font-weight", "bold");
+		          		Text1.setAttribute("font-size", "13px");
+		          		Text2.setAttribute("font-size", "13px");
+		          	
 		                div.transition()    
 		                    .duration(200)    
 		                    .style("opacity", .9);    
@@ -404,25 +429,54 @@ angular.module('brainConnectivity')
 		                    .style("top", (d3.event.pageY + 28) + "px");  
 		                })          
 		            .on("mouseout", function(d) {   
+
+		            	var sized = d.length;
+		          		valLink1=d[0].key;
+		          		valLink2=d[sized-1].key;
+		          		var Text1 = document.getElementById(valLink1);
+		          		var Text2 = document.getElementById(valLink2);
+		          		Text1.setAttribute("font-weight", "normal");
+		          		Text2.setAttribute("font-weight", "normal");
+		          		Text1.setAttribute("font-size", "11px");
+		          		Text2.setAttribute("font-size", "11px");
+
 		                div.transition()    
 		                    .duration(500)    
 		                    .style("opacity", 0); 
 		            })
 		          ;
+		          console.log("VALLINK2" + valLink2)
 
 		       svg.selectAll(".node")
 		          .data(nodes.filter(function(n) { 
 		          	//if(n.parent["depth"]==1)
-		          	console.log(!n.children) ;
+		          //console.log(n) ;
 		          	return !n.children; }))
 		        .enter().append("g")
 		          .attr("class", "node")
 		          .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
 		        .append("text")
+		          .attr("id",function(d){ return d.key; })
 		          .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
 		          .attr("dy", ".31em")
 		          .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-		          .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })          .text(function(d) { return d.key; });
+		          .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; }) 
+		          //.attr("font-weight", "bold")      
+		          .text(function(d) { 
+		          	// if(d.key == "Precentral_L"){
+		          	// 	d.attr("font-weight", "bold");
+		          	// }
+		          	return d.key; })
+		          .attr("font-weight",function(d){
+		          	if(d.key == valLink2 )
+		          	{
+		          		return "bold";
+		          	}
+		          else
+		          {
+		          	return "normal";
+		          }
+		          });
 
 
 		      d3.select(self.frameElement).style("height", diameter + "px");  
@@ -510,6 +564,17 @@ $scope.packageImports = function (nodes, threshold) {
   //console.log(imports);
   return imports;
 }
+
+		$scope.$watch("plotParameters.link1", function(){
+		    console.log("HelloWatch tooltip", $scope.plotParameters.link1);
+		    $scope.Tooltip();
+		  });
+
+		$scope.$watch("plotParameters.link2", function(){
+		    console.log("HelloWatch tooltip", $scope.plotParameters.link2);
+		    $scope.Tooltip();
+		  });
+
 
 		$scope.$watch("plotParameters.threshold", function(){
 		    console.log("HelloWatch thres", $scope.plotParameters.threshold);

@@ -13,6 +13,8 @@ angular.module('brainConnectivity')
     probtrack.getFDTMatrix()
     .then(function(response){
       $scope.ButtonClicked = true;
+      $scope.plotParameters.link1 = "";
+      $scope.plotParameters.link2 = "";
       $scope.plotParameters.threshold = 0.1;
       $scope.plotParameters.method = [true,false,false];
       $scope.plotParameters.tension = 85;
