@@ -38,43 +38,38 @@ angular.module('brainConnectivity')
 			}
 			return returnMethod;
 			};
-		
-		 $scope.CreateDescription = function(JSONInfo, checkbox){
-				 if($scope.plotData)
-		 		 {		 		 	
-		 		 	console.log("valueCheck" + checkbox);
-		 		 	var matrix = JSONInfo["matrix"];
-		 		 	var MatrixProc = [];
-		 		 	//Process matrix 
-		 		 	if(checkbox == "average")
-		 		 	{
-						matrix.forEach(function(line,i){
-							var row = [];
-							line.forEach(function(val,j)
-							{
-								if(i==j)
-								{
-									row.push(0);
-								}
-								else if (j>i)
-								{
-									var average;
-									average = ( matrix[i][j] + matrix[j][i] ) /2;
-									row.push(average);
-								}
-								else
-								{
-									row.push(-1);
-								}
-							})
-							MatrixProc.push(row);
-						})
 
+		$scope.AverageMatrix = function(matrix){
+			
+			var MatrixProc = [];
+			matrix.forEach(function(line,i){
+				var row = [];
+				line.forEach(function(val,j)
+				{
+					if(i==j)
+					{
+						row.push(0);
+					}
+					else if (j>i)
+					{
+						var average;
+						average = ( matrix[i][j] + matrix[j][i] ) /2;
+						row.push(average);
+					}
+					else
+					{
+						row.push(-1);
+					}
+				})
+				MatrixProc.push(row);
+				})
+			return MatrixProc;
+			}
 
-		 		 	}
-		 		 	else if (checkbox == "max")
-		 		 	{
-		 		 		matrix.forEach(function(line,i){
+		$scope.MaximumMatrix = function(matrix){
+
+				var MatrixProc = [];
+				matrix.forEach(function(line,i){
 						var row = [];
 						line.forEach(function(val,j)
 							{
@@ -101,10 +96,13 @@ angular.module('brainConnectivity')
 							})
 							MatrixProc.push(row);
 						})
-		 		 	}
-		 		 	else
-		 		 	{
-		 		 		matrix.forEach(function(line,i){
+					return MatrixProc;
+		}
+
+		$scope.MinimumMatrix = function(matrix){
+
+				var MatrixProc = [];
+				matrix.forEach(function(line,i){
 						var row = [];
 						line.forEach(function(val,j)
 							{
@@ -114,15 +112,15 @@ angular.module('brainConnectivity')
 								}
 								else if (j>i)
 								{
-									var min;
+									var max;
 									if(matrix[i][j] < matrix[j][i])
 									{
-										min = matrix[i][j];
+										max = matrix[i][j];
 									}
 									else{
-										min = matrix[j][i];
+										max = matrix[j][i];
 									}
-									row.push(min);
+									row.push(max);
 								}
 								else
 								{
@@ -131,6 +129,27 @@ angular.module('brainConnectivity')
 							})
 							MatrixProc.push(row);
 						})
+					return MatrixProc;
+		}
+		
+		 $scope.CreateDescription = function(JSONInfo, checkbox){
+				 if($scope.plotData)
+		 		 {		 		 	
+		 		 	console.log("valueCheck" + checkbox);
+		 		 	var matrix = JSONInfo["matrix"];
+		 		 	var MatProcess = [];
+		 		 	//Process matrix 
+		 		 	if(checkbox == "average")
+		 		 	{
+						MatProcess=$scope.AverageMatrix(matrix)
+		 		 	}
+		 		 	else if (checkbox == "max")
+		 		 	{
+		 		 		MatProcess=$scope.MaximumMatrix(matrix)
+		 		 	}
+		 		 	else
+		 		 	{
+		 		 		MatProcess=$scope.MinimumMatrix(matrix)
 		 		 	}
 		 			var seeds = JSONInfo["listOrdered"];
 		 			var matrixDescription = [];
@@ -146,9 +165,9 @@ angular.module('brainConnectivity')
                     	{
                         	if(j != nbseed )
                         	{
-                            	if(MatrixProc[nbseed][j] > "0")
+                            	if(MatProcess[nbseed][j] > "0")
                             	{
-                                	size.push(parseFloat(MatrixProc[nbseed][j]));
+                                	size.push(parseFloat(MatProcess[nbseed][j]));
                                 	imports.push(seeds[j]);
                             	}
                         	}
@@ -350,7 +369,7 @@ angular.module('brainConnectivity')
 		     //console.log(thresholdDefaultValue);
 		     var links = $scope.packageImports(nodes,thresholdDefaultValue);
 		     splines = bundle(links);
-		     console.log("splines" + splines.source);
+		     console.log("splines" + splines.sources);
 		      var size = $scope.sizeMap(nodes,thresholdDefaultValue);
 
 		      var sizeOfLinksRatio = diameter/35;
