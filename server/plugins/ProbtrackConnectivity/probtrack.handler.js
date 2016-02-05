@@ -97,7 +97,7 @@ module.exports = function(server,options)
     handler.getFDTMatrix = function (request, reply)
     {
 
-        var array = ["/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/fdt_network_matrix", "/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/TABLE_AAL.json"];
+        var array = ["/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/fdt_network_matrix", "/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/TABLE_AAL_coord.json"];
 
         Promise.map(array, readFile)
         .then(function(arrayData){
@@ -164,11 +164,12 @@ module.exports = function(server,options)
                 var table_Matrix = [];
                 var listFDT = [];
                 var listVisuOrder = [];
+                var coordList = {};
                 var MaxvisuOrder = 0;
 
                 for(var i=0 ; i < matrix.length ; i++)
                 {
-                  listFDT.push("");
+                  listFDT.push({});
                 }
 
                 for ( var seed in AALObject)
@@ -205,7 +206,13 @@ module.exports = function(server,options)
                   if(visuOrder != "-1")
                   {
                     //console.log("hello");
-                    listVisuOrder[visuOrder-1] = table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
+                    var name = table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
+                    var coordX = table_Matrix[seed]["coord"][0];
+                    var coordY = table_Matrix[seed]["coord"][1];
+                    var coordZ = table_Matrix[seed]["coord"][2];
+                    var seedInfo = {"name" : name,  "x": coordX, "y": coordY, "z": coordZ};
+                    listVisuOrder[visuOrder-1] = seedInfo
+                    //listVisuOrder[visuOrder-1]=table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
                   } 
                   else
                   {
@@ -219,14 +226,14 @@ module.exports = function(server,options)
                 var NewMat = [];
                 matrix_norm.forEach(function(line,i)
                 {
-                var indexLine = listFDT.indexOf(listVisuOrder[i])  //1
+                var indexLine = listFDT.indexOf(listVisuOrder[i]["name"])  //1
                 if(indexLine != -1)
                 {
                   var row=matrix_norm[indexLine];
                   var NewRow =[];
                   row.forEach(function(val,j)
                   {
-                    var indexRow = listFDT.indexOf(listVisuOrder[j]);
+                    var indexRow = listFDT.indexOf(listVisuOrder[j]["name"]);
                     if(indexRow  != -1)
                     {
                       NewRow.push(row[indexRow]);
@@ -240,7 +247,7 @@ module.exports = function(server,options)
             console.log(NewMat.length);
 
             var returnJSONobject = {"matrix" : NewMat, "listOrdered" : listVisuOrder}
-
+            console.log(listVisuOrder);
             reply(returnJSONobject);
         })
         .catch(reply);

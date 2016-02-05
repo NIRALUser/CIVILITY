@@ -160,7 +160,7 @@ angular.module('brainConnectivity')
                 	var sizeMat = seeds.length;
                 	for (var nbseed = 0; nbseed<sizeMat; nbseed++)
                 	{
-                    	var jsonLine = {"name": seeds[nbseed] };
+                    	var jsonLine = {"name": seeds[nbseed]["name"] };
                     	var size = [];
                     	var imports = [];
 
@@ -179,7 +179,7 @@ angular.module('brainConnectivity')
                     	jsonLine.imports = imports;
                     	matrixDescription.push(jsonLine);
                		 }
-               		 
+               		 console.log(matrixDescription);
 		 			return matrixDescription;
 		 		}
 		 }
@@ -252,9 +252,9 @@ angular.module('brainConnectivity')
 		  $scope.Plot = function(){
 
 		  	var method = $scope.selectMethodMatrixProcess();
+		  	console.log(method + "method");
 		    var JSONInfo = $scope.plotData;
 		    var classes = $scope.CreateDescription(JSONInfo,$scope.selectMethodMatrixProcess());
-		    
 		    var thresholdDefaultValue = $scope.plotParameters.threshold;
 		    var diameter = $scope.plotParameters.diameter;
 
@@ -271,12 +271,10 @@ angular.module('brainConnectivity')
 		    var radius = diameter / 2,
 		        innerRadius = radius - 120;
 
-
 		    var cluster = d3.layout.cluster()
 		        .size([360, innerRadius])
 		        .sort(null)
 		        .value(function(d) { return d.size; });
-
 
 		    var bundle = d3.layout.bundle();
 
@@ -320,7 +318,6 @@ angular.module('brainConnectivity')
 		    var y = d3.scale.linear()
 		        .range([height/2, 0])
 		        .domain([thresholdDefaultValue, upperValue]);	     
-		        
 
 		    var svgColorbar = d3.select(".divPlot").append("svg")
 		        .attr("width", 100)
@@ -380,6 +377,7 @@ angular.module('brainConnectivity')
 		      
 		     //console.log(thresholdDefaultValue);
 		     var links = $scope.packageImports(nodes,thresholdDefaultValue);
+		     console.log(links);
 		     splines = bundle(links);
 		     //console.log(splines);
 		      var size = $scope.sizeMap(nodes,thresholdDefaultValue);
@@ -478,8 +476,107 @@ angular.module('brainConnectivity')
 		          }
 		          });
 
-
+				//document.body.style.backgroundImage = "url('data/brainALL.jpg')";
 		      d3.select(self.frameElement).style("height", diameter + "px");  
+
+		      var divBrainPlot = d3.select(".divPlot")
+		      	.append("div")
+		      	.attr("class","divBrain")
+		      	.attr("id","divBrain");
+
+		      var divBrainImg = d3.select(".divBrain")
+		      	.append("div")
+		      	.attr("class","divBrainImg")
+		      	.attr("id","divBrainImg");
+
+		      var divBrainLink = d3.select(".divBrain")
+		      	.append("div")
+		      	.attr("class","divBrainLink")
+		      	.attr("id","divBrainLink");
+
+		      var svgBrain = d3.select(".divBrainLink")
+		      	.append("svg")
+		     	 .attr("width", 400 )
+		         .attr("height", 400);
+		      
+		      var imgBrain = d3.select(".divBrainImg")
+		      .append("img")
+		      .attr("src","data/rsz_brainall.png")
+		      .attr("class","bgimg")
+		      .attr("width", "auto" )
+		      .attr("height", "auto" )
+		      .attr("max-width", 400 )
+		      .attr("max-height", 400 );
+		     // .attr("webkit-transform", "rotate(180deg)");
+		      
+
+		     //   document.getElementById("divBrain").style.backgroundImage="url('data/brainALL.png')";
+		     
+		     var gradientCircle = svgBrain.append("defs")
+		         .append("radialGradient")
+		         .attr("id","blueCircle")
+		         .attr("gradientUnits", "objectBoundingBox")
+		         .attr("fx","30%")
+		         .attr("fy","30%")
+
+		        gradientCircle.append("stop")
+		        .attr("offset","0%")
+		        .attr("stop-color","#FFFFFF");
+
+		        gradientCircle.append("stop")
+		        .attr("offset","40%")
+		        .attr("stop-color","#AA0000");
+
+		        gradientCircle.append("stop")
+		        .attr("offset","100%")
+		        .attr("stop-color","#660000");
+
+		        var maxX = 0;
+		        var maxY = 0;
+		        var maxZ = 0;
+		        var CoordDescription = JSONInfo["listOrdered"];
+		        CoordDescription.forEach(function(d,i){
+		        	var coordX = d["x"]+100;
+
+		        	var coordY = -d["y"];
+		        	coordY = coordY+70
+		        	var coordZ = d["z"]+105;
+		        	
+
+		        	console.log("x" + coordX);
+		        	console.log("y" + coordY);
+		        	svgBrain.append("circle")
+		        		.attr("cx", coordX*1.85)
+		        		.attr("cy", coordY*1.85)
+		        		.attr("r", 4)
+		         	.style("fill", "url(#blueCircle)");
+		         	maxX=maxX+1;
+		        })
+		        console.log("MAX ")
+		        console.log(maxX);
+
+		        // svgBrain.append("circle")
+		        // 		.attr("cx", 25)
+		        // 		.attr("cy", 25)
+		        // 		.attr("r", 10)
+		        //  	.style("fill", "url(#blueCircle)");
+
+		         // var line = [{"x":25,"y":100},{"x":225,"y":300}];
+		         // var linefunction = d3.svg.line()
+		       		// 		 .interpolate("bundle")
+		        	// 		.tension(tensionSplines)
+		        	// 		 // .radius(function(d) { return d.y; })
+		        	// 		 // .angle(function(d) { return d.x / 180 * Math.PI; })
+		         // 		 .x(function(d){return d.x})
+		         // 		.y(function(d){return d.y})
+		       
+
+
+		         // var linegraph = svgBrain.append("path")
+		         // .attr("d",linefunction(line))
+		         // .attr("stroke","red")
+		         // .attr("stroke-width",2)
+		         // .attr("fill","none");
  
 		  }
 
@@ -515,7 +612,6 @@ angular.module('brainConnectivity')
 		          
 		        }
 		  });    
-		     // console.log(size);
 		   return size;
 		}
 
@@ -534,7 +630,6 @@ $scope.packageHierarchy = function (classes) {
     }
     return node;
   }
-  //console.log(classes);
   classes.forEach(function(d) {
     find(d.name, d);
   });
@@ -555,9 +650,8 @@ $scope.packageImports = function (nodes, threshold) {
   // For each import, construct a link from the source to target node.
   nodes.forEach(function(d) {
     if (d.imports) d.imports.forEach(function(i,r) {
-    	//console.log(threshold);
       if(d.size[r]>threshold)  {
-      	imports.push({source: map[d.name], target: map[i]});
+      	imports.push({source: map[d.name], target: map[i["name"]]});
       }
     });
   });

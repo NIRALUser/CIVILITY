@@ -1,3 +1,24 @@
+.divBrain{
+  position: relative;
+}
+
+.divBrainImg, .divBrainLink{
+  position: absolute;
+}
+
+.divBrainLink{
+  margin-left: 15px;
+}
+
+.bgimg {
+    z-index: -1;
+    overflow: hidden;
+    left: 70px;
+    position: relative;
+    display: block;
+}
+
+
 input.boxMin, input.boxMax, input.boxAverage{
   margin-top: -12px;
 }
