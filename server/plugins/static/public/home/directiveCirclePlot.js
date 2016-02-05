@@ -674,6 +674,7 @@ angular.module('brainConnectivity')
 		            var side = d["name"].substring(last+1);
 		            if(side == "L")
 		            {
+		            	nbLeft = nbLeft +1;
 		            	var coordX = d["y"]+140;
 
 		        		var coordY = -d["z"];
@@ -706,6 +707,8 @@ angular.module('brainConnectivity')
 
 
 		        })
+
+				console.log(nbLeft);
 		
 
 	
