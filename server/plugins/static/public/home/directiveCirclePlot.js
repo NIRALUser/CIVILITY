@@ -380,6 +380,7 @@ angular.module('brainConnectivity')
 		     console.log(links);
 		     splines = bundle(links);
 		     //console.log(splines);
+		      
 		      var size = $scope.sizeMap(nodes,thresholdDefaultValue);
 
 		      var sizeOfLinksRatio = diameter/35;
@@ -484,22 +485,37 @@ angular.module('brainConnectivity')
 		      	.attr("class","divBrain")
 		      	.attr("id","divBrain");
 
-		      var divBrainImg = d3.select(".divBrain")
+		      var divBrainALL = d3.select(".divBrain")
 		      	.append("div")
-		      	.attr("class","divBrainImg")
-		      	.attr("id","divBrainImg");
+		      	.attr("class","divBrainALL")
+		      	.attr("id","divBrainALL");
 
-		      var divBrainLink = d3.select(".divBrain")
+		      var divBrainLeft = d3.select(".divBrain")
 		      	.append("div")
-		      	.attr("class","divBrainLink")
-		      	.attr("id","divBrainLink");
+		      	.attr("class","divBrainLeft")
+		      	.attr("id","divBrainLeft");
 
-		      var svgBrain = d3.select(".divBrainLink")
+		      var divBrainRight = d3.select(".divBrain")
+		      	.append("div")
+		      	.attr("class","divBrainRight")
+		      	.attr("id","divBrainRight");
+
+		      var divBrainImgALL = d3.select(".divBrainALL")
+		      	.append("div")
+		      	.attr("class","divBrainImgALL")
+		      	.attr("id","divBrainImgALL");
+
+		      var divBrainLinkALL = d3.select(".divBrainALL")
+		      	.append("div")
+		      	.attr("class","divBrainLinkALL")
+		      	.attr("id","divBrainLinkALL");
+
+		      var svgBrain = d3.select(".divBrainLinkALL")
 		      	.append("svg")
 		     	 .attr("width", 400 )
 		         .attr("height", 400);
 		      
-		      var imgBrain = d3.select(".divBrainImg")
+		      var imgBrain = d3.select(".divBrainImgALL")
 		      .append("img")
 		      .attr("src","data/rsz_brainall.png")
 		      .attr("class","bgimg")
@@ -507,11 +523,7 @@ angular.module('brainConnectivity')
 		      .attr("height", "auto" )
 		      .attr("max-width", 400 )
 		      .attr("max-height", 400 );
-		     // .attr("webkit-transform", "rotate(180deg)");
-		      
-
-		     //   document.getElementById("divBrain").style.backgroundImage="url('data/brainALL.png')";
-		     
+	
 		     var gradientCircle = svgBrain.append("defs")
 		         .append("radialGradient")
 		         .attr("id","blueCircle")
@@ -541,15 +553,12 @@ angular.module('brainConnectivity')
 		        var CoordDescription = JSONInfo["listOrdered"];
 
 		        CoordDescription.forEach(function(d,i){
-		        	var coordX = d["x"]+100;
+		        	var coordX = d["x"]+60;
 
 		        	var coordY = -d["y"];
 		        	coordY = coordY+70
 		        	var coordZ = d["z"]+105;
 		        	
-
-		        	console.log("x" + coordX);
-		        	console.log("y" + coordY);
 		        	svgBrain.append("circle")
 		        		.attr("cx", coordX*multipleScale)
 		        		.attr("cy", coordY*multipleScale)
@@ -572,25 +581,15 @@ angular.module('brainConnectivity')
 		                    .duration(500)    
 		                    .style("opacity", 0); 
 		         	});
-
-					// console.log("x" + coordX*1.85);
-					// console.log("y" +coordY*1.85 );
 		        })
 		       
 				 var linefunction = d3.svg.line()
 		       				 .interpolate("bundle")
 		        			.tension(tensionSplines)
-		        			 // .radius(function(d) { return d.y; })
-		        			 // .angle(function(d) { return d.x / 180 * Math.PI; })
-		         		 .x(function(d){return d.x})
-		         		.y(function(d){return d.y})
+		         		 	.x(function(d){return d.x})
+		         			.y(function(d){return d.y})
 
-		        // svgBrain.append("circle")
-		        // 		.attr("cx", 25)
-		        // 		.attr("cy", 25)
-		        // 		.attr("r", 10)
-		        //  	.style("fill", "url(#blueCircle)");
-		       splines.forEach(function(d){
+		      	splines.forEach(function(d,n){
 		       		var sized = d.length;
 		       		var seedName = d[0].key;
 		       		var targetName = d[sized-1].key;
@@ -602,7 +601,7 @@ angular.module('brainConnectivity')
 		                var KeyName = c["name"].substring(last+1);
 		       			if(KeyName == seedName)
 		       			{
-		       				x1 = c["x"] + 100;
+		       				x1 = c["x"] + 60;
 		       				x1 = x1 * multipleScale;
 		       				
 		       				y1 = - c["y"];
@@ -611,7 +610,7 @@ angular.module('brainConnectivity')
 		       			}
 		       			else if(KeyName == targetName)
 		       			{
-		       				x2 = c["x"] + 100;
+		       				x2 = c["x"] + 60;
 		       				x2 = x2 * multipleScale;
 		       				y2 = - c["y"];
 		       				y2 = y2 + 70;
@@ -621,18 +620,118 @@ angular.module('brainConnectivity')
 		       		})
 
 		       		var line = [{"x":x1,"y":y1},{"x":x2,"y":y2}];
-
+		       		var linkRatioBrain = 10
 		       		var linegraph = svgBrain.append("path")
 		         .attr("d",linefunction(line))
-		         .attr("stroke","red")
-		         .attr("stroke-width",2)
+		         .attr("stroke",  function() { 
+		          			if(size[n] >= upperValue)
+		          			{
+		          				return $scope.colorHSV("max",0,1);
+
+		          			}
+		          			else
+		          			{
+		          				return $scope.colorHSV(size[n],thresholdDefaultValue,upperValue); 	
+		          			}
+		          	})            
+		         .attr("stroke-width",function() { return (size[n]*linkRatioBrain) + "px"; })
 		         .attr("fill","none");
 		          		
 		       })
 		         
 		        //var line = [{"x":113.49,"y":140.01},{"x":95.40,"y":105.94}];
 		        
-		       
+		       var divBrainImgLeft = d3.select(".divBrainLeft")
+		      	.append("div")
+		      	.attr("class","divBrainImgLeft")
+		      	.attr("id","divBrainImgLeft");
+
+		      var divBrainLinkLeft = d3.select(".divBrainLeft")
+		      	.append("div")
+		      	.attr("class","divBrainLinkLeft")
+		      	.attr("id","divBrainLinkLeft");
+
+		      var svgBrain = d3.select(".divBrainLinkLeft")
+		      	.append("svg")
+		     	 .attr("width", 400 )
+		         .attr("height", 400);
+		      
+		      var imgBrain = d3.select(".divBrainImgLeft")
+		      .append("img")
+		      .attr("src","data/rsz_brainleft.jpg")
+		      .attr("class","bgimg")
+		      .attr("width", "auto" )
+		      .attr("height", "auto" )
+		      .attr("max-width", 400 )
+		      .attr("max-height", 400 );
+
+		      multipleScaleLeft = 2.2;
+		      var nbLeft =0;
+		        CoordDescription.forEach(function(d,i){
+
+		        	var name = d["name"];
+		        	var last = d["name"].lastIndexOf("_");
+		            var side = d["name"].substring(last+1);
+		            if(side == "L")
+		            {
+		            	var coordX = d["y"]+140;
+
+		        		var coordY = -d["z"];
+		        		coordY = coordY+100
+		        		var coordZ = d["z"]+105;
+		        	
+		        		svgBrain.append("circle")
+		        			.attr("cx", coordX*multipleScaleLeft)
+		        			.attr("cy", coordY*multipleScaleLeft)
+		        			.attr("r", 4)
+		         			.style("fill", "url(#blueCircle)")
+		         			.on("mouseover", function(e,i) {  
+		         				nodeTooltip.transition()    
+		                    			.duration(200)    
+		                    			.style("opacity", .9);  
+		                		var last = d["name"].lastIndexOf(".");
+		                		var KeyName = d["name"].substring(last+1);
+
+		                		nodeTooltip.html( "Seed : " + KeyName ) 
+		                    	.style("left", (d3.event.pageX) + "px")   
+		                    	.style("top", (d3.event.pageY) + "px");  
+		         				})
+		         			.on("mouseout", function(d) {   
+		         		 	
+		         		 	nodeTooltip.transition()    
+		                    .duration(500)    
+		                    .style("opacity", 0); 
+		         			});
+		            }
+
+
+		        })
+		
+
+	
+		      var divBrainImgRight = d3.select(".divBrainRight")
+		      	.append("div")
+		      	.attr("class","divBrainImgRight")
+		      	.attr("id","divBrainImgRight");
+
+		      var divBrainLinkRight = d3.select(".divBrainRight")
+		      	.append("div")
+		      	.attr("class","divBrainLinkRight")
+		      	.attr("id","divBrainLinkRight");
+
+		      var svgBrain = d3.select(".divBrainLinkRight")
+		      	.append("svg")
+		     	 .attr("width", 400 )
+		         .attr("height", 400);
+		      
+		      var imgBrain = d3.select(".divBrainImgRight")
+		      .append("img")
+		      .attr("src","data/rsz_brainright.jpg")
+		      .attr("class","bgimg")
+		      .attr("width", "auto" )
+		      .attr("height", "auto" )
+		      .attr("max-width", 400 )
+		      .attr("max-height", 400 );
 
 
 		         

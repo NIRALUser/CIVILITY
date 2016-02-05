@@ -1,19 +1,34 @@
 .divBrain{
-  position: relative;
+  text-align: center;
 }
 
-.divBrainImg, .divBrainLink{
+.divBrainALL, .divBrainRight, .divBrainLeft{
+    position: relative;
+}
+
+.divBrainRight{
+  margin-left: 750px;
+}
+
+.divBrainALL{
+  margin-left: 500px;
+}
+
+.divBrainLeft{
+  margin-left: 0px;
+}
+.divBrainImgALL, .divBrainLinkALL, .divBrainImgLeft, .divBrainLinkLeft, .divBrainImgRight, .divBrainLinkRight{
   position: absolute;
 }
 
-.divBrainLink{
+.divBrainLinkALL{
   margin-left: 15px;
 }
 
 .bgimg {
     z-index: -1;
     overflow: hidden;
-    left: 70px;
+    left: 0px;
     position: relative;
     display: block;
 }
@@ -33,7 +48,7 @@ input.boxMin, input.boxMax, input.boxAverage{
 }
 
 .divPlot{
-  
+
   text-align: center;
 }
 
