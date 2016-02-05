@@ -33,6 +33,7 @@ input.boxMin, input.boxMax, input.boxAverage{
 }
 
 .divPlot{
+  
   text-align: center;
 }
 
@@ -136,6 +137,20 @@ div.tooltip {
     border-radius: 8px;			
     pointer-events: none;			
 }
+
+div.nodeTooltip { 
+    position: absolute;     
+    text-align: center;     
+    width: 200px;          
+    height: 20px;         
+    padding: 2px;       
+    font: 12px sans-serif;    
+    background: lightcoral ; 
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;     
+}
+
     
 .link:hover{
         stroke-opacity:1;

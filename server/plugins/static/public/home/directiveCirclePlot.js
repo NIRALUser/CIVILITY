@@ -531,10 +531,15 @@ angular.module('brainConnectivity')
 		        .attr("offset","100%")
 		        .attr("stop-color","#660000");
 
-		        var maxX = 0;
-		        var maxY = 0;
-		        var maxZ = 0;
+		        var nodeTooltip = d3.select("body").append("div") 
+		        .attr("class", "nodeTooltip")
+		        .attr("id", "nodeTooltip")        
+		        .style("opacity", 0);
+
+		        var multipleScale = 1.85;
+		        
 		        var CoordDescription = JSONInfo["listOrdered"];
+
 		        CoordDescription.forEach(function(d,i){
 		        	var coordX = d["x"]+100;
 
@@ -546,37 +551,91 @@ angular.module('brainConnectivity')
 		        	console.log("x" + coordX);
 		        	console.log("y" + coordY);
 		        	svgBrain.append("circle")
-		        		.attr("cx", coordX*1.85)
-		        		.attr("cy", coordY*1.85)
+		        		.attr("cx", coordX*multipleScale)
+		        		.attr("cy", coordY*multipleScale)
 		        		.attr("r", 4)
-		         	.style("fill", "url(#blueCircle)");
-		         	maxX=maxX+1;
+		         	.style("fill", "url(#blueCircle)")
+		         	.on("mouseover", function(e,i) {  
+		         		nodeTooltip.transition()    
+		                    .duration(200)    
+		                    .style("opacity", .9);  
+		                var last = d["name"].lastIndexOf(".");
+		                var KeyName = d["name"].substring(last+1);
+
+		                nodeTooltip.html( "Seed : " + KeyName ) 
+		                    .style("left", (d3.event.pageX) + "px")   
+		                    .style("top", (d3.event.pageY) + "px");  
+		         	})
+		         	.on("mouseout", function(d) {   
+		         		 	
+		         		 	nodeTooltip.transition()    
+		                    .duration(500)    
+		                    .style("opacity", 0); 
+		         	});
+
+					// console.log("x" + coordX*1.85);
+					// console.log("y" +coordY*1.85 );
 		        })
-		        console.log("MAX ")
-		        console.log(maxX);
+		       
+				 var linefunction = d3.svg.line()
+		       				 .interpolate("bundle")
+		        			.tension(tensionSplines)
+		        			 // .radius(function(d) { return d.y; })
+		        			 // .angle(function(d) { return d.x / 180 * Math.PI; })
+		         		 .x(function(d){return d.x})
+		         		.y(function(d){return d.y})
 
 		        // svgBrain.append("circle")
 		        // 		.attr("cx", 25)
 		        // 		.attr("cy", 25)
 		        // 		.attr("r", 10)
 		        //  	.style("fill", "url(#blueCircle)");
+		       splines.forEach(function(d){
+		       		var sized = d.length;
+		       		var seedName = d[0].key;
+		       		var targetName = d[sized-1].key;
+		       		var x1,x2,y1,y2;
 
-		         // var line = [{"x":25,"y":100},{"x":225,"y":300}];
-		         // var linefunction = d3.svg.line()
-		       		// 		 .interpolate("bundle")
-		        	// 		.tension(tensionSplines)
-		        	// 		 // .radius(function(d) { return d.y; })
-		        	// 		 // .angle(function(d) { return d.x / 180 * Math.PI; })
-		         // 		 .x(function(d){return d.x})
-		         // 		.y(function(d){return d.y})
+		       		CoordDescription.forEach(function(c,i){
+
+		       			var last = c["name"].lastIndexOf(".");
+		                var KeyName = c["name"].substring(last+1);
+		       			if(KeyName == seedName)
+		       			{
+		       				x1 = c["x"] + 100;
+		       				x1 = x1 * multipleScale;
+		       				
+		       				y1 = - c["y"];
+		       				y1 = y1 + 70;
+		       			 	y1 = y1 * multipleScale;
+		       			}
+		       			else if(KeyName == targetName)
+		       			{
+		       				x2 = c["x"] + 100;
+		       				x2 = x2 * multipleScale;
+		       				y2 = - c["y"];
+		       				y2 = y2 + 70;
+		       			 	y2 = y2  * multipleScale;
+		       			}
+		       			
+		       		})
+
+		       		var line = [{"x":x1,"y":y1},{"x":x2,"y":y2}];
+
+		       		var linegraph = svgBrain.append("path")
+		         .attr("d",linefunction(line))
+		         .attr("stroke","red")
+		         .attr("stroke-width",2)
+		         .attr("fill","none");
+		          		
+		       })
+		         
+		        //var line = [{"x":113.49,"y":140.01},{"x":95.40,"y":105.94}];
+		        
 		       
 
 
-		         // var linegraph = svgBrain.append("path")
-		         // .attr("d",linefunction(line))
-		         // .attr("stroke","red")
-		         // .attr("stroke-width",2)
-		         // .attr("fill","none");
+		         
  
 		  }
 
