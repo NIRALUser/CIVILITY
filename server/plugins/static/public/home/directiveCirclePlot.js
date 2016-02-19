@@ -480,264 +480,424 @@ angular.module('brainConnectivity')
 				//document.body.style.backgroundImage = "url('data/brainALL.jpg')";
 		      d3.select(self.frameElement).style("height", diameter + "px");  
 
-		      var divBrainPlot = d3.select(".divPlot")
-		      	.append("div")
-		      	.attr("class","divBrain")
-		      	.attr("id","divBrain");
+		      if(JSONInfo.listOrdered[1].x != undefined)  //should be improve
+		     {
+		     	var divBrainPlot = d3.select(".divPlot")
+		     	.append("div")
+		     	.attr("class","divBrain")
+		     	.attr("id","divBrain");
 
-		      var divBrainALL = d3.select(".divBrain")
-		      	.append("div")
-		      	.attr("class","divBrainALL")
-		      	.attr("id","divBrainALL");
+		     var divBrainALL = d3.select(".divBrain")
+		     	.append("div")
+		     	.attr("class","divBrainALL")
+		     	.attr("id","divBrainALL");
 
-		      var divBrainLeft = d3.select(".divBrain")
-		      	.append("div")
-		      	.attr("class","divBrainLeft")
-		      	.attr("id","divBrainLeft");
+		     var divBrainLeft = d3.select(".divBrain")
+		     	.append("div")
+		     	.attr("class","divBrainLeft")
+		     	.attr("id","divBrainLeft");
 
-		      var divBrainRight = d3.select(".divBrain")
-		      	.append("div")
-		      	.attr("class","divBrainRight")
-		      	.attr("id","divBrainRight");
+		     var divBrainRight = d3.select(".divBrain")
+		     	.append("div")
+		     	.attr("class","divBrainRight")
+		     	.attr("id","divBrainRight");
 
-		      var divBrainImgALL = d3.select(".divBrainALL")
-		      	.append("div")
-		      	.attr("class","divBrainImgALL")
-		      	.attr("id","divBrainImgALL");
+		     var divBrainImgALL = d3.select(".divBrainALL")
+		     	.append("div")
+		     	.attr("class","divBrainImgALL")
+		     	.attr("id","divBrainImgALL");
 
-		      var divBrainLinkALL = d3.select(".divBrainALL")
-		      	.append("div")
-		      	.attr("class","divBrainLinkALL")
-		      	.attr("id","divBrainLinkALL");
+		     var divBrainLinkALL = d3.select(".divBrainALL")
+		     	.append("div")
+		     	.attr("class","divBrainLinkALL")
+		     	.attr("id","divBrainLinkALL");
 
-		      var svgBrain = d3.select(".divBrainLinkALL")
-		      	.append("svg")
-		     	 .attr("width", 400 )
-		         .attr("height", 400);
-		      
-		      var imgBrain = d3.select(".divBrainImgALL")
-		      .append("img")
-		      .attr("src","data/rsz_brainall.png")
-		      .attr("class","bgimg")
-		      .attr("width", "auto" )
-		      .attr("height", "auto" )
-		      .attr("max-width", 400 )
-		      .attr("max-height", 400 );
+		     var svgBrain = d3.select(".divBrainLinkALL")
+		     	.append("svg")
+		    	.attr("width", 300 )
+		        .attr("height", 350);
+		     
+		     var imgBrain = d3.select(".divBrainImgALL")
+		     .append("img")
+		     .attr("src","data/rsz_brainall.png")
+		     .attr("class","bgimg")
+		     .attr("width", "auto" )
+		     .attr("height", "auto" )
+		     .attr("max-width", 400 )
+		     .attr("max-height", 400 );
 	
-		     var gradientCircle = svgBrain.append("defs")
-		         .append("radialGradient")
-		         .attr("id","blueCircle")
-		         .attr("gradientUnits", "objectBoundingBox")
-		         .attr("fx","30%")
-		         .attr("fy","30%")
+		    var gradientCircle = svgBrain.append("defs")
+		        .append("radialGradient")
+		        .attr("id","blueCircle")
+		        .attr("gradientUnits", "objectBoundingBox")
+		        .attr("fx","30%")
+		        .attr("fy","30%")
 
-		        gradientCircle.append("stop")
-		        .attr("offset","0%")
-		        .attr("stop-color","#FFFFFF");
+		       gradientCircle.append("stop")
+		       .attr("offset","0%")
+		       .attr("stop-color","#FFFFFF");
 
-		        gradientCircle.append("stop")
-		        .attr("offset","40%")
-		        .attr("stop-color","#AA0000");
+		       gradientCircle.append("stop")
+		       .attr("offset","40%")
+		       .attr("stop-color","#AA0000");
 
-		        gradientCircle.append("stop")
-		        .attr("offset","100%")
-		        .attr("stop-color","#660000");
+		       gradientCircle.append("stop")
+		       .attr("offset","100%")
+		       .attr("stop-color","#660000");
 
-		        var nodeTooltip = d3.select("body").append("div") 
-		        .attr("class", "nodeTooltip")
-		        .attr("id", "nodeTooltip")        
-		        .style("opacity", 0);
+		       var nodeTooltip = d3.select("body").append("div") 
+		       .attr("class", "nodeTooltip")
+		       .attr("id", "nodeTooltip")        
+		       .style("opacity", 0);
 
-		        var multipleScale = 1.85;
-		        
-		        var CoordDescription = JSONInfo["listOrdered"];
-
-		        CoordDescription.forEach(function(d,i){
-		        	var coordX = d["x"]+60;
-
-		        	var coordY = -d["y"];
-		        	coordY = coordY+70
-		        	var coordZ = d["z"]+105;
-		        	
-		        	svgBrain.append("circle")
-		        		.attr("cx", coordX*multipleScale)
-		        		.attr("cy", coordY*multipleScale)
-		        		.attr("r", 4)
-		         	.style("fill", "url(#blueCircle)")
-		         	.on("mouseover", function(e,i) {  
-		         		nodeTooltip.transition()    
-		                    .duration(200)    
-		                    .style("opacity", .9);  
-		                var last = d["name"].lastIndexOf(".");
-		                var KeyName = d["name"].substring(last+1);
-
-		                nodeTooltip.html( "Seed : " + KeyName ) 
-		                    .style("left", (d3.event.pageX) + "px")   
-		                    .style("top", (d3.event.pageY) + "px");  
-		         	})
-		         	.on("mouseout", function(d) {   
-		         		 	
-		         		 	nodeTooltip.transition()    
-		                    .duration(500)    
-		                    .style("opacity", 0); 
-		         	});
-		        })
+		       var multipleScale = 1.85;
 		       
-				 var linefunction = d3.svg.line()
-		       				 .interpolate("bundle")
-		        			.tension(tensionSplines)
-		         		 	.x(function(d){return d.x})
-		         			.y(function(d){return d.y})
+		       var CoordDescription = JSONInfo["listOrdered"];
 
-		      	splines.forEach(function(d,n){
-		       		var sized = d.length;
-		       		var seedName = d[0].key;
-		       		var targetName = d[sized-1].key;
-		       		var x1,x2,y1,y2;
+		       CoordDescription.forEach(function(d,i){
+		       	var coordX = d["x"]+60;
 
-		       		CoordDescription.forEach(function(c,i){
+		       	var coordY = -d["y"];
+		       	coordY = coordY+70;
+		       	
+		       	svgBrain.append("circle")
+		       		.attr("cx", coordX*multipleScale)
+		       		.attr("cy", coordY*multipleScale)
+		       		.attr("r", 4)
+		        	.style("fill", "url(#blueCircle)")
+		        	.on("mouseover", function(e,i) {  
+		        		nodeTooltip.transition()    
+		                   .duration(200)    
+		                   .style("opacity", .9);  
+		               var last = d["name"].lastIndexOf(".");
+		               var KeyName = d["name"].substring(last+1);
 
-		       			var last = c["name"].lastIndexOf(".");
-		                var KeyName = c["name"].substring(last+1);
-		       			if(KeyName == seedName)
-		       			{
-		       				x1 = c["x"] + 60;
-		       				x1 = x1 * multipleScale;
-		       				
-		       				y1 = - c["y"];
-		       				y1 = y1 + 70;
-		       			 	y1 = y1 * multipleScale;
-		       			}
-		       			else if(KeyName == targetName)
-		       			{
-		       				x2 = c["x"] + 60;
-		       				x2 = x2 * multipleScale;
-		       				y2 = - c["y"];
-		       				y2 = y2 + 70;
-		       			 	y2 = y2  * multipleScale;
-		       			}
-		       			
-		       		})
-
-		       		var line = [{"x":x1,"y":y1},{"x":x2,"y":y2}];
-		       		var linkRatioBrain = 10
-		       		var linegraph = svgBrain.append("path")
-		         .attr("d",linefunction(line))
-		         .attr("stroke",  function() { 
-		          			if(size[n] >= upperValue)
-		          			{
-		          				return $scope.colorHSV("max",0,1);
-
-		          			}
-		          			else
-		          			{
-		          				return $scope.colorHSV(size[n],thresholdDefaultValue,upperValue); 	
-		          			}
-		          	})            
-		         .attr("stroke-width",function() { return (size[n]*linkRatioBrain) + "px"; })
-		         .attr("fill","none");
-		          		
+		               nodeTooltip.html( "Seed : " + KeyName ) 
+		                   .style("left", (d3.event.pageX) + "px")   
+		                   .style("top", (d3.event.pageY) + "px");  
+		        	})
+		        	.on("mouseout", function(d) {   
+		        			
+		        			nodeTooltip.transition()    
+		                   .duration(500)    
+		                   .style("opacity", 0); 
+		        	});
 		       })
-		         
-		        //var line = [{"x":113.49,"y":140.01},{"x":95.40,"y":105.94}];
+		      
+				var linefunction = d3.svg.line()
+		      				.interpolate("bundle")
+		       			.tension(tensionSplines)
+		        			.x(function(d){return d.x})
+		        			.y(function(d){return d.y})
+
+		     	splines.forEach(function(d,n){
+		      		var sized = d.length;
+		      		var seedName = d[0].key;
+		      		var targetName = d[sized-1].key;
+		      		var x1,x2,y1,y2;
+
+		      		CoordDescription.forEach(function(c,i){
+
+		      			var last = c["name"].lastIndexOf(".");
+		               var KeyName = c["name"].substring(last+1);
+		      			if(KeyName == seedName)
+		      			{
+		      				x1 = c["x"] + 60;
+		      				x1 = x1 * multipleScale;
+		      				
+		      				y1 = - c["y"];
+		      				y1 = y1 + 70;
+		      				y1 = y1 * multipleScale;
+		      			}
+		      			else if(KeyName == targetName)
+		      			{
+		      				x2 = c["x"] + 60;
+		      				x2 = x2 * multipleScale;
+		      				y2 = - c["y"];
+		      				y2 = y2 + 70;
+		      				y2 = y2  * multipleScale;
+		      			}
+		      			
+		      		})
+
+		      		var line = [{"x":x1,"y":y1},{"x":x2,"y":y2}];
+		      		var linkRatioBrain = 10
+		      		var linegraph = svgBrain.append("path")
+		        .attr("d",linefunction(line))
+		        .attr("stroke",  function() { 
+		         			if(size[n] >= upperValue)
+		         			{
+		         				return $scope.colorHSV("max",0,1);
+
+		         			}
+		         			else
+		         			{
+		         				return $scope.colorHSV(size[n],thresholdDefaultValue,upperValue); 	
+		         			}
+		         	})            
+		        .attr("stroke-width",function() { return (size[n]*linkRatioBrain) + "px"; })
+		        .attr("fill","none");
+		         		
+		      })
 		        
-		       var divBrainImgLeft = d3.select(".divBrainLeft")
-		      	.append("div")
-		      	.attr("class","divBrainImgLeft")
-		      	.attr("id","divBrainImgLeft");
+		       //var line = [{"x":113.49,"y":140.01},{"x":95.40,"y":105.94}];
+		       
+		      var divBrainImgLeft = d3.select(".divBrainLeft")
+		     	.append("div")
+		     	.attr("class","divBrainImgLeft")
+		     	.attr("id","divBrainImgLeft");
 
-		      var divBrainLinkLeft = d3.select(".divBrainLeft")
-		      	.append("div")
-		      	.attr("class","divBrainLinkLeft")
-		      	.attr("id","divBrainLinkLeft");
+		     var divBrainLinkLeft = d3.select(".divBrainLeft")
+		     	.append("div")
+		     	.attr("class","divBrainLinkLeft")
+		     	.attr("id","divBrainLinkLeft");
 
-		      var svgBrain = d3.select(".divBrainLinkLeft")
-		      	.append("svg")
-		     	 .attr("width", 400 )
-		         .attr("height", 400);
-		      
-		      var imgBrain = d3.select(".divBrainImgLeft")
-		      .append("img")
-		      .attr("src","data/rsz_brainleft.jpg")
-		      .attr("class","bgimg")
-		      .attr("width", "auto" )
-		      .attr("height", "auto" )
-		      .attr("max-width", 400 )
-		      .attr("max-height", 400 );
+		     var svgBrainLeft = d3.select(".divBrainLinkLeft")
+		     	.append("svg")
+		    	.attr("width", 450 )
+		        .attr("height", 350);
+		     
+		     var imgBrainLeft = d3.select(".divBrainImgLeft")
+		     .append("img")
+		     .attr("src","data/rsz_brainleft.jpg")
+		     .attr("class","bgimg")
+		     .attr("width", "auto" )
+		     .attr("height", "auto" )
+		     .attr("max-width", 400 )
+		     .attr("max-height", 400 );
 
-		      multipleScaleLeft = 2.2;
-		      var nbLeft =0;
-		        CoordDescription.forEach(function(d,i){
+		     var multipleScaleLeft = 2.4;
+		     var nbLeft =0;
+		       CoordDescription.forEach(function(d,i){
 
-		        	var name = d["name"];
-		        	var last = d["name"].lastIndexOf("_");
-		            var side = d["name"].substring(last+1);
-		            if(side == "L")
-		            {
-		            	nbLeft = nbLeft +1;
-		            	var coordX = d["y"]+140;
+		       	var name = d["name"];
+		       	var last = d["name"].lastIndexOf("_");
+		           var side = d["name"].substring(last+1);
+		           if(side == "L")
+		           {
+		           	nbLeft = nbLeft +1;
+		           	var coordY = - d["y"];
+		           	var coordY = coordY +90;
 
-		        		var coordY = -d["z"];
-		        		coordY = coordY+100
-		        		var coordZ = d["z"]+105;
-		        	
-		        		svgBrain.append("circle")
-		        			.attr("cx", coordX*multipleScaleLeft)
-		        			.attr("cy", coordY*multipleScaleLeft)
-		        			.attr("r", 4)
-		         			.style("fill", "url(#blueCircle)")
-		         			.on("mouseover", function(e,i) {  
-		         				nodeTooltip.transition()    
-		                    			.duration(200)    
-		                    			.style("opacity", .9);  
-		                		var last = d["name"].lastIndexOf(".");
-		                		var KeyName = d["name"].substring(last+1);
+		       		var coordZ = - d["z"];
+		       		coordZ = coordZ+90
+		       	
+		       		svgBrainLeft.append("circle")
+		       			.attr("cx", coordY*multipleScaleLeft)
+		       			.attr("cy", coordZ*multipleScaleLeft)
+		       			.attr("r", 4)
+		        			.style("fill", "url(#blueCircle)")
+		        			.on("mouseover", function(e,i) {  
+		        				nodeTooltip.transition()    
+		                   			.duration(200)    
+		                   			.style("opacity", .9);  
+		               		var last = d["name"].lastIndexOf(".");
+		               		var KeyName = d["name"].substring(last+1);
 
-		                		nodeTooltip.html( "Seed : " + KeyName ) 
-		                    	.style("left", (d3.event.pageX) + "px")   
-		                    	.style("top", (d3.event.pageY) + "px");  
-		         				})
-		         			.on("mouseout", function(d) {   
-		         		 	
-		         		 	nodeTooltip.transition()    
-		                    .duration(500)    
-		                    .style("opacity", 0); 
-		         			});
-		            }
+		               		nodeTooltip.html( "Seed : " + KeyName ) 
+		                   	.style("left", (d3.event.pageX) + "px")   
+		                   	.style("top", (d3.event.pageY) + "px");  
+		        				})
+		        			.on("mouseout", function(d) {   
+		        			
+		        			nodeTooltip.transition()    
+		                   .duration(500)    
+		                   .style("opacity", 0); 
+		        			});
+		           }
+		       })
+
+				splines.forEach(function(d,n){
+		      		var sized = d.length;
+		      		var seedName = d[0].key;
+		      		var targetName = d[sized-1].key;
+		      		var y1,y2,z1,z2;
+
+		       	var last1 = seedName.lastIndexOf("_");
+		       	var End1 = seedName.substring(last1+1);
+		       	var last2 = targetName.lastIndexOf("_");
+		       	var End2 = targetName.substring(last2+1);
+		      		if( End1 == "L" && End2 == "L" )
+		      		{
+		      			CoordDescription.forEach(function(c,i){
+
+		      			var last = c["name"].lastIndexOf(".");
+		               var KeyName = c["name"].substring(last+1);
 
 
-		        })
-
-				console.log(nbLeft);
-		
-
+		      			if(KeyName == seedName)
+		      			{
+		      				y1 =  -c["y"] 
+		      				y1 = y1 + 90;
+		      				y1 = y1 * multipleScaleLeft;
+		      				
+		      				z1 = -c["z"];
+		      				z1 = z1 + 90;
+		      				z1 = z1 * multipleScaleLeft;
+		      			}
+		      			else if(KeyName == targetName)
+		      			{
+		      				y2 = -c["y"]
+		      				y2 = y2 + 90;
+		      				y2 = y2 * multipleScaleLeft;
+		      				
+		      				z2 = -c["z"];
+		      				z2 = z2 + 90;
+		      				z2 = z2  * multipleScaleLeft;
+		      			}
+		      			
+		      		})    				      		
+		      		var line = [{"x":y1,"y":z1},{"x":y2,"y":z2}];
+		      		var linkRatioBrain = 10
+		      		var linegraph = svgBrainLeft.append("path")
+		        			.attr("d",linefunction(line))
+		        			.attr("stroke",  function() { 
+		         				if(size[n] >= upperValue)
+		         				{
+		         					return $scope.colorHSV("max",0,1);
+		         				}
+		         				else
+		         				{
+		         					return $scope.colorHSV(size[n],thresholdDefaultValue,upperValue); 	
+		         				}
+		         			})            
+		        			.attr("stroke-width",function() { return (size[n]*linkRatioBrain) + "px"; })
+		        			.attr("fill","none");
+		        				} 		
+		      	})
 	
-		      var divBrainImgRight = d3.select(".divBrainRight")
-		      	.append("div")
-		      	.attr("class","divBrainImgRight")
-		      	.attr("id","divBrainImgRight");
+		     var divBrainImgRight = d3.select(".divBrainRight")
+		     	.append("div")
+		     	.attr("class","divBrainImgRight")
+		     	.attr("id","divBrainImgRight");
 
-		      var divBrainLinkRight = d3.select(".divBrainRight")
-		      	.append("div")
-		      	.attr("class","divBrainLinkRight")
-		      	.attr("id","divBrainLinkRight");
+		     var divBrainLinkRight = d3.select(".divBrainRight")
+		     	.append("div")
+		     	.attr("class","divBrainLinkRight")
+		     	.attr("id","divBrainLinkRight");
 
-		      var svgBrain = d3.select(".divBrainLinkRight")
-		      	.append("svg")
-		     	 .attr("width", 400 )
-		         .attr("height", 400);
-		      
-		      var imgBrain = d3.select(".divBrainImgRight")
-		      .append("img")
-		      .attr("src","data/rsz_brainright.jpg")
-		      .attr("class","bgimg")
-		      .attr("width", "auto" )
-		      .attr("height", "auto" )
-		      .attr("max-width", 400 )
-		      .attr("max-height", 400 );
+		     var svgBrainRight = d3.select(".divBrainLinkRight")
+		     	.append("svg")
+		    	.attr("width", 450 )
+		        .attr("height", 350);
+		     
+		     var imgBrainRight = d3.select(".divBrainImgRight")
+		     .append("img")
+		     .attr("src","data/rsz_brainright.jpg")
+		     .attr("class","bgimg")
+		     .attr("width", "auto" )
+		     .attr("height", "auto" )
+		     .attr("max-width", 400 )
+		     .attr("max-height", 400 );
 
 
-		         
+		     var multipleScaleRight = 2.4;
+		     var nbRight=0;
+		       CoordDescription.forEach(function(d,i){
+
+		       	var name = d["name"];
+		       	var last = d["name"].lastIndexOf("_");
+		           var side = d["name"].substring(last+1);
+		           if(side == "R")
+		           {
+		           	nbRight = nbRight +1;
+		           	var coordY = d["y"];
+		           	var coordY = coordY +125;
+
+		       		var coordZ = - d["z"];
+		       		coordZ = coordZ+92
+		       			       	
+		       		svgBrainRight.append("circle")
+		       			.attr("cx", coordY*multipleScaleRight)
+		       			.attr("cy", coordZ*multipleScaleRight)
+		       			.attr("r", 4)
+		        			.style("fill", "url(#blueCircle)")
+		        			.on("mouseover", function(e,i) {  
+		        				nodeTooltip.transition()    
+		                   			.duration(200)    
+		                   			.style("opacity", .9);  
+		               		var last = d["name"].lastIndexOf(".");
+		               		var KeyName = d["name"].substring(last+1);
+
+		               		nodeTooltip.html( "Seed : " + KeyName ) 
+		                   	.style("left", (d3.event.pageX) + "px")   
+		                   	.style("top", (d3.event.pageY) + "px");  
+		        				})
+		        			.on("mouseout", function(d) {   
+		        			
+		        			nodeTooltip.transition()    
+		                   .duration(500)    
+		                   .style("opacity", 0); 
+		        			});
+		           }
+
+
+		       })
+
+				splines.forEach(function(d,n){
+		      		var sized = d.length;
+		      		var seedName = d[0].key;
+		      		var targetName = d[sized-1].key;
+		      		var y1,y2,z1,z2;
+
+		       	var last1 = seedName.lastIndexOf("_");
+		       	var End1 = seedName.substring(last1+1);
+		       	var last2 = targetName.lastIndexOf("_");
+		       	var End2 = targetName.substring(last2+1);
+		      		if( End1 == "R" && End2 == "R" )
+		      		{
+		      			CoordDescription.forEach(function(c,i){
+
+		      			var last = c["name"].lastIndexOf(".");
+		               var KeyName = c["name"].substring(last+1);
+
+
+		      			if(KeyName == seedName)
+		      			{
+		      				y1 =  c["y"] 
+		      				y1 = y1 + 125;
+		      				y1 = y1 * multipleScaleLeft;
+		      				
+		      				z1 = -c["z"];
+		      				z1 = z1 + 92;
+		      				z1 = z1 * multipleScaleLeft;
+		      			}
+		      			else if(KeyName == targetName)
+		      			{
+		      				y2 = c["y"]
+		      				y2 = y2 + 125;
+		      				y2 = y2 * multipleScaleLeft;
+		      				
+		      				z2 = -c["z"];
+		      				z2 = z2 + 92;
+		      				z2 = z2  * multipleScaleLeft;
+		      			}
+		      			
+		      		})
+
+		      				      		
+
+		      		var line = [{"x":y1,"y":z1},{"x":y2,"y":z2}];
+		      		var linkRatioBrain = 10
+		      		var linegraph = svgBrainRight.append("path")
+		        .attr("d",linefunction(line))
+		        .attr("stroke",  function() { 
+		         			if(size[n] >= upperValue)
+		         			{
+		         				return $scope.colorHSV("max",0,1);
+		         			}
+		         			else
+		         			{
+		         				return $scope.colorHSV(size[n],thresholdDefaultValue,upperValue); 	
+		         			}
+		         	})            
+		        .attr("stroke-width",function() { return (size[n]*linkRatioBrain) + "px"; })
+		        .attr("fill","none");
+		        	} 		
+		      })
+		     }
+
+		     
  
 		  }
 
