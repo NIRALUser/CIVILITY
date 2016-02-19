@@ -17,6 +17,7 @@
     "good-console": "^4.1.0",
     "hapi": "^8.1.0",
     "jsonfile": "^2.2.3",
+    "nodemon": "^1.8.1",
     "papaparse": "^4.1.2"
   }
 }
