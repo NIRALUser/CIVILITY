@@ -1,6 +1,7 @@
 .case1 , .case2{
   font-style: italic;
   margin : 5% auto;
+  font-size: 15px;
 }
 
 .homeHEAD{
@@ -104,7 +105,7 @@ input.boxMin, input.boxMax, input.boxAverage{
 }
 
 .buttons{
-  margin: 5% auto; 
+  margin: 15px auto; 
   font-size: 15px;
 }
 div.TensionText {
@@ -248,4 +249,18 @@ body {
 .axis path,
 .grid path {
   display: none;
+}
+
+.buttonHome {
+  font: 20px sans-serif;
+  text-decoration: none;
+  background-color: #286090;
+  color: #ffffff;
+  padding: 9px;
+  border-radius: 5px;
+}
+
+.nav > li > a:focus
+{
+  background-color: #0000ff;
 }
