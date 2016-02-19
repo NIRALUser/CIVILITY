@@ -1,3 +1,18 @@
+.case1 , .case2{
+  font-style: italic;
+  margin : 5% auto;
+}
+
+.homeHEAD{
+  border-style: solid;
+  border-color: #286090;
+  border-width: 3px;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-top:  10px;
+}
+
+
 .divBrain{
   text-align: center;
 }
@@ -89,7 +104,7 @@ input.boxMin, input.boxMax, input.boxAverage{
 }
 
 .buttons{
-  margin-left: 1%; 
+  margin: 5% auto; 
   font-size: 15px;
 }
 div.TensionText {
@@ -102,7 +117,7 @@ div.TensionText {
 
 #title{
   font-size: 22px;
-  color: #0066FF;
+  color: #286090;
   text-align: center;
   font-family: sans-serif;
   font-weight: bold;
@@ -124,11 +139,15 @@ div.TensionText {
 }
 
 .btn{
-  margin: auto;
+  margin: 15px auto;
 }
 
 .active {
    background-color: #ff0000;
+ }
+
+ a{
+  font-size: 12px;
  }
 
 .node {

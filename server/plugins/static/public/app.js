@@ -9,6 +9,12 @@ config(['$routeProvider', function($routeProvider) {
   .when('/home', {
     templateUrl: 'home/home.html'
   })
+  .when('/tracto', {
+    templateUrl: 'home/tracto.html'
+  })
+  .when('/visualisation', {
+    templateUrl: 'home/visualisation.html'
+  })
   .when('/createJSON', {
     templateUrl: 'home/createJSON.html'
   })
