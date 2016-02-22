@@ -25,4 +25,6 @@ angular.module('brainConnectivity')
     }).catch(console.error);
 
   }
+
+
 }]);

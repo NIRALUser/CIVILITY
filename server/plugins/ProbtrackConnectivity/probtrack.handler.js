@@ -97,8 +97,8 @@ module.exports = function(server,options)
     handler.getFDTMatrix = function (request, reply)
     {
 
-        var array = ["/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/fdt_network_matrix", "/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/TABLE_AAL_coord.json"];
-        var array = ["/work/danaele/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/fdt_network_matrix_average", "/work/danaele/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/TABLE_AAL.json"];
+        var array = ["/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/fdt_network_matrix", "/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/TABLE_AAL.json"];
+       // var array = ["/work/danaele/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/fdt_network_matrix_average", "/work/danaele/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/TABLE_AAL.json"];
 
         Promise.map(array, readFile)
         .then(function(arrayData){
