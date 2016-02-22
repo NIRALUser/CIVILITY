@@ -119,7 +119,6 @@ angular.module('brainConnectivity')
          job.parameters.push(param);
       }
 
-
       job.type = "job"; 
       job.userEmail = "danaele@email.unc.edu";
       job.executionserver =  "testserver";
