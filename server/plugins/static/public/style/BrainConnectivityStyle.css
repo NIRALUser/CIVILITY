@@ -1,6 +1,5 @@
 .case1 , .case2{
   font-style: italic;
-  margin : 5% auto;
   font-size: 15px;
 }
 
@@ -8,9 +7,7 @@
   border-style: solid;
   border-color: #286090;
   border-width: 3px;
-  margin-left: 15%;
-  margin-right: 15%;
-  margin-top:  10px;
+
 }
 
 
@@ -105,8 +102,10 @@ input.boxMin, input.boxMax, input.boxAverage{
 }
 
 .buttons{
-  margin: 15px auto; 
   font-size: 15px;
+  margin: 1% 5% 1% 5%;
+  padding: 2% 2% 2% 2%;
+  background-color :  #e6f9ff;
 }
 div.TensionText {
     height:10px;
@@ -263,4 +262,16 @@ body {
 .nav > li > a:focus
 {
   background-color: #0000ff;
+}
+
+.tractoForm{
+margin: 2% 5% 2% 5%;
+padding: 2% 2% 2% 2%;
+background-color :  #e6f9ff;
+color : #286090;
+font : 13px sans-serif;
+}
+
+h4, h5{
+  text-decoration: underline;
 }
