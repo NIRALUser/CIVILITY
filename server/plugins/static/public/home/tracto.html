@@ -5,49 +5,55 @@
 <h3 id="title">Tractography with FSL tool : probtrackx2</h3> 
 
 <div class="tractoForm">
-<h4> Subject id  :</h4>	<input type="text" name="subjectID"><br>
 
+<label>Subject id:
+    <input type="text" name="input" ng-model="subjectID.id"
+           required ng-trim="false">
+</label>
 
 <h4> Load data :</h4>
 
-DWI Image : <br>
+DWI Image :<input type = "file" file-model="myFile"/><br>
 
-DTI image : <br>
+DTI image :<input type = "file" file-model="myFile"/> <br>
 
-Nodif brain mask : <br>
+Nodif brain mask :<input type = "file" file-model="myFile1"/> <br>
 
-Table description (JSON file): <br>
+Table description (JSON file):<input type = "file" file-model="myFile"/> <br>
 
-Inner surface : <br>
+Inner surface :<input type = "file" file-model = "myFile"/> <br>
 
-Contained color label  : <input type="checkbox" name="color" value="color" checked/>
-
-<div> if Inner surface not contained label color :
-
-Surface corresponding with label color :
+Surface contains color labels 
+ <input type="checkbox" name="colorExist" value="colorExist" ng-model="checkedSurfaceColored" ng-init="checkedSurfaceColored=true" /><br/>
+<span ng-if="!checkedSurfaceColored">
+<div> 
+Surface corresponding with label color :<input type = "file" file-model = "myFile"/> <br>
 
 </div>
-
-Labelset name in vtk file : <input type="text" name="labelSetname"><br>
-
-Ignore label  <input type="checkbox" name="color" value="color" checked/>
-<div> <input type="text" name="labelIgnore"><br> </div>
+</span>
 
 
 
+Labelset name in vtk file :  <input type="text" name="input" ng-model="labelset.name"
+           required ng-trim="false"><br>
 
+Ignore label  <input type="checkbox" name="ignore" value="ignore" ng-model="checkedIgnoreLabel" ng-init="checkedIgnoreLabel=false" /><br/>
+<span ng-if="checkedIgnoreLabel">
+<div> <input type="text" name="input" ng-model="labelNameIgnore.name"
+           required ng-trim="false"><br> </div>
+</span>
 
 
 <h5> Extract Label Surface options : </h5>
 Overlapping
-<input type="checkbox" name="overlapping" value="overlapping"/>
+<input type="checkbox" name="overlapping" value="overlapping" ng-model="overlapping" ng-init="overlapping=true"  />
 
 <h5> Tractography / Probtrackx2 options : </h5>
 
 Loopcheck
-<input type="checkbox" name="loopcheck" value="loopcheck"/>
+<input type="checkbox" name="loopcheck" value="loopcheck" ng-model="loopcheck" ng-init="loopcheck=true" />
 
-<button type="button" class="btn btn-default btn-lg center-block">
+<button type="button" class="btn btn-default btn-lg center-block" ng-click="paramSubmitJob()">
 Start tractography
 </button>
 
