@@ -13,6 +13,8 @@ angular.module('brainConnectivity')
 		$scope.plotParameters.link1 = "";
 		$scope.plotParameters.link2 = "";
 
+		$scope.plotID = _.uniqueId("divDiagram");
+
     	$scope.choices = [{"id":"average", "value":"1", "label":"Average", "checked":true}, {"id":"max", "value":"2","label":"Maximum","checked":false},{"id":"min", "value":"3","label":"Minumum","checked":false}];
 		 
 		$scope.selectMethodMatrixProcess = function(){
@@ -285,7 +287,7 @@ angular.module('brainConnectivity')
 		        .angle(function(d) { return d.x / 180 * Math.PI; });
 
 		    // Define the div for the tooltip
-		    var div = d3.select("body").append("div") 
+		    var div = d3.select('#'+$scope.plotID).append("div") 
 		        .attr("class", "tooltip")
 		        .attr("id", "tooltip")        
 		        .style("opacity", 0);
@@ -300,7 +302,7 @@ angular.module('brainConnectivity')
 		    var bottom = margin.bottom;
 		    var newHeight = intDiameter +  bottom;
 
-		    var divPlot = d3.select("body").append("div")
+		    var divPlot = d3.select('#'+$scope.plotID).append("div")
 		     	.attr("width", diamMargin)
 		        .attr("height", newHeight)
 		        .attr("class", "divPlot")
@@ -545,7 +547,7 @@ angular.module('brainConnectivity')
 		       .attr("offset","100%")
 		       .attr("stop-color","#660000");
 
-		       var nodeTooltip = d3.select("body").append("div") 
+		       var nodeTooltip = d3.select('#'+$scope.plotID).append("div") 
 		       .attr("class", "nodeTooltip")
 		       .attr("id", "nodeTooltip")        
 		       .style("opacity", 0);
@@ -1065,7 +1067,7 @@ $scope.packageImports = function (nodes, threshold) {
     	plotData : "="
     },
     link : link,
-    templateUrl: 'home/directiveCirclePlotTemplate.html'
+    templateUrl: 'views/directives/directiveCirclePlotTemplate.html'
 
 
   }

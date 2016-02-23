@@ -1,8 +1,8 @@
 
 
-<div ng-controller="firstController" class="ng-col-12 se-slope">
+<div ng-controller="tractography" class="ng-col-12 se-slope">
 
-<h3 id="title">Tractography with FSL tool : probtrackx2</h3> 
+ <h3 id="title">Tractography with FSL tool : probtrackx2</h3> 
 
 <div class="tractoForm">
 
@@ -13,21 +13,20 @@
 
 <h4> Load data :</h4>
 
-DWI Image :<input type = "file" file-model="myFile"/><br>
+DWI Image :<input type="file" id="DWI"/><br>
 
-DTI image :<input type = "file" file-model="myFile"/> <br>
+DTI image :<input type = "file" id="DTI"/> <br>
 
-Nodif brain mask :<input type = "file" file-model="myFile1"/> <br>
+Nodif brain mask :<input type = "file" id="BrainMask"/> <br>
 
-Table description (JSON file):<input type = "file" file-model="myFile"/> <br>
+Table description (JSON file):<input type ="file" id="JSON"/> <br>
 
-Inner surface :<input type = "file" file-model = "myFile"/> <br>
+Inner surface :<input type = "file" id="SURFACE"/> <br>
 
 Surface contains color labels 
  <input type="checkbox" name="colorExist" value="colorExist" ng-model="checkedSurfaceColored" ng-init="checkedSurfaceColored=true" /><br/>
-<span ng-if="!checkedSurfaceColored">
-<div> 
-Surface corresponding with label color :<input type = "file" file-model = "myFile"/> <br>
+<div > 
+Surface corresponding with label color : <input type = "file" id="COLORSURF" ng-disabled="checkedSurfaceColored"/> <br>
 
 </div>
 </span>

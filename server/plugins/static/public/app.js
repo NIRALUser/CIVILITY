@@ -7,19 +7,19 @@ angular.module('brainConnectivity', [
 config(['$routeProvider', function($routeProvider) {
   $routeProvider
   .when('/home', {
-    templateUrl: 'home/home.html'
+    templateUrl: 'views/controllers/home.html'
   })
   .when('/tracto', {
-    templateUrl: 'home/tracto.html'
+    templateUrl: 'views/controllers/tracto.html'
   })
   .when('/visualisation', {
-    templateUrl: 'home/visualisation.html'
+    templateUrl: 'views/controllers/visualisation.html'
   })
   .when('/createJSON', {
-    templateUrl: 'home/createJSON.html'
+    templateUrl: 'views/controllers/createJSON.html'
   })
   .when('/plotMatrix', {
-    templateUrl: 'home/plotMatrix.html'
+    templateUrl: 'views/controllers/plotMatrix.html'
   })
   .otherwise({redirectTo: '/home'});
 }]);

@@ -1,7 +1,7 @@
 
 
 angular.module('brainConnectivity')
-.controller('firstController', ['$scope','$http','probtrack', function($scope, $http, probtrack) {
+.controller('visualisation', ['$scope','$http','probtrack', function($scope, $http, probtrack) {
 
   $scope.plotVisible = false ;
   $scope.ButtonClicked = false;
