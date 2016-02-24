@@ -14,6 +14,7 @@ angular.module('brainConnectivity')
 		$scope.plotParameters.link2 = "";
 
 		$scope.plotID = _.uniqueId("divDiagram");
+		console.log($scope.plotID);
 
     	$scope.choices = [{"id":"average", "value":"1", "label":"Average", "checked":true}, {"id":"max", "value":"2","label":"Maximum","checked":false},{"id":"min", "value":"3","label":"Minumum","checked":false}];
 		 
@@ -287,7 +288,7 @@ angular.module('brainConnectivity')
 		        .angle(function(d) { return d.x / 180 * Math.PI; });
 
 		    // Define the div for the tooltip
-		    var div = d3.select('#'+$scope.plotID).append("div") 
+		    var div = d3.select('#'+$scope.plotID).append("div")
 		        .attr("class", "tooltip")
 		        .attr("id", "tooltip")        
 		        .style("opacity", 0);
@@ -309,7 +310,7 @@ angular.module('brainConnectivity')
 		        .attr("id", "divPlot");;
 
 		    var splines = [];    
-		    var svg = d3.select(".divPlot").append("svg")
+		    var svg = divPlot.append("svg")
 		         .attr("width", intDiameter )
 		         .attr("height", newHeight)
 		        .attr("class", "circlePlot")
@@ -321,7 +322,7 @@ angular.module('brainConnectivity')
 		        .range([height/2, 0])
 		        .domain([thresholdDefaultValue, upperValue]);	     
 
-		    var svgColorbar = d3.select(".divPlot").append("svg")
+		    var svgColorbar = divPlot.append("svg")
 		        .attr("width", 100)
 		        .attr("height", newHeight+10)//+ margin.top + margin.bottom )
 		        .attr("id", "colorBar")
@@ -446,7 +447,7 @@ angular.module('brainConnectivity')
 		                    .style("opacity", 0); 
 		            })
 		          ;
-		          console.log("VALLINK2" + valLink2)
+		          console.log("VALLINK2" + valLink2);
 
 		       svg.selectAll(".node")
 		          .data(nodes.filter(function(n) { 
@@ -484,43 +485,35 @@ angular.module('brainConnectivity')
 
 		      if(JSONInfo.listOrdered[1].x != undefined)  //should be improve
 		     {
-		     	var divBrainPlot = d3.select(".divPlot")
-		     	.append("div")
+		     	var divBrainPlot = divPlot.append("div")
 		     	.attr("class","divBrain")
 		     	.attr("id","divBrain");
 
-		     var divBrainALL = d3.select(".divBrain")
-		     	.append("div")
+		     var divBrainALL = divBrainPlot.append("div")
 		     	.attr("class","divBrainALL")
 		     	.attr("id","divBrainALL");
 
-		     var divBrainLeft = d3.select(".divBrain")
-		     	.append("div")
+		     var divBrainLeft = divBrainPlot.append("div")
 		     	.attr("class","divBrainLeft")
 		     	.attr("id","divBrainLeft");
 
-		     var divBrainRight = d3.select(".divBrain")
-		     	.append("div")
+		     var divBrainRight = divBrainPlot.append("div")
 		     	.attr("class","divBrainRight")
 		     	.attr("id","divBrainRight");
 
-		     var divBrainImgALL = d3.select(".divBrainALL")
-		     	.append("div")
+		     var divBrainImgALL = divBrainALL.append("div")
 		     	.attr("class","divBrainImgALL")
 		     	.attr("id","divBrainImgALL");
 
-		     var divBrainLinkALL = d3.select(".divBrainALL")
-		     	.append("div")
+		     var divBrainLinkALL = divBrainALL.append("div")
 		     	.attr("class","divBrainLinkALL")
 		     	.attr("id","divBrainLinkALL");
 
-		     var svgBrain = d3.select(".divBrainLinkALL")
-		     	.append("svg")
+		     var svgBrain = divBrainLinkALL.append("svg")
 		    	.attr("width", 300 )
 		        .attr("height", 350);
 		     
-		     var imgBrain = d3.select(".divBrainImgALL")
-		     .append("img")
+		     var imgBrain = divBrainImgALL.append("img")
 		     .attr("src","data/rsz_brainall.png")
 		     .attr("class","bgimg")
 		     .attr("width", "auto" )
@@ -561,7 +554,7 @@ angular.module('brainConnectivity')
 
 		       	var coordY = -d["y"];
 		       	coordY = coordY+70;
-		       	
+
 		       	svgBrain.append("circle")
 		       		.attr("cx", coordX*multipleScale)
 		       		.attr("cy", coordY*multipleScale)
@@ -643,24 +636,20 @@ angular.module('brainConnectivity')
 		      })
 		        
 		       //var line = [{"x":113.49,"y":140.01},{"x":95.40,"y":105.94}];
-		       
-		      var divBrainImgLeft = d3.select(".divBrainLeft")
-		     	.append("div")
+
+		      var divBrainImgLeft = divBrainLeft.append("div")
 		     	.attr("class","divBrainImgLeft")
 		     	.attr("id","divBrainImgLeft");
 
-		     var divBrainLinkLeft = d3.select(".divBrainLeft")
-		     	.append("div")
+		     var divBrainLinkLeft = divBrainLeft.append("div")
 		     	.attr("class","divBrainLinkLeft")
 		     	.attr("id","divBrainLinkLeft");
 
-		     var svgBrainLeft = d3.select(".divBrainLinkLeft")
-		     	.append("svg")
+		     var svgBrainLeft = divBrainLinkLeft.append("svg")
 		    	.attr("width", 450 )
 		        .attr("height", 350);
 		     
-		     var imgBrainLeft = d3.select(".divBrainImgLeft")
-		     .append("img")
+		     var imgBrainLeft = divBrainImgLeft.append("img")
 		     .attr("src","data/rsz_brainleft.jpg")
 		     .attr("class","bgimg")
 		     .attr("width", "auto" )
@@ -708,6 +697,7 @@ angular.module('brainConnectivity')
 		        			});
 		           }
 		       })
+
 
 				splines.forEach(function(d,n){
 		      		var sized = d.length;
@@ -768,23 +758,19 @@ angular.module('brainConnectivity')
 		        				} 		
 		      	})
 	
-		     var divBrainImgRight = d3.select(".divBrainRight")
-		     	.append("div")
+		     var divBrainImgRight = divBrainRight.append("div")
 		     	.attr("class","divBrainImgRight")
 		     	.attr("id","divBrainImgRight");
 
-		     var divBrainLinkRight = d3.select(".divBrainRight")
-		     	.append("div")
+		     var divBrainLinkRight = divBrainRight.append("div")
 		     	.attr("class","divBrainLinkRight")
 		     	.attr("id","divBrainLinkRight");
 
-		     var svgBrainRight = d3.select(".divBrainLinkRight")
-		     	.append("svg")
+		     var svgBrainRight = divBrainLinkRight.append("svg")
 		    	.attr("width", 450 )
 		        .attr("height", 350);
 		     
-		     var imgBrainRight = d3.select(".divBrainImgRight")
-		     .append("img")
+		     var imgBrainRight = divBrainImgRight.append("img")
 		     .attr("src","data/rsz_brainright.jpg")
 		     .attr("class","bgimg")
 		     .attr("width", "auto" )
@@ -835,13 +821,14 @@ angular.module('brainConnectivity')
 
 
 		       })
+		        			console.log("TEST");
 
 				splines.forEach(function(d,n){
 		      		var sized = d.length;
 		      		var seedName = d[0].key;
 		      		var targetName = d[sized-1].key;
 		      		var y1,y2,z1,z2;
-
+				console.log("TEST");
 		       	var last1 = seedName.lastIndexOf("_");
 		       	var End1 = seedName.substring(last1+1);
 		       	var last2 = targetName.lastIndexOf("_");
@@ -899,8 +886,6 @@ angular.module('brainConnectivity')
 		      })
 		     }
 
-		     
- 
 		  }
 
 		  $scope.colorHSV = function(size,Min,Max){
