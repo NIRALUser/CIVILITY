@@ -14,7 +14,6 @@ angular.module('brainConnectivity')
 		$scope.plotParameters.link2 = "";
 
 		$scope.plotID = _.uniqueId("divDiagram");
-		console.log($scope.plotID);
 
     	$scope.choices = [{"id":"average", "value":"1", "label":"Average", "checked":true}, {"id":"max", "value":"2","label":"Maximum","checked":false},{"id":"min", "value":"3","label":"Minumum","checked":false}];
 		 
@@ -287,8 +286,11 @@ angular.module('brainConnectivity')
 		        .radius(function(d) { return d.y; })
 		        .angle(function(d) { return d.x / 180 * Math.PI; });
 
+		    var diagram = d3.select("body").append("div")
+		    	.attr("id",$scope.plotID);
+
 		    // Define the div for the tooltip
-		    var div = d3.select('#'+$scope.plotID).append("div")
+		    var div = diagram.append("div") 
 		        .attr("class", "tooltip")
 		        .attr("id", "tooltip")        
 		        .style("opacity", 0);
@@ -303,7 +305,7 @@ angular.module('brainConnectivity')
 		    var bottom = margin.bottom;
 		    var newHeight = intDiameter +  bottom;
 
-		    var divPlot = d3.select('#'+$scope.plotID).append("div")
+		    var divPlot = diagram.append("div")
 		     	.attr("width", diamMargin)
 		        .attr("height", newHeight)
 		        .attr("class", "divPlot")
@@ -485,35 +487,45 @@ angular.module('brainConnectivity')
 
 		      if(JSONInfo.listOrdered[1].x != undefined)  //should be improve
 		     {
-		     	var divBrainPlot = divPlot.append("div")
+		     	var divBrainPlot = d3.select(".divPlot")
+		     	.append("div")
 		     	.attr("class","divBrain")
 		     	.attr("id","divBrain");
 
-		     var divBrainALL = divBrainPlot.append("div")
-		     	.attr("class","divBrainALL")
-		     	.attr("id","divBrainALL");
-
-		     var divBrainLeft = divBrainPlot.append("div")
+		     
+		     var divBrainLeft = d3.select(".divBrain")
+		     	.append("div")
 		     	.attr("class","divBrainLeft")
 		     	.attr("id","divBrainLeft");
 
-		     var divBrainRight = divBrainPlot.append("div")
+		     var divBrainALL = d3.select(".divBrain")
+		     	.append("div")
+		     	.attr("class","divBrainALL")
+		     	.attr("id","divBrainALL");
+
+
+		     var divBrainRight = d3.select(".divBrain")
+		     	.append("div")
 		     	.attr("class","divBrainRight")
 		     	.attr("id","divBrainRight");
 
-		     var divBrainImgALL = divBrainALL.append("div")
+		     var divBrainImgALL = d3.select(".divBrainALL")
+		     	.append("div")
 		     	.attr("class","divBrainImgALL")
 		     	.attr("id","divBrainImgALL");
 
-		     var divBrainLinkALL = divBrainALL.append("div")
+		     var divBrainLinkALL = d3.select(".divBrainALL")
+		     	.append("div")
 		     	.attr("class","divBrainLinkALL")
 		     	.attr("id","divBrainLinkALL");
 
-		     var svgBrain = divBrainLinkALL.append("svg")
+		     var svgBrain = d3.select(".divBrainLinkALL")
+		     	.append("svg")
 		    	.attr("width", 300 )
 		        .attr("height", 350);
 		     
-		     var imgBrain = divBrainImgALL.append("img")
+		     var imgBrain = d3.select(".divBrainImgALL")
+		     .append("img")
 		     .attr("src","data/rsz_brainall.png")
 		     .attr("class","bgimg")
 		     .attr("width", "auto" )
@@ -540,7 +552,7 @@ angular.module('brainConnectivity')
 		       .attr("offset","100%")
 		       .attr("stop-color","#660000");
 
-		       var nodeTooltip = d3.select('#'+$scope.plotID).append("div") 
+		       var nodeTooltip = diagram.append("div") 
 		       .attr("class", "nodeTooltip")
 		       .attr("id", "nodeTooltip")        
 		       .style("opacity", 0);

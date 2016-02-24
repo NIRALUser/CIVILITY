@@ -20,25 +20,29 @@
 
 .divBrainALL, .divBrainRight, .divBrainLeft{
     position: relative;
+    display: inline-block;
 }
 
-.divBrainRight{
-  margin-left: 750px;
+
+.divBrainImgALL, .divBrainImgLeft, .divBrainImgRight{
+  position: relative;
 }
 
-.divBrainALL{
-  margin-left: 500px;
-}
-
-.divBrainLeft{
-  margin-left: 0px;
-}
-.divBrainImgALL, .divBrainLinkALL, .divBrainImgLeft, .divBrainLinkLeft, .divBrainImgRight, .divBrainLinkRight{
-  position: absolute;
+.divBrainLinkALL, .divBrainLinkLeft, .divBrainLinkRight{
+  position: relative;
 }
 
 .divBrainLinkALL{
-  margin-left: 15px;
+  margin-left : 15px;
+  margin-top: -325px;
+}
+.divBrainLinkLeft{
+  margin-left : -50px;
+  margin-top: -375px;
+}
+.divBrainLinkRight{
+  margin-left : -50px;
+  margin-top: -375px;
 }
 
 .bgimg {
@@ -54,7 +58,9 @@ input.boxMin, input.boxMax, input.boxAverage{
   margin-top: -12px;
 }
 
-
+.circleAndBar{
+  display: inline;
+}
 .text{
   display: inline; 
 }
