@@ -108,7 +108,7 @@ angular.module('brainConnectivity')
       };
 
       $scope.labelNameIgnore = {
-        name: '0-0-0'
+        name: "0 0 0"
       };
 
   $scope.labelset = {

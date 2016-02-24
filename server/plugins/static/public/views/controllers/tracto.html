@@ -15,25 +15,26 @@
 
 DWI Image :<input type="file" id="DWI"/><br>
 
-DTI image :<input type = "file" id="DTI"/> <br>
+T1 reference in DWI space :<input type = "file" id="DTI"/> <br>
 
-Nodif brain mask :<input type = "file" id="BrainMask"/> <br>
+Brain mask in DWI space :<input type = "file" id="BrainMask"/> <br>
 
-Table description (JSON file):<input type ="file" id="JSON"/> <br>
+Parcellation table (JSON file) : 
+<input type ="file" id="JSON"/> <br>
 
 Inner surface :<input type = "file" id="SURFACE"/> <br>
 
-Surface contains color labels 
+Inner surface contains color labels
  <input type="checkbox" name="colorExist" value="colorExist" ng-model="checkedSurfaceColored" ng-init="checkedSurfaceColored=true" /><br/>
-<div > 
-Surface corresponding with label color : <input type = "file" id="COLORSURF" ng-disabled="checkedSurfaceColored"/> <br>
+<div ng-show="!checkedSurfaceColored" style="text-indent: 20px; font-style: italic;">  
+Alternative surface corresponding with color labels : <input type = "file" id="COLORSURF" ng-disabled="checkedSurfaceColored" style="text-indent: 20px;"/> <br>
 
 </div>
 </span>
 
 
 
-Labelset name in vtk file :  <input type="text" name="input" ng-model="labelset.name"
+Labelset name in vtk surface file :  <input type="text" name="input" ng-model="labelset.name"
            required ng-trim="false"><br>
 
 Ignore label  <input type="checkbox" name="ignore" value="ignore" ng-model="checkedIgnoreLabel" ng-init="checkedIgnoreLabel=false" /><br/>
