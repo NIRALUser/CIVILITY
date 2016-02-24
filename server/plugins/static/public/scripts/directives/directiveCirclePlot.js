@@ -561,43 +561,13 @@ angular.module('brainConnectivity')
 		       
 		       var CoordDescription = JSONInfo["listOrdered"];
 
-		       CoordDescription.forEach(function(d,i){
-		       	var coordX = d["x"]+60;
-
-		       	var coordY = -d["y"];
-		       	coordY = coordY+70;
-
-		       	svgBrain.append("circle")
-		       		.attr("cx", coordX*multipleScale)
-		       		.attr("cy", coordY*multipleScale)
-		       		.attr("r", 4)
-		        	.style("fill", "url(#blueCircle)")
-		        	.on("mouseover", function(e,i) {  
-		        		nodeTooltip.transition()    
-		                   .duration(200)    
-		                   .style("opacity", .9);  
-		               var last = d["name"].lastIndexOf(".");
-		               var KeyName = d["name"].substring(last+1);
-
-		               nodeTooltip.html( "Seed : " + KeyName ) 
-		                   .style("left", (d3.event.pageX) + "px")   
-		                   .style("top", (d3.event.pageY) + "px");  
-		        	})
-		        	.on("mouseout", function(d) {   
-		        			
-		        			nodeTooltip.transition()    
-		                   .duration(500)    
-		                   .style("opacity", 0); 
-		        	});
-		       })
-		      
-				var linefunction = d3.svg.line()
+		       var linefunction = d3.svg.line()
 		      				.interpolate("bundle")
 		       			.tension(tensionSplines)
 		        			.x(function(d){return d.x})
 		        			.y(function(d){return d.y})
 
-		     	splines.forEach(function(d,n){
+				splines.forEach(function(d,n){
 		      		var sized = d.length;
 		      		var seedName = d[0].key;
 		      		var targetName = d[sized-1].key;
@@ -646,7 +616,41 @@ angular.module('brainConnectivity')
 		        .attr("fill","none");
 		         		
 		      })
-		        
+
+
+		       CoordDescription.forEach(function(d,i){
+		       	var coordX = d["x"]+60;
+
+		       	var coordY = -d["y"];
+		       	coordY = coordY+70;
+
+		       	svgBrain.append("circle")
+		       		.attr("cx", coordX*multipleScale)
+		       		.attr("cy", coordY*multipleScale)
+		       		.attr("r", 4)
+		        	.style("fill", "url(#blueCircle)")
+		        	.on("mouseover", function(e,i) {  
+		        		nodeTooltip.transition()    
+		                   .duration(200)    
+		                   .style("opacity", .9);  
+		               var last = d["name"].lastIndexOf(".");
+		               var KeyName = d["name"].substring(last+1);
+
+		               nodeTooltip.html( "Seed : " + KeyName ) 
+		                   .style("left", (d3.event.pageX) + "px")   
+		                   .style("top", (d3.event.pageY) + "px");  
+		        	})
+		        	.on("mouseout", function(d) {   
+		        			
+		        			nodeTooltip.transition()    
+		                   .duration(500)    
+		                   .style("opacity", 0); 
+		        	});
+		       })
+		      
+				
+
+		     	
 		       //var line = [{"x":113.49,"y":140.01},{"x":95.40,"y":105.94}];
 
 		      var divBrainImgLeft = divBrainLeft.append("div")
@@ -671,47 +675,8 @@ angular.module('brainConnectivity')
 
 		     var multipleScaleLeft = 2.4;
 		     var nbLeft =0;
-		       CoordDescription.forEach(function(d,i){
-
-		       	var name = d["name"];
-		       	var last = d["name"].lastIndexOf("_");
-		           var side = d["name"].substring(last+1);
-		           if(side == "L")
-		           {
-		           	nbLeft = nbLeft +1;
-		           	var coordY = - d["y"];
-		           	var coordY = coordY +90;
-
-		       		var coordZ = - d["z"];
-		       		coordZ = coordZ+90
-		       	
-		       		svgBrainLeft.append("circle")
-		       			.attr("cx", coordY*multipleScaleLeft)
-		       			.attr("cy", coordZ*multipleScaleLeft)
-		       			.attr("r", 4)
-		        			.style("fill", "url(#blueCircle)")
-		        			.on("mouseover", function(e,i) {  
-		        				nodeTooltip.transition()    
-		                   			.duration(200)    
-		                   			.style("opacity", .9);  
-		               		var last = d["name"].lastIndexOf(".");
-		               		var KeyName = d["name"].substring(last+1);
-
-		               		nodeTooltip.html( "Seed : " + KeyName ) 
-		                   	.style("left", (d3.event.pageX) + "px")   
-		                   	.style("top", (d3.event.pageY) + "px");  
-		        				})
-		        			.on("mouseout", function(d) {   
-		        			
-		        			nodeTooltip.transition()    
-		                   .duration(500)    
-		                   .style("opacity", 0); 
-		        			});
-		           }
-		       })
-
-
-				splines.forEach(function(d,n){
+			
+			splines.forEach(function(d,n){
 		      		var sized = d.length;
 		      		var seedName = d[0].key;
 		      		var targetName = d[sized-1].key;
@@ -769,6 +734,48 @@ angular.module('brainConnectivity')
 		        			.attr("fill","none");
 		        				} 		
 		      	})
+
+		     CoordDescription.forEach(function(d,i){
+
+		       	var name = d["name"];
+		       	var last = d["name"].lastIndexOf("_");
+		           var side = d["name"].substring(last+1);
+		           if(side == "L")
+		           {
+		           	nbLeft = nbLeft +1;
+		           	var coordY = - d["y"];
+		           	var coordY = coordY +90;
+
+		       		var coordZ = - d["z"];
+		       		coordZ = coordZ+90
+		       	
+		       		svgBrainLeft.append("circle")
+		       			.attr("cx", coordY*multipleScaleLeft)
+		       			.attr("cy", coordZ*multipleScaleLeft)
+		       			.attr("r", 4)
+		        			.style("fill", "url(#blueCircle)")
+		        			.on("mouseover", function(e,i) {  
+		        				nodeTooltip.transition()    
+		                   			.duration(200)    
+		                   			.style("opacity", .9);  
+		               		var last = d["name"].lastIndexOf(".");
+		               		var KeyName = d["name"].substring(last+1);
+
+		               		nodeTooltip.html( "Seed : " + KeyName ) 
+		                   	.style("left", (d3.event.pageX) + "px")   
+		                   	.style("top", (d3.event.pageY) + "px");  
+		        				})
+		        			.on("mouseout", function(d) {   
+		        			
+		        			nodeTooltip.transition()    
+		                   .duration(500)    
+		                   .style("opacity", 0); 
+		        			});
+		           }
+		       })
+
+
+				
 	
 		     var divBrainImgRight = divBrainRight.append("div")
 		     	.attr("class","divBrainImgRight")
@@ -793,49 +800,9 @@ angular.module('brainConnectivity')
 
 		     var multipleScaleRight = 2.4;
 		     var nbRight=0;
-		       CoordDescription.forEach(function(d,i){
-
-		       	var name = d["name"];
-		       	var last = d["name"].lastIndexOf("_");
-		           var side = d["name"].substring(last+1);
-		           if(side == "R")
-		           {
-		           	nbRight = nbRight +1;
-		           	var coordY = d["y"];
-		           	var coordY = coordY +125;
-
-		       		var coordZ = - d["z"];
-		       		coordZ = coordZ+92
-		       			       	
-		       		svgBrainRight.append("circle")
-		       			.attr("cx", coordY*multipleScaleRight)
-		       			.attr("cy", coordZ*multipleScaleRight)
-		       			.attr("r", 4)
-		        			.style("fill", "url(#blueCircle)")
-		        			.on("mouseover", function(e,i) {  
-		        				nodeTooltip.transition()    
-		                   			.duration(200)    
-		                   			.style("opacity", .9);  
-		               		var last = d["name"].lastIndexOf(".");
-		               		var KeyName = d["name"].substring(last+1);
-
-		               		nodeTooltip.html( "Seed : " + KeyName ) 
-		                   	.style("left", (d3.event.pageX) + "px")   
-		                   	.style("top", (d3.event.pageY) + "px");  
-		        				})
-		        			.on("mouseout", function(d) {   
-		        			
-		        			nodeTooltip.transition()    
-		                   .duration(500)    
-		                   .style("opacity", 0); 
-		        			});
-		           }
 
 
-		       })
-		        			console.log("TEST");
-
-				splines.forEach(function(d,n){
+			splines.forEach(function(d,n){
 		      		var sized = d.length;
 		      		var seedName = d[0].key;
 		      		var targetName = d[sized-1].key;
@@ -896,6 +863,47 @@ angular.module('brainConnectivity')
 		        .attr("fill","none");
 		        	} 		
 		      })
+
+				CoordDescription.forEach(function(d,i){
+
+		       	var name = d["name"];
+		       	var last = d["name"].lastIndexOf("_");
+		           var side = d["name"].substring(last+1);
+		           if(side == "R")
+		           {
+		           	nbRight = nbRight +1;
+		           	var coordY = d["y"];
+		           	var coordY = coordY +125;
+
+		       		var coordZ = - d["z"];
+		       		coordZ = coordZ+92
+		       			       	
+		       		svgBrainRight.append("circle")
+		       			.attr("cx", coordY*multipleScaleRight)
+		       			.attr("cy", coordZ*multipleScaleRight)
+		       			.attr("r", 4)
+		        			.style("fill", "url(#blueCircle)")
+		        			.on("mouseover", function(e,i) {  
+		        				nodeTooltip.transition()    
+		                   			.duration(200)    
+		                   			.style("opacity", .9);  
+		               		var last = d["name"].lastIndexOf(".");
+		               		var KeyName = d["name"].substring(last+1);
+
+		               		nodeTooltip.html( "Seed : " + KeyName ) 
+		                   	.style("left", (d3.event.pageX) + "px")   
+		                   	.style("top", (d3.event.pageY) + "px");  
+		        				})
+		        			.on("mouseout", function(d) {   
+		        			
+		        			nodeTooltip.transition()    
+		                   .duration(500)    
+		                   .style("opacity", 0); 
+		        			});
+		           }
+
+
+		       })
 		     }
 
 		  }
