@@ -5,43 +5,40 @@
  <h3 id="title">Tractography with FSL tool : probtrackx2</h3> 
 
 <div class="tractoForm">
-
+<form>
 <label>Subject id:
-    <input type="text" name="input" ng-model="subjectID.id"
-           required ng-trim="false">
+    <input type="text" name="input" ng-model="subjectID"
+           required  pattern="([\w\-]+)" ng-trim="false" title="Pattern error">
 </label>
 
 <h4> Load data :</h4>
 
-DWI Image :<input type="file" id="DWI"/><br>
+DWI Image :<input type="file" id="DWI" file-model="DWI"/><br>
 
-T1 reference in DWI space :<input type = "file" id="DTI"/> <br>
+T1 reference in DWI space :<input type = "file" id="T1" file-model="T1"/> <br>
 
-Brain mask in DWI space :<input type = "file" id="BrainMask"/> <br>
+Brain mask in DWI space :<input type = "file" id="BrainMask" file-model="BrainMask"/> <br>
 
 Parcellation table (JSON file) : 
-<input type ="file" id="JSON"/> <br>
+<input type ="file" id="JSON" file-model="parcellationTable"/> <br>
 
-Inner surface :<input type = "file" id="SURFACE"/> <br>
+Inner surface :<input type = "file" id="innerSurface" file-model="innerSurface"/> <br>
 
 Inner surface contains color labels
  <input type="checkbox" name="colorExist" value="colorExist" ng-model="checkedSurfaceColored" ng-init="checkedSurfaceColored=true" /><br/>
 <div ng-show="!checkedSurfaceColored" style="text-indent: 20px; font-style: italic;">  
-Alternative surface corresponding with color labels : <input type = "file" id="COLORSURF" ng-disabled="checkedSurfaceColored" style="text-indent: 20px;"/> <br>
+Alternative surface corresponding with color labels : <input type = "file" id="colorSurface" ng-disabled="checkedSurfaceColored" style="text-indent: 20px;" file-model="colorSurface"/> <br>
 
 </div>
 </span>
 
+Labelset name in vtk surface file : <input type="text" name="input" ng-model="labelset" required ng-trim="false" pattern="([\w\-]+)" title="Pattern error"><br>
 
-
-Labelset name in vtk surface file :  <input type="text" name="input" ng-model="labelset.name"
-           required ng-trim="false"><br>
-
-Ignore label  <input type="checkbox" name="ignore" value="ignore" ng-model="checkedIgnoreLabel" ng-init="checkedIgnoreLabel=false" /><br/>
-<span ng-if="checkedIgnoreLabel">
-<div> <input type="text" name="input" ng-model="labelNameIgnore.name"
-           required ng-trim="false"><br> </div>
-</span>
+Ignore label  <input type="checkbox" name="ignore" value="ignore" ng-model="ignoreLabel" ng-init="ignoreLabel=false" /><br/>
+<div ng-if="ignoreLabel"> 
+	<input type="text" name="input" ng-model="$parent.labelID"
+           required ng-trim="false"><br> 
+</div>
 
 
 <h5> Extract Label Surface options : </h5>
@@ -56,7 +53,7 @@ Loopcheck
 <button type="button" class="btn btn-default btn-lg center-block" ng-click="paramSubmitJob()">
 Start tractography
 </button>
-
+</form>
 </div>
 </div>
 

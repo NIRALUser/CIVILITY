@@ -1,19 +1,32 @@
 
 
 angular.module('brainConnectivity')
-.controller('tractography', ['$scope','$http','probtrack', function($scope, $http, probtrack) {
+.controller('tractography', ['$scope','$http','probtrack', 'fileUpload' , function($scope, $http, probtrack, fileUpload) {
 
-	  $scope.plotParameters = {};
-	 $scope.parametersTracto = {};
+	$scope.plotParameters = {};
+	$scope.parametersTracto = {};
+    $scope.subjectID = "neonate";
+    $scope.overlapping = true;
+    $scope.loopcheck = true;
+    $scope.labelID = "0 0 0";
+	$scope.labelset = "colour";
+	$scope.ignoreLabel = false;
 
-   $scope.FileList = {
-      "DWI" : "",
-      "DTI" : "",
+
+   $scope.Parameters = {
+   	  "subject" : $scope.subjectID,
+   	  "DWI" : "",
+      "T1" : "",
       "BrainMask":"",
-      "JSON": "",
-      "SURFACE": "",
-      "COLORSURF": ""
-  }
+      "parcellationTable": "",
+      "innerSurface": "",
+      "colorSurface": "",  
+      "labelsetName": $scope.labelset,
+      "ignoreLabel": $scope.ignoreLabel,
+      "ignoreLabelID" : $scope.labelID,
+      "overlapping": $scope.overlapping,
+      "loopcheck": $scope.loopcheck
+      }
  
   $scope.submit = function(){
 
@@ -35,105 +48,143 @@ angular.module('brainConnectivity')
 
   $scope.paramSubmitJob = function()
   {
-    $scope.parametersTracto = {};
-
     console.log("Submit");
     $scope.getSubjectID();
-
-    //Upload reauired files 
-    $scope.uploadFilesList();
-
     $scope.getLabelsetName();
-    $scope.ignoreLabel();
-   // console.log("Overlapping " + $scope.overlapping);
-    // $scope.parametersTracto.overlapping = $scope.overlapping;
-   // console.log("Loopcheck " + $scope.loopcheck);
-    //  $scope.parametersTracto.loopcheck = $scope.loopcheck;
-    $scope.parametersTracto.overlapping = $scope.overlapping;
-    $scope.parametersTracto.loopcheck = $scope.loopcheck;
-   // $scope.createJobObject();
+    $scope.getIgnoreLabel();
 
+    $scope.Parameters.overlapping = $scope.overlapping;
+    $scope.Parameters.loopcheck = $scope.loopcheck;
+     $scope.readFilenamea();
+   // $scope.uploadFile();
 
     console.log("END ");
-    console.log($scope.parametersTracto);
+    console.log($scope.Parameters);
 
   };
 
 
   $scope.getSubjectID = function()
   {
-    console.log("subject ID : " + $scope.subjectID.id);
-    if($scope.subjectID.id)
+    if($scope.subjectID)
     {
-        $scope.parametersTracto.subjectID = $scope.subjectID.id;
+        $scope.Parameters.subject = $scope.subjectID;
     }
     else
     {
-      alert ("You must choose a subject ID ");
+      alert ("You must define a valid subject ID (only letters, numbers, \"-\", \"_\" are allowed - no space).");
     }
 
   };
 
   $scope.getLabelsetName = function()
   {
-    console.log("labelset name : "+ $scope.labelset.name);
-    $scope.parametersTracto.labelSet = $scope.labelset.name;
+  	 if($scope.labelset)
+    {
+        $scope.Parameters.labelsetName = $scope.labelset;
+    }
+    else
+    {
+      alert ("You must define a valid labelset name (only letters, numbers, \"-\", \"_\" are allowed - no space).");
+    }
+    
   };
 
-    $scope.ignoreLabel = function()
+    $scope.getIgnoreLabel = function()
   {
-      $scope.parametersTracto.ignoreLabel = $scope.checkedIgnoreLabel;
-      if($scope.checkedIgnoreLabel)
+      $scope.Parameters.ignoreLabel = $scope.ignoreLabel;
+      if($scope.ignoreLabel)
       {
-         $scope.parametersTracto.ignoreLabel = $scope.labelNameIgnore.name;
+         $scope.Parameters.ignoreLabelID = $scope.labelID;
       }
       else
       {
-        $scope.parametersTracto.ignoreLabel = "";
+        $scope.Parameters.ignoreLabelID = "";
       }
   };
 
+  $scope.readFilenamea= function(){
 
+ 		//DWI Image
+ 		if($scope.DWI)
+ 		{
+ 			$scope.Parameters.DWI= $scope.DWI.name;
+ 		}
+ 		else
+ 		{
+ 			alert("You must select DWI file.");
+ 		}
 
-   $scope.subjectID = {
-        id: 'neonate'
-      };
+ 		//T1 image
+ 		if($scope.T1)
+ 		{
+ 			$scope.Parameters.T1= $scope.T1.name;
+ 		}
+ 		else
+ 		{
+ 			alert("You must select T1 file.");
+ 		}
+	
+		//Brain mask
+		if($scope.BrainMask)
+ 		{
+ 			$scope.Parameters.BrainMask= $scope.BrainMask.name;
+ 		}
+ 		else
+ 		{
+ 			alert("You must select brainmask file.");
+ 		} 
 
-     $scope.overlapping = {
-        overlapping : true
-      };
+ 		//Parcellation Table
+ 		if($scope.parcellationTable)
+ 		{
+ 			$scope.Parameters.parcellationTable= $scope.parcellationTable.name;
+ 		}
+ 		else
+ 		{
+ 			alert("You must select parcellation Table file.");
+ 		} 
 
-    $scope.loopcheck = {
-        loopcheck : true
-      };
+ 		//Inner Surface
+ 		if($scope.innerSurface)
+ 		{
+ 			$scope.Parameters.innerSurface= $scope.innerSurface.name;
+ 		}
+ 		else
+ 		{
+ 			alert("You must select inner Surface file.");
+ 		}
 
-      $scope.labelNameIgnore = {
-        name: "0 0 0"
-      };
+ 		//Colored surface
+ 		if($scope.checkedSurfaceColored  && $scope.innerSurface)
+ 		{
+ 			$scope.Parameters.colorSurface = $scope.innerSurface.name;
+ 		}
+ 		else if ($scope.checkedSurfaceColored && !$scope.innerSurface)
+ 		{
+ 				//Do nothing 
+ 		}
+ 		else
+ 		{
+ 			if($scope.colorSurface)
+ 			{
+ 				$scope.Parameters.colorSurface = $scope.colorSurface.name;
+ 			}
+ 			else
+ 			{
+ 				alert("You must select an alternative surface file containing color labels.");
+ 			}
+ 		}
 
-  $scope.labelset = {
-        name: 'colour'
-      };
+  	   };
 
-  $scope.uploadFilesList = function(){
-      console.log($scope.FileList);
-      for (var key in $scope.FileList) {
-      console.log(key + " - "  + $scope.FileList[key]);
-      if(!$scope.FileList[key] )
-        {
-          if( key=="COLORSURF"  && $scope.checkedSurfaceColored)
-          {
-            //Do nothing 
-          }
-          else
-          {
-            alert("You must select a " + key +" file for run Tractogrpahy");
-          }      
-        }
-     
-      } 
-   };
-
+ $scope.uploadFile = function(){
+        var file = $scope.DWI;
+        console.log('file is ' );
+        console.dir(file);
+        var uploadUrl = "/fileUpload";
+        fileUpload.uploadFileToUrl(file, uploadUrl);
+    };
 
 
  /*  $scope.createJobObject = function(){
@@ -193,57 +244,7 @@ angular.module('brainConnectivity')
 
 /*  } */
 
-   function readSingleFile(evt) {
-    //Retrieve the first (and only!) File from the FileList object
-    var f = evt.target.files[0]; 
-
-    var targ = evt.target;
-    var IdFile = targ.id;
-    console.log(IdFile);
-
-    if (f) {
-      var r = new FileReader();
-      r.onload = function(e) { 
-        var contents = e.target.result;
-    /*    alert( "Got the file.n" 
-              +"name: " + f.name + "n"
-              +"type: " + f.type + "n"
-              +"size: " + f.size + " bytesn"
-              + "starts with: " + contents.substr(1, contents.indexOf("n"))
-        );  */
-      }
-      r.readAsBinaryString(f);
-      if(!$scope.checkedSurfaceColored)
-      {
-        $scope.FileList[IdFile] = f.name;
-      }
-      else
-      {
-       if(IdFile == "COLORSURF")
-       {
-         $scope.FileList[IdFile] = $scope.FileList["SURFACE"];
-       }
-       else
-       {
-        $scope.FileList[IdFile] = f.name;
-       }
-      }
-
-    } else { 
-      alert("Failed to load file");
-    }
-  }
-
-document.getElementById('DWI').addEventListener('change', readSingleFile, true);
-document.getElementById('DTI').addEventListener('change', readSingleFile, false);
-document.getElementById('BrainMask').addEventListener('change', readSingleFile, false);
-document.getElementById('JSON').addEventListener('change', readSingleFile, false);
-document.getElementById('SURFACE').addEventListener('change', readSingleFile, false);
-document.getElementById('COLORSURF').addEventListener('change', readSingleFile, false);
-
- 
-
-
+   
 }]);
 
 

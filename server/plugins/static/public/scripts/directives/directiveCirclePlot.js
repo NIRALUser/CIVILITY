@@ -290,7 +290,7 @@ angular.module('brainConnectivity')
 		    	.attr("id",$scope.plotID);
 
 		    // Define the div for the tooltip
-		    var div = diagram.append("div") 
+		    var div = d3.select('#'+$scope.plotID).append("div") 
 		        .attr("class", "tooltip")
 		        .attr("id", "tooltip")        
 		        .style("opacity", 0);
@@ -305,7 +305,7 @@ angular.module('brainConnectivity')
 		    var bottom = margin.bottom;
 		    var newHeight = intDiameter +  bottom;
 
-		    var divPlot = diagram.append("div")
+		    var divPlot = d3.select('#'+$scope.plotID).append("div")
 		     	.attr("width", diamMargin)
 		        .attr("height", newHeight)
 		        .attr("class", "divPlot")
@@ -552,7 +552,7 @@ angular.module('brainConnectivity')
 		       .attr("offset","100%")
 		       .attr("stop-color","#660000");
 
-		       var nodeTooltip = diagram.append("div") 
+		       var nodeTooltip = d3.select('#'+$scope.plotID).append("div") 
 		       .attr("class", "nodeTooltip")
 		       .attr("id", "nodeTooltip")        
 		       .style("opacity", 0);
@@ -567,7 +567,7 @@ angular.module('brainConnectivity')
 		        			.x(function(d){return d.x})
 		        			.y(function(d){return d.y})
 
-				splines.forEach(function(d,n){
+			splines.forEach(function(d,n){
 		      		var sized = d.length;
 		      		var seedName = d[0].key;
 		      		var targetName = d[sized-1].key;
