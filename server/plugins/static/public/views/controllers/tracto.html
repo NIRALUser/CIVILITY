@@ -7,36 +7,35 @@
 <div class="tractoForm">
 <form>
 <label>Subject id:
-    <input type="text" name="input" ng-model="subjectID"
+    <input type="text" name="input" ng-model="Parameters.subject"
            required  pattern="([\w\-]+)" ng-trim="false" title="Pattern error">
 </label>
 
 <h4> Load data :</h4>
 
-DWI Image :<input type="file" id="DWI" file-model="DWI"/><br>
+DWI Image :<input type="file" id="DWI" file-model="Parameters.Files.DWI"/><br>
 
-T1 reference in DWI space :<input type = "file" id="T1" file-model="T1"/> <br>
+T1 reference in DWI space :<input type = "file" id="T1" file-model="Parameters.Files.T1"/> <br>
 
-Brain mask in DWI space :<input type = "file" id="BrainMask" file-model="BrainMask"/> <br>
+Brain mask in DWI space :<input type = "file" id="BrainMask" file-model="Parameters.Files.BrainMask"/> <br>
 
 Parcellation table (JSON file) : 
-<input type ="file" id="JSON" file-model="parcellationTable"/> <br>
+<input type ="file" id="JSON" file-model="Parameters.Files.parcellationTable"/> <br>
 
-Inner surface :<input type = "file" id="innerSurface" file-model="innerSurface"/> <br>
+Inner surface :<input type = "file" id="innerSurface" file-model="Parameters.Files.innerSurface"/> <br>
 
 Inner surface contains color labels
  <input type="checkbox" name="colorExist" value="colorExist" ng-model="checkedSurfaceColored" ng-init="checkedSurfaceColored=true" /><br/>
 <div ng-show="!checkedSurfaceColored" style="text-indent: 20px; font-style: italic;">  
-Alternative surface corresponding with color labels : <input type = "file" id="colorSurface" ng-disabled="checkedSurfaceColored" style="text-indent: 20px;" file-model="colorSurface"/> <br>
-
+Alternative surface corresponding with color labels : <input type = "file" id="colorSurface" ng-disabled="checkedSurfaceColored" style="text-indent: 20px;" file-model="alternativeSurface"/> <br>
 </div>
 </span>
 
-Labelset name in vtk surface file : <input type="text" name="input" ng-model="labelset" required ng-trim="false" pattern="([\w\-]+)" title="Pattern error"><br>
+Labelset name in vtk surface file : <input type="text" name="input" ng-model="Parameters.labelsetName" required ng-trim="false" pattern="([\w\-]+)" title="Pattern error"><br>
 
-Ignore label  <input type="checkbox" name="ignore" value="ignore" ng-model="ignoreLabel" ng-init="ignoreLabel=false" /><br/>
-<div ng-if="ignoreLabel"> 
-	<input type="text" name="input" ng-model="$parent.labelID"
+Ignore label  <input type="checkbox" name="ignore" value="ignore" ng-model="Parameters.ignoreLabel" ng-init="Parameters.ignoreLabel=false" /><br/>
+<div ng-if="Parameters.ignoreLabel"> 
+	<input type="text" name="input" ng-model="Parameters.ignoreLabelID"
            required ng-trim="false"><br> 
 </div>
 

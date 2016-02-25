@@ -3,32 +3,26 @@
 angular.module('brainConnectivity')
 .controller('tractography', ['$scope','$http','probtrack', 'fileUpload' , function($scope, $http, probtrack, fileUpload) {
 
-	$scope.plotParameters = {};
-	$scope.parametersTracto = {};
-    $scope.subjectID = "neonate";
-    $scope.overlapping = true;
-    $scope.loopcheck = true;
-    $scope.labelID = "0 0 0";
-	$scope.labelset = "colour";
-	$scope.ignoreLabel = false;
-
-
+//	$scope.plotParameters = {};
    $scope.Parameters = {
-   	  "subject" : $scope.subjectID,
-   	  "DWI" : "",
-      "T1" : "",
-      "BrainMask":"",
-      "parcellationTable": "",
-      "innerSurface": "",
-      "colorSurface": "",  
-      "labelsetName": $scope.labelset,
-      "ignoreLabel": $scope.ignoreLabel,
-      "ignoreLabelID" : $scope.labelID,
-      "overlapping": $scope.overlapping,
-      "loopcheck": $scope.loopcheck
+   	  subject : "neonate",
+   	  Files : {
+   	  		DWI : "",
+      		T1 : "",
+      		BrainMask:"",
+      		parcellationTable: "",
+      		innerSurface: "",
+      		colorSurface: ""
+   	  },
+   	  
+      labelsetName: "colour",
+      ignoreLabel: false,
+      ignoreLabelID : "",
+      overlapping: true,
+      loopcheck: true
       }
  
-  $scope.submit = function(){
+/*  $scope.submit = function(){
 
     probtrack.getFDTMatrix()
     .then(function(response){
@@ -44,19 +38,15 @@ angular.module('brainConnectivity')
       $scope.Plot;
     }).catch(console.error);
 
-  };
+  };*/
 
   $scope.paramSubmitJob = function()
   {
     console.log("Submit");
-    $scope.getSubjectID();
-    $scope.getLabelsetName();
-    $scope.getIgnoreLabel();
-
+    $scope.formValidation();
     $scope.Parameters.overlapping = $scope.overlapping;
     $scope.Parameters.loopcheck = $scope.loopcheck;
-     $scope.readFilenamea();
-   // $scope.uploadFile();
+    $scope.createJobObject();
 
     console.log("END ");
     console.log($scope.Parameters);
@@ -64,145 +54,140 @@ angular.module('brainConnectivity')
   };
 
 
-  $scope.getSubjectID = function()
+  $scope.formValidation = function()
   {
-    if($scope.subjectID)
+    //Subject ID 
+    if(!$scope.Parameters.subject)
     {
-        $scope.Parameters.subject = $scope.subjectID;
+        alert ("You must define a valid subject ID (only letters, numbers, \"-\", \"_\" are allowed - no space).");
+        return false;
     }
-    else
+	//DWI Image
+ 	if(!$scope.Parameters.Files.DWI)
+ 	{
+ 		alert("You must select DWI file.");
+ 		return false;
+ 	}
+	//T1 image
+	if(!$scope.Parameters.Files.T1)
+	{
+ 		alert("You must select T1 file.");
+ 		return false;
+ 	}
+	
+	//Brain mask
+	if(!$scope.Parameters.Files.BrainMask)
+ 	{
+ 		alert("You must select brainmask file.");
+ 		return false;
+ 	} 
+ 		//Parcellation Table
+ 	if(!$scope.Parameters.Files.parcellationTable)
+ 	{
+ 		alert("You must select parcellation Table file.");
+ 		return false;
+ 	} 
+
+ 	//Inner Surface
+ 	if(!$scope.Parameters.Files.innerSurface)
+ 	{
+ 		alert("You must select inner Surface file.");
+ 		return false;
+ 	}
+
+ 	//Colored surface
+ 	if($scope.checkedSurfaceColored  && $scope.Parameters.Files.innerSurface)
+ 	{
+ 		$scope.Parameters.Files.colorSurface = $scope.Parameters.Files.innerSurface;
+ 	}
+ 	else if ($scope.checkedSurfaceColored && !$scope.Parameters.Files.innerSurface)
+ 	{
+ 			//Do nothing 
+ 	}
+ 	else
+ 	{
+ 		if(!$scope.alternativeSurface )
+ 		{
+ 			alert("You must select an alternative surface file containing color labels.");
+ 			return false;
+ 		}
+ 		else
+ 		{
+ 			$scope.Parameters.Files.colorSurface = $scope.alternativeSurface;
+ 		}
+ 	}
+
+ 	//Check LabelSetName format pattern
+ 	if(!$scope.Parameters.labelsetName)
     {
-      alert ("You must define a valid subject ID (only letters, numbers, \"-\", \"_\" are allowed - no space).");
+        alert ("You must define a valid labelset name (only letters, numbers, \"-\", \"_\" are allowed - no space).");
+        return false;
     }
 
-  };
-
-  $scope.getLabelsetName = function()
-  {
-  	 if($scope.labelset)
+    //Check label name is specified when ignoreLabel = true 
+    if($scope.Parameters.ignoreLabel && !$scope.Parameters.ignoreLabelID)
     {
-        $scope.Parameters.labelsetName = $scope.labelset;
+       alert ("You must specified the name of label to ignore");
+       return false;
     }
-    else
+
+    //empty string if ignoreLabel = false 
+    if(!$scope.Parameters.ignoreLabel)
     {
-      alert ("You must define a valid labelset name (only letters, numbers, \"-\", \"_\" are allowed - no space).");
+    	$scope.Parameters.ignoreLabelID = "";
     }
     
+
   };
 
-    $scope.getIgnoreLabel = function()
-  {
-      $scope.Parameters.ignoreLabel = $scope.ignoreLabel;
-      if($scope.ignoreLabel)
-      {
-         $scope.Parameters.ignoreLabelID = $scope.labelID;
-      }
-      else
-      {
-        $scope.Parameters.ignoreLabelID = "";
-      }
-  };
 
-  $scope.readFilenamea= function(){
-
- 		//DWI Image
- 		if($scope.DWI)
- 		{
- 			$scope.Parameters.DWI= $scope.DWI.name;
- 		}
- 		else
- 		{
- 			alert("You must select DWI file.");
- 		}
-
- 		//T1 image
- 		if($scope.T1)
- 		{
- 			$scope.Parameters.T1= $scope.T1.name;
- 		}
- 		else
- 		{
- 			alert("You must select T1 file.");
- 		}
-	
-		//Brain mask
-		if($scope.BrainMask)
- 		{
- 			$scope.Parameters.BrainMask= $scope.BrainMask.name;
- 		}
- 		else
- 		{
- 			alert("You must select brainmask file.");
- 		} 
-
- 		//Parcellation Table
- 		if($scope.parcellationTable)
- 		{
- 			$scope.Parameters.parcellationTable= $scope.parcellationTable.name;
- 		}
- 		else
- 		{
- 			alert("You must select parcellation Table file.");
- 		} 
-
- 		//Inner Surface
- 		if($scope.innerSurface)
- 		{
- 			$scope.Parameters.innerSurface= $scope.innerSurface.name;
- 		}
- 		else
- 		{
- 			alert("You must select inner Surface file.");
- 		}
-
- 		//Colored surface
- 		if($scope.checkedSurfaceColored  && $scope.innerSurface)
- 		{
- 			$scope.Parameters.colorSurface = $scope.innerSurface.name;
- 		}
- 		else if ($scope.checkedSurfaceColored && !$scope.innerSurface)
- 		{
- 				//Do nothing 
- 		}
- 		else
- 		{
- 			if($scope.colorSurface)
- 			{
- 				$scope.Parameters.colorSurface = $scope.colorSurface.name;
- 			}
- 			else
- 			{
- 				alert("You must select an alternative surface file containing color labels.");
- 			}
- 		}
-
-  	   };
-
- $scope.uploadFile = function(){
+/* $scope.uploadFile = function(){
         var file = $scope.DWI;
         console.log('file is ' );
         console.dir(file);
         var uploadUrl = "/fileUpload";
         fileUpload.uploadFileToUrl(file, uploadUrl);
-    };
+    };*/
 
 
- /*  $scope.createJobObject = function(){
+   $scope.createJobObject = function(){
       var job = {};
 
       job.executable = "TractograpyhWorkflow"; 
 
-      var nbParameters = 4; 
-
-
       job.parameters = [];
-      for (var i = 0 ; i < nbParameters ; i++)
-      {
-        var param = {}; 
-        param.flag = "";
-        param.name = $scope.parametersTracto[i]
-         job.parameters.push(param);
-      }
+      _.each($scope.Parameters, function(value, key){
+      		if(key != "Files")
+      		{
+      			var param = {}; 
+      			param.flag = "";
+      			param.name = value;
+      			job.parameters.push(param);
+
+      		}
+      		else if (key=="Files")
+      		{
+      			_.each($scope.Parameters.Files, function(value, key){
+      			
+      				var param = {}; 
+      				param.flag = "";
+      				param.name = value.name;
+
+      				job.parameters.push(param);
+
+      			});
+      		}
+
+      	});
+
+      job.inputs = [];
+      _.each($scope.Parameters.Files, function(value, key){
+			var input = {}; 
+      		input.name = value.name;
+	      	job.inputs.push(input);
+
+
+      });
 
       job.type = "job"; 
       job.userEmail = "danaele@email.unc.edu";
@@ -242,7 +227,7 @@ angular.module('brainConnectivity')
 };*/
 
 
-/*  } */
+ } 
 
    
 }]);
