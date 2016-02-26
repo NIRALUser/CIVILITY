@@ -15,6 +15,7 @@
   "dependencies": {
     "good": "^5.1.1",
     "good-console": "^4.1.0",
+    "h2o2": "^5.0.0",
     "hapi": "^8.1.0",
     "jsonfile": "^2.2.3",
     "nodemon": "^1.8.1",

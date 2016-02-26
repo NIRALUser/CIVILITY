@@ -1,5 +1,7 @@
 module.exports = function (server, conf) {
 
+  var options = require("./conf." + conf.env + ".json");
+  
   server.route({
     path: '/clusterpost/{path*}',
     method: '*',
@@ -8,7 +10,8 @@ module.exports = function (server, conf) {
         proxy: {
           redirects: 10,
           mapUri: function(req, callback){
-            var path = req.url.path.replace("/clusterpost", conf.clusterpost);
+            console.log("ddddd",conf);
+            var path = req.url.path.replace("/clusterpost", options.clusterpost);
             callback(null, path);
           },
           passThrough: true,

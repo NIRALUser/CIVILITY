@@ -286,9 +286,6 @@ angular.module('brainConnectivity')
 		        .radius(function(d) { return d.y; })
 		        .angle(function(d) { return d.x / 180 * Math.PI; });
 
-		    var diagram = d3.select("body").append("div")
-		    	.attr("id",$scope.plotID);
-
 		    // Define the div for the tooltip
 		    var div = d3.select('#'+$scope.plotID).append("div") 
 		        .attr("class", "tooltip")

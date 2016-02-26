@@ -1,7 +1,7 @@
 
 
 angular.module('brainConnectivity')
-.controller('tractography', ['$scope','$http','probtrack', 'fileUpload' , function($scope, $http, probtrack, fileUpload) {
+.controller('tractography', ['$scope','$http','probtrack', 'fileUpload','clusterpost' , function($scope, $http, probtrack, fileUpload, clusterpost) {
 
 //	$scope.plotParameters = {};
    $scope.Parameters = {
@@ -191,10 +191,24 @@ angular.module('brainConnectivity')
 
       job.type = "job"; 
       job.userEmail = "danaele@email.unc.edu";
-      job.executionserver =  "testserver";
+      //job.executionserver =  "testserver";
    
 
-      console.log(job);
+   		var serversAvail = clusterpost.getExecutionServers();
+   		d3.select(".selectserver").append("select")
+   			.attr("class","selectBar");
+
+   		_.each(serversAvail, function(server){
+   			//d3.select(".selectBar").append("option")
+   			//	.attr("value",server);
+   			console.log(server);
+   		})
+   		console.log(serversAvail);
+     /* clusterpost.createJob(job)
+      .then(function(res){
+      	console.log(res);
+      });
+      console.log(job);*/
       return job;
 
 
