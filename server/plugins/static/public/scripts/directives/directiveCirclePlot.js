@@ -13,10 +13,44 @@ angular.module('brainConnectivity')
 		$scope.plotParameters.link1 = "";
 		$scope.plotParameters.link2 = "";
 
+		$scope.positionNodes = {};
+		$scope.positionNodes.Left = {};
+		$scope.positionNodes.Right = {};
+		$scope.positionNodes.All = {};
+		$scope.positionNodes.Left.scalePointLeft = 2.4;
+		$scope.positionNodes.Right.scalePointRight = 2.4;
+		$scope.positionNodes.All.scalePointAll = 1.85;
+
+		$scope.positionNodes.Left.offsetXLeft = 70;
+		$scope.positionNodes.Right.offsetXRight = 115;
+		$scope.positionNodes.All.offsetXAll = 68;
+
+		$scope.positionNodes.Left.offsetYLeft = 90;
+		$scope.positionNodes.Right.offsetYRight = 92;
+		$scope.positionNodes.All.offsetYAll = 70;
+
+
 		$scope.plotID = _.uniqueId("divDiagram");
 
     	$scope.choices = [{"id":"average", "value":"1", "label":"Average", "checked":true}, {"id":"max", "value":"2","label":"Maximum","checked":false},{"id":"min", "value":"3","label":"Minumum","checked":false}];
 		 
+		
+
+
+		$scope.plotBrainTemplate = function(){
+
+		}
+
+		$scope.positionCoord = function(x,y,scale) { 
+				if($scope.plotData){
+		    	$scope.removeOldPlot();
+		       	$scope.plotVisible = true  ;
+		      	$scope.Plot();
+		    }
+
+
+		}
+
 		$scope.selectMethodMatrixProcess = function(){
 
 			var method = $scope.plotParameters.method;
@@ -181,7 +215,6 @@ angular.module('brainConnectivity')
                     	jsonLine.imports = imports;
                     	matrixDescription.push(jsonLine);
                		 }
-               		 console.log(matrixDescription);
 		 			return matrixDescription;
 		 		}
 		 }
@@ -248,6 +281,19 @@ angular.module('brainConnectivity')
 		  	circlePlot.parentNode.removeChild(circlePlot);
 		  	var tooltipPlot = document.getElementById("tooltip");
 		  	tooltipPlot.parentNode.removeChild(tooltipPlot);
+		  	var allImg = document.getElementById("divBrainImgALL");
+		  	allImg.parentNode.removeChild(allImg);
+		  	var allLink = document.getElementById("divBrainLinkALL");
+		  	allLink.parentNode.removeChild(allLink);
+		  	var rightImg = document.getElementById("divBrainImgRight");
+		  	rightImg.parentNode.removeChild(rightImg);
+		  	var rightLink = document.getElementById("divBrainLinkRight");
+		  	rightLink.parentNode.removeChild(rightLink);
+		  	var leftImg = document.getElementById("divBrainImgLeft");
+		  	leftImg.parentNode.removeChild(leftImg);
+		  	var leftLink = document.getElementById("divBrainLinkLeft");
+		  	leftLink.parentNode.removeChild(leftLink);
+
 		  	
 		  }
 
@@ -379,7 +425,6 @@ angular.module('brainConnectivity')
 		      
 		     //console.log(thresholdDefaultValue);
 		     var links = $scope.packageImports(nodes,thresholdDefaultValue);
-		     console.log(links);
 		     splines = bundle(links);
 		     //console.log(splines);
 		      
@@ -484,13 +529,13 @@ angular.module('brainConnectivity')
 
 		      if(JSONInfo.listOrdered[1].x != undefined)  //should be improve
 		     {
-		     	var divBrainPlot = d3.select(".divPlot")
+		     /*	var divBrainPlot = d3.select(".divPlot")
 		     	.append("div")
 		     	.attr("class","divBrain")
-		     	.attr("id","divBrain");
+		     	.attr("id","divBrain");*/
 
 		     
-		     var divBrainLeft = d3.select(".divBrain")
+/*		     var divBrainLeft = d3.select(".divBrain")
 		     	.append("div")
 		     	.attr("class","divBrainLeft")
 		     	.attr("id","divBrainLeft");
@@ -504,22 +549,23 @@ angular.module('brainConnectivity')
 		     var divBrainRight = d3.select(".divBrain")
 		     	.append("div")
 		     	.attr("class","divBrainRight")
-		     	.attr("id","divBrainRight");
+		     	.attr("id","divBrainRight");*/
 
-		     var divBrainImgALL = d3.select(".divBrainALL")
+
+		     var divBrainImgALL = d3.select("#divBrainALL")
 		     	.append("div")
 		     	.attr("class","divBrainImgALL")
 		     	.attr("id","divBrainImgALL");
 
-		     var divBrainLinkALL = d3.select(".divBrainALL")
+		     var divBrainLinkALL = d3.select("#divBrainALL")
 		     	.append("div")
 		     	.attr("class","divBrainLinkALL")
 		     	.attr("id","divBrainLinkALL");
 
-		     var svgBrain = d3.select(".divBrainLinkALL")
+		     var svgBrain = d3.select("#divBrainLinkALL")
 		     	.append("svg")
-		    	.attr("width", 300 )
-		        .attr("height", 350);
+		    	.attr("width", 310 )
+		        .attr("height", 310);
 		     
 		     var imgBrain = d3.select(".divBrainImgALL")
 		     .append("img")
@@ -552,10 +598,7 @@ angular.module('brainConnectivity')
 		       var nodeTooltip = d3.select('#'+$scope.plotID).append("div") 
 		       .attr("class", "nodeTooltip")
 		       .attr("id", "nodeTooltip")        
-		       .style("opacity", 0);
-
-		       var multipleScale = 1.85;
-		       
+		       .style("opacity", 0);		       
 		       var CoordDescription = JSONInfo["listOrdered"];
 
 		       var linefunction = d3.svg.line()
@@ -576,20 +619,20 @@ angular.module('brainConnectivity')
 		               var KeyName = c["name"].substring(last+1);
 		      			if(KeyName == seedName)
 		      			{
-		      				x1 = c["x"] + 60;
-		      				x1 = x1 * multipleScale;
+		      				x1 = c["x"] + $scope.positionNodes.All.offsetXAll;
+		      				x1 = x1 * $scope.positionNodes.All.scalePointAll;
 		      				
 		      				y1 = - c["y"];
-		      				y1 = y1 + 70;
-		      				y1 = y1 * multipleScale;
+		      				y1 = y1 + $scope.positionNodes.All.offsetYAll;
+		      				y1 = y1 * $scope.positionNodes.All.scalePointAll;
 		      			}
 		      			else if(KeyName == targetName)
 		      			{
-		      				x2 = c["x"] + 60;
-		      				x2 = x2 * multipleScale;
+		      				x2 = c["x"] + $scope.positionNodes.All.offsetXAll;
+		      				x2 = x2 * $scope.positionNodes.All.scalePointAll;
 		      				y2 = - c["y"];
-		      				y2 = y2 + 70;
-		      				y2 = y2  * multipleScale;
+		      				y2 = y2 + $scope.positionNodes.All.offsetYAll;
+		      				y2 = y2  * $scope.positionNodes.All.scalePointAll;
 		      			}
 		      			
 		      		})
@@ -616,14 +659,14 @@ angular.module('brainConnectivity')
 
 
 		       CoordDescription.forEach(function(d,i){
-		       	var coordX = d["x"]+60;
+		       	var coordX = d["x"]+$scope.positionNodes.All.offsetXAll;
 
 		       	var coordY = -d["y"];
-		       	coordY = coordY+70;
+		       	coordY = coordY+$scope.positionNodes.All.offsetYAll;
 
 		       	svgBrain.append("circle")
-		       		.attr("cx", coordX*multipleScale)
-		       		.attr("cy", coordY*multipleScale)
+		       		.attr("cx", coordX*$scope.positionNodes.All.scalePointAll)
+		       		.attr("cy", coordY*$scope.positionNodes.All.scalePointAll)
 		       		.attr("r", 4)
 		        	.style("fill", "url(#blueCircle)")
 		        	.on("mouseover", function(e,i) {  
@@ -647,19 +690,19 @@ angular.module('brainConnectivity')
 		      
 				
 
-		     	
+		    	
 		       //var line = [{"x":113.49,"y":140.01},{"x":95.40,"y":105.94}];
 
-		      var divBrainImgLeft = divBrainLeft.append("div")
+		      var divBrainImgLeft = d3.select(".divBrainLeft").append("div")
 		     	.attr("class","divBrainImgLeft")
 		     	.attr("id","divBrainImgLeft");
 
-		     var divBrainLinkLeft = divBrainLeft.append("div")
+		     var divBrainLinkLeft = d3.select(".divBrainLeft").append("div")
 		     	.attr("class","divBrainLinkLeft")
 		     	.attr("id","divBrainLinkLeft");
 
 		     var svgBrainLeft = divBrainLinkLeft.append("svg")
-		    	.attr("width", 450 )
+		    	.attr("width", 400 )
 		        .attr("height", 350);
 		     
 		     var imgBrainLeft = divBrainImgLeft.append("img")
@@ -670,14 +713,23 @@ angular.module('brainConnectivity')
 		     .attr("max-width", 400 )
 		     .attr("max-height", 400 );
 
-		     var multipleScaleLeft = 2.4;
+
+		     console.log*("BONJOUR");
 		     var nbLeft =0;
+		     //var offsetXLeft = $scope.positionNodes.Left.offsetXLeft;
+		     //var offsetYLeft = $scope.positionNodes.Left.offsetYLeft;
+		     var scaleLeft = $scope.positionNodes.Left.scalePointLeft;
 			
 			splines.forEach(function(d,n){
 		      		var sized = d.length;
 		      		var seedName = d[0].key;
 		      		var targetName = d[sized-1].key;
-		      		var y1,y2,z1,z2;
+		      		var y1=0;
+		      		var y2=0;
+		      		var z1=0;
+		      		var z2=0;
+
+		      		console.log("Coord splines");
 
 		       	var last1 = seedName.lastIndexOf("_");
 		       	var End1 = seedName.substring(last1+1);
@@ -685,6 +737,7 @@ angular.module('brainConnectivity')
 		       	var End2 = targetName.substring(last2+1);
 		      		if( End1 == "L" && End2 == "L" )
 		      		{
+		      			console.log("Coord splines");
 		      			CoordDescription.forEach(function(c,i){
 
 		      			var last = c["name"].lastIndexOf(".");
@@ -693,23 +746,28 @@ angular.module('brainConnectivity')
 
 		      			if(KeyName == seedName)
 		      			{
-		      				y1 =  -c["y"] 
-		      				y1 = y1 + 90;
-		      				y1 = y1 * multipleScaleLeft;
+		      				console.log(parseFloat(-c["y"]) + parseFloat($scope.positionNodes.Left.offsetXLeft));
+		      				y1 = parseFloat(-c["y"]) + parseFloat($scope.positionNodes.Left.offsetXLeft);
+		      				y1 = y1 * parseFloat($scope.positionNodes.Left.scalePointLeft);
 		      				
-		      				z1 = -c["z"];
-		      				z1 = z1 + 90;
-		      				z1 = z1 * multipleScaleLeft;
+		      				z1 = parseFloat(-c["z"]) + parseFloat($scope.positionNodes.Left.offsetYLeft);
+		      				z1= z1 *  parseFloat($scope.positionNodes.Left.scalePointLeft);
+		      			//	z1 = z1 + $scope.positionNodes.Left.offsetYLeft;
+		      			//	z1 = z1 * $scope.positionNodes.Left.scalePointLeft;
+
+
 		      			}
 		      			else if(KeyName == targetName)
 		      			{
-		      				y2 = -c["y"]
-		      				y2 = y2 + 90;
-		      				y2 = y2 * multipleScaleLeft;
+		      				y2 = parseFloat(-c["y"]);
+		      				y2 = y2 + parseFloat($scope.positionNodes.Left.offsetXLeft);
+		      				y2 = y2 * parseFloat($scope.positionNodes.Left.scalePointLeft);
 		      				
-		      				z2 = -c["z"];
-		      				z2 = z2 + 90;
-		      				z2 = z2  * multipleScaleLeft;
+		      				z2 = parseFloat(-c["z"]);
+		      				z2 = z2+ parseFloat($scope.positionNodes.Left.offsetYLeft);
+		      				z2 = z2 * parseFloat($scope.positionNodes.Left.scalePointLeft);
+
+
 		      			}
 		      			
 		      		})    				      		
@@ -740,18 +798,21 @@ angular.module('brainConnectivity')
 		           if(side == "L")
 		           {
 		           	nbLeft = nbLeft +1;
-		           	var coordY = - d["y"];
-		           	var coordY = coordY +90;
+		           	var coordY = parseFloat(-d["y"]);
+		           	var coordY = coordY+parseFloat($scope.positionNodes.Left.offsetXLeft);
 
-		       		var coordZ = - d["z"];
-		       		coordZ = coordZ+90
-		       	
+		       		var coordZ = parseFloat(-d["z"]);
+		       		coordZ = coordZ+parseFloat($scope.positionNodes.Left.offsetYLeft);
+
+		       		var coordXScale = coordY*parseFloat($scope.positionNodes.Left.scalePointLeft);
+		       		var coordYScale = coordZ*parseFloat($scope.positionNodes.Left.scalePointLeft);
+		       		console.log("coord");
 		       		svgBrainLeft.append("circle")
-		       			.attr("cx", coordY*multipleScaleLeft)
-		       			.attr("cy", coordZ*multipleScaleLeft)
+		       			.attr("cx", coordXScale)
+		       			.attr("cy", coordYScale)
 		       			.attr("r", 4)
-		        			.style("fill", "url(#blueCircle)")
-		        			.on("mouseover", function(e,i) {  
+		        		.style("fill", "url(#blueCircle)")
+		        		.on("mouseover", function(e,i) {  
 		        				nodeTooltip.transition()    
 		                   			.duration(200)    
 		                   			.style("opacity", .9);  
@@ -774,11 +835,11 @@ angular.module('brainConnectivity')
 
 				
 	
-		     var divBrainImgRight = divBrainRight.append("div")
+		     var divBrainImgRight = d3.select(".divBrainRight").append("div")
 		     	.attr("class","divBrainImgRight")
 		     	.attr("id","divBrainImgRight");
 
-		     var divBrainLinkRight = divBrainRight.append("div")
+		     var divBrainLinkRight = d3.select(".divBrainRight").append("div")
 		     	.attr("class","divBrainLinkRight")
 		     	.attr("id","divBrainLinkRight");
 
@@ -795,16 +856,15 @@ angular.module('brainConnectivity')
 		     .attr("max-height", 400 );
 
 
-		     var multipleScaleRight = 2.4;
-		     var nbRight=0;
+	     var nbRight=0;
 
 
 			splines.forEach(function(d,n){
-		      		var sized = d.length;
-		      		var seedName = d[0].key;
-		      		var targetName = d[sized-1].key;
-		      		var y1,y2,z1,z2;
-				console.log("TEST");
+
+		      	var sized = d.length;
+		      	var seedName = d[0].key;
+		      	var targetName = d[sized-1].key;
+		      	var y1,y2,z1,z2;
 		       	var last1 = seedName.lastIndexOf("_");
 		       	var End1 = seedName.substring(last1+1);
 		       	var last2 = targetName.lastIndexOf("_");
@@ -820,22 +880,22 @@ angular.module('brainConnectivity')
 		      			if(KeyName == seedName)
 		      			{
 		      				y1 =  c["y"] 
-		      				y1 = y1 + 125;
-		      				y1 = y1 * multipleScaleLeft;
+		      				y1 = y1 + $scope.positionNodes.Right.offsetXRight;
+		      				y1 = y1 * $scope.positionNodes.Right.scalePointRight;
 		      				
 		      				z1 = -c["z"];
-		      				z1 = z1 + 92;
-		      				z1 = z1 * multipleScaleLeft;
+		      				z1 = z1 + $scope.positionNodes.Right.offsetYRight;
+		      				z1 = z1 * $scope.positionNodes.Right.scalePointRight;
 		      			}
 		      			else if(KeyName == targetName)
 		      			{
 		      				y2 = c["y"]
-		      				y2 = y2 + 125;
-		      				y2 = y2 * multipleScaleLeft;
+		      				y2 = y2 + $scope.positionNodes.Right.offsetXRight;
+		      				y2 = y2 * $scope.positionNodes.Right.scalePointRight;
 		      				
 		      				z2 = -c["z"];
-		      				z2 = z2 + 92;
-		      				z2 = z2  * multipleScaleLeft;
+		      				z2 = z2 + $scope.positionNodes.Right.offsetYRight;
+		      				z2 = z2  * $scope.positionNodes.Right.scalePointRight;
 		      			}
 		      			
 		      		})
@@ -870,14 +930,14 @@ angular.module('brainConnectivity')
 		           {
 		           	nbRight = nbRight +1;
 		           	var coordY = d["y"];
-		           	var coordY = coordY +125;
+		           	var coordY = coordY +$scope.positionNodes.Right.offsetXRight;
 
 		       		var coordZ = - d["z"];
-		       		coordZ = coordZ+92
+		       		coordZ = coordZ+$scope.positionNodes.Right.offsetYRight;
 		       			       	
 		       		svgBrainRight.append("circle")
-		       			.attr("cx", coordY*multipleScaleRight)
-		       			.attr("cy", coordZ*multipleScaleRight)
+		       			.attr("cx", coordY*$scope.positionNodes.Right.scalePointRight)
+		       			.attr("cy", coordZ*$scope.positionNodes.Right.scalePointRight)
 		       			.attr("r", 4)
 		        			.style("fill", "url(#blueCircle)")
 		        			.on("mouseover", function(e,i) {  
@@ -983,6 +1043,22 @@ $scope.packageImports = function (nodes, threshold) {
   //console.log(imports);
   return imports;
 }
+
+		$scope.$watch("positionNodes.Left.scalePointLeft", function(){
+		    console.log("HelloWatch scaleLeft", $scope.positionNodes.Left.scalePointLeft);
+		    $scope.positionCoord();
+		  });
+
+		$scope.$watch("positionNodes.Left.offsetXLeft", function(){
+		    console.log("HelloWatch offsetXLeft", $scope.positionNodes.Left.offsetXLeft);
+		    $scope.positionCoord();
+		  });
+
+		$scope.$watch("positionNodes.Left.offsetYLeft", function(){
+		    console.log("HelloWatch offsetYLeft", $scope.positionNodes.Left.offsetYLeft);
+		    $scope.positionCoord();
+		  });
+
 
 		$scope.$watch("plotParameters.link1", function(){
 		    console.log("HelloWatch tooltip", $scope.plotParameters.link1);

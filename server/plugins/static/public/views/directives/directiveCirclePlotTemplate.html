@@ -29,7 +29,7 @@
 
 <div class="slides">
 <p ng-if="plotVisible"> Diameter of circle : </p>
-<input type="range" class="diameterBar" class="diameterBar" id="diameterBar" min="300" max="1000" value="960" step="10" ng-if="plotVisible" ng-model="plotParameters.diameter" ng-change="diameterValue"/> 
+<input type="range" class="diameterBar" id="diameterBar" min="300" max="1000" value="960" step="10" ng-if="plotVisible" ng-model="plotParameters.diameter" ng-change="diameterValue"/> 
 </div>
 
 </div>
@@ -39,5 +39,34 @@
 </div>
 
 
+
+<div class="brainTemplatePlot" id="brainTemplatePlot" ng-show="plotVisible">
+
+<label> Visualisation brain template connectivity : <input type="checkbox" name="showBrainTemplate" value="showBrainTemplate" ng-model="showBrainTemplate" ng-init="showBrainTemplate=false" />
+
+Change nodes and links position or/and scale : 
+<input type="checkbox" name="modifCoordPosition" value="modifCoordPosition" ng-model="modifCoordPosition" ng-init="modifCoordPosition=false" />
+
+<div class="brainTemplatePlot" ng-show="showBrainTemplate" ng-model="showBrainTemplate" ng-change="plotBrainTemplate">
+
+	<div class="divBrainLeft" id="divBrainLeft">
+
+<div class=modifCoord ng-if="modifCoordPosition">
+	Scale : <input type="range" min="0.01" max="5" step=0.1 ng-model="positionNodes.Left.scalePointLeft" ng-change="positionCoord">
+
+	X-offset : <input type="range" min="-100" max="100" step=0.1 ng-model="positionNodes.Left.offsetXLeft" ng-change="positionCoord">
+
+
+	Y-offset : <input type="range" min="-100" max="100" step=0.1 ng-model="positionNodes.Left.offsetYLeft" ng-change="positionCoord">
+</div>
+	</div>
+
+	<div class="divBrainALL" id="divBrainALL" >
+	</div>
+
+	<div class="divBrainRight" id="divBrainRight" >
+	</div>
+</div>
+</div>
 
 

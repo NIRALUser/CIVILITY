@@ -1,9 +1,15 @@
 
-
 angular.module('brainConnectivity')
 .controller('tractography', ['$scope','$http','probtrack', 'fileUpload','clusterpost' , function($scope, $http, probtrack, fileUpload, clusterpost) {
 
 //	$scope.plotParameters = {};
+	
+	$scope.formOK = false;
+	$scope.serverselect = {
+		selection : null,
+		nbSubmit : 0
+	};
+
    $scope.Parameters = {
    	  subject : "neonate",
    	  Files : {
@@ -17,7 +23,7 @@ angular.module('brainConnectivity')
    	  
       labelsetName: "colour",
       ignoreLabel: false,
-      ignoreLabelID : "",
+      ignoreLabelID : "set labelID",
       overlapping: true,
       loopcheck: true
       }
@@ -46,6 +52,8 @@ angular.module('brainConnectivity')
     $scope.formValidation();
     $scope.Parameters.overlapping = $scope.overlapping;
     $scope.Parameters.loopcheck = $scope.loopcheck;
+
+    $scope.formOK = true;
     $scope.createJobObject();
 
     console.log("END ");
@@ -134,7 +142,7 @@ angular.module('brainConnectivity')
     //empty string if ignoreLabel = false 
     if(!$scope.Parameters.ignoreLabel)
     {
-    	$scope.Parameters.ignoreLabelID = "";
+    	$scope.Parameters.ignoreLabelID = "set labelID";
     }
     
 
@@ -161,7 +169,7 @@ angular.module('brainConnectivity')
       		{
       			var param = {}; 
       			param.flag = "";
-      			param.name = value;
+      			param.name = value.toString();
       			job.parameters.push(param);
 
       		}
@@ -194,21 +202,79 @@ angular.module('brainConnectivity')
       //job.executionserver =  "testserver";
    
 
-   		var serversAvail = clusterpost.getExecutionServers();
-   		d3.select(".selectserver").append("select")
-   			.attr("class","selectBar");
 
-   		_.each(serversAvail, function(server){
-   			//d3.select(".selectBar").append("option")
-   			//	.attr("value",server);
+      //Search server avail 
+   	clusterpost.getExecutionServers().then(function(res){
+   		var servers = res.data;
+   		_.each(servers, function(server){
+
+   			//First request 
+   			if($scope.serverselect.nbSubmit <= 0)
+   			{
+   				d3.select(".serverSelect").append("option")
+   				.attr("value",server.name)
+   				.text(server.name);
+   				$scope.serverselect.nbSubmit ++;
+   			}
+   			//After select one server -- do not add once again option in select tag
+   			else if ($scope.serverselect.nbSubmit > 0 && d3.select(".serverSelect").filter(function()
+   			{
+   				return $(this).val() == server.name;
+   			}).length <= 0)
+   			{
+					d3.select(".serverSelect").append("option")
+   				.attr("value",server.name)
+   				.text(server.name);
+   			}   			
+   				
+   			/*
+				d3.select(".serverSelect").append("option")
+   				.attr("value",server.name)
+   				.text(server.name);
+   				d3.select(".serverSelect").append("option")
+   				.attr("value","server.name")
+   				.text("server.name");*/
+   		
+   			});
+   		});
+   		job.executionserver = $scope.serverselect.selection;
+		//console.log(job);
+
+   			//console.log(serversAvail);
+   			//console.log();
+   			//console.log(serversAvail.$$state);
+   			//console.log(serversAvail.state);
+   		/*_.each(serversAvail, function(server){
+   			
+   			_.each(server, function(s){
+   					console.log(s);
+   			})
+
    			console.log(server);
-   		})
-   		console.log(serversAvail);
-     /* clusterpost.createJob(job)
-      .then(function(res){
-      	console.log(res);
+   		})*/
+
+		console.log(job);
+      	clusterpost.createJob(job)
+      	.then(function(res){
+
+      		//Upload data
+      		console.log(res.data);
+      		var doc = body;
+			var params = [];
+
+			for(var i = 0; i < inputs.length; i++){
+				params.push({
+					filename: inputs[i],
+					id: doc.id
+				});
+			}
+			console.log(params);
+      		console.log("HELLO");
+      	//console.log(res.data);
       });
-      console.log(job);*/
+      console.log(job);
+
+
       return job;
 
 
@@ -242,6 +308,38 @@ angular.module('brainConnectivity')
 
 
  } 
+
+ const uploadfile = function(params){
+
+	var filename = params.filename;
+	var id = params.id;
+
+	return new Promise(function(resolve, reject){
+
+        try{
+            var options = {
+                url : "http://localhost:8180/dataprovider/" + id + "/" + path.basename(filename),
+                method: "PUT",
+                headers:{
+                    "Content-Type": "application/octet-stream"
+                }
+            }
+
+            var stream = fs.createReadStream(filename);
+
+            stream.pipe(request(options, function(err, res, body){
+                    if(err) resolve(err);
+                    
+                    resolve(body);
+                    
+                })
+            );
+        }catch(e){
+            reject(e);
+        }
+
+	});
+}
 
    
 }]);

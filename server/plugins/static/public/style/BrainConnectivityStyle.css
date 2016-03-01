@@ -1,6 +1,25 @@
+.serverChoice{
+ display: inline-block;
+}
 
+.serverSelect{
+  color:#000;
+}
 
+.jobOptions{
+   background-color: #274ED0;
+   color:#fff;
+  border-color: #274ED0;
+  border-width: 3px;
+  padding: 10px 5px 10px 10px ;
+  border-radius: 5px;
+  margin-top: 10px;
 
+}
+
+.nodeCircle{
+
+}
 .case1 , .case2{
   font-style: italic;
   font-size: 15px;
@@ -14,7 +33,7 @@
 }
 
 
-.divBrain{
+.brainTemplatePlot{
   text-align: center;
 }
 
@@ -23,7 +42,10 @@
     display: inline-block;
 }
 
+.divBrainLinkRight, .divBrainImgRight{
+  margin-left: -65px;
 
+}
 .divBrainImgALL, .divBrainImgLeft, .divBrainImgRight{
   position: relative;
 }
@@ -33,15 +55,12 @@
 }
 
 .divBrainLinkALL{
-  margin-left : 15px;
   margin-top: -325px;
 }
 .divBrainLinkLeft{
-  margin-left : -50px;
   margin-top: -375px;
 }
 .divBrainLinkRight{
-  margin-left : -50px;
   margin-top: -375px;
 }
 
