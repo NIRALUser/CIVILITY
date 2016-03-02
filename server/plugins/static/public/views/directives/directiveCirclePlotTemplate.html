@@ -14,22 +14,22 @@
 
   <p ng-if="plotVisible"> <div class="text" ng-if="plotVisible"> Maximum upper value : </div>
 <input type="text" pattern="[0-9]+([,\.][0-9]+)?" value="1"
- ng-model="plotParameters.upperValue" ng-change="upperValue" class="upperValue" ng-if="plotVisible" /> 
+ ng-model="plotParameters.upperValue" ng-change="NewPlot" class="upperValue" ng-if="plotVisible" /> 
 
  <div class="text" id="textMargin" ng-if="plotVisible"> Threshold value :  </div>
 <input type="text" pattern="[0-9]+([,\.][0-9]+)?" value="0"
- ng-model="plotParameters.threshold" ng-change="thresholdValue" class="ValueThreshold" ng-if="plotVisible" /> </p>
+ ng-model="plotParameters.threshold" ng-change="NewPlot" class="ValueThreshold" ng-if="plotVisible" /> </p>
  
   </div>
 
 <div class="slides">
 <p ng-if="plotVisible"> Tension splines value : </p>
-<input type="range" class="tensionBar" id="tensionBar" min="0" max="1" step="0.05" value="0.85" ng-if="plotVisible" ng-model="plotParameters.tension" ng-change="tensionValue"/> 
+<input type="range" class="tensionBar" id="tensionBar" min="0" max="1" step="0.05" value="0.85" ng-if="plotVisible" ng-model="plotParameters.tension" ng-change="NewPlot"/> 
 </div>
 
 <div class="slides">
 <p ng-if="plotVisible"> Diameter of circle : </p>
-<input type="range" class="diameterBar" id="diameterBar" min="300" max="1000" value="960" step="10" ng-if="plotVisible" ng-model="plotParameters.diameter" ng-change="diameterValue"/> 
+<input type="range" class="diameterBar" id="diameterBar" min="300" max="1000" value="960" step="10" ng-if="plotVisible" ng-model="plotParameters.diameter" ng-change="NewPlot"/> 
 </div>
 
 </div>
@@ -49,34 +49,34 @@
 	<div class="divBrainLeft" id="divBrainLeft">
 
 <div class=modifCoord ng-if="modifCoordPosition">
-	Scale : <input type="range" min="0.01" max="5" step=0.1 ng-model="positionNodes.Left.scalePointLeft" ng-change="positionCoord">
+	Scale : <input type="range" min="0.01" max="5" step=0.1 ng-model="positionNodes.Left.scalePointLeft" ng-change="NewPlot">
 
-	X-offset : <input type="range" min="-100" max="150" step=0.1 ng-model="positionNodes.Left.offsetXLeft" ng-change="positionCoord">
+	X-offset : <input type="range" min="-100" max="150" step=0.1 ng-model="positionNodes.Left.offsetXLeft" ng-change="NewPlot">
 
 
-	Y-offset : <input type="range" min="-100" max="150" step=0.1 ng-model="positionNodes.Left.offsetYLeft" ng-change="positionCoord">
+	Y-offset : <input type="range" min="-100" max="150" step=0.1 ng-model="positionNodes.Left.offsetYLeft" ng-change="NewPlot">
 </div>
 	</div>
 
 	<div class="divBrainALL" id="divBrainALL" >
 	<div class=modifCoord ng-if="modifCoordPosition">
-	Scale : <input type="range" min="0.01" max="5" step=0.1 ng-model="positionNodes.All.scalePointAll" ng-change="positionCoord">
+	Scale : <input type="range" min="0.01" max="5" step=0.1 ng-model="positionNodes.All.scalePointAll" ng-change="NewPlot">
 
-	X-offset : <input type="range" min="-100" max="150" step=0.1 ng-model="positionNodes.All.offsetXAll" ng-change="positionCoord">
+	X-offset : <input type="range" min="-100" max="150" step=0.1 ng-model="positionNodes.All.offsetXAll" ng-change="NewPlot">
 
 
-	Y-offset : <input type="range" min="-100" max="150" step=0.1 ng-model="positionNodes.All.offsetYAll" ng-change="positionCoord">
+	Y-offset : <input type="range" min="-100" max="150" step=0.1 ng-model="positionNodes.All.offsetYAll" ng-change="NewPlot">
 </div>
 	</div>
 
 	<div class="divBrainRight" id="divBrainRight" >
 	<div class=modifCoord ng-if="modifCoordPosition">
-	Scale : <input type="range" min="0.01" max="5" step=0.1 ng-model="positionNodes.Right.scalePointRight" ng-change="positionCoord">
+	Scale : <input type="range" min="0.01" max="5" step=0.1 ng-model="positionNodes.Right.scalePointRight" ng-change="NewPlot">
 
-	X-offset : <input type="range" min="-100" max="150" step=0.1 ng-model="positionNodes.Right.offsetXRight" ng-change="positionCoord">
+	X-offset : <input type="range" min="-100" max="150" step=0.1 ng-model="positionNodes.Right.offsetXRight" ng-change="NewPlot">
 
 
-	Y-offset : <input type="range" min="-100" max="150" step=0.1 ng-model="positionNodes.Right.offsetYRight" ng-change="positionCoord">
+	Y-offset : <input type="range" min="-100" max="150" step=0.1 ng-model="positionNodes.Right.offsetYRight" ng-change="NewPlot">
 </div>
 	</div>
 	<h6 class="changePositonCheckbox">  Change nodes and links position or/and scale : 

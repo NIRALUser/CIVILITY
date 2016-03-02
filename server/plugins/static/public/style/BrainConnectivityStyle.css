@@ -303,9 +303,9 @@ body {
 
 .nav > li > a:focus
 {
-  background-color: #0000ff;
+  background-color: #286090;
+  color: #fff
 }
-
 .tractoForm{
 margin: 2% 5% 2% 5%;
 padding: 2% 2% 2% 2%;
@@ -337,3 +337,5 @@ h4, h5{
     height: auto;
     width: 0;
   }
+
+  

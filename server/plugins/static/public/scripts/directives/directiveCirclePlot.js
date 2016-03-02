@@ -1,9 +1,7 @@
 angular.module('brainConnectivity')
 .directive('circlePlot',function($routeParams,$location,probtrack){
 
-
 	function link($scope,$attrs,$filter){
-
 		$scope.plotParameters = {};
 		$scope.plotParameters.threshold = 0;
 		$scope.plotParameters.method = [true,false,false];
@@ -29,28 +27,11 @@ angular.module('brainConnectivity')
 		$scope.positionNodes.Right.offsetYRight = 92;
 		$scope.positionNodes.All.offsetYAll = 58;
 
-
 		$scope.plotID = _.uniqueId("divDiagram");
 
-    	$scope.choices = [{"id":"average", "value":"1", "label":"Average", "checked":true}, {"id":"max", "value":"2","label":"Maximum","checked":false},{"id":"min", "value":"3","label":"Minumum","checked":false}];
-		 
+    	$scope.choices = [{"id":"average", "value":"1", "label":"Average", "checked":true}, {"id":"max", "value":"2","label":"Maximum","checked":false},{"id":"min", "value":"3","label":"Minumum","checked":false}];	 
 		
-
-
-		$scope.plotBrainTemplate = function(){
-
-		}
-
-		$scope.positionCoord = function(x,y,scale) { 
-				if($scope.plotData){
-		    	$scope.removeOldPlot();
-		       	$scope.plotVisible = true  ;
-		      	$scope.Plot();
-		    }
-
-
-		}
-
+		//Select method for Matrix processing : Average / Max values / Min values
 		$scope.selectMethodMatrixProcess = function(){
 
 			var method = $scope.plotParameters.method;
@@ -73,11 +54,11 @@ angular.module('brainConnectivity')
 				$scope.choices[0]["checked"]=true;
 				$scope.plotParameters.method[0]=true;
 				returnMethod = "average";
-
 			}
 			return returnMethod;
 			};
 
+		//Average connectivity matrix 
 		$scope.AverageMatrix = function(matrix){
 			
 			var MatrixProc = [];
@@ -105,6 +86,7 @@ angular.module('brainConnectivity')
 			return MatrixProc;
 			}
 
+		//Connectivty matrix : maximum values
 		$scope.MaximumMatrix = function(matrix){
 
 				var MatrixProc = [];
@@ -138,6 +120,7 @@ angular.module('brainConnectivity')
 					return MatrixProc;
 		}
 
+		//Connectivty matrix : minimum values
 		$scope.MinimumMatrix = function(matrix){
 
 				var MatrixProc = [];
@@ -170,8 +153,10 @@ angular.module('brainConnectivity')
 						})
 					return MatrixProc;
 		}
-		
-		 $scope.CreateDescription = function(JSONInfo, checkbox){
+
+
+		//This function create the description object for d3 plotting
+		$scope.CreateDescription = function(JSONInfo, checkbox){
 				 if($scope.plotData)
 		 		 {		 		 	
 		 		 	console.log("valueCheck" + checkbox);
@@ -218,62 +203,17 @@ angular.module('brainConnectivity')
 		 			return matrixDescription;
 		 		}
 		 }
-
-		 $scope.MatrixProcess = function(){
-    
-		    if($scope.plotData){
+		 
+		 $scope.NewPlot = function(x,y,scale) { 
+				if($scope.plotData){
 		    	$scope.removeOldPlot();
 		       	$scope.plotVisible = true  ;
 		      	$scope.Plot();
 		    }
-		  }
+		}
 
-		  $scope.Tooltip = function(){
-    
-		    if($scope.plotData){
-		    	$scope.removeOldPlot();
-		       	$scope.plotVisible = true  ;
-		      	$scope.Plot();
-		    }
-		  }
-
-		 $scope.thresholdValue = function(){
-    
-		    if($scope.plotData){
-		    	$scope.removeOldPlot();
-		       	$scope.plotVisible = true  ;
-		      	$scope.Plot();
-		    }
-		  }
-
-		  $scope.diameterValue = function(){
-    
-		    if($scope.plotData){
-		    	
-		    	$scope.removeOldPlot();
-		       	$scope.plotVisible = true  ;
-		       	$scope.Plot();
-		    }
-		  }
-
-		  $scope.tensionValue = function(){
-    
-		    if($scope.plotData){
-		    	$scope.removeOldPlot();
-		       	$scope.plotVisible = true  ;
-		      	$scope.Plot();
-		    }
-		  }
-
-		  $scope.upperValue = function(){
-    
-		    if($scope.plotData){
-		    	$scope.removeOldPlot();
-		       	$scope.plotVisible = true  ;
-		      	$scope.Plot();
-		    }
-		  }
-
+		  //This function remove circle plotm tooltips, and brain template plot 
+		  //---This function is call when $scope variable are changing - before call Plot()
 		  $scope.removeOldPlot = function()
 		  {
 		  	console.log("REMOVE");
@@ -293,22 +233,28 @@ angular.module('brainConnectivity')
 		  	leftImg.parentNode.removeChild(leftImg);
 		  	var leftLink = document.getElementById("divBrainLinkLeft");
 		  	leftLink.parentNode.removeChild(leftLink);
+  		  }
 
-		  	
-		  }
-
+		  //Main function -- this function plot brain connectivity on circle and on brain Template
 		  $scope.Plot = function(){
 
+		  	//Catch method used
 		  	var method = $scope.selectMethodMatrixProcess();
 		  	console.log(method + "method");
+
+		  	//Data 
 		    var JSONInfo = $scope.plotData;
+
+		    //Create description object for d3 circle plot
 		    var classes = $scope.CreateDescription(JSONInfo,$scope.selectMethodMatrixProcess());
+		    
+		    //Options
 		    var thresholdDefaultValue = $scope.plotParameters.threshold;
 		    var diameter = $scope.plotParameters.diameter;
-
 		    var tensionSplines = $scope.plotParameters.tension;
 		    var upperValue = $scope.plotParameters.upperValue;
 
+		    //Alert if upper value specified is inferior to threshold value specified
 		    if(upperValue != 0)
 		    {
 		    	if(upperValue <= thresholdDefaultValue) alert("The maximum upper value should be superior to the threshold value");
@@ -367,6 +313,7 @@ angular.module('brainConnectivity')
 		        .range([height/2, 0])
 		        .domain([thresholdDefaultValue, upperValue]);	     
 
+		    //Colorbar 
 		    var svgColorbar = divPlot.append("svg")
 		        .attr("width", 100)
 		        .attr("height", newHeight+10)//+ margin.top + margin.bottom )
@@ -374,7 +321,8 @@ angular.module('brainConnectivity')
 		        .attr("class", "colorBar")
 		      .append("g")
 		        .attr("transform", "translate(" + margin.left + "," + newHeight/4 + ")");
-
+		    
+		    //Define gradient for color bar    
 		    var gradient = svgColorbar.append("defs")
 		      .append("linearGradient")
 		        .attr("id", "gradient")
@@ -415,9 +363,9 @@ angular.module('brainConnectivity')
 		        .attr("height", height/2)
 		        .style("fill", "url(#gradient)");
 
+		    //Add gradient to colorbar
 		    svgColorbar.append("g")
 		        .attr("class", "axis")
-		        //.attr("transform", "translate(0," + height + ")")
 		        .call(d3.svg.axis().scale(y).orient("left").ticks(10));
 
 
@@ -431,10 +379,7 @@ angular.module('brainConnectivity')
 		      var size = $scope.sizeMap(nodes,thresholdDefaultValue);
 
 		      var sizeOfLinksRatio = diameter/35;
-
 		      var MinMax = upperValue - thresholdDefaultValue; 
-		      var invMinMax = 1 / MinMax
-
 
 		      var valLink1=$scope.plotParameters.link1;
 		      var valLink2=$scope.plotParameters.link2;
@@ -475,7 +420,6 @@ angular.module('brainConnectivity')
 		                    .style("top", (d3.event.pageY + 28) + "px");  
 		                })          
 		            .on("mouseout", function(d) {   
-
 		            	var sized = d.length;
 		          		valLink1=d[0].key;
 		          		valLink2=d[sized-1].key;
@@ -527,31 +471,10 @@ angular.module('brainConnectivity')
 				//document.body.style.backgroundImage = "url('data/brainALL.jpg')";
 		      d3.select(self.frameElement).style("height", diameter + "px");  
 
-		      if(JSONInfo.listOrdered[1].x != undefined)  //should be improve
+		     //Plot brain template -- if coord specified in Json table 
+		    if(JSONInfo.listOrdered[1].x != undefined)  //should be improve
 		     {
-		     /*	var divBrainPlot = d3.select(".divPlot")
-		     	.append("div")
-		     	.attr("class","divBrain")
-		     	.attr("id","divBrain");*/
-
-		     
-/*		     var divBrainLeft = d3.select(".divBrain")
-		     	.append("div")
-		     	.attr("class","divBrainLeft")
-		     	.attr("id","divBrainLeft");
-
-		     var divBrainALL = d3.select(".divBrain")
-		     	.append("div")
-		     	.attr("class","divBrainALL")
-		     	.attr("id","divBrainALL");
-
-
-		     var divBrainRight = d3.select(".divBrain")
-		     	.append("div")
-		     	.attr("class","divBrainRight")
-		     	.attr("id","divBrainRight");*/
-
-
+		     //Whole brain connection
 		     var divBrainImgALL = d3.select("#divBrainALL")
 		     	.append("div")
 		     	.attr("class","divBrainImgALL")
@@ -575,7 +498,9 @@ angular.module('brainConnectivity')
 		     .attr("height", "auto" )
 		     .attr("max-width", 400 )
 		     .attr("max-height", 400 );
-	
+			
+
+			//Gradient for nodes 
 		    var gradientCircle = svgBrain.append("defs")
 		        .append("radialGradient")
 		        .attr("id","blueCircle")
@@ -686,13 +611,9 @@ angular.module('brainConnectivity')
 		                   .duration(500)    
 		                   .style("opacity", 0); 
 		        	});
-		       })
-		      
-				
+		       })	    	
 
-		    	
-		       //var line = [{"x":113.49,"y":140.01},{"x":95.40,"y":105.94}];
-
+		       //Left brain template
 		      var divBrainImgLeft = d3.select(".divBrainLeft").append("div")
 		     	.attr("class","divBrainImgLeft")
 		     	.attr("id","divBrainImgLeft");
@@ -712,10 +633,6 @@ angular.module('brainConnectivity')
 		     .attr("height", "auto" )
 		     .attr("max-width", 400 )
 		     .attr("max-height", 400 );
-
-
-		     console.log*("BONJOUR");
-		     var nbLeft =0;
 			
 			splines.forEach(function(d,n){
 		      		var sized = d.length;
@@ -794,7 +711,6 @@ angular.module('brainConnectivity')
 		           var side = d["name"].substring(last+1);
 		           if(side == "L")
 		           {
-		           	nbLeft = nbLeft +1;
 		           	var coordY = parseFloat(-d["y"]);
 		           	var coordY = coordY+parseFloat($scope.positionNodes.Left.offsetXLeft);
 
@@ -851,10 +767,6 @@ angular.module('brainConnectivity')
 		     .attr("height", "auto" )
 		     .attr("max-width", 400 )
 		     .attr("max-height", 400 );
-
-
-	     var nbRight=0;
-
 
 			splines.forEach(function(d,n){
 
@@ -925,7 +837,6 @@ angular.module('brainConnectivity')
 		           var side = d["name"].substring(last+1);
 		           if(side == "R")
 		           {
-		           	nbRight = nbRight +1;
 		           	var coordY = d["y"];
 		           	var coordY = coordY +parseFloat($scope.positionNodes.Right.offsetXRight);
 
@@ -955,75 +866,67 @@ angular.module('brainConnectivity')
 		                   .style("opacity", 0); 
 		        			});
 		           }
-
-
 		       })
 		     }
-
 		  }
 
-		  $scope.colorHSV = function(size,Min,Max){
-
-		  		if(size == "max")
-		  		{
-		  			var color = d3.hsl(0,1,0.5);
-		  		} 
-		  		else
-		  		{
-		  			var range = Max - Min; 
-		  			var temp = size - Min;
-		  			var alpha = temp/range ; 
-
-		        	var hue = 240 * alpha ;
-		        
-		        	var color = d3.hsl(240-hue,1,0.5);
-		  		}
-		  		
-		        return color;
-		    }
+	//This function return a color accordinf to a value (size) a a range specified in inputs  
+	$scope.colorHSV = function(size,Min,Max){
+		if(size == "max")
+		{
+		  	var color = d3.hsl(0,1,0.5);
+		} 
+		else
+		{
+		  	var range = Max - Min; 
+		  	var temp = size - Min;
+		  	var alpha = temp/range ; 
+			var hue = 240 * alpha ;
+		    var color = d3.hsl(240-hue,1,0.5);
+		}		  		
+		return color;
+	 }
 		       
-		$scope.sizeMap = function (nodes,threshold) {
+	//This function return the size of Map (connectivity description) according to a threshold value
+	$scope.sizeMap = function (nodes,threshold) {
 		    var size = [];
 		    // Compute a map from name to node.
 		      nodes.forEach(function(d) {
 		       if (d.size) 
 		        {
-		            d.size.forEach(function(i) {
+		          d.size.forEach(function(i) {
 		          if (i > threshold) size.push(i);
-		    });
-		          
+		    		});
 		        }
 		  });    
 		   return size;
 		}
 
-		// Lazily construct the package hierarchy from class names.
-$scope.packageHierarchy = function (classes) {
-  var map = {};
-  function find(name, data) {
-    var node = map[name], i;
-    if (!node) {
-      node = map[name] = data || {name: name, children: []};
-      if (name.length) {
-        node.parent = find(name.substring(0, i = name.lastIndexOf(".")));
-        node.parent.children.push(node);
-        node.key = name.substring(i + 1);
-      }
-    }
-    return node;
-  }
-  classes.forEach(function(d) {
-    find(d.name, d);
-  });
-
-  return map[""];
-}
+	// Lazily construct the package hierarchy from class names.
+	$scope.packageHierarchy = function (classes) {
+  		var map = {};
+  		function find(name, data) {
+    		var node = map[name], i;
+    		if (!node) {
+      			node = map[name] = data || {name: name, children: []};
+     			 if (name.length) {
+        			node.parent = find(name.substring(0, i = name.lastIndexOf(".")));
+        			node.parent.children.push(node);
+        			node.key = name.substring(i + 1);
+      				}
+    			}
+    		return node;
+  		}
+  		classes.forEach(function(d) {
+    	find(d.name, d);
+  	});
+  	return map[""];
+	}
 
 // Return a list of imports for the given array of nodes.
 $scope.packageImports = function (nodes, threshold) {
   var map = {},
       imports = [];
-      //console.log(nodes);
   // Compute a map from name to node.
   nodes.forEach(function(d) {
     map[d.name] = d;
@@ -1037,85 +940,86 @@ $scope.packageImports = function (nodes, threshold) {
       }
     });
   });
-  //console.log(imports);
   return imports;
 }
 
+		
+	//Watch scope variable
 		$scope.$watch("positionNodes.Left.scalePointLeft", function(){
 		    console.log("HelloWatch scaleLeft", $scope.positionNodes.Left.scalePointLeft);
-		    $scope.positionCoord();
+		    $scope.NewPlot();
 		  });
 
 		$scope.$watch("positionNodes.Left.offsetXLeft", function(){
 		    console.log("HelloWatch offsetXLeft", $scope.positionNodes.Left.offsetXLeft);
-		    $scope.positionCoord();
+		    $scope.NewPlot();
 		  });
 
 		$scope.$watch("positionNodes.Left.offsetYLeft", function(){
 		    console.log("HelloWatch offsetYLeft", $scope.positionNodes.Left.offsetYLeft);
-		    $scope.positionCoord();
+		    $scope.NewPlot();
 		  });
 
 		$scope.$watch("positionNodes.All.scalePointAll", function(){
 		    console.log("HelloWatch scaleAll", $scope.positionNodes.All.scalePointAll);
-		    $scope.positionCoord();
+		    $scope.NewPlot();
 		  });
 
 		$scope.$watch("positionNodes.All.offsetXAll", function(){
 		    console.log("HelloWatch offsetXAll", $scope.positionNodes.All.offsetXAll);
-		    $scope.positionCoord();
+		    $scope.NewPlot();
 		  });
 
 		$scope.$watch("positionNodes.All.offsetYAll", function(){
 		    console.log("HelloWatch offsetYAll", $scope.positionNodes.All.offsetYAll);
-		    $scope.positionCoord();
+		    $scope.NewPlot();
 		  });
 
 		$scope.$watch("positionNodes.Right.scalePointRight", function(){
 		    console.log("HelloWatch scaleRight", $scope.positionNodes.Right.scalePointRight);
-		    $scope.positionCoord();
+		    $scope.NewPlot();
 		  });
 
 		$scope.$watch("positionNodes.Right.offsetXRight", function(){
 		    console.log("HelloWatch offsetXRight", $scope.positionNodes.Right.offsetXRight);
-		    $scope.positionCoord();
+		    $scope.NewPlot();
 		  });
 
 		$scope.$watch("positionNodes.Right.offsetYRight", function(){
 		    console.log("HelloWatch offsetYRight", $scope.positionNodes.Right.offsetYRight);
-		    $scope.positionCoord();
+		    $scope.NewPlot();
 		  });
 
 
 		$scope.$watch("plotParameters.link1", function(){
 		    console.log("HelloWatch tooltip", $scope.plotParameters.link1);
-		    $scope.Tooltip();
+		    $scope.NewPlot();
 		  });
 
 		$scope.$watch("plotParameters.link2", function(){
 		    console.log("HelloWatch tooltip", $scope.plotParameters.link2);
-		    $scope.Tooltip();
+		    $scope.NewPlot();
 		  });
 
 
 		$scope.$watch("plotParameters.threshold", function(){
 		    console.log("HelloWatch thres", $scope.plotParameters.threshold);
-		    $scope.thresholdValue();
+		    $scope.NewPlot();
 		  });
 
 		$scope.$watch("plotParameters.diameter", function(){
 		    console.log("HelloWatch diam", $scope.plotParameters.diameter);
-		    $scope.diameterValue();
+		    $scope.NewPlot();
 		  });
 
 		$scope.$watch("plotParameters.tension", function(){
 		    console.log("HelloWatch tension", $scope.plotParameters.tension);
-		    $scope.tensionValue();
+		    $scope.NewPlot();
 		  });
 
 		$scope.$watch("plotParameters.upperValue", function(){
 		    console.log("HelloWatch upper", $scope.plotParameters.upperValue);
-		    $scope.upperValue();
+		    $scope.NewPlot();
 		  });
 
 		//Checkboxes
@@ -1129,7 +1033,7 @@ $scope.packageImports = function (nodes, threshold) {
 		    	$scope.plotParameters.method[2]=false;
 		    }
 		    console.log("HelloWatch processvalue", $scope.plotParameters.method);
-		    $scope.MatrixProcess();
+		    $scope.NewPlot();
 		  });
 
 		$scope.$watch("plotParameters.method[1]", function(){
@@ -1142,7 +1046,7 @@ $scope.packageImports = function (nodes, threshold) {
 		    	$scope.plotParameters.method[2]=false;
 		    }
 		    console.log("HelloWatch processvalue", $scope.plotParameters.method);
-		    $scope.MatrixProcess();
+		    $scope.NewPlot();
 		  });
 
 		$scope.$watch("plotParameters.method[2]", function(){
@@ -1153,7 +1057,7 @@ $scope.packageImports = function (nodes, threshold) {
 		    	$scope.plotParameters.method[0]=false;
 		    	$scope.plotParameters.method[1]=false;
 		    }
-		    $scope.MatrixProcess();
+		    $scope.NewPlot();
 		    console.log("HelloWatch processvalue", $scope.plotParameters.method);
 		  });
 
