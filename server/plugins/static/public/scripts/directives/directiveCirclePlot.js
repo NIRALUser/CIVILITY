@@ -27,7 +27,7 @@ angular.module('brainConnectivity')
 
 		$scope.positionNodes.Left.offsetYLeft = 90;
 		$scope.positionNodes.Right.offsetYRight = 92;
-		$scope.positionNodes.All.offsetYAll = 70;
+		$scope.positionNodes.All.offsetYAll = 58;
 
 
 		$scope.plotID = _.uniqueId("divDiagram");
@@ -565,7 +565,7 @@ angular.module('brainConnectivity')
 		     var svgBrain = d3.select("#divBrainLinkALL")
 		     	.append("svg")
 		    	.attr("width", 310 )
-		        .attr("height", 310);
+		        .attr("height", 325);
 		     
 		     var imgBrain = d3.select(".divBrainImgALL")
 		     .append("img")
@@ -619,20 +619,20 @@ angular.module('brainConnectivity')
 		               var KeyName = c["name"].substring(last+1);
 		      			if(KeyName == seedName)
 		      			{
-		      				x1 = c["x"] + $scope.positionNodes.All.offsetXAll;
-		      				x1 = x1 * $scope.positionNodes.All.scalePointAll;
+		      				x1 = c["x"] + parseFloat($scope.positionNodes.All.offsetXAll);
+		      				x1 = x1 * parseFloat($scope.positionNodes.All.scalePointAll);
 		      				
 		      				y1 = - c["y"];
-		      				y1 = y1 + $scope.positionNodes.All.offsetYAll;
-		      				y1 = y1 * $scope.positionNodes.All.scalePointAll;
+		      				y1 = y1 + parseFloat($scope.positionNodes.All.offsetYAll);
+		      				y1 = y1 * parseFloat($scope.positionNodes.All.scalePointAll);
 		      			}
 		      			else if(KeyName == targetName)
 		      			{
-		      				x2 = c["x"] + $scope.positionNodes.All.offsetXAll;
-		      				x2 = x2 * $scope.positionNodes.All.scalePointAll;
+		      				x2 = c["x"] + parseFloat($scope.positionNodes.All.offsetXAll);
+		      				x2 = x2 * parseFloat($scope.positionNodes.All.scalePointAll);
 		      				y2 = - c["y"];
-		      				y2 = y2 + $scope.positionNodes.All.offsetYAll;
-		      				y2 = y2  * $scope.positionNodes.All.scalePointAll;
+		      				y2 = y2 + parseFloat($scope.positionNodes.All.offsetYAll);
+		      				y2 = y2  * parseFloat($scope.positionNodes.All.scalePointAll);
 		      			}
 		      			
 		      		})
@@ -659,14 +659,14 @@ angular.module('brainConnectivity')
 
 
 		       CoordDescription.forEach(function(d,i){
-		       	var coordX = d["x"]+$scope.positionNodes.All.offsetXAll;
+		       	var coordX = d["x"]+parseFloat($scope.positionNodes.All.offsetXAll);
 
 		       	var coordY = -d["y"];
-		       	coordY = coordY+$scope.positionNodes.All.offsetYAll;
+		       	coordY = coordY+parseFloat($scope.positionNodes.All.offsetYAll);
 
 		       	svgBrain.append("circle")
-		       		.attr("cx", coordX*$scope.positionNodes.All.scalePointAll)
-		       		.attr("cy", coordY*$scope.positionNodes.All.scalePointAll)
+		       		.attr("cx", coordX*parseFloat($scope.positionNodes.All.scalePointAll))
+		       		.attr("cy", coordY*parseFloat($scope.positionNodes.All.scalePointAll))
 		       		.attr("r", 4)
 		        	.style("fill", "url(#blueCircle)")
 		        	.on("mouseover", function(e,i) {  
@@ -716,9 +716,6 @@ angular.module('brainConnectivity')
 
 		     console.log*("BONJOUR");
 		     var nbLeft =0;
-		     //var offsetXLeft = $scope.positionNodes.Left.offsetXLeft;
-		     //var offsetYLeft = $scope.positionNodes.Left.offsetYLeft;
-		     var scaleLeft = $scope.positionNodes.Left.scalePointLeft;
 			
 			splines.forEach(function(d,n){
 		      		var sized = d.length;
@@ -880,22 +877,22 @@ angular.module('brainConnectivity')
 		      			if(KeyName == seedName)
 		      			{
 		      				y1 =  c["y"] 
-		      				y1 = y1 + $scope.positionNodes.Right.offsetXRight;
-		      				y1 = y1 * $scope.positionNodes.Right.scalePointRight;
+		      				y1 = y1 + parseFloat($scope.positionNodes.Right.offsetXRight);
+		      				y1 = y1 * parseFloat($scope.positionNodes.Right.scalePointRight);
 		      				
 		      				z1 = -c["z"];
-		      				z1 = z1 + $scope.positionNodes.Right.offsetYRight;
-		      				z1 = z1 * $scope.positionNodes.Right.scalePointRight;
+		      				z1 = z1 + parseFloat($scope.positionNodes.Right.offsetYRight);
+		      				z1 = z1 * parseFloat($scope.positionNodes.Right.scalePointRight);
 		      			}
 		      			else if(KeyName == targetName)
 		      			{
 		      				y2 = c["y"]
-		      				y2 = y2 + $scope.positionNodes.Right.offsetXRight;
-		      				y2 = y2 * $scope.positionNodes.Right.scalePointRight;
+		      				y2 = y2 + parseFloat($scope.positionNodes.Right.offsetXRight);
+		      				y2 = y2 * parseFloat($scope.positionNodes.Right.scalePointRight);
 		      				
 		      				z2 = -c["z"];
-		      				z2 = z2 + $scope.positionNodes.Right.offsetYRight;
-		      				z2 = z2  * $scope.positionNodes.Right.scalePointRight;
+		      				z2 = z2 + parseFloat($scope.positionNodes.Right.offsetYRight);
+		      				z2 = z2  * parseFloat($scope.positionNodes.Right.scalePointRight);
 		      			}
 		      			
 		      		})
@@ -930,14 +927,14 @@ angular.module('brainConnectivity')
 		           {
 		           	nbRight = nbRight +1;
 		           	var coordY = d["y"];
-		           	var coordY = coordY +$scope.positionNodes.Right.offsetXRight;
+		           	var coordY = coordY +parseFloat($scope.positionNodes.Right.offsetXRight);
 
 		       		var coordZ = - d["z"];
-		       		coordZ = coordZ+$scope.positionNodes.Right.offsetYRight;
+		       		coordZ = coordZ+parseFloat($scope.positionNodes.Right.offsetYRight);
 		       			       	
 		       		svgBrainRight.append("circle")
-		       			.attr("cx", coordY*$scope.positionNodes.Right.scalePointRight)
-		       			.attr("cy", coordZ*$scope.positionNodes.Right.scalePointRight)
+		       			.attr("cx", coordY*parseFloat($scope.positionNodes.Right.scalePointRight))
+		       			.attr("cy", coordZ*parseFloat($scope.positionNodes.Right.scalePointRight))
 		       			.attr("r", 4)
 		        			.style("fill", "url(#blueCircle)")
 		        			.on("mouseover", function(e,i) {  
@@ -1056,6 +1053,36 @@ $scope.packageImports = function (nodes, threshold) {
 
 		$scope.$watch("positionNodes.Left.offsetYLeft", function(){
 		    console.log("HelloWatch offsetYLeft", $scope.positionNodes.Left.offsetYLeft);
+		    $scope.positionCoord();
+		  });
+
+		$scope.$watch("positionNodes.All.scalePointAll", function(){
+		    console.log("HelloWatch scaleAll", $scope.positionNodes.All.scalePointAll);
+		    $scope.positionCoord();
+		  });
+
+		$scope.$watch("positionNodes.All.offsetXAll", function(){
+		    console.log("HelloWatch offsetXAll", $scope.positionNodes.All.offsetXAll);
+		    $scope.positionCoord();
+		  });
+
+		$scope.$watch("positionNodes.All.offsetYAll", function(){
+		    console.log("HelloWatch offsetYAll", $scope.positionNodes.All.offsetYAll);
+		    $scope.positionCoord();
+		  });
+
+		$scope.$watch("positionNodes.Right.scalePointRight", function(){
+		    console.log("HelloWatch scaleRight", $scope.positionNodes.Right.scalePointRight);
+		    $scope.positionCoord();
+		  });
+
+		$scope.$watch("positionNodes.Right.offsetXRight", function(){
+		    console.log("HelloWatch offsetXRight", $scope.positionNodes.Right.offsetXRight);
+		    $scope.positionCoord();
+		  });
+
+		$scope.$watch("positionNodes.Right.offsetYRight", function(){
+		    console.log("HelloWatch offsetYRight", $scope.positionNodes.Right.offsetYRight);
 		    $scope.positionCoord();
 		  });
 
