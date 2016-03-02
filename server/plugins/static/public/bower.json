@@ -28,6 +28,7 @@
     "angular-loader": "1.2.x",
     "angular-mocks": "~1.2.x",
     "bootstrap": "~3.3.2",
-    "d3": "~3.5.10"
+    "d3": "~3.5.10",
+    "html2canvas" : "^0.5.0-beta4"
   }
 }

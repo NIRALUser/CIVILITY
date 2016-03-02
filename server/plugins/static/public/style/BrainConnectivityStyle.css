@@ -27,6 +27,9 @@
   margin-top: 10px;
 
 }
+.title{
+  margin-top: -80px;
+}
 
 .nodeCircle{
 
@@ -40,6 +43,9 @@
   border-style: solid;
   border-color: #286090;
   border-width: 3px;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 2%;
 
 }
 

@@ -2,8 +2,6 @@
 angular.module('brainConnectivity')
 .controller('tractography', ['$scope','$http','probtrack', 'fileUpload','clusterpost' , function($scope, $http, probtrack, fileUpload, clusterpost) {
 
-//	$scope.plotParameters = {};
-	
 	$scope.formOK = false;
 	$scope.serverselect = {
 		selection : null,
@@ -27,34 +25,18 @@ angular.module('brainConnectivity')
       overlapping: true,
       loopcheck: true
       }
- 
-/*  $scope.submit = function(){
-
-    probtrack.getFDTMatrix()
-    .then(function(response){
-      $scope.ButtonClicked = true;
-      $scope.plotParameters.link1 = "";
-      $scope.plotParameters.link2 = "";
-      $scope.plotParameters.threshold = 0.1;
-      $scope.plotParameters.method = [true,false,false];
-      $scope.plotParameters.tension = 85;
-      $scope.plotParameters.diameter = 960
-      $scope.plotParameters.upperValue = 1;
-      $scope.plotParameters.data = response.data;
-      $scope.Plot;
-    }).catch(console.error);
-
-  };*/
 
   $scope.paramSubmitJob = function()
   {
     console.log("Submit");
-    $scope.formValidation();
-    $scope.Parameters.overlapping = $scope.overlapping;
-    $scope.Parameters.loopcheck = $scope.loopcheck;
-
-    $scope.formOK = true;
-    $scope.createJobObject();
+    $scope.formOK = $scope.formValidation();
+    console.log("Valid",$scope.formOK);
+    if($scope.formOK == true)
+    {
+        $scope.Parameters.overlapping = $scope.overlapping;
+        $scope.Parameters.loopcheck = $scope.loopcheck;
+        $scope.createJobObject();
+    }
 
     console.log("END ");
     console.log($scope.Parameters);
@@ -144,6 +126,7 @@ angular.module('brainConnectivity')
     {
     	$scope.Parameters.ignoreLabelID = "set labelID";
     }
+    return true;
     
 
   };
@@ -197,6 +180,12 @@ angular.module('brainConnectivity')
 
       });
 
+      job.outputs = [];
+      var param = {}; 
+      param.type = "file";
+      param.name = "output.jpg";
+      job.outputs.push(param);
+
       job.type = "job"; 
       job.userEmail = "danaele@email.unc.edu";
       //job.executionserver =  "testserver";
@@ -204,7 +193,7 @@ angular.module('brainConnectivity')
 
 
       //Search server avail 
-   	clusterpost.getExecutionServers().then(function(res){
+   	  clusterpost.getExecutionServers().then(function(res){
    		var servers = res.data;
    		_.each(servers, function(server){
 
@@ -226,18 +215,19 @@ angular.module('brainConnectivity')
    				.attr("value",server.name)
    				.text(server.name);
    			}   			
-   				
-   			/*
-				d3.select(".serverSelect").append("option")
-   				.attr("value",server.name)
-   				.text(server.name);
-   				d3.select(".serverSelect").append("option")
-   				.attr("value","server.name")
-   				.text("server.name");*/
+ 		
+ 			});
+ 		});
+      if($scope.serverselect.selection == "" || $scope.serverselect.selection == null)
+      {
+          alert("No server specified - you must choose one server to run a job on it");
+      }
+      else
+      {
+          job.executionserver = $scope.serverselect.selection;
+
+      }
    		
-   			});
-   		});
-   		job.executionserver = $scope.serverselect.selection;
 		//console.log(job);
 
    			//console.log(serversAvail);
@@ -253,14 +243,19 @@ angular.module('brainConnectivity')
    			console.log(server);
    		})*/
 
-		console.log(job);
-      	clusterpost.createJob(job)
+/*		console.log(job);
+    var sol = clusterpost.createJob(job);
+    console.log(JSON.stringify(sol));*/
+
+      
+    clusterpost.createJob(job)
       	.then(function(res){
 
+          console.log("TOP");
       		//Upload data
       		console.log(res.data);
       		var doc = body;
-			var params = [];
+			    var params = [];
 
 			for(var i = 0; i < inputs.length; i++){
 				params.push({
@@ -271,41 +266,19 @@ angular.module('brainConnectivity')
 			console.log(params);
       		console.log("HELLO");
       	//console.log(res.data);
-      });
+      })
+      .catch(function(e)
+          {
+            console.log(e);
+            var error_msg = e.data.message;
+            //ar msgPARSE = JSON.parse(error_msg);
+            //console.log(msgPARSE);
+            console.log(e.data.message);
+          });
       console.log(job);
-
+      
 
       return job;
-
-
-/*    var job = {
-    "executable": "convert",
-    "parameters": [
-        {
-            "flag": "",
-            "name": "pic.jpg"
-        },
-        {
-            "flag": "",
-            "name": "pic.eps"
-        }
-    ],
-    "inputs": [
-        {
-            "name": "pic.jpg"
-        }
-    ],
-    "outputs": [
-        {
-            "type": "file",
-            "name": "pic.eps"
-        }
-    ],
-    "type": "job",
-    "userEmail": "juanprietob@gmail.com",
-    "executionserver" : "testserver"
-};*/
-
 
  } 
 
