@@ -18,11 +18,17 @@ module.exports = function(server,options)
         });
     }
 
+    handler.viewMat = function (request, reply)
+    {
+      
+    }
+
     handler.getFDTMatrix = function (request, reply)
     {
 
         //var array = ["/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/fdt_network_matrix", "/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/TABLE_AAL.json"];
-        var array = ["/work/danaele/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/fdt_network_matrix_average", "/work/danaele/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/TABLE_AAL.json"];
+       // var array = ["/work/danaele/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/fdt_network_matrix_average", "/work/danaele/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/TABLE_AAL.json"];
+       var array = ["/Human2/Neonate-1-2yr/tractography_changeParam_test/Network_initialParam_P_5000_sampvox05/fdt_network_matrix", "/work/danaele/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/TABLE_AAL.json"];
 
         Promise.map(array, readFile)
         .then(function(arrayData){

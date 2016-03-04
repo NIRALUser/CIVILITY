@@ -248,7 +248,7 @@ angular.module('brainConnectivity')
     console.log(JSON.stringify(sol));*/
 
       
-    clusterpost.createJob(job)
+/*    clusterpost.createJob(job)
       	.then(function(res){
 
           console.log("TOP");
@@ -274,8 +274,11 @@ angular.module('brainConnectivity')
             //ar msgPARSE = JSON.parse(error_msg);
             //console.log(msgPARSE);
             console.log(e.data.message);
-          });
-      console.log(job);
+          });*/
+
+   //  var job = JSON.parse("job.json");
+  var test = probtrack.getJSONjob;
+      console.log(test);
       
 
       return job;
