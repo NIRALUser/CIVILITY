@@ -17,7 +17,7 @@ DWI Image :<input type="file" id="DWI" file-model="Parameters.Files.DWI"/><br>
 
 T1 reference in DWI space :<input type = "file" id="T1" file-model="Parameters.Files.T1"/> <br>
 
-Brain mask in DWI space :<input type = "file" id="BrainMask" file-model="Parameters.Files.BrainMask"/> <br>
+Brain mask in DWI space :<input type = "file" id="BrainMask" file-model="Parameters.Files.BrainMask" /> <br>
 
 Parcellation table (JSON file) : 
 <input type ="file" id="JSON" file-model="Parameters.Files.parcellationTable"/> <br>
@@ -49,12 +49,11 @@ Overlapping
 Loopcheck
 <input type="checkbox" name="loopcheck" value="loopcheck" ng-model="loopcheck" ng-init="loopcheck=true" />
 
-<div ng-if="formOK" class="jobOptions">
+<div  class="jobOptions">
 <h5> Option for submit job :</h5>
 <div class="serverChoice">
 <p> Select server to run job</p>
-<select class="serverSelect" id="serverSelect"ng-model="serverselect.selection">
- <option value="">- Select one server-</option>
+<select class="serverSelect" id="serverSelect" ng-model="serverselect.selection" ng-options="server.name for server in serverselect.servers"> 
 </select>
 </div>
 </div>

@@ -4,8 +4,7 @@ angular.module('brainConnectivity')
 
 	$scope.formOK = false;
 	$scope.serverselect = {
-		selection : null,
-		nbSubmit : 0
+		selection : null
 	};
 
    $scope.Parameters = {
@@ -26,6 +25,8 @@ angular.module('brainConnectivity')
       loopcheck: true
       }
 
+  $scope.data = ["DWI", "T1", "BrainMask", "JSON", "innerSurface", "colorSurface"]
+  $scope.params = [];
   $scope.paramSubmitJob = function()
   {
     console.log("Submit");
@@ -131,7 +132,6 @@ angular.module('brainConnectivity')
 
   };
 
-
 /* $scope.uploadFile = function(){
         var file = $scope.DWI;
         console.log('file is ' );
@@ -140,6 +140,50 @@ angular.module('brainConnectivity')
         fileUpload.uploadFileToUrl(file, uploadUrl);
     };*/
 
+    /*$scope.addAttachment = function(id, array, index){
+      var i = index;
+      var stream = fs.createReadStream(params[index].filename);
+
+      stream.pipe(request(options, function(err, res, body){
+          if(err) resolve(err);
+          resolve(body);
+             })
+          );
+
+      return clusterpost.addAttachment(id, array[i], data)
+      .then(function(res){
+        if(index < array.length){
+          return $scope.addAttachment(id, filename2, index+1);
+        }
+        return "ok";
+      })
+    }*/
+
+  clusterpost.getExecutionServers().then(function(res){
+    $scope.serverselect.servers = res.data;
+    // _.each(servers, function(server){
+
+    //   //First request 
+    //   if($scope.serverselect.nbSubmit <= 0)
+    //   {
+    //     d3.select(".serverSelect").append("option")
+    //     .attr("value",server.name)
+    //     .text(server.name);
+    //     $scope.serverselect.nbSubmit ++;
+    //   }
+    //   //After select one server -- do not add once again option in select tag
+    //   else if ($scope.serverselect.nbSubmit > 0 && d3.select(".serverSelect").filter(function()
+    //   {
+    //     return $(this).val() == server.name;
+    //   }).length <= 0)
+    //   {
+    //     d3.select(".serverSelect").append("option")
+    //     .attr("value",server.name)
+    //     .text(server.name);
+    //   }         
+  
+    // });
+   });
 
    $scope.createJobObject = function(){
       var job = {};
@@ -193,151 +237,78 @@ angular.module('brainConnectivity')
 
 
       //Search server avail 
-   	  clusterpost.getExecutionServers().then(function(res){
-   		var servers = res.data;
-   		_.each(servers, function(server){
-
-   			//First request 
-   			if($scope.serverselect.nbSubmit <= 0)
-   			{
-   				d3.select(".serverSelect").append("option")
-   				.attr("value",server.name)
-   				.text(server.name);
-   				$scope.serverselect.nbSubmit ++;
-   			}
-   			//After select one server -- do not add once again option in select tag
-   			else if ($scope.serverselect.nbSubmit > 0 && d3.select(".serverSelect").filter(function()
-   			{
-   				return $(this).val() == server.name;
-   			}).length <= 0)
-   			{
-					d3.select(".serverSelect").append("option")
-   				.attr("value",server.name)
-   				.text(server.name);
-   			}   			
- 		
- 			});
- 		});
       if($scope.serverselect.selection == "" || $scope.serverselect.selection == null)
       {
           alert("No server specified - you must choose one server to run a job on it");
       }
       else
       {
-          job.executionserver = $scope.serverselect.selection;
-
+          job.executionserver = $scope.serverselect.selection.name;
       }
-   		
-		//console.log(job);
 
-   			//console.log(serversAvail);
-   			//console.log();
-   			//console.log(serversAvail.$$state);
-   			//console.log(serversAvail.state);
-   		/*_.each(serversAvail, function(server){
-   			
-   			_.each(server, function(s){
-   					console.log(s);
-   			})
-
-   			console.log(server);
-   		})*/
-
-/*		console.log(job);
-    var sol = clusterpost.createJob(job);
-    console.log(JSON.stringify(sol));*/
-
-    $scope.addAttachment = function(id, array, index){
-      return clusterpost.addAttachment(id, filename[index], data)
-      .then(function(res){
-        if(index < array.length){
-          return $scope.addAttachment(id, filename2, index+1);
-        }
-        return "ok";
-      })
-    }
-
-      
+    $scope.params = [];
+    var job_id = "";  
     clusterpost.createJob(job)
-      	.then(function(res){
+  	.then(function(res){
 
-          console.log("TOP");
-      		//Upload data
-      		console.log(res.data);
-      		var doc = body;
-			    var params = [];
-
-			for(var i = 0; i < inputs.length; i++){
-				params.push({
-					filename: inputs[i],
-					id: doc.id
-				});
-			}
-			console.log(params);
-      		console.log("HELLO");
-      	//console.log(res.data);
-      })
-
-        clusterpost.addAttachment(id, filename, data)
-        .then(function(res){
-          return clusterpost.addAttachment(id, filename2, data2);
-        })
-        .then(function(res){
-          return clusterpost.addAttachment(id, filename3, data3);
-        })
-      .catch(function(e)
-          {
-            console.log(e);
-            var error_msg = e.data.message;
-            var msgPARSE = JSON.parse(error_msg);
-            console.log(msgPARSE);
-            console.log(e.data.message);
-          });
-
-   //  var job = JSON.parse("job.json");
-
-
-/*  var test = probtrack.getJSONjob;
-      console.log(test);*/
+      console.log($scope.Parameters.Files);
+  		//Upload data
+  		console.log(res.data);
+  		var doc = res.data;
+      job_id = doc.id;
+     
+      $scope.readFiles(doc.id);
+    })
+    .catch(console.log);
+       
       
 
       return job;
 
- } 
+ }
 
- const uploadfile = function(params){
+  $scope.uploadPromise = function(jobid, file){
+    return new Promise(function(resolve, reject){
+      var reader = new FileReader();
+      reader.onloadend = function(e) {
+        //upload file        
+        clusterpost.addAttachment(jobid, file.name, reader.result)
+        .then(function(res){
+          resolve(res);
+        })
+        .catch(reject);        
+      }
 
-	var filename = params.filename;
-	var id = params.id;
+      reader.readAsArrayBuffer(file);
+    });
+  }
 
-	return new Promise(function(resolve, reject){
+  $scope.reader = function(jobid, keys, index){
+    
+    return $scope.uploadPromise(jobid, $scope.Parameters.Files[keys[index]])
+    .then(function(res){
+      if(index < keys.length - 1){
+        return $scope.reader(jobid, keys, index+1);
+      }else{
+        return 'Done';
+      }
+    })
+    .catch(function(e){
+      console.log(e);
+    });
+  }
 
-        try{
-            var options = {
-                url : "http://localhost:8180/dataprovider/" + id + "/" + path.basename(filename),
-                method: "PUT",
-                headers:{
-                    "Content-Type": "application/octet-stream"
-                }
-            }
+  $scope.readFiles = function(jobid){
+    
+    var keys = _.keys($scope.Parameters.Files);
 
-            var stream = fs.createReadStream(filename);
+    $scope.reader(jobid, keys, 0)
+    .then(function(res){
+      console.log(res);
+    });
+  }  
 
-            stream.pipe(request(options, function(err, res, body){
-                    if(err) resolve(err);
-                    
-                    resolve(body);
-                    
-                })
-            );
-        }catch(e){
-            reject(e);
-        }
 
-	});
-}
-
-   
 }]);
 
 
