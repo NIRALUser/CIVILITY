@@ -247,8 +247,18 @@ angular.module('brainConnectivity')
     var sol = clusterpost.createJob(job);
     console.log(JSON.stringify(sol));*/
 
+    $scope.addAttachment = function(id, array, index){
+      return clusterpost.addAttachment(id, filename[index], data)
+      .then(function(res){
+        if(index < array.length){
+          return $scope.addAttachment(id, filename2, index+1);
+        }
+        return "ok";
+      })
+    }
+
       
-/*    clusterpost.createJob(job)
+    clusterpost.createJob(job)
       	.then(function(res){
 
           console.log("TOP");
@@ -267,18 +277,28 @@ angular.module('brainConnectivity')
       		console.log("HELLO");
       	//console.log(res.data);
       })
+
+        clusterpost.addAttachment(id, filename, data)
+        .then(function(res){
+          return clusterpost.addAttachment(id, filename2, data2);
+        })
+        .then(function(res){
+          return clusterpost.addAttachment(id, filename3, data3);
+        })
       .catch(function(e)
           {
             console.log(e);
             var error_msg = e.data.message;
-            //ar msgPARSE = JSON.parse(error_msg);
-            //console.log(msgPARSE);
+            var msgPARSE = JSON.parse(error_msg);
+            console.log(msgPARSE);
             console.log(e.data.message);
-          });*/
+          });
 
    //  var job = JSON.parse("job.json");
-  var test = probtrack.getJSONjob;
-      console.log(test);
+
+
+/*  var test = probtrack.getJSONjob;
+      console.log(test);*/
       
 
       return job;

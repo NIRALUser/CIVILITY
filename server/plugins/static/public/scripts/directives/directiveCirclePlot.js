@@ -3,11 +3,11 @@ angular.module('brainConnectivity')
 
 	function link($scope,$attrs,$filter){
 		$scope.plotParameters = {};
-		$scope.plotParameters.threshold = 0;
+		$scope.plotParameters.threshold = 0.2;
 		$scope.plotParameters.method = [true,false,false];
 		$scope.plotParameters.diameter = 960;
 		$scope.plotParameters.tension = 0.85;
-		$scope.plotParameters.upperValue = 1;
+		$scope.plotParameters.upperValue = 0.44;
 		$scope.plotParameters.link1 = "";
 		$scope.plotParameters.link2 = "";
 
@@ -15,17 +15,22 @@ angular.module('brainConnectivity')
 		$scope.positionNodes.Left = {};
 		$scope.positionNodes.Right = {};
 		$scope.positionNodes.All = {};
-		$scope.positionNodes.Left.scalePointLeft = 2.4;
-		$scope.positionNodes.Right.scalePointRight = 2.4;
-		$scope.positionNodes.All.scalePointAll = 1.85;
+		$scope.positionNodes.Left.scalePointLeft = 2.8;
+		$scope.positionNodes.Right.scalePointRight = 2.8;
+		$scope.positionNodes.All.scalePointAll = 2.4;
 
-		$scope.positionNodes.Left.offsetXLeft = 70;
-		$scope.positionNodes.Right.offsetXRight = 115;
-		$scope.positionNodes.All.offsetXAll = 68;
+		$scope.positionNodes.Left.offsetXLeft = 93.8;
+		$scope.positionNodes.Right.offsetXRight = 128.5;
+		$scope.positionNodes.All.offsetXAll = 73;
 
-		$scope.positionNodes.Left.offsetYLeft = 90;
-		$scope.positionNodes.Right.offsetYRight = 92;
-		$scope.positionNodes.All.offsetYAll = 58;
+		$scope.positionNodes.Left.offsetYLeft = 80;
+		$scope.positionNodes.Right.offsetYRight = 71.4;
+		$scope.positionNodes.All.offsetYAll = 72;
+
+		$scope.scaleImgBrainTemplate = {};
+		$scope.scaleImgBrainTemplate.Left = 98;
+		$scope.scaleImgBrainTemplate.All = 98;
+		$scope.scaleImgBrainTemplate.Right = 98;
 
 		$scope.plotID = _.uniqueId("divDiagram");
 
@@ -233,6 +238,7 @@ angular.module('brainConnectivity')
 		  	leftImg.parentNode.removeChild(leftImg);
 		  	var leftLink = document.getElementById("divBrainLinkLeft");
 		  	leftLink.parentNode.removeChild(leftLink);
+
   		  }
 
 		  //Main function -- this function plot brain connectivity on circle and on brain Template
@@ -475,30 +481,29 @@ angular.module('brainConnectivity')
 		    if(JSONInfo.listOrdered[1].x != undefined)  //should be improve
 		     {
 		     //Whole brain connection
-		     var divBrainImgALL = d3.select("#divBrainALL")
+		     var divBrainImgALL = d3.select(".AllPlotTemplate")
 		     	.append("div")
 		     	.attr("class","divBrainImgALL")
 		     	.attr("id","divBrainImgALL");
 
-		     var divBrainLinkALL = d3.select("#divBrainALL")
+		     var divBrainLinkALL = d3.select(".AllPlotTemplate")
 		     	.append("div")
 		     	.attr("class","divBrainLinkALL")
 		     	.attr("id","divBrainLinkALL");
 
-		     var svgBrain = d3.select("#divBrainLinkALL")
-		     	.append("svg")
-		    	.attr("width", 310 )
-		        .attr("height", 325);
+		     var svgBrain = divBrainLinkALL.append("svg")
+		     	.attr("id","linksTemplate")
+		    	.attr("width", 350 )
+		        .attr("height", 420);
 		     
-		     var imgBrain = d3.select(".divBrainImgALL")
-		     .append("img")
+
+		     var scaleImgAll = $scope.scaleImgBrainTemplate.All + "%";
+		     console.log("scaleImgAll",scaleImgAll);
+		     var imgBrain = divBrainImgALL.append("img")
 		     .attr("src","data/rsz_brainall.png")
-		     .attr("class","bgimg")
-		     .attr("width", "auto" )
-		     .attr("height", "auto" )
-		     .attr("max-width", 400 )
-		     .attr("max-height", 400 );
-			
+		     .attr("class","bgimgAll")
+		     .attr("id","bgimgAll")
+		     .attr("width", scaleImgAll );			
 
 			//Gradient for nodes 
 		    var gradientCircle = svgBrain.append("defs")
@@ -614,25 +619,30 @@ angular.module('brainConnectivity')
 		       })	    	
 
 		       //Left brain template
-		      var divBrainImgLeft = d3.select(".divBrainLeft").append("div")
+		      var divBrainImgLeft = d3.select(".leftPlotTemplate")
+		      	.append("div")
 		     	.attr("class","divBrainImgLeft")
 		     	.attr("id","divBrainImgLeft");
 
-		     var divBrainLinkLeft = d3.select(".divBrainLeft").append("div")
+		     var divBrainLinkLeft = d3.select(".leftPlotTemplate")
+		     	.append("div")
 		     	.attr("class","divBrainLinkLeft")
 		     	.attr("id","divBrainLinkLeft");
 
 		     var svgBrainLeft = divBrainLinkLeft.append("svg")
-		    	.attr("width", 400 )
-		        .attr("height", 350);
+		     	.attr("id","linksTemplate")
+		    	.attr("width", 600 )
+		        .attr("height", 400 );
 		     
+		     var scaleImgLeft = $scope.scaleImgBrainTemplate.Left + "%";
 		     var imgBrainLeft = divBrainImgLeft.append("img")
 		     .attr("src","data/rsz_brainleft.jpg")
-		     .attr("class","bgimg")
-		     .attr("width", "auto" )
-		     .attr("height", "auto" )
+		     .attr("class","bgimgLeft")
+		     .attr("id","bgimgLeft")
+		     .attr("width", scaleImgLeft );
+		     /*.attr("height", "auto" )
 		     .attr("max-width", 400 )
-		     .attr("max-height", 400 );
+		     .attr("max-height", 400 );*/
 			
 			splines.forEach(function(d,n){
 		      		var sized = d.length;
@@ -643,7 +653,6 @@ angular.module('brainConnectivity')
 		      		var z1=0;
 		      		var z2=0;
 
-		      		console.log("Coord splines");
 
 		       	var last1 = seedName.lastIndexOf("_");
 		       	var End1 = seedName.substring(last1+1);
@@ -651,7 +660,6 @@ angular.module('brainConnectivity')
 		       	var End2 = targetName.substring(last2+1);
 		      		if( End1 == "L" && End2 == "L" )
 		      		{
-		      			console.log("Coord splines");
 		      			CoordDescription.forEach(function(c,i){
 
 		      			var last = c["name"].lastIndexOf(".");
@@ -660,7 +668,6 @@ angular.module('brainConnectivity')
 
 		      			if(KeyName == seedName)
 		      			{
-		      				console.log(parseFloat(-c["y"]) + parseFloat($scope.positionNodes.Left.offsetXLeft));
 		      				y1 = parseFloat(-c["y"]) + parseFloat($scope.positionNodes.Left.offsetXLeft);
 		      				y1 = y1 * parseFloat($scope.positionNodes.Left.scalePointLeft);
 		      				
@@ -719,7 +726,7 @@ angular.module('brainConnectivity')
 
 		       		var coordXScale = coordY*parseFloat($scope.positionNodes.Left.scalePointLeft);
 		       		var coordYScale = coordZ*parseFloat($scope.positionNodes.Left.scalePointLeft);
-		       		console.log("coord");
+		       		//console.log("coord");
 		       		svgBrainLeft.append("circle")
 		       			.attr("cx", coordXScale)
 		       			.attr("cy", coordYScale)
@@ -748,25 +755,31 @@ angular.module('brainConnectivity')
 
 				
 	
-		     var divBrainImgRight = d3.select(".divBrainRight").append("div")
+		     var divBrainImgRight = d3.select(".rightPlotTemplate").append("div")
 		     	.attr("class","divBrainImgRight")
 		     	.attr("id","divBrainImgRight");
 
-		     var divBrainLinkRight = d3.select(".divBrainRight").append("div")
+		     var divBrainLinkRight = d3.select(".rightPlotTemplate").append("div")
 		     	.attr("class","divBrainLinkRight")
 		     	.attr("id","divBrainLinkRight");
 
 		     var svgBrainRight = divBrainLinkRight.append("svg")
-		    	.attr("width", 450 )
-		        .attr("height", 350);
+		     	.attr("id","linksTemplate")
+		    	.attr("width", 600 )
+		        .attr("height", 400);
 		     
+		     var scaleImgRight = $scope.scaleImgBrainTemplate.Right + "%";
 		     var imgBrainRight = divBrainImgRight.append("img")
 		     .attr("src","data/rsz_brainright.jpg")
-		     .attr("class","bgimg")
-		     .attr("width", "auto" )
+		     .attr("class","bgimgRight")
+		     .attr("id","bgimgRight")
+		     .attr("width", scaleImgRight );/*
+		     .attr("max-width", "50%" )
+		     .attr("max-height", "50%" );*/
+		     /*.attr("width", "auto" )
 		     .attr("height", "auto" )
 		     .attr("max-width", 400 )
-		     .attr("max-height", 400 );
+		     .attr("max-height", 400 );*/
 
 			splines.forEach(function(d,n){
 
@@ -868,7 +881,11 @@ angular.module('brainConnectivity')
 		           }
 		       })
 		     }
-		  }
+		     else
+		     {
+		     	alert("Brain templates can't be plot. There is no coordonation specified in the parcellation table descritption.")
+		     }
+ }
 
 	//This function return a color accordinf to a value (size) a a range specified in inputs  
 	$scope.colorHSV = function(size,Min,Max){
@@ -945,6 +962,22 @@ $scope.packageImports = function (nodes, threshold) {
 
 		
 	//Watch scope variable
+
+
+		$scope.$watch("scaleImgBrainTemplate.All", function(){
+		    console.log("HelloWatch scale all brain template", $scope.scaleImgBrainTemplate.All);
+		    $scope.NewPlot();
+		  });
+		$scope.$watch("scaleImgBrainTemplate.Left", function(){
+		    console.log("HelloWatch scale left brain template", $scope.scaleImgBrainTemplate.Left);
+		    $scope.NewPlot();
+		  });
+
+				$scope.$watch("scaleImgBrainTemplate.Right", function(){
+		    console.log("HelloWatch scale right brain template", $scope.scaleImgBrainTemplate.Right);
+		    $scope.NewPlot();
+		  });
+
 		$scope.$watch("positionNodes.Left.scalePointLeft", function(){
 		    console.log("HelloWatch scaleLeft", $scope.positionNodes.Left.scalePointLeft);
 		    $scope.NewPlot();

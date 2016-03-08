@@ -1,4 +1,7 @@
-new-window { display: none; }
+.modifCoordTitles{
+  text-align: left;
+  font-weight : bold;
+}
 
 .serverChoice{
  display: inline-block;
@@ -13,6 +16,7 @@ new-window { display: none; }
   color: #286090;
   font-size: 12px;
   font-style: italic;
+  padding:  10px 10px 10px 10px ;
 }
 
 .serverSelect{
@@ -51,6 +55,10 @@ new-window { display: none; }
 
 }
 
+.modifCoord{
+  margin : 2%;
+  vertical-align:bottom;
+}
 .modifCoordPosition{
   text-align: left;
 }
@@ -61,15 +69,33 @@ new-window { display: none; }
 .divBrainALL, .divBrainRight, .divBrainLeft{
     position: relative;
     display: inline-block;
+    padding: 0% 2% 0% 2%;
 }
 
 .divBrainLinkRight, .divBrainImgRight{
-  margin-left: -65px;
+  margin-left: -70px;
 
 }
+.divBrainImgRLeft{
+  margin-bottom: 50px;
+}
+
+.divBrainImgRight{
+  margin-bottom: 50px;
+}
+
+.AllPlotTemplate, .rightPlotTemplate, .leftPlotTemplate{
+  margin : 0px 0px 20px 0px;
+}
+/*.leftPlotTemplate{
+  position:absolute;
+}*/
+.rightPlotTemplate{
+
+}
+
 .divBrainImgALL, .divBrainImgLeft, .divBrainImgRight{
   position: relative;
-  margin-top: 50px;
 }
 
 .divBrainLinkALL, .divBrainLinkLeft, .divBrainLinkRight{
@@ -77,13 +103,13 @@ new-window { display: none; }
 }
 
 .divBrainLinkALL{
-  margin-top: -300px;
+  margin-top: -430px;
 }
 .divBrainLinkLeft{
-  margin-top: -375px;
+  margin-top: -410px;
 }
 .divBrainLinkRight{
-  margin-top: -375px;
+  margin-top: -430px;
 }
 
 .bgimg {
@@ -92,8 +118,9 @@ new-window { display: none; }
     left: 0px;
     position: relative;
     display: block;
+      /*max-width:50%;
+   max-height:50%;*/
 }
-
 
 input.boxMin, input.boxMax, input.boxAverage{
   margin-top: -12px;
@@ -325,25 +352,5 @@ font : 13px sans-serif;
 h4, h5{
   text-decoration: underline;
 }
-
-  #progress_bar {
-    margin: 10px 0;
-    padding: 3px;
-    border: 1px solid #000;
-    font-size: 14px;
-    clear: both;
-    opacity: 0;
-    -moz-transition: opacity 1s linear;
-    -o-transition: opacity 1s linear;
-    -webkit-transition: opacity 1s linear;
-  }
-  #progress_bar.loading {
-    opacity: 1.0;
-  }
-  #progress_bar .percent {
-    background-color: #99ccff;
-    height: auto;
-    width: 0;
-  }
 
   

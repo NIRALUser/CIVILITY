@@ -9,9 +9,9 @@ module.exports = function (server, conf) {
       handler: {
         proxy: {
           redirects: 10,
-          mapUri: function(req, callback){
-            console.log("ddddd",conf);
+          mapUri: function(req, callback){            
             var path = req.url.path.replace("/clusterpost", options.clusterpost);
+            console.log(path);
             callback(null, path);
           },
           passThrough: true,
