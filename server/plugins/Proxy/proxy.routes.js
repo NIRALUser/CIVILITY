@@ -18,8 +18,13 @@ module.exports = function (server, conf) {
           xforward: true
         }
       },
+      payload : {
+      maxBytes : 1024 * 1024 * 1024,
+      output : "stream"
+      },
       description: 'Proxy to the clusterpost application'
     }
+
   });
 
 };

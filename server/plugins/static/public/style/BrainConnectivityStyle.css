@@ -1,3 +1,47 @@
+.jobNoInfo{
+  font-style: italic;
+}
+
+.job{
+  margin: 1% 5% 2% 5%;
+  padding: 1% 2% 2% 2%;
+  background-color :  #ffffff;
+  color : #286090;
+  font : 13px sans-serif;
+}
+.serverChoiceText{
+  display: inline;
+}
+.userEmail{
+  margin : 5px auto;
+}
+
+.emailField{
+  color:#000;
+}
+
+.jobs{
+    margin: 1% 5% 2% 5%;
+  padding: 1% 2% 2% 2%;
+  background-color :  #e6f9ff;
+  color : #286090;
+  font : 13px sans-serif;
+}
+
+.jobLine{
+  background-color: #f5f5dc;
+  border-color: #f5f5dc;
+  border-width: 5px;
+  padding: 10px 5px 10px 10px ;
+  border-radius: 5px;
+  margin: 10px 40px 10px 40px;
+}
+
+.jobsTitle{
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .modifCoordTitles{
   text-align: left;
   font-weight : bold;
@@ -342,11 +386,11 @@ body {
   color: #fff
 }
 .tractoForm{
-margin: 2% 5% 2% 5%;
-padding: 2% 2% 2% 2%;
-background-color :  #e6f9ff;
-color : #286090;
-font : 13px sans-serif;
+  margin: 2% 5% 2% 5%;
+  padding: 2% 2% 2% 2%;
+  background-color :  #e6f9ff;
+  color : #286090;
+  font : 13px sans-serif;
 }
 
 h4, h5{

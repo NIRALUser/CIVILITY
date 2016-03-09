@@ -46,10 +46,8 @@ angular.module('brainConnectivity')
     },
     getJob: function(id){
     	return $http({
-        method: 'PUT',
-        url: '/clusterpost/dataprovider/' + id,
-        data: job
-        
+        method: 'GET',
+        url: '/clusterpost/dataprovider/' + id        
       });
     },
     getAttachment: function(id, filename){

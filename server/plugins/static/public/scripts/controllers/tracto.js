@@ -7,6 +7,8 @@ angular.module('brainConnectivity')
 		selection : null
 	};
 
+
+
    $scope.Parameters = {
    	  subject : "neonate",
    	  Files : {
@@ -25,11 +27,20 @@ angular.module('brainConnectivity')
       loopcheck: true
       }
 
-  $scope.data = ["DWI", "T1", "BrainMask", "JSON", "innerSurface", "colorSurface"]
-  $scope.params = [];
+  $scope.nbJobSubmit = 0;
+
+  $scope.listJobs = [];
+
+  $scope.noJobSubmit = function()
+  {
+    if($scope.listJobs.length == 0)  return true;
+    else return false;
+  }
+
   $scope.paramSubmitJob = function()
   {
     console.log("Submit");
+    console.log("Emailfield", $scope.userEmail);
     $scope.formOK = $scope.formValidation();
     console.log("Valid",$scope.formOK);
     if($scope.formOK == true)
@@ -127,9 +138,15 @@ angular.module('brainConnectivity')
     {
     	$scope.Parameters.ignoreLabelID = "set labelID";
     }
-    return true;
     
-
+    //Check email select 
+    if($scope.userEmail == undefined)
+    {
+      alert ("You must specify your email to receive tractography results");
+       return false;
+    }
+   
+    return true;
   };
 
 /* $scope.uploadFile = function(){
@@ -140,49 +157,9 @@ angular.module('brainConnectivity')
         fileUpload.uploadFileToUrl(file, uploadUrl);
     };*/
 
-    /*$scope.addAttachment = function(id, array, index){
-      var i = index;
-      var stream = fs.createReadStream(params[index].filename);
-
-      stream.pipe(request(options, function(err, res, body){
-          if(err) resolve(err);
-          resolve(body);
-             })
-          );
-
-      return clusterpost.addAttachment(id, array[i], data)
-      .then(function(res){
-        if(index < array.length){
-          return $scope.addAttachment(id, filename2, index+1);
-        }
-        return "ok";
-      })
-    }*/
-
   clusterpost.getExecutionServers().then(function(res){
     $scope.serverselect.servers = res.data;
-    // _.each(servers, function(server){
 
-    //   //First request 
-    //   if($scope.serverselect.nbSubmit <= 0)
-    //   {
-    //     d3.select(".serverSelect").append("option")
-    //     .attr("value",server.name)
-    //     .text(server.name);
-    //     $scope.serverselect.nbSubmit ++;
-    //   }
-    //   //After select one server -- do not add once again option in select tag
-    //   else if ($scope.serverselect.nbSubmit > 0 && d3.select(".serverSelect").filter(function()
-    //   {
-    //     return $(this).val() == server.name;
-    //   }).length <= 0)
-    //   {
-    //     d3.select(".serverSelect").append("option")
-    //     .attr("value",server.name)
-    //     .text(server.name);
-    //   }         
-  
-    // });
    });
 
    $scope.createJobObject = function(){
@@ -231,7 +208,7 @@ angular.module('brainConnectivity')
       job.outputs.push(param);
 
       job.type = "job"; 
-      job.userEmail = "danaele@email.unc.edu";
+      job.userEmail = $scope.userEmail;
       //job.executionserver =  "testserver";
    
 
@@ -246,8 +223,9 @@ angular.module('brainConnectivity')
           job.executionserver = $scope.serverselect.selection.name;
       }
 
-    $scope.params = [];
-    var job_id = "";  
+    var job_id = "";
+
+    //Create Job   
     clusterpost.createJob(job)
   	.then(function(res){
 
@@ -256,55 +234,60 @@ angular.module('brainConnectivity')
   		console.log(res.data);
   		var doc = res.data;
       job_id = doc.id;
-     
-      $scope.readFiles(doc.id);
-    })
-    .catch(console.log);
-       
-      
 
-      return job;
-
- }
-
-  $scope.uploadPromise = function(jobid, file){
-    return new Promise(function(resolve, reject){
-      var reader = new FileReader();
-      reader.onloadend = function(e) {
-        //upload file        
-        clusterpost.addAttachment(jobid, file.name, reader.result)
-        .then(function(res){
-          resolve(res);
-        })
-        .catch(reject);        
-      }
-
-      reader.readAsArrayBuffer(file);
-    });
-  }
-
-  $scope.reader = function(jobid, keys, index){
-    
-    return $scope.uploadPromise(jobid, $scope.Parameters.Files[keys[index]])
-    .then(function(res){
-      if(index < keys.length - 1){
-        return $scope.reader(jobid, keys, index+1);
-      }else{
-        return 'Done';
-      }
+      var val = $scope.readFilesAndSubmit(job_id);
+ 
     })
     .catch(function(e){
       console.log(e);
     });
+
+
+ }
+
+ $scope.printTest = function(){
+
+  console.log("print test function");
+
+ }
+
+
+ $scope.submitJobX = function(jobid){
+    console.log("before submit job");
+    //Submit job 
+    clusterpost.submitJob(jobid).then(function(res){
+        console.log("Job " + jobid + " submit");
+        $scope.listJobs.push(jobid);
+    })
+    .catch(function(e){
+      console.log(e);
+    });
+ }
+
+  $scope.uploadFiles = function(jobid, keys, index){
+
+       return  clusterpost.addAttachment(jobid, $scope.Parameters.Files[keys[index]].name, $scope.Parameters.Files[keys[index]]).then(
+     function(res){
+        if(index < keys.length - 1){
+        return $scope.uploadFiles(jobid, keys, index+1);
+      }else{
+        return 'Done';
+      }
+     })//upload file        
+    .catch(function(e){
+      console.log(e);
+    });
+    
   }
 
-  $scope.readFiles = function(jobid){
+  $scope.readFilesAndSubmit = function(jobid){
     
     var keys = _.keys($scope.Parameters.Files);
-
-    $scope.reader(jobid, keys, 0)
+    $scope.uploadFiles(jobid, keys, 0)
     .then(function(res){
       console.log(res);
+      $scope.submitJobX(jobid);
+
     });
   }  
 
