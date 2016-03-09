@@ -126,17 +126,25 @@ angular.module('brainConnectivity')
         return false;
     }
 
-    //Check label name is specified when ignoreLabel = true 
+/*    //Check label name is specified when ignoreLabel = true 
     if($scope.Parameters.ignoreLabel && !$scope.Parameters.ignoreLabelID)
     {
        alert ("You must specified the name of label to ignore");
        return false;
     }
-
-    //empty string if ignoreLabel = false 
+*/
+    //default string if ignoreLabel = false 
     if(!$scope.Parameters.ignoreLabel)
     {
     	$scope.Parameters.ignoreLabelID = "set labelID";
+    }
+    else
+    {
+      if($scope.Parameters.ignoreLabelID == "set labelID")
+      {
+        alert ("You must specified the name of label to ignore - Change 'set labelID' by the name of label to ignore (example : 0 0 0)");
+       return false;
+      }
     }
     
     //Check email select 
@@ -165,7 +173,7 @@ angular.module('brainConnectivity')
    $scope.createJobObject = function(){
       var job = {};
 
-      job.executable = "TractograpyhWorkflow"; 
+      job.executable = "scriptTestApp"; 
 
       job.parameters = [];
       _.each($scope.Parameters, function(value, key){

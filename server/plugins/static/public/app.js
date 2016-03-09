@@ -12,6 +12,9 @@ config(['$routeProvider', function($routeProvider) {
   .when('/tracto', {
     templateUrl: 'views/controllers/tracto.html'
   })
+  .when('/jobSummary', {
+    templateUrl: 'views/controllers/jobSummary.html'
+  })
   .when('/visualisation', {
     templateUrl: 'views/controllers/visualisation.html'
   })

@@ -11,8 +11,7 @@ angular.module('brainConnectivity')
     getJobStatus: function (id) {
       return $http({
         method: 'GET',
-        url: '/clusterpost/executionserver/' + id
-        
+        url: '/clusterpost/executionserver/' + id       
       });
     },
     submitJob: function (id) {
