@@ -28,8 +28,8 @@ angular.module('brainConnectivity')
       }
 
   $scope.nbJobSubmit = 0;
-
-  $scope.listJobs = [];
+  //$scope.listJobs = [];
+  $scope.listJobs = ["123456","98765"];
 
   $scope.noJobSubmit = function()
   {
@@ -170,6 +170,7 @@ angular.module('brainConnectivity')
 
    });
 
+
    $scope.createJobObject = function(){
       var job = {};
 
@@ -212,7 +213,7 @@ angular.module('brainConnectivity')
       job.outputs = [];
       var param = {}; 
       param.type = "file";
-      param.name = "output.jpg";
+      param.name = "nodif_brain_mask.nii.gz";
       job.outputs.push(param);
 
       job.type = "job"; 

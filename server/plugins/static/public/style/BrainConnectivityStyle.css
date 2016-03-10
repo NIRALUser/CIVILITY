@@ -1,4 +1,19 @@
+.parameters{
+  margin : 20px auto;
+}
+
 .jobNoInfo{
+  font-style: italic;
+}
+
+.jobIdTitle{
+  font-size: 15px;
+  font-weight: bold;
+  display: inline;
+  text-decoration: underline;
+}
+
+.idJob{
   font-style: italic;
 }
 
@@ -8,6 +23,9 @@
   background-color :  #ffffff;
   color : #286090;
   font : 13px sans-serif;
+  border-width:1px 1px 1px 1px;
+  border-style:solid;
+  border-color:#286090;
 }
 .serverChoiceText{
   display: inline;
@@ -260,7 +278,7 @@ div.TensionText {
 }
 
 .btn{
-  margin: 15px auto;
+  margin: 5px auto;
 }
 
 .active {
