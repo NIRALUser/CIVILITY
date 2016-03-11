@@ -1,7 +1,7 @@
 
 
 angular.module('brainConnectivity')
-.controller('visualisation', ['$scope','$http','probtrack','fileUpload', function($scope, $http, probtrack,fileUpload) {
+.controller('connectivityVisualisationController', ['$scope','$http','probtrack','fileUpload', function($scope, $http, probtrack,fileUpload) {
 
   $scope.plotVisible = false ;
   $scope.ButtonClicked = false;

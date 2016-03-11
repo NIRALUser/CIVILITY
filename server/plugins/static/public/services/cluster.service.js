@@ -68,7 +68,7 @@ angular.module('brainConnectivity')
     	return $http({
         method: 'GET',
         url: '/clusterpost/dataprovider/user',
-        data: {
+        params: {
         	userEmail: email, 
         	jobstatus: jobstatus,
         	executable: executable

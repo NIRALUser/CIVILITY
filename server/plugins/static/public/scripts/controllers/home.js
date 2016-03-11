@@ -1,6 +1,6 @@
 
 angular.module('brainConnectivity')
-.controller('firstController', ['$scope','$http','probtrack', function($scope, $http, probtrack) {
+.controller('homeController', ['$scope','$http','probtrack', function($scope, $http, probtrack) {
 
 }]);
 

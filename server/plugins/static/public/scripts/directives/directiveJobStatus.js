@@ -10,6 +10,7 @@ angular.module('brainConnectivity')
 		$scope.jobDone = false;
 		$scope.jobCancel = false;
 		$scope.plotCircle = false;
+		$scope.plotOnce = false;
 
 		var id = $scope.jobId;
 		console.log("Job id :", id);
@@ -77,7 +78,7 @@ angular.module('brainConnectivity')
 			clusterpost.getJob(id).then(function(res){
 					console.log(res);
 					$scope.jobStatus = res.data.jobstatus.status;
-					$scope.jobStatus = "DONE";
+					//$scope.jobStatus = "DONE";
 					$scope.getStatusRequest = true;
 					if($scope.jobStatus == "DONE")
 					{
@@ -110,6 +111,7 @@ angular.module('brainConnectivity')
 
 		    probtrack.getFDTMatrix()
 		    .then(function(response){
+
 		      $scope.ButtonClicked = true;
 		      $scope.plotParameters = {};
 		      $scope.plotParameters.link1 = "";
@@ -127,44 +129,27 @@ angular.module('brainConnectivity')
 
 		  }
 
-		 $scope.removeCircle = function()
+		 $scope.removeOld = function()
 		  {
-		  	console.log("REMOVE");
-		  	console.log($scope.plotID);
-		  	var circlePlot = document.getElementById($scope.plotID);
-		  	circlePlot.parentNode.removeChild(circlePlot);
-		  /*	var tooltipPlot = document.getElementById("tooltip");
-		  	tooltipPlot.parentNode.removeChild(tooltipPlot);
-		  	var allImg = document.getElementById("divBrainImgALL");
-		  	allImg.parentNode.removeChild(allImg);
-		  	var allLink = document.getElementById("divBrainLinkALL");
-		  	allLink.parentNode.removeChild(allLink);
-		  	var rightImg = document.getElementById("divBrainImgRight");
-		  	rightImg.parentNode.removeChild(rightImg);
-		  	var rightLink = document.getElementById("divBrainLinkRight");
-		  	rightLink.parentNode.removeChild(rightLink);
-		  	var leftImg = document.getElementById("divBrainImgLeft");
-		  	leftImg.parentNode.removeChild(leftImg);
-		  	var leftLink = document.getElementById("divBrainLinkLeft");
-		  	leftLink.parentNode.removeChild(leftLink);*/
+		  	console.log("REMOVE OLD PLOT JOB");
+		  	var circlePlot = document.getElementById("divPlot_"+$scope.plotID);
+		  	if(circlePlot != null) 	circlePlot.parentNode.removeChild(circlePlot);
+		  	var tooltipPlot = document.getElementById("tooltip_"+$scope.plotID);
+		  	if(tooltipPlot != null) tooltipPlot.parentNode.removeChild(tooltipPlot);
+		  	var tooltipNode = document.getElementById("nodeTooltip_"+$scope.plotID);
+		  	if(tooltipNode != null) tooltipNode.parentNode.removeChild(tooltipNode);
+		  	$scope.plotCircle = false;
 
   		  }
 		
 		$scope.connectivityVisualisation = function(){
-
-			if($scope.plotCircle == false)
-			{
+				if (!$scope.plotOnce)
+				{
+					 $scope.submit();
+					 $scope.plotOnce = true;
+				}
 				$scope.plotCircle = true;
-				$scope.submit();
-			}
-			else
-			{
-				$scope.plotCircle = false;
-				
-			}
 			
-
-
 		}
 	}
 	return {

@@ -222,22 +222,24 @@ angular.module('brainConnectivity')
 		  $scope.removeOldPlot = function()
 		  {
 		  	console.log("REMOVE");
-		  	var circlePlot = document.getElementById("divPlot");
-		  	circlePlot.parentNode.removeChild(circlePlot);
-		  	var tooltipPlot = document.getElementById("tooltip");
-		  	tooltipPlot.parentNode.removeChild(tooltipPlot);
+		  	var circlePlot = document.getElementById("divPlot_"+$scope.plotID);
+		  	if(circlePlot != null) 	circlePlot.parentNode.removeChild(circlePlot);
+		  	var tooltipPlot = document.getElementById("tooltip_"+$scope.plotID);
+		  	if(tooltipPlot != null) tooltipPlot.parentNode.removeChild(tooltipPlot);
+		  	var tooltipNode = document.getElementById("nodeTooltip_"+$scope.plotID);
+		  	if(tooltipNode != null) tooltipNode.parentNode.removeChild(tooltipNode);
 		  	var allImg = document.getElementById("divBrainImgALL");
-		  	allImg.parentNode.removeChild(allImg);
+		  	if(allImg != null) allImg.parentNode.removeChild(allImg);
 		  	var allLink = document.getElementById("divBrainLinkALL");
-		  	allLink.parentNode.removeChild(allLink);
+		  	if(allLink != null) allLink.parentNode.removeChild(allLink);
 		  	var rightImg = document.getElementById("divBrainImgRight");
-		  	rightImg.parentNode.removeChild(rightImg);
+		  	if(rightImg != null) rightImg.parentNode.removeChild(rightImg);
 		  	var rightLink = document.getElementById("divBrainLinkRight");
-		  	rightLink.parentNode.removeChild(rightLink);
+		  	if(rightLink != null) rightLink.parentNode.removeChild(rightLink);
 		  	var leftImg = document.getElementById("divBrainImgLeft");
-		  	leftImg.parentNode.removeChild(leftImg);
+		  	if(leftImg != null) leftImg.parentNode.removeChild(leftImg);
 		  	var leftLink = document.getElementById("divBrainLinkLeft");
-		  	leftLink.parentNode.removeChild(leftLink);
+		  	if(leftLink != null) leftLink.parentNode.removeChild(leftLink);
 
   		  }
 
@@ -287,7 +289,7 @@ angular.module('brainConnectivity')
 		    // Define the div for the tooltip
 		    var div = d3.select('#'+$scope.plotID).append("div") 
 		        .attr("class", "tooltip")
-		        .attr("id", "tooltip")        
+		        .attr("id", "tooltip_"+$scope.plotID)        
 		        .style("opacity", 0);
 
 		      var margin = {top: 30, right: 10, bottom: 15, left: 50},
@@ -304,7 +306,7 @@ angular.module('brainConnectivity')
 		     	.attr("width", diamMargin)
 		        .attr("height", newHeight)
 		        .attr("class", "divPlot")
-		        .attr("id", "divPlot");;
+		        .attr("id", "divPlot_"+$scope.plotID);
 
 		    var splines = [];    
 		    var svg = divPlot.append("svg")
@@ -527,7 +529,7 @@ angular.module('brainConnectivity')
 
 		       var nodeTooltip = d3.select('#'+$scope.plotID).append("div") 
 		       .attr("class", "nodeTooltip")
-		       .attr("id", "nodeTooltip")        
+		       .attr("id", "nodeTooltip_"+$scope.plotID)        
 		       .style("opacity", 0);		       
 		       var CoordDescription = JSONInfo["listOrdered"];
 
@@ -1025,12 +1027,12 @@ $scope.packageImports = function (nodes, threshold) {
 
 
 		$scope.$watch("plotParameters.link1", function(){
-		    console.log("HelloWatch tooltip", $scope.plotParameters.link1);
+		    console.log("HelloWatch link1", $scope.plotParameters.link1);
 		    $scope.NewPlot();
 		  });
 
 		$scope.$watch("plotParameters.link2", function(){
-		    console.log("HelloWatch tooltip", $scope.plotParameters.link2);
+		    console.log("HelloWatch link2", $scope.plotParameters.link2);
 		    $scope.NewPlot();
 		  });
 

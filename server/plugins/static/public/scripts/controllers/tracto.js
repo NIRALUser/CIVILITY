@@ -1,6 +1,6 @@
 
 angular.module('brainConnectivity')
-.controller('tractography', ['$scope','$http','probtrack', 'fileUpload','clusterpost' , function($scope, $http, probtrack, fileUpload, clusterpost) {
+.controller('submitTractographyController', ['$scope','$http','probtrack', 'fileUpload','clusterpost' , function($scope, $http, probtrack, fileUpload, clusterpost) {
 
 	$scope.formOK = false;
 	$scope.serverselect = {
@@ -28,8 +28,8 @@ angular.module('brainConnectivity')
       }
 
   $scope.nbJobSubmit = 0;
-  //$scope.listJobs = [];
-  $scope.listJobs = ["123456","98765"];
+  $scope.listJobs = [];
+  //$scope.listJobs = ["123456","98765"];
 
   $scope.noJobSubmit = function()
   {

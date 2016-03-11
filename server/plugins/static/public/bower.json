@@ -29,6 +29,8 @@
     "angular-mocks": "~1.2.x",
     "bootstrap": "~3.3.2",
     "d3": "~3.5.10",
-    "html2canvas" : "^0.5.0-beta4"
+    "html2canvas": "^0.5.0-beta4",
+    "angular-ui-bootstrap": "^1.2.4",
+    "foundation": "^5.5.3"
   }
 }

@@ -9,6 +9,9 @@ config(['$routeProvider', function($routeProvider) {
   .when('/home', {
     templateUrl: 'views/controllers/home.html'
   })
+  .when('/tractographyApp', {
+    templateUrl: 'views/controllers/tractographyApp.html'
+  })
   .when('/tracto', {
     templateUrl: 'views/controllers/tracto.html'
   })
