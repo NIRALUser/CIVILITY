@@ -1,3 +1,7 @@
+.tab-content > .active{
+
+  background-color: #fff
+}
 .parameters{
   margin : 20px auto;
 }
@@ -413,6 +417,11 @@ body {
 
 h4, h5{
   text-decoration: underline;
+}
+
+/*navbar */
+.container-fluid{
+  background-color: #eee
 }
 
   

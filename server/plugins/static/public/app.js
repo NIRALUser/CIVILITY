@@ -2,12 +2,16 @@
 
 // Declare app level module which depends on views, and components
 angular.module('brainConnectivity', [
-  'ngRoute'
+  'ngRoute',
+  'ui.bootstrap'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider
   .when('/home', {
     templateUrl: 'views/controllers/home.html'
+  })
+  .when('/welcome', {
+    templateUrl: 'views/controllers/welcome.html'
   })
   .when('/tractographyApp', {
     templateUrl: 'views/controllers/tractographyApp.html'
