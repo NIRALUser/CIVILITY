@@ -2,6 +2,15 @@
 
   background-color: #fff
 }
+
+.tabsetJobs{
+  background-color: #f6f6f6
+}
+
+.tabsetAppMenu{
+  background-color: #fff
+}
+
 .parameters{
   margin : 20px auto;
 }
@@ -421,7 +430,7 @@ h4, h5{
 
 /*navbar */
 .container-fluid{
-  background-color: #eee
+  background-color: #f6f6f6
 }
 
   
