@@ -150,6 +150,12 @@ h4, h5{
 }
 
 /* Circle Plot*/
+
+.resetCoordPos{
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-family: sans-serif;
+}
 .grid-background {
   fill: #ddd;
 }
@@ -273,7 +279,7 @@ input.boxMin, input.boxMax, input.boxAverage{
      height:10px;
     width:60%;
     margin: 0 auto;
-    margin-left: 0px;
+    margin-left: 15%;
 }
 
 .ValueThreshold, .upperValue {

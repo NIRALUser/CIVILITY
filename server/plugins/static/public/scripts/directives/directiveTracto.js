@@ -23,7 +23,7 @@ function link($scope,$attrs,$filter){
       
       labelsetName: "colour",
       ignoreLabel: false,
-      ignoreLabelID : "set labelID",
+      ignoreLabelID : "setlabelID",
       overlapping: true,
       loopcheck: true
       }
@@ -168,7 +168,8 @@ function link($scope,$attrs,$filter){
         $scope.submitTractoButton = true;
       var job = {};
 
-      job.executable = "scriptTestApp"; 
+      //job.executable = "scriptTestApp"; 
+      job.executable ="tractographyScriptApp.sh";
 
       job.parameters = [];
       _.each($scope.Parameters, function(value, key){

@@ -2,7 +2,10 @@
 	 <div class="jobIdTitle"> Job id : </div> <div class="idJob"> {{jobId}} </div> 
 	
 	<!-- 	<button class="btn btn-success" ng-click="getStatus()" ng-if="!getStatusRequest"> Get job status </button> --> 
-		<div class=jobStatus ng-if="getStatusRequest"> 
+		<div class=jobStatus ng-if="getStatusRequest">
+
+		<button type="button" class="btn btn-info" ng-click="reRunJob()" ng-if="jobKill"> Restart </button>
+
 			<button class="btn btn-success" ng-click="getStatus()" ng-if="getStatusRequest"> <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> </button> 
 			Status : {{jobStatus}}
 
@@ -15,7 +18,9 @@
 			</div>
 
 		</div>
-		<button class="btn btn-danger" ng-click="killJob()" ng-if="!jobKill"> Kill Job </button> <div ng-if="jobKill"> <button class="btn btn-danger" ng-click="killJob()"> Kill Job </button> <span class="glyphicon glyphicon-ok" aria-hidden="true">  </span> </div>		
+		<button class="btn btn-danger" ng-click="killJob()" ng-if="!jobKill"> Kill Job </button> 
+
+		<div ng-if="jobKill"> <button class="btn btn-danger" ng-click="killJob()"> Kill Job </button> <span class="glyphicon glyphicon-ok" aria-hidden="true">  </span> </div>		
 
 		<button class="btn btn-info" ng-click="getJob()" ng-if="!getJobRequest"> Print job info </button> 	
 		

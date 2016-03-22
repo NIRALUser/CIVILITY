@@ -37,6 +37,26 @@ angular.module('brainConnectivity')
     	$scope.choices = [{"id":"average", "value":"1", "label":"Average", "checked":true}, {"id":"max", "value":"2","label":"Maximum","checked":false},{"id":"min", "value":"3","label":"Minumum","checked":false}];	 
 		
 		//Select method for Matrix processing : Average / Max values / Min values
+		
+	$scope.resetCoord = function()
+	{
+		$scope.positionNodes.Left.scalePointLeft = 2.8;
+		$scope.positionNodes.Right.scalePointRight = 2.8;
+		$scope.positionNodes.All.scalePointAll = 2.4;
+
+		$scope.positionNodes.Left.offsetXLeft = 93.8;
+		$scope.positionNodes.Right.offsetXRight = 128.5;
+		$scope.positionNodes.All.offsetXAll = 73;
+
+		$scope.positionNodes.Left.offsetYLeft = 80;
+		$scope.positionNodes.Right.offsetYRight = 71.4;
+		$scope.positionNodes.All.offsetYAll = 72;
+
+		$scope.scaleImgBrainTemplate.Left = 98;
+		$scope.scaleImgBrainTemplate.All = 98;
+		$scope.scaleImgBrainTemplate.Right = 98;
+	}
+
 		$scope.selectMethodMatrixProcess = function(){
 
 			var method = $scope.plotParameters.method;

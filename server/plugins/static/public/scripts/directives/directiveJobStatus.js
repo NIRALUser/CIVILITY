@@ -16,6 +16,19 @@ angular.module('brainConnectivity')
 		console.log("Job id :", id);
 
 
+		$scope.reRunJob = function(){
+
+			    //Submit job 
+		    clusterpost.submitJob(id).then(function(res){
+		        console.log("Job " + id + " submit");
+		        $scope.jobKill = false;
+		    })
+		    .catch(function(e){
+		      console.log(e);
+		    });
+		}
+
+
   		$scope.paramInfo = function(){
   			if($scope.jobInfo.data.parameters[8].name == true)
   			{
@@ -89,12 +102,10 @@ angular.module('brainConnectivity')
 					else if ($scope.jobStatus == "FAILED" || $scope.jobStatus == "KILL")
 					{
 						console.log("Job failed");
-						$scope.jobCancel = true;
+						$scope.jobKill = true;
 						//Ask to user if he want's to re-run the job 
 						//	Recontruct job object and submit once again
 					}
-
-
 				})
 		}
 		$scope.getStatus();
