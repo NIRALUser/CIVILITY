@@ -1,24 +1,25 @@
 <div >
 
 <uib-tabset active="activePill" type="pills" class="tabsetAppMenu">
-	<uib-tab index="0" heading="Home">
+	<uib-tab index="0" heading="Home" >
     	<!-- <div ng-include="'views/controllers/home.html'"></div>  -->
       <home-tracto> </home-tracto>
+      <!-- <a ng-click="tabs[2].active = true"> test1</a> -->
     </uib-tab>
 
-    <uib-tab index="1" heading="Tractography" >
+    <uib-tab index="1" heading="Tractography" active="tabs[2].active">
       <div> <submit-tracto  > </submit-tracto> </div>  
  </uib-tab>
 
-    <uib-tab index="2" heading="Jobs running">
+    <uib-tab index="2" heading="Jobs running" >
   <jobs-home> </jobs-home>    
     </uib-tab>
 
-    <uib-tab index="3" heading="Visualisation">
+    <uib-tab index="3" heading="Visualisation" >
       <connectivity-visualisation > </connectivity-visualisation>
     </uib-tab>
 
-    <uib-tab index="4" heading="TEST">
+    <uib-tab index="4" heading="TEST" >
      <test-dir> </test-dir> 
     </uib-tab>
 

@@ -11,6 +11,8 @@ function link($scope,$attrs,$filter){
 
    $scope.testD = undefined; 
 
+   $scope.nbPlotInit = 0;
+
   $scope.Files = {
     "json": "",
     "matrix": ""
@@ -23,8 +25,12 @@ function link($scope,$attrs,$filter){
    $scope.showContentMatrix = function($fileContent){
         $scope.contentM = $fileContent;
     };
+
+    $scope.testTab = function(){
+
+    }
   
-  $scope.test = function(){
+  $scope.plotBrainConnectivity = function(){
 
 
       var data =  $scope.contentM ;

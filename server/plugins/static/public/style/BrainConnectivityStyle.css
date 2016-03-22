@@ -1,15 +1,4 @@
-.tab-content > .active{
 
-  background-color: #fff
-}
-
-.tabsetJobs{
-  background-color: #f6f6f6
-}
-
-.tabsetAppMenu{
-  background-color: #fff
-}
 
 .parameters{
   margin : 20px auto;
@@ -115,7 +104,7 @@
 .nodeCircle{
 
 }
-.case1 , .case2{
+.case1 , .case2, .case3{
   font-style: italic;
   font-size: 15px;
 }
@@ -128,6 +117,62 @@
   margin-right: 5%;
   margin-top: 2%;
 
+}
+
+
+
+
+body {
+  font: 10px sans-serif;
+  shape-rendering: crispEdges;
+}
+
+
+
+.buttonHome {
+  font: 20px sans-serif;
+  text-decoration: none;
+  background-color: #286090;
+  color: #ffffff;
+  padding: 9px;
+  border-radius: 5px;
+}
+
+.nav > li > a:focus
+{
+  background-color: #286090;
+  color: #fff
+}
+
+
+h4, h5{
+  text-decoration: underline;
+}
+
+/* Circle Plot*/
+.grid-background {
+  fill: #ddd;
+}
+
+.grid line {
+  stroke: #fff;
+}
+
+.grid .minor line {
+  stroke-opacity: .5;
+}
+
+.grid text {
+  display: none;
+}
+
+.axis line {
+  stroke: #000;
+}
+
+.axis path,
+.grid path {
+  display: none;
 }
 
 .modifCoord{
@@ -311,17 +356,17 @@ div.TensionText {
   fill: none;
 }
     
-div.tooltip {	
-    position: absolute;			
-    text-align: center;			
-    width: 80px;					
-    height: 50px;					
-    padding: 2px;				
-    font: 12px sans-serif;		
-    background: lightsteelblue;	
-    border: 0px;		
-    border-radius: 8px;			
-    pointer-events: none;			
+div.tooltip { 
+    position: absolute;     
+    text-align: center;     
+    width: 80px;          
+    height: 50px;         
+    padding: 2px;       
+    font: 12px sans-serif;    
+    background: lightsteelblue; 
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;     
 }
 
 div.nodeTooltip { 
@@ -359,63 +404,19 @@ div.nodeTooltip {
 }
 
 #tooltipColor{
-      position: absolute;			
-    text-align: center;			
-    width: 250px;					
-    height: 18px;					
-    padding: 2px;				
-    font: 12px sans-serif;		
-    background: lightsteelblue;	
-    border: 0px;		
-    border-radius: 8px;			
-    pointer-events: none;		
+      position: absolute;     
+    text-align: center;     
+    width: 250px;         
+    height: 18px;         
+    padding: 2px;       
+    font: 12px sans-serif;    
+    background: lightsteelblue; 
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;   
 }
 
-
-body {
-  font: 10px sans-serif;
-  shape-rendering: crispEdges;
-}
-
-.grid-background {
-  fill: #ddd;
-}
-
-.grid line {
-  stroke: #fff;
-}
-
-.grid .minor line {
-  stroke-opacity: .5;
-}
-
-.grid text {
-  display: none;
-}
-
-.axis line {
-  stroke: #000;
-}
-
-.axis path,
-.grid path {
-  display: none;
-}
-
-.buttonHome {
-  font: 20px sans-serif;
-  text-decoration: none;
-  background-color: #286090;
-  color: #ffffff;
-  padding: 9px;
-  border-radius: 5px;
-}
-
-.nav > li > a:focus
-{
-  background-color: #286090;
-  color: #fff
-}
+/*Tractography Form*/
 .tractoForm{
   margin: 2% 5% 2% 5%;
   padding: 2% 2% 2% 2%;
@@ -424,13 +425,49 @@ body {
   font : 13px sans-serif;
 }
 
-h4, h5{
-  text-decoration: underline;
-}
-
 /*navbar */
 .container-fluid{
   background-color: #f6f6f6
 }
 
-  
+.tab-content > .active{
+
+  background-color: #fff
+}
+
+.tabsetJobs{
+  background-color: #fff
+}
+
+.tabsetAppMenu{
+  background-color: #fff
+}
+
+/*Find job*/ 
+.findJob{
+  text-align: center;
+  border : solid;
+  margin : 1% 5% 1% 5%;
+  border-color: #286090;
+  font-family: sans-serif;
+  font-size: 15px;
+}
+
+/* Visualisation */
+.Plot{
+  text-align: center;
+  border : solid;
+  margin : 1% 5% 1% 5%;
+  border-color: #286090;
+  font-family: sans-serif;
+  font-size: 15px;
+ 
+}
+
+#matrix , #JSONFile{
+  margin-left: 40%;
+}
+
+.fdt_mat_input, .json-file-input{
+  margin: 2% 2% 2% 2%;
+}
