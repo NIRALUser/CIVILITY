@@ -5,6 +5,7 @@ angular.module('brainConnectivity')
 function link($scope,$attrs,$filter){
 
   $scope.formOK = false;
+  $scope.submitTractoButton = false;
   $scope.serverselect = {
     selection : null
   };
@@ -48,9 +49,11 @@ function link($scope,$attrs,$filter){
           $scope.Parameters.overlapping = $scope.overlapping;
           $scope.Parameters.loopcheck = $scope.loopcheck;
           $scope.createJobObject();
+
       }
 
       console.log("END ");
+      $scope.submitTractoButton = false;
       console.log($scope.Parameters);
 
     };
@@ -162,6 +165,7 @@ function link($scope,$attrs,$filter){
    });
 
        $scope.createJobObject = function(){
+        $scope.submitTractoButton = true;
       var job = {};
 
       job.executable = "scriptTestApp"; 

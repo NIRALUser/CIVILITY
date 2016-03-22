@@ -4,18 +4,34 @@ angular.module('brainConnectivity')
 
 function link($scope,$attrs,$filter){
 
-	$scope.test = function()
-    {
-     console.log("FIND JOB");
+  $scope.jobFound = [];
+  $scope.viewResult = true;
+  $scope.noResult = false;
 
-    }
+  $scope.statusAvail = ["All status","CREATE", "DOWNLOADING", "RUN", "FAIL", "KILL", "UPLOADING", "EXIT", "DONE"];
 
-  $scope.statusAvail = ["CREATE", "DOWNLOADING", "RUN", "FAIL", "KILL", "UPLOADING", "EXIT", "DONE"]
+   $scope.getJobByUser = function(){
 
-  $scope.getJobByUser = function(){
+    $scope.jobFound = [];
+    $scope.noResult = false;
+    $scope.viewResult =false; //delete and recreate
+
     //console.log($scope.selectStatus.selection);
-    clusterpost.getJobUser($scope.userEmail, undefined, "scriptTestApp").then(function(res){
+    if($scope.selectStatus.selection=="All status") {
+         $scope.selectStatus.selection = undefined;
+    }
+    clusterpost.getJobUser($scope.userEmail, $scope.selectStatus.selection, "scriptTestApp").then(function(res){
       console.log(res);
+       var jobF = $scope.jobFound;
+      _.each(res.data, function(val, ind){  
+        jobF.push(val);
+      })
+      $scope.viewResult=true;
+      $scope.jobFound = jobF;
+      if(jobF.length == 0 )
+      {
+        $scope.noResult = true;
+      }
     })
   }
 
