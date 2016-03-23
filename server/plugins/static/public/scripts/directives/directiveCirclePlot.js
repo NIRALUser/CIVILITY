@@ -266,6 +266,7 @@ angular.module('brainConnectivity')
 		  //Main function -- this function plot brain connectivity on circle and on brain Template
 		  $scope.Plot = function(){
 
+		  	$scope.removeOldPlot();
 		  	//Catch method used
 		  	var method = $scope.selectMethodMatrixProcess();
 		  	console.log(method + "method");
