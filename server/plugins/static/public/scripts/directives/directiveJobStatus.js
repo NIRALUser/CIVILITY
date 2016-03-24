@@ -60,6 +60,9 @@ angular.module('brainConnectivity')
 		$scope.getData = function(){
 
 				console.log("Get data");
+				clusterpost.getAttachment(id,"nodif_brain_mask.nii.gz").then(function(res){
+					console.log(res);
+				});
 
 		}
 
@@ -76,6 +79,7 @@ angular.module('brainConnectivity')
 
 		}
 
+
 		$scope.hideJobInfo = function()
 		{
 			$scope.getJobRequest = false;
@@ -88,9 +92,10 @@ angular.module('brainConnectivity')
 				console.log("Status : ",res);
 				$scope.getStatusRequest = true;
 			})*/
-			clusterpost.getJob(id).then(function(res){
+			clusterpost.getJobStatus(id).then(function(res){
 					console.log(res);
-					$scope.jobStatus = res.data.jobstatus.status;
+					console.log(res.data.status);
+					$scope.jobStatus = res.data.status;
 					//$scope.jobStatus = "DONE";
 					$scope.getStatusRequest = true;
 					if($scope.jobStatus == "DONE")

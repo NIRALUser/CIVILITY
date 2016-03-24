@@ -20,7 +20,7 @@ function link($scope,$attrs,$filter){
     if($scope.selectStatus.selection=="All status") {
          $scope.selectStatus.selection = undefined;
     }
-    clusterpost.getJobUser($scope.userEmail, $scope.selectStatus.selection, "scriptTestApp").then(function(res){
+    clusterpost.getJobUser($scope.userEmail, $scope.selectStatus.selection, "tractographyScriptApp.sh").then(function(res){
       console.log(res);
        var jobF = $scope.jobFound;
       _.each(res.data, function(val, ind){  

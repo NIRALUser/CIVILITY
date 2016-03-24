@@ -15,22 +15,22 @@ angular.module('brainConnectivity')
 		$scope.positionNodes.Left = {};
 		$scope.positionNodes.Right = {};
 		$scope.positionNodes.All = {};
-		$scope.positionNodes.Left.scalePointLeft = 2.8;
-		$scope.positionNodes.Right.scalePointRight = 2.8;
-		$scope.positionNodes.All.scalePointAll = 2.4;
+		$scope.positionNodes.Left.scalePointLeft = 1.9;
+		$scope.positionNodes.Right.scalePointRight = 1.9;
+		$scope.positionNodes.All.scalePointAll = 2.0;
 
-		$scope.positionNodes.Left.offsetXLeft = 93.8;
-		$scope.positionNodes.Right.offsetXRight = 128.5;
-		$scope.positionNodes.All.offsetXAll = 73;
+		$scope.positionNodes.Left.offsetXLeft = 95;
+		$scope.positionNodes.Right.offsetXRight = 130;
+		$scope.positionNodes.All.offsetXAll = 85;
 
-		$scope.positionNodes.Left.offsetYLeft = 80;
-		$scope.positionNodes.Right.offsetYRight = 71.4;
-		$scope.positionNodes.All.offsetYAll = 72;
+		$scope.positionNodes.Left.offsetYLeft = 150;
+		$scope.positionNodes.Right.offsetYRight = 150;
+		$scope.positionNodes.All.offsetYAll = 110;
 
 		$scope.scaleImgBrainTemplate = {};
-		$scope.scaleImgBrainTemplate.Left = 98;
-		$scope.scaleImgBrainTemplate.All = 98;
-		$scope.scaleImgBrainTemplate.Right = 98;
+		$scope.scaleImgBrainTemplate.Left = 80;
+		$scope.scaleImgBrainTemplate.All = 80;
+		$scope.scaleImgBrainTemplate.Right = 80;
 
 		$scope.plotID = _.uniqueId("divDiagram");
 
@@ -40,21 +40,21 @@ angular.module('brainConnectivity')
 		
 	$scope.resetCoord = function()
 	{
-		$scope.positionNodes.Left.scalePointLeft = 2.8;
-		$scope.positionNodes.Right.scalePointRight = 2.8;
-		$scope.positionNodes.All.scalePointAll = 2.4;
+		$scope.positionNodes.Left.scalePointLeft = 1.9;
+		$scope.positionNodes.Right.scalePointRight = 1.9;
+		$scope.positionNodes.All.scalePointAll = 2.0;
 
-		$scope.positionNodes.Left.offsetXLeft = 93.8;
-		$scope.positionNodes.Right.offsetXRight = 128.5;
-		$scope.positionNodes.All.offsetXAll = 73;
+		$scope.positionNodes.Left.offsetXLeft = 95;
+		$scope.positionNodes.Right.offsetXRight = 130;
+		$scope.positionNodes.All.offsetXAll = 85;
 
-		$scope.positionNodes.Left.offsetYLeft = 80;
-		$scope.positionNodes.Right.offsetYRight = 71.4;
-		$scope.positionNodes.All.offsetYAll = 72;
+		$scope.positionNodes.Left.offsetYLeft = 150;
+		$scope.positionNodes.Right.offsetYRight = 150;
+		$scope.positionNodes.All.offsetYAll = 110;
 
-		$scope.scaleImgBrainTemplate.Left = 98;
-		$scope.scaleImgBrainTemplate.All = 98;
-		$scope.scaleImgBrainTemplate.Right = 98;
+		$scope.scaleImgBrainTemplate.Left = 80;
+		$scope.scaleImgBrainTemplate.All = 80;
+		$scope.scaleImgBrainTemplate.Right = 80;
 	}
 
 		$scope.selectMethodMatrixProcess = function(){
@@ -266,6 +266,7 @@ angular.module('brainConnectivity')
 		  //Main function -- this function plot brain connectivity on circle and on brain Template
 		  $scope.Plot = function(){
 
+		  	$scope.removeOldPlot();
 		  	//Catch method used
 		  	var method = $scope.selectMethodMatrixProcess();
 		  	console.log(method + "method");
@@ -653,7 +654,7 @@ angular.module('brainConnectivity')
 
 		     var svgBrainLeft = divBrainLinkLeft.append("svg")
 		     	.attr("id","linksTemplate")
-		    	.attr("width", 600 )
+		    	.attr("width", 410 )
 		        .attr("height", 400 );
 		     
 		     var scaleImgLeft = $scope.scaleImgBrainTemplate.Left + "%";
@@ -787,7 +788,7 @@ angular.module('brainConnectivity')
 
 		     var svgBrainRight = divBrainLinkRight.append("svg")
 		     	.attr("id","linksTemplate")
-		    	.attr("width", 600 )
+		    	.attr("width", 410 )
 		        .attr("height", 400);
 		     
 		     var scaleImgRight = $scope.scaleImgBrainTemplate.Right + "%";

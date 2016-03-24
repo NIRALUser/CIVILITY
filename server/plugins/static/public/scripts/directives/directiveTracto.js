@@ -208,7 +208,7 @@ function link($scope,$attrs,$filter){
       job.outputs = [];
       var param = {}; 
       param.type = "file";
-      param.name = "nodif_brain_mask.nii.gz";
+      param.name = "neonate/Diffusion/nodif_brain_mask.nii.gz";
       job.outputs.push(param);
 
       job.type = "job"; 
