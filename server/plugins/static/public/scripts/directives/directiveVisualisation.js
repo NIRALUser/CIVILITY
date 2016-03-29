@@ -32,6 +32,8 @@ function link($scope,$attrs,$filter){
   
   $scope.plotBrainConnectivity = function(){
 
+      $scope.nbPlotInit = $scope.nbPlotInit +1;
+
 
       var data =  $scope.contentM ;
       console.log(data);
@@ -192,6 +194,7 @@ function link($scope,$attrs,$filter){
             $scope.plotParameters.diameter = 960
             $scope.plotParameters.upperValue = 1;
             $scope.plotParameters.data = returnJSONobject;
+            
             $scope.Plot;
    
 

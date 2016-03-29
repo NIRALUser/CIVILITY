@@ -4,6 +4,9 @@ angular.module('brainConnectivity')
 
 function link($scope,$attrs,$filter){
 
+
+  //s$scope.listJobs = ["1234","56789"];
+
 	$scope.noJobSubmit = function()
     {
       if($scope.listJobs.length == 0)  return true;

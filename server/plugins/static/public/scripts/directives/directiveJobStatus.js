@@ -60,9 +60,27 @@ angular.module('brainConnectivity')
 		$scope.getData = function(){
 
 				console.log("Get data");
-				clusterpost.getAttachment(id,"nodif_brain_mask.nii.gz").then(function(res){
+				clusterpost.getAttachment(id,"neonate/Diffusion/nodif_brain_mask.nii.gz").then(function(res){
 					console.log(res);
-				});
+
+
+					//var a = document.createElement("a");
+					var al = d3.select("#testFakeLink").append("a");
+			       // document.body.appendChild(a);
+			        al.style = "display: none";
+			        var url = window.URL.createObjectURL(res.data);
+			        al.href = url;
+			        al.download = name;
+			      // al.on( "click", handler );
+			        window.URL.revokeObjectURL(url);
+			       var fakeLink =  document.getElementById("testFakeLink");
+			       if(fakeLink != null) fakeLink.parentNode.removeChild(fakeLink);
+
+			        //document.body.removeChild(a);
+				})
+				.catch(function(e){
+      				console.log(e);
+    			});
 
 		}
 
@@ -94,7 +112,10 @@ angular.module('brainConnectivity')
 			})*/
 			clusterpost.getJobStatus(id).then(function(res){
 					console.log(res);
-					console.log(res.data.status);
+					console.log(res.data);
+					var response = res.data;
+					/*var resParse = JSON.parse(response);
+					console.log(resParse);*/
 					$scope.jobStatus = res.data.status;
 					//$scope.jobStatus = "DONE";
 					$scope.getStatusRequest = true;

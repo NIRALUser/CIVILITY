@@ -464,7 +464,6 @@ angular.module('brainConnectivity')
 		                    .style("opacity", 0); 
 		            })
 		          ;
-		          console.log("VALLINK2" + valLink2);
 
 		       svg.selectAll(".node")
 		          .data(nodes.filter(function(n) { 

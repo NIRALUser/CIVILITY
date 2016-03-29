@@ -20,8 +20,8 @@
 }
 
 .job{
-  margin: 1% 5% 2% 5%;
-  padding: 1% 2% 2% 2%;
+  margin: 1% 0.5% 2% 0.5%;
+  padding: 1% 1% 2% 1%;
   background-color :  #ffffff;
   color : #286090;
   font : 13px sans-serif;
@@ -41,8 +41,8 @@
 }
 
 .jobs{
-    margin: 1% 5% 2% 5%;
-  padding: 1% 2% 2% 2%;
+    margin: 1% 1% 2% 1%;
+  padding: 1% 1% 2% 1%;
   background-color :  #e6f9ff;
   color : #286090;
   font : 13px sans-serif;
@@ -74,6 +74,9 @@
 .visuCheckbox{
   color: #286090;
   font-size: 15px;
+  margin-bottom : 50px;
+  z-index: 10;
+position: relative;
 }
 
 .changePositonCheckbox{
@@ -389,7 +392,8 @@ div.nodeTooltip {
     background: lightcoral ; 
     border: 0px;    
     border-radius: 8px;     
-    pointer-events: none;     
+    pointer-events: none;  
+    z-index: 5;   
 }
 
     
