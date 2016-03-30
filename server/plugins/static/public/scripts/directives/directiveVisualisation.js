@@ -142,10 +142,20 @@ function link($scope,$attrs,$filter){
                   {
                     //console.log("hello");
                     var name = table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
-                    var coordX = table_Matrix[seed]["coord"][0];
-                    var coordY = table_Matrix[seed]["coord"][1];
-                    var coordZ = table_Matrix[seed]["coord"][2];
-                    var seedInfo = {"name" : name,  "x": coordX, "y": coordY, "z": coordZ};
+                    console.log("test value ", table_Matrix[seed]["coord"])
+                    if(table_Matrix[seed]["coord"] != undefined)
+                    {
+                      console.log("TEST");
+                      var coordX = table_Matrix[seed]["coord"][0];
+                      var coordY = table_Matrix[seed]["coord"][1];
+                      var coordZ = table_Matrix[seed]["coord"][2];
+                      var seedInfo = {"name" : name,  "x": coordX, "y": coordY, "z": coordZ};
+
+                    }
+                    else 
+                    {
+                      var seedInfo = {"name" : name};
+                    }
                     listVisuOrder[visuOrder-1] = seedInfo
                     //listVisuOrder[visuOrder-1]=table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
                   } 

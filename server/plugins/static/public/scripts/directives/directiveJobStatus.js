@@ -64,19 +64,17 @@ angular.module('brainConnectivity')
 					console.log(res);
 
 
-					//var a = document.createElement("a");
-					var al = d3.select("#testFakeLink").append("a");
-			       // document.body.appendChild(a);
-			        al.style = "display: none";
+					var a = document.createElement("a");
+			        document.body.appendChild(a);
+			        a.style = "display: none";
 			        var url = window.URL.createObjectURL(res.data);
-			        al.href = url;
-			        al.download = name;
-			      // al.on( "click", handler );
+			        a.href = url;
+			        a.download = name;
+			        a.click();
+			        console.log("DOWNLOAD FILE")
 			        window.URL.revokeObjectURL(url);
-			       var fakeLink =  document.getElementById("testFakeLink");
-			       if(fakeLink != null) fakeLink.parentNode.removeChild(fakeLink);
+			        document.body.removeChild(a);
 
-			        //document.body.removeChild(a);
 				})
 				.catch(function(e){
       				console.log(e);

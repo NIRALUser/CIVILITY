@@ -49,6 +49,8 @@ angular.module('brainConnectivity')
 
     	$scope.choices = [{"id":"average", "value":"1", "label":"Average", "checked":true}, {"id":"max", "value":"2","label":"Maximum","checked":false},{"id":"min", "value":"3","label":"Minumum","checked":false}];	 
 		
+		 $scope.plotBrainTemplate = false;
+
 		//Select method for Matrix processing : Average / Max values / Min values
 		
 	$scope.resetCoord = function()
@@ -517,6 +519,7 @@ angular.module('brainConnectivity')
 		     //Plot brain template -- if coord specified in Json table 
 		    if(JSONInfo.listOrdered[1].x != undefined)  //should be improve
 		     {
+		     	$scope.plotBrainTemplate = true;
 		     //Whole brain connection
 		     var divBrainImgALL = d3.select("." + $scope.brainTemplateAllClass)
 		     	.append("div")
@@ -920,7 +923,8 @@ angular.module('brainConnectivity')
 		     }
 		     else
 		     {
-		     	alert("Brain templates can't be plot. There is no coordonation specified in the parcellation table descritption.")
+		     	//alert("Brain templates can't be plot. There is no coordonation specified in the parcellation table descritption.")
+		     	$scope.plotBrainTemplate = false;
 		     }
  }
 
