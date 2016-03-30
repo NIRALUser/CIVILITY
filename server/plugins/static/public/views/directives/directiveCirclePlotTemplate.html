@@ -45,7 +45,7 @@
 <div class="brainTemplate" ng-show="showBrainTemplate" ng-model="showBrainTemplate" ng-change="plotBrainTemplate">
 
 <div class="divBrainLeft" id="divBrainLeft">
-	<div class="leftPlotTemplate" id="leftPlotTemplate"> 
+	<div class="{{brainTemplateLeftClass}}" id="{{brainTemplateLeftClass}}"> 
 	</div>
 	<div class=modifCoord ng-if="modifCoordPosition">
 <div class=modifCoordTitles> Scale and location of nodes : <br/> </div>
@@ -62,7 +62,7 @@
 
 
 <div class="divBrainALL" id="divBrainALL" >
-	<div class="AllPlotTemplate" id="AllPlotTemplate"> 
+	<div class="{{brainTemplateAllClass}}" id="{{brainTemplateAllClass}}"> 
 	</div>
 	<div class=modifCoord ng-if="modifCoordPosition">
 <div class=modifCoordTitles> Scale and location of nodes : <br/> </div>
@@ -78,7 +78,7 @@
 </div>
 
 <div class="divBrainRight" id="divBrainRight" >
-	<div class="rightPlotTemplate" id="rightPlotTemplate"> 
+	<div class="{{brainTemplateRightClass}}" id="{{brainTemplateRightClass}}"> 
 	</div>
 	<div class=modifCoord ng-if="modifCoordPosition">
 <div class=modifCoordTitles> Scale and location of nodes : <br/> </div>

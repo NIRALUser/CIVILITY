@@ -34,6 +34,19 @@ angular.module('brainConnectivity')
 
 		$scope.plotID = _.uniqueId("divDiagram");
 
+		$scope.brainTemplateAllClass = "AllPlotTemplate" + $scope.plotID;
+		$scope.brainTemplateLeftClass = "leftPlotTemplate" + $scope.plotID;
+		$scope.brainTemplateRightClass = "rightPlotTemplate" + $scope.plotID;
+
+		$scope.brainTemplateImgAll =  "divBrainImgALL" + $scope.plotID;
+		$scope.brainTemplateLinkAll =  "divBrainLinkALL" + $scope.plotID;
+
+		$scope.brainTemplateImgLeft =  "divBrainImgLeft" + $scope.plotID;
+		$scope.brainTemplateLinkLeft =  "divBrainLinkLeft" + $scope.plotID;
+
+		$scope.brainTemplateImgRight =  "divBrainImgRight" + $scope.plotID;
+		$scope.brainTemplateLinkRight =  "divBrainLinkRight" + $scope.plotID;
+
     	$scope.choices = [{"id":"average", "value":"1", "label":"Average", "checked":true}, {"id":"max", "value":"2","label":"Maximum","checked":false},{"id":"min", "value":"3","label":"Minumum","checked":false}];	 
 		
 		//Select method for Matrix processing : Average / Max values / Min values
@@ -248,17 +261,19 @@ angular.module('brainConnectivity')
 		  	if(tooltipPlot != null) tooltipPlot.parentNode.removeChild(tooltipPlot);
 		  	var tooltipNode = document.getElementById("nodeTooltip_"+$scope.plotID);
 		  	if(tooltipNode != null) tooltipNode.parentNode.removeChild(tooltipNode);
-		  	var allImg = document.getElementById("divBrainImgALL");
+
+		  	
+		  	var allImg = document.getElementById($scope.brainTemplateImgAll);
 		  	if(allImg != null) allImg.parentNode.removeChild(allImg);
-		  	var allLink = document.getElementById("divBrainLinkALL");
+		  	var allLink = document.getElementById($scope.brainTemplateLinkAll);
 		  	if(allLink != null) allLink.parentNode.removeChild(allLink);
-		  	var rightImg = document.getElementById("divBrainImgRight");
+		  	var rightImg = document.getElementById($scope.brainTemplateImgRight);
 		  	if(rightImg != null) rightImg.parentNode.removeChild(rightImg);
-		  	var rightLink = document.getElementById("divBrainLinkRight");
+		  	var rightLink = document.getElementById($scope.brainTemplateLinkRight);
 		  	if(rightLink != null) rightLink.parentNode.removeChild(rightLink);
-		  	var leftImg = document.getElementById("divBrainImgLeft");
+		  	var leftImg = document.getElementById($scope.brainTemplateImgLeft);
 		  	if(leftImg != null) leftImg.parentNode.removeChild(leftImg);
-		  	var leftLink = document.getElementById("divBrainLinkLeft");
+		  	var leftLink = document.getElementById($scope.brainTemplateLinkLeft);
 		  	if(leftLink != null) leftLink.parentNode.removeChild(leftLink);
 
   		  }
@@ -503,15 +518,15 @@ angular.module('brainConnectivity')
 		    if(JSONInfo.listOrdered[1].x != undefined)  //should be improve
 		     {
 		     //Whole brain connection
-		     var divBrainImgALL = d3.select(".AllPlotTemplate")
+		     var divBrainImgALL = d3.select("." + $scope.brainTemplateAllClass)
 		     	.append("div")
 		     	.attr("class","divBrainImgALL")
-		     	.attr("id","divBrainImgALL");
+		     	.attr("id",$scope.brainTemplateImgAll);
 
-		     var divBrainLinkALL = d3.select(".AllPlotTemplate")
+		     var divBrainLinkALL = d3.select("." + $scope.brainTemplateAllClass)
 		     	.append("div")
 		     	.attr("class","divBrainLinkALL")
-		     	.attr("id","divBrainLinkALL");
+		     	.attr("id",$scope.brainTemplateLinkAll);
 
 		     var svgBrain = divBrainLinkALL.append("svg")
 		     	.attr("id","linksTemplate")
@@ -641,15 +656,15 @@ angular.module('brainConnectivity')
 		       })	    	
 
 		       //Left brain template
-		      var divBrainImgLeft = d3.select(".leftPlotTemplate")
+		      var divBrainImgLeft = d3.select("." + $scope.brainTemplateLeftClass )
 		      	.append("div")
 		     	.attr("class","divBrainImgLeft")
-		     	.attr("id","divBrainImgLeft");
+		     	.attr("id",$scope.brainTemplateImgLeft);
 
-		     var divBrainLinkLeft = d3.select(".leftPlotTemplate")
+		     var divBrainLinkLeft = d3.select("." + $scope.brainTemplateLeftClass )
 		     	.append("div")
 		     	.attr("class","divBrainLinkLeft")
-		     	.attr("id","divBrainLinkLeft");
+		     	.attr("id",$scope.brainTemplateLinkLeft);
 
 		     var svgBrainLeft = divBrainLinkLeft.append("svg")
 		     	.attr("id","linksTemplate")
@@ -777,13 +792,13 @@ angular.module('brainConnectivity')
 
 				
 	
-		     var divBrainImgRight = d3.select(".rightPlotTemplate").append("div")
+		     var divBrainImgRight = d3.select("." + $scope.brainTemplateRightClass).append("div")
 		     	.attr("class","divBrainImgRight")
-		     	.attr("id","divBrainImgRight");
+		     	.attr("id",$scope.brainTemplateImgRight);
 
-		     var divBrainLinkRight = d3.select(".rightPlotTemplate").append("div")
+		     var divBrainLinkRight = d3.select("." + $scope.brainTemplateRightClass).append("div")
 		     	.attr("class","divBrainLinkRight")
-		     	.attr("id","divBrainLinkRight");
+		     	.attr("id",$scope.brainTemplateLinkRight);
 
 		     var svgBrainRight = divBrainLinkRight.append("svg")
 		     	.attr("id","linksTemplate")
