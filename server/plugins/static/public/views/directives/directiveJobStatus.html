@@ -17,9 +17,14 @@
 			<div ng-show="plotCircle" id="circleConnectivity"> <circle-plot plot-data="plotParameters.data"  > </circle-plot> </div>
 			<!-- </div> -->
 
+
+			<button type="button" class="btn btn-primary" ng-click=
+			"plotDataCircle()" ng-if="!plotCircle"> Connectivity visualisation TEST retreive data </button>  
+			 <circle-plot plot-data="plotParameters.data"  > </circle-plot>
+
 		</div>
 
-		<button class="btn btn-danger" ng-click="getData()" > Get attachment </button> 
+		<button class="btn btn-danger" ng-click="$scope.getOutputDirectory()" > Get output directory </button> 
 
 		<button class="btn btn-danger" ng-click="killJob()" ng-if="!jobKill"> Kill Job </button> 
 

@@ -31,8 +31,41 @@ function link($scope,$attrs,$filter){
       $scope.nbJobSubmit = 0;
     $scope.listJobs = [];
     //$scope.listJobs = ["123456","98765"];
+ /*   $scope.outputFiles = ["neonate/Diffusion/nodif_brain_mask.nii.gz",
+                          "neonate/Diffusion/data.nii.gz",
+                          "neonate/Diffusion/bvals",
+                          "neonate/Diffusion/bvecs",
+                          "neonate/TABLE_AAL.json",
+                          "neonate/seeds.txt",
+                          "neonate/"+$scope.NetworkDir+"/fdt_network_matrix",
+                          "neonate/"+$scope.NetworkDir+"/waytotal"];
 
-    $scope.noJobSubmit = function()
+    $scope.findDirectoryName();
+    
+    $scope.outputDirectories = ["neonate/Diffusion.bedpostX",
+                                "neonate/"+$scope.NetworkDir];
+
+
+   $scope.findDirectoryName = function(){
+    if($scope.Parameters.overlapping == true && $scope.Parameters.loopcheck == true)
+    {
+      $scope.NetworkDir = "Network_overlapping_loopcheck";
+    }
+    else if ($scope.Parameters.overlapping == true && $scope.Parameters.loopcheck == false)
+    {
+      $scope.NetworkDir = "Network_overlapping";
+    }
+    else if ($scope.Parameters.overlapping == false && $scope.Parameters.loopcheck == true)
+    {
+      $scope.NetworkDir = "Network_loopcheck";
+    }
+    else
+    {
+      $scope.NetworkDir = "Network";
+    }
+   }*/
+
+   $scope.noJobSubmit = function()
     {
       if($scope.listJobs.length == 0)  return true;
       else return false;
@@ -206,10 +239,20 @@ function link($scope,$attrs,$filter){
       });
 
       job.outputs = [];
-      var param = {}; 
-      param.type = "file";
-      param.name = "neonate/Diffusion/nodif_brain_mask.nii.gz";
-      job.outputs.push(param);
+
+      var param1 = {}; 
+      param1.type = "file";
+      param1.name = "neonate/Network_overlapping_loopcheck/fdt_network_matrix";
+      job.outputs.push(param1);
+      var param2 = {}; 
+      param2.type = "file";
+      param2.name = "neonate/TABLE_AAL.json";
+      job.outputs.push(param2);
+
+       var param3 = {}; 
+      param3.type = "directory";
+      param3.name = "neonate";
+      job.outputs.push(param2);
 
       job.type = "job"; 
       job.userEmail = $scope.userEmail;

@@ -18,11 +18,6 @@ module.exports = function(server,options)
         });
     }
 
-    handler.viewMat = function (request, reply)
-    {
-      
-    }
-
     handler.getFDTMatrix = function (request, reply)
     {
 

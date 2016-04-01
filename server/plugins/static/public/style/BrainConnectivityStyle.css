@@ -48,6 +48,15 @@
   font : 13px sans-serif;
 }
 
+.jobsDone{
+  margin: 1% 1% 2% 1%;
+  padding: 1% 1% 2% 1%;
+  background-color :  #e6f9ff;
+  color : #286090;
+  font : 13px sans-serif;
+  text-align: center;
+}
+
 .jobLine{
   background-color: #f5f5dc;
   border-color: #f5f5dc;
@@ -127,7 +136,7 @@ position: relative;
 
 body {
   font: 10px sans-serif;
-  shape-rendering: crispEdges;
+  /*shape-rendering: crispEdges;*/
 }
 
 

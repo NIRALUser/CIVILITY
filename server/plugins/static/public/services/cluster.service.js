@@ -49,11 +49,11 @@ angular.module('brainConnectivity')
         url: '/clusterpost/dataprovider/' + id        
       });
     },
-    getAttachment: function(id, filename){
+    getAttachment: function(id, filename,responseType){
     	return $http({
         method: 'GET',
         url: '/clusterpost/dataprovider/' + id + '/' + encodeURIComponent(filename),
-        responseType: "blob"
+        responseType: responseType
       });
     },
     addAttachment: function(id, filename, data){

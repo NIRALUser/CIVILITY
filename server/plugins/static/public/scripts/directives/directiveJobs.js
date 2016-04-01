@@ -4,11 +4,6 @@ angular.module('brainConnectivity')
 
 function link($scope,$attrs,$filter){
 
-	$scope.hello = function()
-    {
-      console.log("I'm in DIRECTIVE JOBS")
-    }
-
 };
 return {
     restrict : 'E',

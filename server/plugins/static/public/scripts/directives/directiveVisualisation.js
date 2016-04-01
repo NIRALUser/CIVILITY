@@ -11,7 +11,8 @@ function link($scope,$attrs,$filter){
 
    $scope.testD = undefined; 
 
-   $scope.nbPlotInit = 0;
+/*   $scope.nbPlot = -1;
+   $scope.plots = [];*/
 
   $scope.Files = {
     "json": "",
@@ -32,8 +33,8 @@ function link($scope,$attrs,$filter){
   
   $scope.plotBrainConnectivity = function(){
 
-      $scope.nbPlotInit = $scope.nbPlotInit +1;
-
+/*      $scope.nbPlot = $scope.nbPlot +1;
+      $scope.plots.push($scope.nbPlot)*/
 
       var data =  $scope.contentM ;
       console.log(data);
