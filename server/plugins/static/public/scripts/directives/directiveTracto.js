@@ -240,19 +240,25 @@ function link($scope,$attrs,$filter){
 
       job.outputs = [];
 
+      //Output 1 : matrix file
       var param1 = {}; 
       param1.type = "file";
-      param1.name = "neonate/Network_overlapping_loopcheck/fdt_network_matrix";
+      param1.name = $scope.Parameters.subject + "/Network_overlapping_loopcheck/fdt_network_matrix";
       job.outputs.push(param1);
+
+      //Output 2 : parcellation description table (json file)
       var param2 = {}; 
       param2.type = "file";
-      param2.name = "neonate/TABLE_AAL.json";
+      param2.name = $scope.Parameters.subject + "/" + $scope.Parameters.Files.parcellationTable;
       job.outputs.push(param2);
 
-       var param3 = {}; 
-      param3.type = "directory";
+
+      //Output 3 : {subject dir} -- all output dir (as tar.gz)
+      var param3 = {}; 
+      param3.type = "tar.gz";
       param3.name = "neonate";
-      job.outputs.push(param2);
+      job.outputs.push(param3);
+
 
       job.type = "job"; 
       job.userEmail = $scope.userEmail;

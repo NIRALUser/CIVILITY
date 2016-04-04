@@ -37,7 +37,10 @@ function link($scope,$attrs,$filter){
       $scope.plots.push($scope.nbPlot)*/
 
       var data =  $scope.contentM ;
-      console.log(data);
+      console.log("MATRIX",data);
+
+      var table =  $scope.contentJ ;
+                console.log("DESCRIPTION TABLE",table);
   
       var lines = data.split('\n');
 
@@ -91,8 +94,7 @@ function link($scope,$attrs,$filter){
                     matrix_norm.push(vals);
                  }
 
-                var table =  $scope.contentJ ;
-                console.log(table);
+
 
                 var AALObject = JSON.parse(table);
                 //console.log(AALObject);

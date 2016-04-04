@@ -29,6 +29,9 @@ module.exports = function(server,options)
         .then(function(arrayData){
 
                 var data = arrayData[0];
+                console.log("MATRIX",data)
+                var table = arrayData[1];
+                console.log("DESCRIPTION TABLE",table);
   
                 var lines = data.split('\n');
 
@@ -81,8 +84,6 @@ module.exports = function(server,options)
                     }
                     matrix_norm.push(vals);
                  }
-
-                var table = arrayData[1];
 
                 var AALObject = JSON.parse(table);
                 //console.log(AALObject);

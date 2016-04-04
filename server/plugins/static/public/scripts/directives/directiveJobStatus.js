@@ -14,11 +14,31 @@ angular.module('brainConnectivity')
 
 		$scope.matrixOut = "";
 		$scope.tableDescription = {};
+		$scope.jobObject = {};
+
+
+
+
+		$scope.getJobObject = function(){
+
+			clusterpost.getJob($scope.jobId).then(function(res){
+				console.log(res);
+				$scope.jobObject = res.data;
+			})
+			 .catch(function(e){
+		      console.log(e);
+		    });
+
+		}
+
+		$scope.getJobObject();
 
 		console.log("Job id :", $scope.jobId);
 
 
 		$scope.getOutput = function(){
+
+
 
 		}
 		$scope.getOutputError = function(){
@@ -68,8 +88,7 @@ angular.module('brainConnectivity')
   		$scope.getOutputDirectory = function(){
 
   			console.log("Get data");
-
-				clusterpost.getAttachment($scope.jobId,"neonate","blob").then(function(res){
+			clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[2].name,"blob").then(function(res){
 					 console.log(res);
 
 					var a = document.createElement("a");
@@ -77,7 +96,7 @@ angular.module('brainConnectivity')
 			        a.style = "display: none";
 			        var url = window.URL.createObjectURL(res.data);
 			        a.href = url;
-			        a.download = "neonate";
+			        a.download = $scope.jobObject.outputs[2].name;
 			        a.click();
 			        console.log("DOWNLOAD FILE")
 			        window.URL.revokeObjectURL(url);
@@ -140,6 +159,9 @@ angular.module('brainConnectivity')
 						//	Recontruct job object and submit once again
 					}
 				})
+				.catch(function(e){
+      			console.log(e);
+    		});
 		}
 		$scope.getStatus();
 		$scope.killJob = function(){
@@ -199,7 +221,7 @@ angular.module('brainConnectivity')
 		$scope.getTableDescription = function(){
 
 			console.log("Get data");
-			clusterpost.getAttachment($scope.jobId,"neonate/TABLE_AAL.json","json").then(function(res){
+			clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[1].name,"text").then(function(res){
 				console.log(res);
 				$scope.tableDescription = res.data;
 				console.log($scope.tableDescription);
@@ -212,7 +234,7 @@ angular.module('brainConnectivity')
 		$scope.getMatrix = function(){
 
 			console.log("Get data");
-			clusterpost.getAttachment($scope.jobId,"neonate/Network_overlapping_loopcheck/fdt_network_matrix","text").then(function(res){
+			clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[0].name,"text").then(function(res){
 				console.log(res);
 				$scope.matrixOut = res.data;
 				console.log($scope.matrixOut);
@@ -241,10 +263,10 @@ angular.module('brainConnectivity')
       $scope.plots.push($scope.nbPlot)*/
 
      var data = $scope.matrixOut ;
-     console.log(data);
+     console.log("MATRIX",data);
   		
-  	 var table =  $scope.tableDescription ;
-     console.log(table);
+  	 var table =  $scope.tableDescription;
+     console.log("DESCRIPTION TABLE",table);
 
      console.log(data);
 
@@ -302,7 +324,7 @@ angular.module('brainConnectivity')
 
                
 
-                var AALObject = table;
+                var AALObject = JSON.parse(table);
                 //console.log(AALObject);
 
                 var table_Matrix = [];

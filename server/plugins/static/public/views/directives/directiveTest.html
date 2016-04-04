@@ -1,0 +1,19 @@
+<div class="PCAslider">
+
+<div class="json-file-input">  
+		Parcellation table (json file)
+		<input id="JSONFile" type="file" on-read-file="showContentJson($fileContent)"></input>
+</div> 
+
+<div class=buttons>
+			<jobs-done> </jobs-done>
+</div>
+
+
+<button>RUN PCA </button>
+
+<h6> Value of K  : {{valueK }}</h6>
+<input type="range" ng-model="valueK" max="1" min="-1" step="0.1" > </input>
+
+<circle-plot plot-data="plotParameters.data"> </circle-plot>	
+</div>

@@ -2,7 +2,7 @@
 	 <div class="jobIdTitle"> Job id : </div> <div class="idJob"> {{jobId}} </div> 
 	
 	<!-- 	<button class="btn btn-success" ng-click="getStatus()" ng-if="!getStatusRequest"> Get job status </button> --> 
-		<div class=jobStatus ng-if="getStatusRequest">
+		<div class=jobStatus >
 
 		<button type="button" class="btn btn-info" ng-click="reRunJob()" ng-if="jobKill"> Restart </button>
 
@@ -20,11 +20,10 @@
 
 			<button type="button" class="btn btn-primary" ng-click=
 			"plotDataCircle()" ng-if="!plotCircle"> Connectivity visualisation TEST retreive data </button>  
-			 <circle-plot plot-data="plotParameters.data"  > </circle-plot>
 
 		</div>
 
-		<button class="btn btn-danger" ng-click="$scope.getOutputDirectory()" > Get output directory </button> 
+		<button class="btn btn-danger" ng-click="getOutputDirectory()" > Get output directory </button> 
 
 		<button class="btn btn-danger" ng-click="killJob()" ng-if="!jobKill"> Kill Job </button> 
 
