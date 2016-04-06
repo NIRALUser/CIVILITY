@@ -9,15 +9,17 @@ angular.module('brainConnectivity')
 
 		$scope.jobDone = false;
 		$scope.jobCancel = false;
-		$scope.plotCircle = false;
 		$scope.plotOnce = false;
 
 		$scope.matrixOut = "";
 		$scope.tableDescription = {};
 		$scope.jobObject = {};
 
+    $scope.selectJobDonePCA = false;
 
+		$scope.plotData = undefined;
 
+   console.log("PCALIST",$scope.listPca);
 
 		$scope.getJobObject = function(){
 
@@ -87,8 +89,9 @@ angular.module('brainConnectivity')
 
   		$scope.getOutputDirectory = function(){
 
-  			console.log("Get data");
-			clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[2].name,"blob").then(function(res){
+  			console.log($scope.jobObject);
+			//clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[2].name + ".tar.gz","blob").then(function(res){
+				clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[2].name + ".tar.gz","blob").then(function(res){
 					 console.log(res);
 
 					var a = document.createElement("a");
@@ -137,7 +140,6 @@ angular.module('brainConnectivity')
 				$scope.getStatusRequest = true;
 			})*/
 			clusterpost.getJobStatus($scope.jobId).then(function(res){
-					console.log(res);
 					console.log(res.data);
 					var response = res.data;
 					/*var resParse = JSON.parse(response);
@@ -204,11 +206,12 @@ angular.module('brainConnectivity')
 		  	if(tooltipPlot != null) tooltipPlot.parentNode.removeChild(tooltipPlot);
 		  	var tooltipNode = document.getElementById("nodeTooltip_"+$scope.plotID);
 		  	if(tooltipNode != null) tooltipNode.parentNode.removeChild(tooltipNode);
-		  	$scope.plotCircle = false;
+        $scope.viewCirclePlot = false;
+
 
   		  }
 		
-		$scope.connectivityVisualisation = function(){
+/*		$scope.connectivityVisualisation = function(){
 				if (!$scope.plotOnce)
 				{
 					 $scope.submit();
@@ -216,42 +219,50 @@ angular.module('brainConnectivity')
 				}
 				$scope.plotCircle = true;
 			
-		}
+		}*/
 
 		$scope.getTableDescription = function(){
-
-			console.log("Get data");
-			clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[1].name,"text").then(function(res){
-				console.log(res);
-				$scope.tableDescription = res.data;
-				console.log($scope.tableDescription);
+			return clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[1].name,"json").then(function(res){				
+				return res.data;
 			})
 			.catch(function(e){
-      			console.log(e);
-    		});
+      			console.error("Error getting parcellation description table", e);
+      			throw e;
+    		});    		
 		}
 
 		$scope.getMatrix = function(){
-
-			console.log("Get data");
-			clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[0].name,"text").then(function(res){
-				console.log(res);
-				$scope.matrixOut = res.data;
-				console.log($scope.matrixOut);
-
+			return clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[0].name,"text").then(function(res){
+				return res.data;
 			})
 			.catch(function(e){
-      			console.log(e);
+      			console.error("Error getting matrix", e);
+      			throw e;
     		});
 		}
+    $scope.viewCirclePlot = false;
 
 		$scope.plotDataCircle = function(){
 
-			$scope.getMatrix();
-			$scope.getTableDescription();
+      $scope.viewCirclePlot = true;
 
-			$scope.plotBrainConnectivityJobDone();
+			var promarray = [
+				$scope.getMatrix(),
+				$scope.getTableDescription()
+			];
 
+			Promise.all(promarray)
+			.then(function(res){
+				$scope.matrixOut = res[0];
+				$scope.tableDescription = res[1];
+
+				console.log($scope.matrixOut, $scope.tableDescription);
+
+				$scope.plotBrainConnectivityJobDone();
+			})
+			.catch(function(e){
+				console.error(e);
+			});
 
 
 		}
@@ -261,15 +272,9 @@ angular.module('brainConnectivity')
 
 /*      $scope.nbPlot = $scope.nbPlot +1;
       $scope.plots.push($scope.nbPlot)*/
-
      var data = $scope.matrixOut ;
-     console.log("MATRIX",data);
-  		
+  	
   	 var table =  $scope.tableDescription;
-     console.log("DESCRIPTION TABLE",table);
-
-     console.log(data);
-
       var lines = data.split('\n');
 
        //GET MATRIX    
@@ -324,7 +329,9 @@ angular.module('brainConnectivity')
 
                
 
-                var AALObject = JSON.parse(table);
+                var AALObject = table;
+
+                /*var AALObject = $scope.tableDescription;*/
                 //console.log(AALObject);
 
                 var table_Matrix = [];
@@ -359,8 +366,6 @@ angular.module('brainConnectivity')
                   }
                   
                 }
-                console.log(MaxvisuOrder);
-
                 for(var i=0 ; i < MaxvisuOrder ; i++)
                 {
                   listVisuOrder.push("");
@@ -373,10 +378,8 @@ angular.module('brainConnectivity')
                   {
                     //console.log("hello");
                     var name = table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
-                    console.log("test value ", table_Matrix[seed]["coord"])
                     if(table_Matrix[seed]["coord"] != undefined)
                     {
-                      console.log("TEST");
                       var coordX = table_Matrix[seed]["coord"][0];
                       var coordY = table_Matrix[seed]["coord"][1];
                       var coordZ = table_Matrix[seed]["coord"][2];
@@ -438,14 +441,52 @@ angular.module('brainConnectivity')
             $scope.plotParameters.data = returnJSONobject;
             
             $scope.Plot;
+
+
    
 
   }
+
+  $scope.valuePCAList = function(){
+
+    console.log($scope.selectJobDonePCA);
+
+  }
+  $scope.listJobsSelectPCA = function(){
+    
+    if($scope.selectJobDonePCA == true){
+
+      var param = {
+        id : "",
+        subject : ""
+      };
+
+      param.id = $scope.jobId;
+      param.subject = "$scope.jobInfo.data.parameters[0].name"
+      $scope.listPca.push(param);
+    }
+    else{
+        $scope.listPca.forEach(function(job,i){
+        if(job.id == $scope.jobId)
+        {
+          //Delete job from list if selected before
+         listPca.splice( i, 1 );
+        }
+      })
+
+    }
+  }
+
+  $scope.$watch("selectJobDonePCA", function(){
+        console.log("HelloWatch selectJobDonePCA", $scope.selectJobDonePCA);
+        $scope.listJobsSelectPCA();
+      });
 	}
 	return {
     restrict : 'E',
     scope: {
-    	jobId : "="
+    	jobId : "=",
+      listPca : "="
     },
     link : link,
     templateUrl: 'views/directives/directiveJobStatus.html'

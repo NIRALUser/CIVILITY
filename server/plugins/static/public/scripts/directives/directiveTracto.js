@@ -246,16 +246,18 @@ function link($scope,$attrs,$filter){
       param1.name = $scope.Parameters.subject + "/Network_overlapping_loopcheck/fdt_network_matrix";
       job.outputs.push(param1);
 
+      
+      console.log("PARAMMM",$scope.Parameters)
       //Output 2 : parcellation description table (json file)
       var param2 = {}; 
       param2.type = "file";
-      param2.name = $scope.Parameters.subject + "/" + $scope.Parameters.Files.parcellationTable;
+      param2.name = $scope.Parameters.subject + "/" + $scope.Parameters.Files.parcellationTable.name;
       job.outputs.push(param2);
 
 
       //Output 3 : {subject dir} -- all output dir (as tar.gz)
       var param3 = {}; 
-      param3.type = "tar.gz";
+      param3.type = "directory";
       param3.name = "neonate";
       job.outputs.push(param3);
 

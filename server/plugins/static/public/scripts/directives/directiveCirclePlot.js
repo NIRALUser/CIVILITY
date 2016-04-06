@@ -32,6 +32,9 @@ angular.module('brainConnectivity')
 		$scope.scaleImgBrainTemplate.All = 80;
 		$scope.scaleImgBrainTemplate.Right = 80;
 
+
+		$scope.descriptionPlotDone = false;
+
 		$scope.plotID = _.uniqueId("divDiagram");
 
 		$scope.brainTemplateAllClass = "AllPlotTemplate" + $scope.plotID;
@@ -197,6 +200,7 @@ angular.module('brainConnectivity')
 
 		//This function create the description object for d3 plotting
 		$scope.CreateDescription = function(JSONInfo, checkbox){
+				console.log($scope.plotData)
 				 if($scope.plotData)
 		 		 {		 		 	
 		 		 	console.log("valueCheck" + checkbox);
@@ -240,6 +244,7 @@ angular.module('brainConnectivity')
                     	jsonLine.imports = imports;
                     	matrixDescription.push(jsonLine);
                		 }
+               		 $scope.descriptionPlotDone = true;
 		 			return matrixDescription;
 		 		}
 		 }
@@ -294,6 +299,9 @@ angular.module('brainConnectivity')
 		    //Create description object for d3 circle plot
 		    var classes = $scope.CreateDescription(JSONInfo,$scope.selectMethodMatrixProcess());
 		    
+
+		    if($scope.descriptionPlotDone == true)
+		    {
 		    //Options
 		    var thresholdDefaultValue = $scope.plotParameters.threshold;
 		    var diameter = $scope.plotParameters.diameter;
@@ -414,7 +422,6 @@ angular.module('brainConnectivity')
 		        .attr("class", "axis")
 		        .call(d3.svg.axis().scale(y).orient("left").ticks(10));
 
-
 		     var nodes = cluster.nodes($scope.packageHierarchy(classes));
 		      
 		     //console.log(thresholdDefaultValue);
@@ -447,10 +454,10 @@ angular.module('brainConnectivity')
 		          			}
 		          	})            
 		          .attr("d", line)
-		          .on("mouseover", function(d,i) {  
+		          .on("mouseover", function(d,i) {
 		          		var sized = d.length;
-		          		valLink1=d[0].key;
-		          		valLink2=d[sized-1].key;
+		          		valLink1=d[0].key + $scope.plotID;
+		          		valLink2=d[sized-1].key + $scope.plotID;
 		          		var Text1 = document.getElementById(valLink1);
 		          		var Text2 = document.getElementById(valLink2);
 		          		Text1.setAttribute("font-weight", "bold");
@@ -467,8 +474,8 @@ angular.module('brainConnectivity')
 		                })          
 		            .on("mouseout", function(d) {   
 		            	var sized = d.length;
-		          		valLink1=d[0].key;
-		          		valLink2=d[sized-1].key;
+		          		valLink1=d[0].key + $scope.plotID;
+		          		valLink2=d[sized-1].key + $scope.plotID;
 		          		var Text1 = document.getElementById(valLink1);
 		          		var Text2 = document.getElementById(valLink2);
 		          		Text1.setAttribute("font-weight", "normal");
@@ -491,7 +498,7 @@ angular.module('brainConnectivity')
 		          .attr("class", "node")
 		          .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
 		        .append("text")
-		          .attr("id",function(d){ return d.key; })
+		          .attr("id",function(d){ return d.key + $scope.plotID; })
 		          .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
 		          .attr("dy", ".31em")
 		          .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
@@ -790,6 +797,7 @@ angular.module('brainConnectivity')
 		                   .style("opacity", 0); 
 		        			});
 		           }
+
 		       })
 
 
@@ -926,6 +934,8 @@ angular.module('brainConnectivity')
 		     	//alert("Brain templates can't be plot. There is no coordonation specified in the parcellation table descritption.")
 		     	$scope.plotBrainTemplate = false;
 		     }
+
+		 }
  }
 
 	//This function return a color accordinf to a value (size) a a range specified in inputs  

@@ -1,0 +1,31 @@
+<div class="PCAslider">
+
+
+SELECT ONE PARCELLATION TABLE DESCRIPTION FILE : 
+<div class="json-file-input">  
+		Parcellation table (json file)
+		<input id="JSONFile" type="file" on-read-file="showContentJson($fileContent)"></input>
+</div> 
+
+ADD MATRIX : 
+<div class="fdt_mat_input">  
+		Connectivity matrix (probtrackx output : fdt_network_matrix )
+		<input id="matrix" type="file" on-read-file="showContentMatrix($fileContent)"></input>
+	</div>
+
+Cases selected for compute PCA : 
+
+(select jobs in "jobs done" tab and/or provide matrix file above)
+
+<div class=buttons>
+			<!-- <jobs-selected-PCA> </jobs-selected-PCA> -->
+</div>
+
+
+<button>RUN PCA </button>
+
+<h6> Value of K  : {{valueK }}</h6>
+<input type="range" ng-model="valueK" max="1" min="-1" step="0.1" > </input>
+
+<circle-plot plot-data="plotParameters.data"> </circle-plot>	
+</div>

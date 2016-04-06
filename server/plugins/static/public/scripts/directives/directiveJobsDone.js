@@ -16,6 +16,8 @@ function link($scope,$attrs,$filter){
     $scope.noResult = false;
     $scope.viewResult =false; //delete and recreate
 
+    $scope.jobsSelectedPCA = [];
+
     //console.log($scope.selectStatus.selection);
 
     clusterpost.getJobUser($scope.userEmail,  $scope.status, "tractographyScriptApp.sh").then(function(res){
