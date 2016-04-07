@@ -19,8 +19,6 @@ angular.module('brainConnectivity')
 
 		$scope.plotData = undefined;
 
-   console.log("PCALIST",$scope.listPca);
-
 		$scope.getJobObject = function(){
 
 			clusterpost.getJob($scope.jobId).then(function(res){
@@ -177,7 +175,7 @@ angular.module('brainConnectivity')
 		}
 		$scope.submit = function(){
 
-		    probtrack.getFDTMatrix()
+		    probtrack.getFDTMatrix("helloOParam1")
 		    .then(function(response){
 
 		      $scope.ButtonClicked = true;
@@ -231,7 +229,7 @@ angular.module('brainConnectivity')
     		});    		
 		}
 
-		$scope.getMatrix = function(){
+		$scope.getMatrix = function(){ 
 			return clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[0].name,"text").then(function(res){
 				return res.data;
 			})
@@ -240,7 +238,11 @@ angular.module('brainConnectivity')
       			throw e;
     		});
 		}
-    $scope.viewCirclePlot = false;
+
+    $scope.plotVisu = function(){
+      $scope.plotDataCircle();
+      $scope.plotDataCircle();
+    }
 
 		$scope.plotDataCircle = function(){
 
@@ -439,8 +441,8 @@ angular.module('brainConnectivity')
             $scope.plotParameters.diameter = 960
             $scope.plotParameters.upperValue = 1;
             $scope.plotParameters.data = returnJSONobject;
-            
-            $scope.Plot;
+            $scope.NewPlot;
+            //$scope.Plot;
 
 
    
@@ -453,32 +455,39 @@ angular.module('brainConnectivity')
 
   }
   $scope.listJobsSelectPCA = function(){
-    
-    if($scope.selectJobDonePCA == true){
+
+
+    if($scope.selectJobPCA == true){
 
       var param = {
         id : "",
-        subject : ""
+        subject : "",
+        type : "job",
+        matrix : ""
       };
 
       param.id = $scope.jobId;
-      param.subject = "$scope.jobInfo.data.parameters[0].name"
+      param.subject = "$scope.jobInfo.data.parameters[0].name";
+      $scope.getMatrix().then(function(res){
+        param.matrix=res;
+      })
       $scope.listPca.push(param);
+      
     }
     else{
         $scope.listPca.forEach(function(job,i){
         if(job.id == $scope.jobId)
         {
           //Delete job from list if selected before
-         listPca.splice( i, 1 );
+         $scope.listPca.splice( i, 1 );
         }
       })
 
     }
   }
 
-  $scope.$watch("selectJobDonePCA", function(){
-        console.log("HelloWatch selectJobDonePCA", $scope.selectJobDonePCA);
+  $scope.$watch("selectJobPCA", function(){
+        console.log("HelloWatch selectJobDonePCA", $scope.selectJobPCA);
         $scope.listJobsSelectPCA();
       });
 	}

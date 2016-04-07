@@ -18,8 +18,16 @@ module.exports = function(server,options)
         });
     }
 
+     handler.getMatrixList = function (request, reply)
+    {
+
+    }
+
+
     handler.getFDTMatrix = function (request, reply)
     {
+
+      console.log("VAAAAAL PARAM 1111",param1)
 
         //var array = ["/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/fdt_network_matrix", "/Users/danaele_puechmaille/Documents/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/TABLE_AAL.json"];
        // var array = ["/work/danaele/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/fdt_network_matrix_average", "/work/danaele/ProbtrackBrainConnectivity/server/plugins/ProbtrackConnectivity/data/TABLE_AAL.json"];
@@ -29,9 +37,7 @@ module.exports = function(server,options)
         .then(function(arrayData){
 
                 var data = arrayData[0];
-                console.log("MATRIX",data)
                 var table = arrayData[1];
-                console.log("DESCRIPTION TABLE",table);
   
                 var lines = data.split('\n');
 
@@ -120,8 +126,6 @@ module.exports = function(server,options)
                   }
                   
                 }
-                console.log(MaxvisuOrder);
-
                 for(var i=0 ; i < MaxvisuOrder ; i++)
                 {
                   listVisuOrder.push("");
@@ -171,10 +175,8 @@ module.exports = function(server,options)
              });
             
             console.log("Matrix ordered");
-            console.log(NewMat.length);
 
             var returnJSONobject = {"matrix" : NewMat, "listOrdered" : listVisuOrder}
-            console.log(listVisuOrder);
             reply(returnJSONobject);
         })
         .catch(reply);

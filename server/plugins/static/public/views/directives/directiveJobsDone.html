@@ -13,7 +13,6 @@
 			<h2 class="jobsTitle"> Jobs done: </h2>
 			<p  ng-if="noResult" class=jobNoInfo> None </p>
         <div id="resultFindJob">
-        {{jobsSelectedPCA}}	
 			<job-status ng-repeat="job in jobFound" job-id="job._id" list-Pca="jobsSelectedPCA"> </job-status>
 		</div>
 </div>
