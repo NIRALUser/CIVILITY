@@ -4,14 +4,177 @@ angular.module('brainConnectivity')
 
 function link($scope,$attrs,$filter){
 
-    $scope.matrixDimension = 0;
-
-
+$scope.matrixDimension = 0;
  $scope.param = {};
 
-  $scope.valueK = 0 ;
 
   $scope.jobsSelectedPCA = [];
+  $scope.listReconstructMatrix = [];
+
+  $scope.plotVisu = function(){
+      $scope.plotDataCircle();
+    }
+
+ $scope.getMatrixK = function(Kvalue){
+
+    var matrix = [];
+        _.each($scope.listReconstructMatrix, function(value, key){
+            
+            console.log(value);
+            console.log(value.Kvalue.toString(),$scope.valueK);
+            if(value.Kvalue.toString() == $scope.valueK)
+            {
+                console.log("EQUAAAAL",value.matrix);
+                matrix = value.matrix;
+            }
+        })
+        return matrix;
+ }
+
+  $scope.plotDataCircle = function(){
+
+      $scope.viewCirclePlot = true;
+/*      var test = $scope.getMatrixK($scope.valueK);
+      console.log("TEST",test)
+            var promarray = [
+                $scope.getMatrixK($scope.valueK),
+                JSON.parse($scope.contentJ)
+            ];
+
+            Promise.all(promarray)
+            .then(function(res){*/
+                $scope.matrixOut = $scope.getMatrixK($scope.valueK);
+                $scope.tableDescription = JSON.parse($scope.contentJ);
+
+                console.log($scope.matrixOut, $scope.tableDescription);
+
+                $scope.plotBrainConnectivityJobDone();
+/*            })
+            .catch(function(e){
+                console.error(e);
+            });*/
+
+
+        }
+
+    $scope.plotBrainConnectivityJobDone = function(){
+
+/*      $scope.nbPlot = $scope.nbPlot +1;
+      $scope.plots.push($scope.nbPlot)*/
+     var matrix_norm = $scope.matrixOut ;
+    
+     var AALObject =  $scope.tableDescription;
+;
+
+                var table_Matrix = [];
+                var listFDT = [];
+                var listVisuOrder = [];
+                var coordList = {};
+                var MaxvisuOrder = 0;
+
+                for(var i=0 ; i < matrix_norm.length ; i++)
+                {
+                  listFDT.push({});
+                }
+
+                for ( var seed in AALObject)
+                {
+                  var matrixRow = AALObject[seed]["MatrixRow"];
+                  if(matrixRow != "-1")
+                  {
+                    //console.log(AALObject[seed]["MatrixRow"]);
+                    listFDT[matrixRow-1] = AALObject[seed]["VisuHierarchy"] + AALObject[seed]["name"];
+                    var visuorder = AALObject[seed]["VisuOrder"];
+                    //console.log(visuorder);
+                    if(visuorder > MaxvisuOrder )
+                    {
+                      MaxvisuOrder = visuorder;
+                    }
+                    table_Matrix.push(AALObject[seed]);
+                  }
+                  else
+                  {
+                    //Don't use
+                  }
+                  
+                }
+                for(var i=0 ; i < MaxvisuOrder ; i++)
+                {
+                  listVisuOrder.push("");
+                }
+                for ( var seed in table_Matrix)
+                {
+                  
+                  var visuOrder = table_Matrix[seed]["VisuOrder"];
+                  if(visuOrder != "-1")
+                  {
+                    //console.log("hello");
+                    var name = table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
+                    if(table_Matrix[seed]["coord"] != undefined)
+                    {
+                      var coordX = table_Matrix[seed]["coord"][0];
+                      var coordY = table_Matrix[seed]["coord"][1];
+                      var coordZ = table_Matrix[seed]["coord"][2];
+                      var seedInfo = {"name" : name,  "x": coordX, "y": coordY, "z": coordZ};
+
+                    }
+                    else 
+                    {
+                      var seedInfo = {"name" : name};
+                    }
+                    listVisuOrder[visuOrder-1] = seedInfo
+                    //listVisuOrder[visuOrder-1]=table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
+                  } 
+                  else
+                  {
+                    //Don't use
+                  }  
+                }
+
+                //console.log("List visu order" + listVisuOrder);
+                //console.log("List fdt" + listFDT);
+
+                var NewMat = [];
+                matrix_norm.forEach(function(line,i)
+                {
+                var indexLine = listFDT.indexOf(listVisuOrder[i]["name"])  //1
+                if(indexLine != -1)
+                {
+                  var row=matrix_norm[indexLine];
+                  var NewRow =[];
+                  row.forEach(function(val,j)
+                  {
+                    var indexRow = listFDT.indexOf(listVisuOrder[j]["name"]);
+                    if(indexRow  != -1)
+                    {
+                      NewRow.push(row[indexRow]);
+                    }      
+                  });
+                  NewMat.push(NewRow); 
+                }                       
+             });
+            
+            console.log("Matrix ordered");
+            console.log(NewMat.length);
+
+            var returnJSONobject = {"matrix" : NewMat, "listOrdered" : listVisuOrder}
+            console.log(listVisuOrder);
+            console.log(returnJSONobject);
+
+            $scope.ButtonClicked = true;
+            $scope.plotParameters = {};
+            $scope.plotParameters.link1 = "";
+            $scope.plotParameters.link2 = "";
+            $scope.plotParameters.threshold = 0.1;
+            $scope.plotParameters.method = [true,false,false];
+            $scope.plotParameters.tension = 85;
+            $scope.plotParameters.diameter = 960
+            $scope.plotParameters.upperValue = 1;
+            $scope.plotParameters.data = returnJSONobject;
+            $scope.NewPlot;
+            //$scope.Plot;
+  }
+
 
   //console.log($scope.jobsSelectedPCA)
 
@@ -22,11 +185,6 @@ function link($scope,$attrs,$filter){
 $scope.showContentMatrix = function($fileContent){
         $scope.contentM = $fileContent;
     };
-
-	$scope.changeData = function()
-    {
-    var file_name = "PCAreconstructionSVD_" +  $scope.valueK ;
-    }
 
 $scope.addMatrixToList = function(){
 
@@ -162,6 +320,8 @@ $scope.numberOfComponents = function(singularValues){
 
 $scope.runPCA = function(){
 
+    $scope.listReconstructMatrix = [];
+
     if($scope.jobsSelectedPCA.length >= 2)
     {
        //Create matrix of all vectors 
@@ -210,51 +370,55 @@ $scope.runPCA = function(){
     });
 
     console.log(vectorList.length);
-    console.log(vectorList[0].length);
+    console.log("VEctorrrr",vectorList);
 
-    var datasetTranspose = vectorList;
-    console.log(datasetTranspose.length);
-    console.log(datasetTranspose[0].length);
+    var dataset = numeric.transpose(vectorList);
+    console.log("Dataset",dataset);
 
-    //Mean dataset
-    var meanDataset = math.mean(datasetTranspose,0);
+    //Mean dataset (each matrix nodes)
+    var meanDataset = math.mean(dataset,1);
     console.log(meanDataset);
+
+    //Mean to center dataset (mean of each subject )
+    var meanDataset2 = math.mean(dataset,0);
+    console.log(meanDataset2);
+
+    //Center dataset 
     var centerDataset = [];
-    for(var i = 0 ; i < vectorList.length ; i++)
+    for(var i = 0 ; i < dataset.length ; i++)
     {
-        var vect = [];
-        var dataVect = datasetTranspose[i];
-        for(var j = 0 ; j < sizeVector ; j++)
-        {
-/*        console.log(datasetTranspose[i][j], meanDataset[j]);
-*/           var a = datasetTranspose[i][j] - meanDataset[j];
-           vect.push(a);
-        }
-        centerDataset.push(vect);
+        var dataVect = numeric.sub(dataset[i],meanDataset2)
+        centerDataset.push(dataVect);
     }
-    console.log(centerDataset);
     var val = 1 / Math.sqrt( sizeVector - 1 );
-   // centerDataset = centerDataset * val;
-    var svdRes = numeric.svd(numeric.transpose(centerDataset));
-    console.log(svdRes.U.length , svdRes.S.length);
-    console.log(numeric.transpose(svdRes.V).length , svdRes.S.length);
+    var centerDataset2 = [];
+    centerDataset.forEach(function(row,i){
+        var centVect = $scope.scalarMultiply(row,val)
+        centerDataset2.push(centVect)
+    })
+    var svdRes = numeric.svd(centerDataset2);
     console.log("eigenvalues",svdRes.S);
     var nbCompo = $scope.numberOfComponents(svdRes.S);
     console.log(nbCompo);
 
     var vectReconstruct = meanDataset;
-        for (var k=0 ; k <= 10 ; k++)
-        {
+    var UTranspose = numeric.transpose(svdRes.U);
 
+    
+ //   console.log("VECTTTT",vectReconstruct);
+        for (var k=-10 ; k <= 10 ; k+=1)
+        {
+           var K = parseFloat(k)/10;
+           // var VTranspose = numeric.transpose(svdRes.V);
             for (var j = 0 ; j < nbCompo ; j++)
             {
-                var scalar = k * Math.sqrt(svdRes.S[j]);
-                console.log(scalar);
-               var newVect = scalar * numeric.transpose(svdRes.V);
-               console.log(newVect);
-               vectReconstruct += newVect;
+                var scalar = K * Math.sqrt(svdRes.S[j]);
+               var newVect = $scope.scalarMultiply(UTranspose[j],scalar)
+              // var newVect = scalar * numeric.transpose(svdRes.V);
+               //vectReconstruct += newVect;
+              vectReconstruct = numeric.add(vectReconstruct,newVect);
             }
-
+            console.log(vectReconstruct);
             //Delinearize vect 
             var id = 0;
             var matrixReconstruct = [];
@@ -263,13 +427,18 @@ $scope.runPCA = function(){
                 var line = [] ;
                 for(var j = 0 ; j < matrixSizeRow ; j++)
                 {
-                    line.push(vectReconstruct[0]);
+                    line.push(vectReconstruct[i+j]);
                     id ++;
                 }
                 matrixReconstruct.push(line);
             }
             console.log(matrixReconstruct);
+            var obj = {};
+            obj.matrix = matrixReconstruct;
+            obj.Kvalue = K;
+            $scope.listReconstructMatrix.push(obj);
         }
+        console.log($scope.listReconstructMatrix);
     }
     else
     {
@@ -279,9 +448,19 @@ $scope.runPCA = function(){
 }
 
 
+$scope.scalarMultiply = function(arr, multiplier) {
+   var newArray = [];
+   for (var i = 0; i < arr.length; i++)
+   {
+      newArray.push(arr[i] * multiplier);
+   }
+   return newArray;
+}
+
+
 $scope.$watch("valueK", function(){
         console.log("HelloWatch svalue K ", $scope.valueK);
-        $scope.changeData();
+        $scope.plotVisu();
       });
 
 };
