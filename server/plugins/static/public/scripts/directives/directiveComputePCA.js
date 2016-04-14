@@ -5,13 +5,15 @@ angular.module('brainConnectivity')
 function link($scope,$attrs,$filter){
 
 $scope.matrixDimension = 0;
- $scope.param = {};
+ $scope.param = {}; 
+ $scope.viewPlot = false;
+ $scope.valueK = 0;
 
 
   $scope.jobsSelectedPCA = [];
   $scope.listReconstructMatrix = [];
 
-  $scope.plotVisu = function(){
+$scope.plotVisu = function(){
       $scope.plotDataCircle();
     }
 
@@ -33,34 +35,17 @@ $scope.matrixDimension = 0;
 
   $scope.plotDataCircle = function(){
 
-      $scope.viewCirclePlot = true;
-/*      var test = $scope.getMatrixK($scope.valueK);
-      console.log("TEST",test)
-            var promarray = [
-                $scope.getMatrixK($scope.valueK),
-                JSON.parse($scope.contentJ)
-            ];
+    $scope.viewCirclePlot = true;
+    $scope.matrixOut = $scope.getMatrixK($scope.valueK);
+    $scope.tableDescription = JSON.parse($scope.contentJ);
 
-            Promise.all(promarray)
-            .then(function(res){*/
-                $scope.matrixOut = $scope.getMatrixK($scope.valueK);
-                $scope.tableDescription = JSON.parse($scope.contentJ);
+    console.log($scope.matrixOut, $scope.tableDescription);
 
-                console.log($scope.matrixOut, $scope.tableDescription);
-
-                $scope.plotBrainConnectivityJobDone();
-/*            })
-            .catch(function(e){
-                console.error(e);
-            });*/
-
-
-        }
+    $scope.plotBrainConnectivityJobDone();
+     }
 
     $scope.plotBrainConnectivityJobDone = function(){
 
-/*      $scope.nbPlot = $scope.nbPlot +1;
-      $scope.plots.push($scope.nbPlot)*/
      var matrix_norm = $scope.matrixOut ;
     
      var AALObject =  $scope.tableDescription;
@@ -140,7 +125,7 @@ $scope.matrixDimension = 0;
                 var indexLine = listFDT.indexOf(listVisuOrder[i]["name"])  //1
                 if(indexLine != -1)
                 {
-                  var row=matrix_norm[indexLine];
+                  var row = matrix_norm[indexLine];
                   var NewRow =[];
                   row.forEach(function(val,j)
                   {
@@ -162,22 +147,18 @@ $scope.matrixDimension = 0;
             console.log(returnJSONobject);
 
             $scope.ButtonClicked = true;
-            $scope.plotParameters = {};
-            $scope.plotParameters.link1 = "";
-            $scope.plotParameters.link2 = "";
-            $scope.plotParameters.threshold = 0.1;
-            $scope.plotParameters.method = [true,false,false];
-            $scope.plotParameters.tension = 85;
-            $scope.plotParameters.diameter = 960
-            $scope.plotParameters.upperValue = 1;
-            $scope.plotParameters.data = returnJSONobject;
+            $scope.plotVisible = true;
+            $scope.plotParametersValues = {};
+            $scope.plotParametersValues.link1 = "";
+            $scope.plotParametersValues.link2 = "";
+            $scope.plotParametersValues.threshold = 0.1;
+            $scope.plotParametersValues.method = [true,false,false];
+            $scope.plotParametersValues.tension = 85;
+            $scope.plotParametersValues.diameter = 960
+            $scope.plotParametersValues.upperValue = 1;
+            $scope.plotParametersValues.data = returnJSONobject;
             $scope.NewPlot;
-            //$scope.Plot;
   }
-
-
-  //console.log($scope.jobsSelectedPCA)
-
   $scope.showContentJson = function($fileContent){
         $scope.contentJ = $fileContent;
     };
@@ -246,7 +227,7 @@ $scope.normalizedMatrix = function(matrix){
                 else
                 {
                     var val = parseFloat(matrix[i][j]);
-                    val_norm = val/waytotal[j];
+                    val_norm = val/waytotal[i];
                     row.push(val_norm);
                 }
             }
@@ -274,11 +255,6 @@ $scope.normalizedMatrix = function(matrix){
 
     console.log(waytotal.length);
     return matrix_norm;
-
-
-
-
-
 }
 
 $scope.matrixAsVector = function(matrix){
@@ -319,6 +295,12 @@ $scope.numberOfComponents = function(singularValues){
 }
 
 $scope.runPCA = function(){
+
+    if($scope.contentJ == undefined)
+    {
+        alert("Please select a parcellation file");
+        return false;
+    }
 
     $scope.listReconstructMatrix = [];
 
@@ -395,20 +377,18 @@ $scope.runPCA = function(){
     centerDataset.forEach(function(row,i){
         var centVect = $scope.scalarMultiply(row,val)
         centerDataset2.push(centVect)
-    })
+         })
     var svdRes = numeric.svd(centerDataset2);
     console.log("eigenvalues",svdRes.S);
     var nbCompo = $scope.numberOfComponents(svdRes.S);
     console.log(nbCompo);
-
-    var vectReconstruct = meanDataset;
     var UTranspose = numeric.transpose(svdRes.U);
-
     
  //   console.log("VECTTTT",vectReconstruct);
         for (var k=-10 ; k <= 10 ; k+=1)
         {
            var K = parseFloat(k)/10;
+           var vectReconstruct = meanDataset;
            // var VTranspose = numeric.transpose(svdRes.V);
             for (var j = 0 ; j < nbCompo ; j++)
             {
@@ -418,20 +398,29 @@ $scope.runPCA = function(){
                //vectReconstruct += newVect;
               vectReconstruct = numeric.add(vectReconstruct,newVect);
             }
-            console.log(vectReconstruct);
+            console.log(vectReconstruct,K);
             //Delinearize vect 
             var id = 0;
             var matrixReconstruct = [];
-            for(var i = 0 ; i < matrixSizeCol ; i++)
+             var line = [];
+            vectReconstruct.forEach(function(val,i){
+                line.push(val);
+                if(line.length == 78){
+                    matrixReconstruct.push(line);
+                    line = [];
+                }
+                
+            })
+            /*for(var i = 0 ; i < matrixSizeRow ; i++)
             {
                 var line = [] ;
-                for(var j = 0 ; j < matrixSizeRow ; j++)
+                for(var j = 0 ; j < matrixSizeCol ; j++)
                 {
                     line.push(vectReconstruct[i+j]);
                     id ++;
                 }
                 matrixReconstruct.push(line);
-            }
+            }*/
             console.log(matrixReconstruct);
             var obj = {};
             obj.matrix = matrixReconstruct;
@@ -439,12 +428,14 @@ $scope.runPCA = function(){
             $scope.listReconstructMatrix.push(obj);
         }
         console.log($scope.listReconstructMatrix);
+        $scope.plotVisible = true  ;
+        $scope.plotVisu();
+        $scope.viewPlot = true;
     }
     else
     {
         console.error("Error : List of matrices to compute PCA is empty ");
     }
-
 }
 
 
@@ -459,7 +450,7 @@ $scope.scalarMultiply = function(arr, multiplier) {
 
 
 $scope.$watch("valueK", function(){
-        console.log("HelloWatch svalue K ", $scope.valueK);
+        console.log("HelloWatch value K ", $scope.valueK);
         $scope.plotVisu();
       });
 

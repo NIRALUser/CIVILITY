@@ -7,7 +7,7 @@ function link($scope,$attrs,$filter){
   $scope.plotVisible = false ;
   $scope.ButtonClicked = false;
   $scope.plotData = undefined;
-  $scope.plotParameters = {};
+  $scope.plotParam = {};
 
    $scope.testD = undefined; 
 
@@ -145,10 +145,8 @@ function link($scope,$attrs,$filter){
                   {
                     //console.log("hello");
                     var name = table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
-                    console.log("test value ", table_Matrix[seed]["coord"])
                     if(table_Matrix[seed]["coord"] != undefined)
                     {
-                      console.log("TEST");
                       var coordX = table_Matrix[seed]["coord"][0];
                       var coordY = table_Matrix[seed]["coord"][1];
                       var coordZ = table_Matrix[seed]["coord"][2];
@@ -199,21 +197,21 @@ function link($scope,$attrs,$filter){
             console.log(returnJSONobject);
 
             $scope.ButtonClicked = true;
-            $scope.plotParameters.link1 = "";
-            $scope.plotParameters.link2 = "";
-            $scope.plotParameters.threshold = 0.1;
-            $scope.plotParameters.method = [true,false,false];
-            $scope.plotParameters.tension = 85;
-            $scope.plotParameters.diameter = 960
-            $scope.plotParameters.upperValue = 1;
-            $scope.plotParameters.data = returnJSONobject;
+            $scope.plotParam.link1 = "";
+            $scope.plotParam.link2 = "";
+            $scope.plotParam.threshold = 0.1;
+            $scope.plotParam.method = [true,false,false];
+            $scope.plotParam.tension = 85;
+            $scope.plotParam.diameter = 960
+            $scope.plotParam.upperValue = 1;
+            $scope.plotParam.data = returnJSONobject;
             
             $scope.Plot;
    
 
   }
 
-  $scope.submit = function(){
+/*  $scope.submit = function(){
 
     probtrack.getFDTMatrix()
     .then(function(response){
@@ -229,7 +227,7 @@ function link($scope,$attrs,$filter){
       $scope.Plot;
     }).catch(console.error);
 
-  }
+  }*/
 
 
 

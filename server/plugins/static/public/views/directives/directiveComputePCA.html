@@ -11,12 +11,12 @@ ADD MATRIX :
 <div class="fdt_mat_input">  
 		<label>Subject id:
    				 <input type="text" name="input" ng-model="param.subjectID"
-           required  pattern="([\w\-]+)" ng-trim="false" title="Pattern error">
-			</label>
+           required  pattern="([\w\-]+)" ng-trim="false" title="Pattern error"></input>
+		</label>
 
-		Connectivity matrix (probtrackx output : fdt_network_matrix )
+		<label> Connectivity matrix (probtrackx output : fdt_network_matrix ) 
 		<input id="matrix" type="file" on-read-file="showContentMatrix($fileContent)"></input>
-
+		</label>
 
 </div>
 
@@ -39,8 +39,12 @@ List of matrices
 
 <button ng-click="runPCA()"> Run PCA  </button>
 
-<h6> Value of K  : {{valueK }}</h6>
-<input type="range" ng-model="valueK" max="1" min="-1" step="0.1" > </input>
+	<div ng-show="viewPlot">
+		<h6> Value of K  : {{valueK }}</h6>
+		<input type="range" ng-model="valueK" max="1" min="-1" step="0.1"> </input>
 
-<circle-plot plot-data="plotParameters.data"> </circle-plot>	
+	</div>
 </div>
+
+<circle-plot plot-data="plotParametersValues.data"> </circle-plot>
+		{{plotVisible}}

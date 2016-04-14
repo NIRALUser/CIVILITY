@@ -3,7 +3,7 @@ angular.module('brainConnectivity')
 
 	function link($scope,$attrs,$filter){
 		$scope.plotParameters = {};
-		$scope.plotParameters.threshold = 0.2;
+		$scope.plotParameters.threshold = 0.01;
 		$scope.plotParameters.method = [true,false,false];
 		$scope.plotParameters.diameter = 960;
 		$scope.plotParameters.tension = 0.85;
@@ -252,7 +252,7 @@ angular.module('brainConnectivity')
 		 $scope.NewPlot = function(x,y,scale) { 
 				if($scope.plotData){
 		    	$scope.removeOldPlot();
-		       	$scope.plotVisible = true  ;
+		       	$scope.plotVisible = true;
 		      	$scope.Plot();
 		    }
 		}
@@ -423,11 +423,8 @@ angular.module('brainConnectivity')
 		        .call(d3.svg.axis().scale(y).orient("left").ticks(10));
 
 		     var nodes = cluster.nodes($scope.packageHierarchy(classes));
-		      
-		     //console.log(thresholdDefaultValue);
 		     var links = $scope.packageImports(nodes,thresholdDefaultValue);
 		     splines = bundle(links);
-		     //console.log(splines);
 		      
 		      var size = $scope.sizeMap(nodes,thresholdDefaultValue);
 
