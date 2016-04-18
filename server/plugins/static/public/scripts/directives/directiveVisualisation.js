@@ -4,7 +4,6 @@ angular.module('brainConnectivity')
 
 function link($scope,$attrs,$filter){
 
-  $scope.plotVisible = false ;
   $scope.ButtonClicked = false;
   $scope.plotData = undefined;
   $scope.plotParam = {};
@@ -33,9 +32,7 @@ function link($scope,$attrs,$filter){
   
   $scope.plotBrainConnectivity = function(){
 
-/*      $scope.nbPlot = $scope.nbPlot +1;
-      $scope.plots.push($scope.nbPlot)*/
-
+      $scope.plotView = true;
       var data =  $scope.contentM ;
       console.log("MATRIX",data);
 
@@ -204,9 +201,8 @@ function link($scope,$attrs,$filter){
             $scope.plotParam.tension = 85;
             $scope.plotParam.diameter = 960
             $scope.plotParam.upperValue = 1;
-            $scope.plotParam.data = returnJSONobject;
-            
-            $scope.Plot;
+            $scope.plotParam.data = returnJSONobject; 
+            $scope.NewPlot;
    
 
   }

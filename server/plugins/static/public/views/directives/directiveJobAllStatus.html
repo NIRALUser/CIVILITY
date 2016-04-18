@@ -1,0 +1,83 @@
+<div class="job">
+	 <div class="jobIdTitle"> Job id : </div> <div class="idJob"> {{jobId}} </div> 
+	
+	<!-- 	<button class="btn btn-success" ng-click="getStatus()" ng-if="!getStatusRequest"> Get job status </button> --> 
+		<div class=jobStatus >
+
+		<button type="button" class="btn btn-info" ng-click="reRunJob()" ng-if="jobKill"> Restart </button> </button>
+
+			<button class="btn btn-success" ng-click="getStatus()" ng-if="getStatusRequest"> <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> </button> 
+			Status : {{jobStatus}} <br>
+
+			<div ng-show="jobDone">
+			<button type="button" class="btn btn-primary" ng-click="plotVisu()" ng-if="!viewCirclePlot"> Connectivity visualisation </button> 
+			<button type="button" class="btn btn-primary" ng-click=
+			"removeOld()" ng-show="viewCirclePlot"> Hide Connectivity visualisation </button> 
+			<br>
+			<div ng-if="viewCirclePlot">
+			<circle-plot plot-data="plotParameters.data"  > </circle-plot> 
+			</div>
+
+		<button class="btn btn-warning" ng-click="getOutputDirectory()" > Get output directory </button> <br>
+			</div>
+		<button class="btn btn-info" ng-click="getJob()" ng-if="!getJobRequest"> Print job info </button> 	
+		<div class=jobInfo ng-if="getJobRequest">
+		<button class="btn btn-info" ng-click="hideJobInfo()" > Hide job info </button> <br/>
+			<div>
+			Execution server : {{jobInfo.data.executionserver}} <br/>
+			User email : {{jobInfo.data.userEmail}} <br/>
+ 			</div>
+ 			<div >
+
+			Executable :  {{jobInfo.data.executable}}
+			<div class="parameters">
+			PARAMETERS : <br/>
+			Subject name :  {{jobInfo.data.parameters[0].name}} <br/>
+			DWI Image : {{jobInfo.data.parameters[1].name}} <br/>
+			T1 reference in DWI space : {{jobInfo.data.parameters[2].name}} <br/>
+			Brain mask in DWI space : {{jobInfo.data.parameters[3].name}} <br/>
+			Parcellation table (JSON file) : {{jobInfo.data.parameters[4].name}} <br/>
+			Inner surface : {{jobInfo.data.parameters[5].name}} <br/>
+			<div ng-if="sameSurface" style="text-indent: 15px; font-style: italic;">
+				This surface contains color labels <br/>
+			</div>
+			<div ng-if="!sameSurface" style="text-indent: 15px; font-style: italic;">
+			Alternative surface corresponding with color labels : {{jobInfo.data.parameters[6].name}} <br/>
+			</div>
+			Label set name : {{jobInfo.data.parameters[7].name}} <br/> 
+			Ignore label : {{jobInfo.data.parameters[8].name}} <br/>
+			<div ng-if="ignoreLabelSet">
+				Label ignored : {{jobInfo.data.parameters[9].name}} <br/>
+			</div>
+
+			Use overlapping for surfaces extraction: {{jobInfo.data.parameters[10].name}} <br/>
+			Use loopcheck in tractography : {{jobInfo.data.parameters[11].name}} <br/>
+			</div>
+			</div>
+
+	</div>
+
+		<div>
+			<div ng-if="!jobKill"> 
+				<button class="btn btn-danger" ng-click="killJob()"> Kill Job </button>  
+				</div> 
+				<div ng-if="jobKill"> 
+				<button class="btn btn-danger" ng-click="killJob()"> Kill Job </button> 
+					<span class="glyphicon glyphicon-ok" aria-hidden="true">  </span> 
+			</div> 
+		</div>
+
+		<div ng-show="jobDone">
+		<div> 
+			<div ng-if="jobKill"> 
+			<button class="btn btn-danger" ng-click="deleteJob()"> Delete Job in database </button> 
+			</div>
+
+			<div ng-if="jobDelete"> 
+			<button class="btn btn-danger" ng-click="deleteJob()"> Delete Job in database </button> 
+			<span class="glyphicon glyphicon-ok" aria-hidden="true">  </span>
+			</div> 
+		</div> 
+		</div>
+	</div>
+

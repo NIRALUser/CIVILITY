@@ -180,7 +180,10 @@ $scope.addMatrixToList = function(){
 }
 
 $scope.removeFromList = function(job){
-    $scope.jobsSelectedPCA.splice( $scope.jobsSelectedPCA.indexOf(job) , 1 );               
+    var index = $scope.jobsSelectedPCA.indexOf(job); 
+    var id = $scope.jobsSelectedPCA[index].id ;
+    var a = document.getElementById("checkbox_" + id);
+    $scope.jobsSelectedPCA.splice( $scope.jobsSelectedPCA.indexOf(job) , 1 ); 
 }
 
 $scope.readMatrixAsDoubleArray = function(matrix){

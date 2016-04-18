@@ -35,6 +35,72 @@ function link($scope,$attrs,$filter){
     })
   }
 
+  $scope.getMatrix = function(id,filepath){ 
+      return clusterpost.getAttachment(id,filepath,"text").then(function(res){
+        return res.data;
+      })
+      .catch(function(e){
+            console.error("Error getting matrix", e);
+            throw e;
+        });
+    }
+  
+  $scope.deleteJob = function(id){
+      console.log("DeleteJob");
+      clusterpost.deleteJob(id).then(function(res){
+          console.log("Job " + id + " is delete ");
+          })
+    }
+  $scope.deleteAllDatabase = function(){
+    var res = confirm("You are about to delete all jobs associated with this email " + $scope.userEmail + ". This means that all data and results will be lost, if you didn't save them before. Do you really wanted clean up all the database ? ")
+    if(res== true)
+    {
+       _.each($scope.jobFound, function(val,i){
+           $scope.deleteJob(val._id);
+       })
+    }
+  }
+
+  $scope.allJobToListPCA = function(){
+
+    if($scope.selectAllJobPCA == true)
+    {
+        _.each($scope.jobFound, function(val,i){
+          var param = {
+        id : "",
+        subject : "",
+        type : "job",
+        matrix : ""
+      };
+      console.log(val);
+      param.id = val._id;
+      var path = val.outputs[0].name;
+      param.subject = val.parameters[0].name;
+      $scope.getMatrix(val._id,path).then(function(res){
+        param.matrix=res;
+      })
+      var inList = false;
+      _.each($scope.jobsSelectedPCA, function(v,i){
+        if(v.id == val._id)
+        {
+          inList = true;
+        }
+      })
+      if( inList != true) {
+        $scope.jobsSelectedPCA.push(param);
+        }  
+     })
+         
+    }
+    else
+    {   
+        $scope.jobsSelectedPCA = [];
+    }
+  }
+ $scope.$watch("selectAllJobPCA", function(){
+        console.log("HelloWatch selectAllJobPCA", $scope.selectAllJobPCA);
+        $scope.allJobToListPCA();
+      });
 };
 return {
     restrict : 'E',

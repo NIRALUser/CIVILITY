@@ -1,11 +1,13 @@
 angular.module('brainConnectivity')
-.directive('jobStatus', function($routeParams,$location,clusterpost, probtrack){
+.directive('jobAllStatus', function($routeParams,$location,clusterpost, probtrack){
 
 	function link($scope,$attrs,$filter){
 
 		$scope.getStatusRequest = false;
 		$scope.getJobRequest = false;
 		$scope.jobKill = false;
+     $scope.jobDelete = false;
+
 
 		$scope.jobDone = false;
 		$scope.jobCancel = false;
@@ -14,8 +16,6 @@ angular.module('brainConnectivity')
 		$scope.matrixOut = "";
 		$scope.tableDescription = {};
 		$scope.jobObject = {};
-
-    $scope.selectJobDonePCA = false;
 
 		$scope.plotData = undefined;
 
@@ -173,6 +173,16 @@ angular.module('brainConnectivity')
        		})
 
 		}
+    $scope.deleteJob = function(){
+      console.log("DeleteJob");
+      clusterpost.deleteJob($scope.jobId).then(function(res){
+          console.log("Job " + $scope.jobId + " is delete ");
+          $scope.jobDelete = true;
+
+          })
+
+    }
+
 		$scope.submit = function(){
 
 		    probtrack.getFDTMatrix("helloOParam1")
@@ -205,20 +215,8 @@ angular.module('brainConnectivity')
 		  	var tooltipNode = document.getElementById("nodeTooltip_"+$scope.plotID);
 		  	if(tooltipNode != null) tooltipNode.parentNode.removeChild(tooltipNode);
         $scope.viewCirclePlot = false;
-
-
   		  }
 		
-/*		$scope.connectivityVisualisation = function(){
-				if (!$scope.plotOnce)
-				{
-					 $scope.submit();
-					 $scope.plotOnce = true;
-				}
-				$scope.plotCircle = true;
-			
-		}*/
-
 		$scope.getTableDescription = function(){
 			return clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[1].name,"json").then(function(res){				
 				return res.data;
@@ -265,15 +263,17 @@ angular.module('brainConnectivity')
 			.catch(function(e){
 				console.error(e);
 			});
-
-
 		}
 
+    $scope.isDone = function(){
+      if($scope.jobStatus == "DONE")
+      {
+        $scope.jobDone = true;
+      }
+    }
 
 		 $scope.plotBrainConnectivityJobDone = function(){
 
-/*      $scope.nbPlot = $scope.nbPlot +1;
-      $scope.plots.push($scope.nbPlot)*/
      var data = $scope.matrixOut ;
   	
   	 var table =  $scope.tableDescription;
@@ -329,13 +329,7 @@ angular.module('brainConnectivity')
                     matrix_norm.push(vals);
                  }
 
-               
-
                 var AALObject = table;
-
-                /*var AALObject = $scope.tableDescription;*/
-                //console.log(AALObject);
-
                 var table_Matrix = [];
                 var listFDT = [];
                 var listVisuOrder = [];
@@ -352,10 +346,8 @@ angular.module('brainConnectivity')
                   var matrixRow = AALObject[seed]["MatrixRow"];
                   if(matrixRow != "-1")
                   {
-                    //console.log(AALObject[seed]["MatrixRow"]);
                     listFDT[matrixRow-1] = AALObject[seed]["VisuHierarchy"] + AALObject[seed]["name"];
                     var visuorder = AALObject[seed]["VisuOrder"];
-                    //console.log(visuorder);
                     if(visuorder > MaxvisuOrder )
                     {
                       MaxvisuOrder = visuorder;
@@ -378,7 +370,6 @@ angular.module('brainConnectivity')
                   var visuOrder = table_Matrix[seed]["VisuOrder"];
                   if(visuOrder != "-1")
                   {
-                    //console.log("hello");
                     var name = table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
                     if(table_Matrix[seed]["coord"] != undefined)
                     {
@@ -392,17 +383,13 @@ angular.module('brainConnectivity')
                     {
                       var seedInfo = {"name" : name};
                     }
-                    listVisuOrder[visuOrder-1] = seedInfo
-                    //listVisuOrder[visuOrder-1]=table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
+                    listVisuOrder[visuOrder-1] = seedInfo;
                   } 
                   else
                   {
                     //Don't use
                   }  
                 }
-
-                //console.log("List visu order" + listVisuOrder);
-                //console.log("List fdt" + listFDT);
 
                 var NewMat = [];
                 matrix_norm.forEach(function(line,i)
@@ -442,63 +429,21 @@ angular.module('brainConnectivity')
             $scope.plotParameters.upperValue = 1;
             $scope.plotParameters.data = returnJSONobject;
             $scope.NewPlot;
-            //$scope.Plot;
-
-
-   
-
-  }
-
-  $scope.valuePCAList = function(){
-
-    console.log($scope.selectJobDonePCA);
-
-  }
-  $scope.listJobsSelectPCA = function(){
-
-
-    if($scope.selectJobPCA == true){
-
-      var param = {
-        id : "",
-        subject : "",
-        type : "job",
-        matrix : ""
-      };
-
-      param.id = $scope.jobId;
-      param.subject = "$scope.jobInfo.data.parameters[0].name";
-      $scope.getMatrix().then(function(res){
-        param.matrix=res;
-      })
-      $scope.listPca.push(param);
-      
     }
-    else{
-        $scope.listPca.forEach(function(job,i){
-        if(job.id == $scope.jobId)
-        {
-          //Delete job from list if selected before
-         $scope.listPca.splice( i, 1 );
-        }
-      })
 
-    }
-  }
 
-  $scope.$watch("selectJobPCA", function(){
-        console.log("HelloWatch selectJobDonePCA", $scope.selectJobPCA);
-        $scope.listJobsSelectPCA();
+    $scope.$watch("jobStatus", function(){
+        console.log("HelloWatch jobStatus", $scope.jobStatus);
+        $scope.isDone();
       });
 	}
 	return {
     restrict : 'E',
     scope: {
     	jobId : "=",
-      listPca : "="
     },
     link : link,
-    templateUrl: 'views/directives/directiveJobStatus.html'
+    templateUrl: 'views/directives/directiveJobAllStatus.html'
 
 
 

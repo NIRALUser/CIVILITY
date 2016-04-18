@@ -379,7 +379,7 @@ angular.module('brainConnectivity')
 		    //Define gradient for color bar    
 		    var gradient = svgColorbar.append("defs")
 		      .append("linearGradient")
-		        .attr("id", "gradient")
+		        .attr("id", "gradient"+ $scope.plotID)
 		        .attr("x1", "0%")
 		        .attr("y1", "100%")
 		        .attr("x2", "0%")
@@ -410,12 +410,14 @@ angular.module('brainConnectivity')
 		        .attr("offset", "100%")
 		        .attr("stop-color", d3.hsl(0,1,0.5))
 		        .attr("stop-opacity", 1);
+
+		        var gradUrl = "gradient"+ $scope.plotID ; 
 		        
 		    svgColorbar.append("rect")
 		        .attr("class", "grid-background")
 		        .attr("width", width/1.5)
 		        .attr("height", height/2)
-		        .style("fill", "url(#gradient)");
+		        .style("fill", "url(#gradient" + $scope.plotID +")");
 
 		    //Add gradient to colorbar
 		    svgColorbar.append("g")
@@ -552,7 +554,7 @@ angular.module('brainConnectivity')
 			//Gradient for nodes 
 		    var gradientCircle = svgBrain.append("defs")
 		        .append("radialGradient")
-		        .attr("id","blueCircle")
+		        .attr("id","blueCircle" + $scope.plotID)
 		        .attr("gradientUnits", "objectBoundingBox")
 		        .attr("fx","30%")
 		        .attr("fy","30%")
@@ -642,7 +644,7 @@ angular.module('brainConnectivity')
 		       		.attr("cx", coordX*parseFloat($scope.positionNodes.All.scalePointAll))
 		       		.attr("cy", coordY*parseFloat($scope.positionNodes.All.scalePointAll))
 		       		.attr("r", 4)
-		        	.style("fill", "url(#blueCircle)")
+		        	.style("fill", "url(#blueCircle"+ $scope.plotID +")")
 		        	.on("mouseover", function(e,i) {  
 		        		nodeTooltip.transition()    
 		                   .duration(200)    
@@ -775,7 +777,7 @@ angular.module('brainConnectivity')
 		       			.attr("cx", coordXScale)
 		       			.attr("cy", coordYScale)
 		       			.attr("r", 4)
-		        		.style("fill", "url(#blueCircle)")
+		        		.style("fill", "url(#blueCircle"+$scope.plotID+")")
 		        		.on("mouseover", function(e,i) {  
 		        				nodeTooltip.transition()    
 		                   			.duration(200)    
@@ -905,7 +907,7 @@ angular.module('brainConnectivity')
 		       			.attr("cx", coordY*parseFloat($scope.positionNodes.Right.scalePointRight))
 		       			.attr("cy", coordZ*parseFloat($scope.positionNodes.Right.scalePointRight))
 		       			.attr("r", 4)
-		        			.style("fill", "url(#blueCircle)")
+		        			.style("fill", "url(#blueCircle"+ $scope.plotID + ")")
 		        			.on("mouseover", function(e,i) {  
 		        				nodeTooltip.transition()    
 		                   			.duration(200)    

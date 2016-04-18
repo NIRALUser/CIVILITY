@@ -75,6 +75,12 @@ angular.module('brainConnectivity')
         }
         
       });
+    },
+    deleteJob: function(id){
+       return $http({
+         method: 'DELETE',
+         url: '/clusterpost/dataprovider/' + id
+       })
     }
   }
 });
