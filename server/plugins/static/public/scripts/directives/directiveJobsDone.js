@@ -44,6 +44,16 @@ function link($scope,$attrs,$filter){
             throw e;
         });
     }
+
+  $scope.getParcellationTable = function(id,filepath){ 
+      return clusterpost.getAttachment(id,filepath,"json").then(function(res){
+        return res.data;
+      })
+      .catch(function(e){
+            console.error("Error getting parcellationTable", e);
+            throw e;
+        });
+    }
   
   $scope.deleteJob = function(id){
       console.log("DeleteJob");
@@ -61,23 +71,71 @@ function link($scope,$attrs,$filter){
     }
   }
 
+  $scope.allJobManuallySelect = function(){
+    if( $scope.jobsSelectedPCA != undefined )
+    {
+      var nbJobSelect = 0;
+      _.each($scope.jobsSelectedPCA, function(v)
+      {
+        if(v.type == "job") nbJobSelect++;
+      })
+      if($scope.jobFound.length == nbJobSelect && $scope.viewResult == true)
+      {
+        $scope.selectAllJobPCA = true;
+      }
+      else
+      {
+        $scope.selectAllJobPCA = false;
+      }
+    }
+  }
+
+  $scope.clickCheckbox = function(){
+    if($scope.selectAllJobPCA == false)
+    {
+       var toDeleteIndex = [];
+       _.each($scope.jobsSelectedPCA, function(val,i){
+        if(val != undefined && val.type == "job")
+        {
+            toDeleteIndex.push(i);
+            console.log(val, i );
+           // $scope.jobsSelectedPCA.splice(k, 1); 
+        }     
+      })
+       toDeleteIndex.sort();
+       toDeleteIndex.reverse();
+       console.log(toDeleteIndex);
+        for(var i = 0 ; i < toDeleteIndex.length ; i++)
+        {
+          $scope.jobsSelectedPCA.splice(toDeleteIndex[i], 1); 
+        }
+        console.log($scope.jobsSelectedPCA);
+    }
+  }
+
   $scope.allJobToListPCA = function(){
 
     if($scope.selectAllJobPCA == true)
     {
         _.each($scope.jobFound, function(val,i){
+
           var param = {
         id : "",
         subject : "",
         type : "job",
-        matrix : ""
+        matrix : "",
+        parcellationTable : ""
       };
       console.log(val);
       param.id = val._id;
-      var path = val.outputs[0].name;
+      var pathMat = val.outputs[0].name;
+      var pathJson = val.outputs[1].name;
       param.subject = val.parameters[0].name;
-      $scope.getMatrix(val._id,path).then(function(res){
+      $scope.getMatrix(val._id,pathMat).then(function(res){
         param.matrix=res;
+      });
+      $scope.getMatrix(val._id,pathJson).then(function(res){
+        param.parcellationTable=res;
       })
       var inList = false;
       _.each($scope.jobsSelectedPCA, function(v,i){
@@ -94,12 +152,17 @@ function link($scope,$attrs,$filter){
     }
     else
     {   
-        $scope.jobsSelectedPCA = [];
+       //
     }
   }
  $scope.$watch("selectAllJobPCA", function(){
         console.log("HelloWatch selectAllJobPCA", $scope.selectAllJobPCA);
         $scope.allJobToListPCA();
+      });
+
+ $scope.$watchCollection("jobsSelectedPCA", function(){
+        console.log("HelloWatch jobsSelectedPCA", $scope.jobsSelectedPCA);
+        $scope.allJobManuallySelect();
       });
 };
 return {

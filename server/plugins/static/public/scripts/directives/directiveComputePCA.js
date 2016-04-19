@@ -8,15 +8,31 @@ $scope.matrixDimension = 0;
  $scope.param = {}; 
  $scope.viewPlot = false;
  $scope.valueK = 0;
+ $scope.isMean = true;
+ $scope.jobInListOK = false;
+ $scope.clickRunPCA = false;
 
+ $scope.parcellationChose = {
+    type : "useTableFile"
+ };
 
   $scope.jobsSelectedPCA = [];
   $scope.listReconstructMatrix = [];
 
-$scope.plotVisu = function(){
-      $scope.plotDataCircle();
-    }
-
+  $scope.jobInList = function(){
+        $scope.jobInListOK = false;
+       _.each($scope.jobsSelectedPCA, function(v,i){
+            if(v.type == "job")
+            {
+                
+                $scope.jobInListOK = true;
+            }
+       })
+       if( $scope.jobInListOK == false)
+       {
+        $scope.parcellationChose.type = "useTableFile";
+       }
+  }
  $scope.getMatrixK = function(Kvalue){
 
     var matrix = [];
@@ -35,10 +51,26 @@ $scope.plotVisu = function(){
 
   $scope.plotDataCircle = function(){
 
+    if($scope.valueK == "0" || $scope.valueK == 0)
+    {
+        $scope.isMean = true;
+    } 
+    else
+    {
+        $scope.isMean = false;
+    } 
     $scope.viewCirclePlot = true;
     $scope.matrixOut = $scope.getMatrixK($scope.valueK);
-    $scope.tableDescription = JSON.parse($scope.contentJ);
-
+    if($scope.clickRunPCA == true &&  $scope.parcellationChose.type=="useTableFile"  )
+    {
+        $scope.tableDescription = JSON.parse($scope.contentJ);
+    }
+    else if($scope.clickRunPCA == true &&  $scope.parcellationChose.type=="useTableJob")
+    {
+        console.log( $scope.jobsSelectedPCA );
+        console.log( $scope.jobsSelectedPCA[0]);
+        $scope.tableDescription = $scope.jobsSelectedPCA[0].parcellationTable;
+    }
     console.log($scope.matrixOut, $scope.tableDescription);
 
     $scope.plotBrainConnectivityJobDone();
@@ -49,7 +81,10 @@ $scope.plotVisu = function(){
      var matrix_norm = $scope.matrixOut ;
     
      var AALObject =  $scope.tableDescription;
-;
+     if($scope.tableDescription == undefined) {
+        console.error("No table description read ");
+        return false;
+     }
 
                 var table_Matrix = [];
                 var listFDT = [];
@@ -169,6 +204,9 @@ $scope.showContentMatrix = function($fileContent){
 
 $scope.addMatrixToList = function(){
 
+    if($scope.param.subjectID != undefined && $scope.param.subjectID.length > 0)
+    {
+
       var param = {
         id : "none",
         subject : $scope.param.subjectID,
@@ -177,6 +215,12 @@ $scope.addMatrixToList = function(){
       };
 
       $scope.jobsSelectedPCA.push(param);
+    }
+    else
+    {
+        alert("You must specified a subject name ! ");
+        return false;
+    }
 }
 
 $scope.removeFromList = function(job){
@@ -299,11 +343,17 @@ $scope.numberOfComponents = function(singularValues){
 
 $scope.runPCA = function(){
 
-    if($scope.contentJ == undefined)
+    console.log("Compute PCA ");
+    if($scope.parcellationChose.type == "useTableFile" && $scope.contentJ == undefined)
     {
         alert("Please select a parcellation file");
         return false;
     }
+    else if( $scope.parcellationChose.type == "useTableJob")
+    {
+            //To do 
+    }
+    $scope.clickRunPCA = true;
 
     $scope.listReconstructMatrix = [];
 
@@ -355,10 +405,8 @@ $scope.runPCA = function(){
     });
 
     console.log(vectorList.length);
-    console.log("VEctorrrr",vectorList);
 
     var dataset = numeric.transpose(vectorList);
-    console.log("Dataset",dataset);
 
     //Mean dataset (each matrix nodes)
     var meanDataset = math.mean(dataset,1);
@@ -432,12 +480,24 @@ $scope.runPCA = function(){
         }
         console.log($scope.listReconstructMatrix);
         $scope.plotVisible = true  ;
-        $scope.plotVisu();
         $scope.viewPlot = true;
+        $scope.plotDataCircle();
     }
     else
     {
-        console.error("Error : List of matrices to compute PCA is empty ");
+        alert("Error : Not enough matrix to compute PCA - add more matrix (at least 2 matrices required)");
+        return false;
+    }
+}
+
+$scope.readTable = function(){
+    if($scope.parcellationChose.type == "useTableFile")
+    {
+        $scope.viewInputTableFile = true;
+    }
+    else
+    {
+        $scope.viewInputTableFile = false;
     }
 }
 
@@ -454,7 +514,18 @@ $scope.scalarMultiply = function(arr, multiplier) {
 
 $scope.$watch("valueK", function(){
         console.log("HelloWatch value K ", $scope.valueK);
-        $scope.plotVisu();
+        if($scope.clickRunPCA) $scope.plotDataCircle();
+        
+      });
+
+$scope.$watch("parcellationChose.type", function(){
+        console.log("HelloWatch parcellationChose.type ", $scope.parcellationChose.type);
+        $scope.readTable();
+        
+      });
+  $scope.$watchCollection("jobsSelectedPCA", function(){
+        console.log("HelloWatch jobsSelectedPCA", $scope.jobsSelectedPCA);
+       $scope.jobInList();
       });
 
 };

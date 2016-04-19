@@ -47,7 +47,21 @@ angular.module('brainConnectivity')
 		$scope.getOutputError = function(){
 
 		}
-		$scope.paramInfo = function(){
+
+		$scope.reRunJob = function(){
+
+			    //Submit job 
+		    clusterpost.submitJob($scope.jobId).then(function(res){
+		        console.log("Job " + $scope.jobId + " submit");
+		        $scope.jobKill = false;
+		    })
+		    .catch(function(e){
+		      console.log(e);
+		    });
+		}
+
+
+  		$scope.paramInfo = function(){
   			if($scope.jobInfo.data.parameters[8].name == "true")
   			{
   				console.log("IgnoreLABEL");
@@ -113,6 +127,7 @@ angular.module('brainConnectivity')
 
 		}
 
+
 		$scope.hideJobInfo = function()
 		{
 			$scope.getJobRequest = false;
@@ -121,7 +136,10 @@ angular.module('brainConnectivity')
 		$scope.getStatus = function(){
 
 			console.log("Get status");
-
+			/*clusterpost.getJobStatus(id).then(function(res){
+				console.log("Status : ",res);
+				$scope.getStatusRequest = true;
+			})*/
 			clusterpost.getJobStatus($scope.jobId).then(function(res){
 					console.log(res.data);
 					var response = res.data;
@@ -211,6 +229,15 @@ angular.module('brainConnectivity')
       			throw e;
     		});    		
 		}
+    $scope.getParcellationTable = function(){ 
+      return clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[1].name,"json").then(function(res){
+        return res.data;
+      })
+      .catch(function(e){
+            console.error("Error getting parcellationTable", e);
+            throw e;
+        });
+    }
 
 		$scope.getMatrix = function(){ 
 			return clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[0].name,"text").then(function(res){
@@ -445,14 +472,18 @@ angular.module('brainConnectivity')
         id : "",
         subject : "",
         type : "job",
-        matrix : ""
+        matrix : "",
+        parcellationTable : ""
       };
 
       param.id = $scope.jobId;
       param.subject = $scope.jobObject.parameters[0].name;
       $scope.getMatrix().then(function(res){
         param.matrix=res;
-      })
+      });
+      $scope.getParcellationTable().then(function(res){
+        param.parcellationTable=res;
+      });
       console.log($scope.listPca);
       var inList = false;
 
