@@ -257,9 +257,22 @@ function link($scope,$attrs,$filter){
 
       //Output 3 : {subject dir} -- all output dir (as tar.gz)
       var param3 = {}; 
-      param3.type = "directory";
+      param3.type = "tar.gz";
       param3.name = "neonate";
       job.outputs.push(param3);
+
+      //Output 4 : output of job -- logFile
+      var param4 = {}; 
+      param4.type = "file";
+      param4.name = "stdout.out";
+      job.outputs.push(param4);
+
+
+      //Output 5 :  output error of job -- logErrorFile
+      var param5 = {}; 
+      param5.type = "file";
+      param5.name = "stderr.err";
+      job.outputs.push(param5);
 
 
       job.type = "job"; 

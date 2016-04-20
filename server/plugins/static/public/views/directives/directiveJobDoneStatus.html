@@ -13,9 +13,7 @@
 			<circle-plot plot-data="plotParameters.data"  > </circle-plot> 
 			</div>
 
-		<button class="btn btn-warning" ng-click="getOutputDirectory()" > Get output directory </button> <br>
-		<a href="/clusterpost/dataprovider/{{jobId}}/{{jobObject.outputs[2].name}}"> Download dir </a>
-
+		 <div class="divLinkDir"> <a class="linkDownloadDir" href="/clusterpost/dataprovider/{{jobId}}/{{jobObject.outputs[2].name}}.tar.gz"> Download output directory </a> <br></div>
 		<button class="btn btn-info" ng-click="getJob()" ng-if="!getJobRequest"> Print job info </button> 	
 		<div class=jobInfo ng-if="getJobRequest">
 		<button class="btn btn-info" ng-click="hideJobInfo()" > Hide job info </button> <br/>
@@ -52,6 +50,12 @@
 			</div>
 
 	</div>
+	<div ng-if="jobDone">
+			<button class="btn btn-info-outline viewOutputLog" ng-click="getOutputLogFile()"> View log output  </button> 
+			<div ng-repeat="logLine in logFile track by $index"> {{logLine}} </div>
+			<button class="btn btn-info-outline viewOutputLogError" ng-click="getOutputErrorLogFile()" > View log error output  </button> <br>
+			<div ng-repeat="errorLine in logErrorFile track by $index"> {{errorLine}} </div>
+			</div>
 	<div> 
 		<div ng-if="!jobDelete"> 
 		<button class="btn btn-danger" ng-click="deleteJob()"> Delete Job in database </button> 

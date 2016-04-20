@@ -38,16 +38,6 @@ angular.module('brainConnectivity')
 
 		console.log("Job id :", $scope.jobId);
 
-
-		$scope.getOutput = function(){
-
-
-
-		}
-		$scope.getOutputError = function(){
-
-		}
-
 		$scope.reRunJob = function(){
 
 			    //Submit job 
@@ -88,7 +78,7 @@ angular.module('brainConnectivity')
 
   		}
 
-  		$scope.getOutputDirectory = function(){
+/*  		$scope.getOutputDirectory = function(){
 
   			console.log($scope.jobObject);
 			//clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[2].name + ".tar.gz","blob").then(function(res){
@@ -100,7 +90,7 @@ angular.module('brainConnectivity')
 			        a.style = "display: none";
 			        var url = window.URL.createObjectURL(res.data);
 			        a.href = url;
-			        a.download = $scope.jobObject.outputs[2].name;
+			        a.download = $scope.jobObject.outputs[2].name + "tar.gz";
 			        a.click();
 			        console.log("DOWNLOAD FILE")
 			        window.URL.revokeObjectURL(url);
@@ -112,7 +102,7 @@ angular.module('brainConnectivity')
     			});
 
 
-  		}
+  		}*/
 
 		$scope.getJob = function(){
 
@@ -126,6 +116,30 @@ angular.module('brainConnectivity')
 				})
 
 		}
+
+    $scope.getOutputLogFile = function(){
+
+      clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[3].name,"text").then(function(res){
+           console.log(res.data);
+           var str = res.data;
+           $scope.logFile = str.split("\n");
+        })
+        .catch(function(e){
+            console.error("Error getting log file", e);
+            throw e;
+          });
+    }
+    $scope.getOutputErrorLogFile = function(){
+      clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[4].name,"text").then(function(res){
+           console.log(res.data);
+           var str = res.data;
+           $scope.logErrorFile = str.split("\n");
+        })
+        .catch(function(e){
+            console.error("Error getting log error file", e);
+            throw e;
+          });
+    }
 
 
 		$scope.hideJobInfo = function()
@@ -142,11 +156,7 @@ angular.module('brainConnectivity')
 			})*/
 			clusterpost.getJobStatus($scope.jobId).then(function(res){
 					console.log(res.data);
-					var response = res.data;
-					/*var resParse = JSON.parse(response);
-					console.log(resParse);*/
 					$scope.jobStatus = res.data.status;
-					//$scope.jobStatus = "DONE";
 					$scope.getStatusRequest = true;
 					if($scope.jobStatus == "DONE")
 					{

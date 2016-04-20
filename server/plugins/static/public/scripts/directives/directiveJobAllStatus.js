@@ -36,13 +36,28 @@ angular.module('brainConnectivity')
 		console.log("Job id :", $scope.jobId);
 
 
-		$scope.getOutput = function(){
+		$scope.getOutputLogFile = function(){
 
-
-
+      clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[3].name,"text").then(function(res){
+           console.log(res.data);
+           var str = res.data;
+           $scope.logFile = str.split("\n");
+        })
+        .catch(function(e){
+            console.error("Error getting log file", e);
+            throw e;
+          });
 		}
-		$scope.getOutputError = function(){
-
+		$scope.getOutputErrorLogFile = function(){
+      clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[4].name,"text").then(function(res){
+           console.log(res.data);
+           var str = res.data;
+           $scope.logErrorFile = str.split("\n");
+        })
+        .catch(function(e){
+            console.error("Error getting log error file", e);
+            throw e;
+          });
 		}
 
 		$scope.reRunJob = function(){
@@ -85,11 +100,11 @@ angular.module('brainConnectivity')
 
   		}
 
-  		$scope.getOutputDirectory = function(){
+/*  		$scope.getOutputDirectory = function(){
 
   			console.log($scope.jobObject);
 			//clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[2].name + ".tar.gz","blob").then(function(res){
-				clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[2].name + ".tar.gz","blob").then(function(res){
+				clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[0].name ,"blob").then(function(res){
 					 console.log(res);
 
 					var a = document.createElement("a");
@@ -97,7 +112,7 @@ angular.module('brainConnectivity')
 			        a.style = "display: none";
 			        var url = window.URL.createObjectURL(res.data);
 			        a.href = url;
-			        a.download = $scope.jobObject.outputs[2].name;
+			        a.download = "matrixFileDownloadTEST";
 			        a.click();
 			        console.log("DOWNLOAD FILE")
 			        window.URL.revokeObjectURL(url);
@@ -109,7 +124,7 @@ angular.module('brainConnectivity')
     			});
 
 
-  		}
+  		}*/
 
 		$scope.getJob = function(){
 
@@ -139,7 +154,6 @@ angular.module('brainConnectivity')
 			})*/
 			clusterpost.getJobStatus($scope.jobId).then(function(res){
 					console.log(res.data);
-					var response = res.data;
 					$scope.jobStatus = res.data.status;
 					$scope.getStatusRequest = true;
 					if($scope.jobStatus == "DONE")
@@ -180,29 +194,7 @@ angular.module('brainConnectivity')
 
     }
 
-		$scope.submit = function(){
-
-		    probtrack.getFDTMatrix("helloOParam1")
-		    .then(function(response){
-
-		      $scope.ButtonClicked = true;
-		      $scope.plotParameters = {};
-		      $scope.plotParameters.link1 = "";
-		      $scope.plotParameters.link2 = "";
-		      $scope.plotParameters.threshold = 0.1;
-		      $scope.plotParameters.method = [true,false,false];
-		      $scope.plotParameters.tension = 85;
-		      $scope.plotParameters.diameter = 960
-		      $scope.plotParameters.upperValue = 1;
-		      $scope.plotParameters.data = response.data;
-		      $scope.Plot;
-		    }).catch(function(e){
-		    	console.log(e);
-		    });
-
-		  }
-
-		 $scope.removeOld = function()
+		$scope.removeOld = function()
 		  {
 		  	console.log("REMOVE OLD PLOT JOB");
 		  	var circlePlot = document.getElementById("divPlot_"+$scope.plotID);

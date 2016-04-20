@@ -4,11 +4,13 @@
 	<!-- 	<button class="btn btn-success" ng-click="getStatus()" ng-if="!getStatusRequest"> Get job status </button> --> 
 		<div class=jobStatus >
 
-		<button type="button" class="btn btn-info" ng-click="reRunJob()" ng-if="jobKill"> Restart </button> </button>
+		<button type="button" class="btn btn-info" ng-click="reRunJob()" ng-if="jobKill"> Restart </button>
 
-			<button class="btn btn-success" ng-click="getStatus()" ng-if="getStatusRequest"> <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> </button> 
+			<div ng-if="!jobDone"> <button class="btn btn-success" ng-click="getStatus()" ng-if="getStatusRequest"> <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button> Status : {{jobStatus}} <br>
+			</div> 
+			<div ng-if="jobDone"> 
 			Status : {{jobStatus}} <br>
-
+			</div>
 			<div ng-show="jobDone">
 			<button type="button" class="btn btn-primary" ng-click="plotVisu()" ng-if="!viewCirclePlot"> Connectivity visualisation </button> 
 			<button type="button" class="btn btn-primary" ng-click=
@@ -17,9 +19,8 @@
 			<div ng-if="viewCirclePlot">
 			<circle-plot plot-data="plotParameters.data"  > </circle-plot> 
 			</div>
-
-		<button class="btn btn-warning" ng-click="getOutputDirectory()" > Get output directory </button> <br>
-			</div>
+		</div>
+			
 		<button class="btn btn-info" ng-click="getJob()" ng-if="!getJobRequest"> Print job info </button> 	
 		<div class=jobInfo ng-if="getJobRequest">
 		<button class="btn btn-info" ng-click="hideJobInfo()" > Hide job info </button> <br/>
@@ -55,20 +56,27 @@
 			</div>
 			</div>
 
-	</div>
+			</div>
 
-		<div>
+			<!-- <div ng-if="jobDone"> -->
+			<div>
+			<button class="btn btn-info-outline viewOutputLog" ng-click="getOutputLogFile()"> View log output  </button> 
+			<div ng-repeat="logLine in logFile track by $index"> {{logLine}} </div>
+			<button class="btn btn-info-outline viewOutputLogError" ng-click="getOutputErrorLogFile()"> View log error output  </button> <br>
+			<div ng-repeat="errorLine in logErrorFile track by $index"> {{errorLine}} </div>
+			</div>
+
+		<div ng-if="!jobDone">
 			<div ng-if="!jobKill"> 
 				<button class="btn btn-danger" ng-click="killJob()"> Kill Job </button>  
-				</div> 
-				<div ng-if="jobKill"> 
+			</div> 
+			<div ng-if="jobKill"> 
 				<button class="btn btn-danger" ng-click="killJob()"> Kill Job </button> 
 					<span class="glyphicon glyphicon-ok" aria-hidden="true">  </span> 
 			</div> 
 		</div>
-
+{{jobDone}} {{jobKill}}
 		<div ng-show="jobDone">
-		<div> 
 			<div ng-if="jobKill"> 
 			<button class="btn btn-danger" ng-click="deleteJob()"> Delete Job in database </button> 
 			</div>
@@ -77,7 +85,6 @@
 			<button class="btn btn-danger" ng-click="deleteJob()"> Delete Job in database </button> 
 			<span class="glyphicon glyphicon-ok" aria-hidden="true">  </span>
 			</div> 
-		</div> 
 		</div>
 	</div>
 
