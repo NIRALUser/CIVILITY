@@ -22,6 +22,9 @@ angular.module('brainConnectivity')
 
 		$scope.plotData = undefined;
 
+     $scope.viewLogOutput = false;
+    $scope.viewLogErrorOutput = false;
+
 		$scope.getJobObject = function(){
 
 			clusterpost.getJob($scope.jobId).then(function(res){
@@ -129,6 +132,11 @@ angular.module('brainConnectivity')
             throw e;
           });
     }
+
+     $scope.hideOutputLogFile = function(){
+        $scope.viewLogOutput = false;
+    }
+    
     $scope.getOutputErrorLogFile = function(){
       clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[4].name,"text").then(function(res){
            console.log(res.data);
@@ -139,6 +147,9 @@ angular.module('brainConnectivity')
             console.error("Error getting log error file", e);
             throw e;
           });
+    }
+    $scope.hideOutputErrorLogFile = function(){
+        $scope.viewLogErrorOutput = false;
     }
 
 

@@ -58,13 +58,23 @@
 
 			</div>
 
-			<!-- <div ng-if="jobDone"> -->
-			<div>
+			<div ng-show="!viewLogOutput">
 			<button class="btn btn-info-outline viewOutputLog" ng-click="getOutputLogFile()"> View log output  </button> 
 			<div ng-repeat="logLine in logFile track by $index"> {{logLine}} </div>
+			</div>
+			<div ng-show="viewLogOutput"> 
+			<button class="btn btn-info-outline viewOutputLog" ng-click="hideOutputLogFile()"> Hide log output  </button> 
+			</div>
+
+
+			<div ng-show="!viewLogErrorOutput">
 			<button class="btn btn-info-outline viewOutputLogError" ng-click="getOutputErrorLogFile()"> View log error output  </button> <br>
 			<div ng-repeat="errorLine in logErrorFile track by $index"> {{errorLine}} </div>
 			</div>
+			<div ng-show="viewLogErrorOutput">
+			<button class="btn btn-info-outline viewOutputLogError" ng-click="hideOutputErrorLogFile()"> Hide log error output  </button> <br>
+			</div>
+
 
 		<div ng-if="!jobDone">
 			<div ng-if="!jobKill"> 

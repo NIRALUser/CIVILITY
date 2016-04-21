@@ -4,7 +4,7 @@
 		<div class=jobStatus >
 
 			Status : {{jobStatus}} <br>
-
+			<div ng-show="jobDone">
 			<button type="button" class="btn btn-primary" ng-click="plotVisu()" ng-if="!viewCirclePlot"> Connectivity visualisation </button> 
 			<button type="button" class="btn btn-primary" ng-click=
 			"removeOld()" ng-show="viewCirclePlot"> Hide Connectivity visualisation </button> 
@@ -51,11 +51,24 @@
 
 	</div>
 	<div ng-if="jobDone">
-			<button class="btn btn-info-outline viewOutputLog" ng-click="getOutputLogFile()"> View log output  </button> 
-			<div ng-repeat="logLine in logFile track by $index"> {{logLine}} </div>
-			<button class="btn btn-info-outline viewOutputLogError" ng-click="getOutputErrorLogFile()" > View log error output  </button> <br>
-			<div ng-repeat="errorLine in logErrorFile track by $index"> {{errorLine}} </div>
+			<div ng-show="!viewLogOutput">
+				<button class="btn btn-info-outline viewOutputLog" ng-click="getOutputLogFile()"> View log output  </button> 
+				<div ng-repeat="logLine in logFile track by $index"> {{logLine}} </div>
 			</div>
+			<div ng-show="viewLogOutput"> 
+				<button class="btn btn-info-outline viewOutputLog" ng-click="hideOutputLogFile()"> Hide log output  </button> 
+			</div>
+
+
+			<div ng-show="!viewLogErrorOutput">
+				<button class="btn btn-info-outline viewOutputLogError" ng-click="getOutputErrorLogFile()"> View log error output  </button> <br>
+				<div ng-repeat="errorLine in logErrorFile track by $index"> {{errorLine}} </div>
+			</div>
+			<div ng-show="viewLogErrorOutput">
+				<button class="btn btn-info-outline viewOutputLogError" ng-click="hideOutputErrorLogFile()"> Hide log error output  </button> <br>
+			</div>
+
+	</div>
 	<div> 
 		<div ng-if="!jobDelete"> 
 		<button class="btn btn-danger" ng-click="deleteJob()"> Delete Job in database </button> 
@@ -69,5 +82,6 @@
 
 
 	<label>	Select for compute PCA <input type="checkbox" name="selectJobPCA" value="selectJobPCA" ng-model="selectJobPCA" ng-init="selectJobPCA=false" id="checkbox_{{jobId}}" /> </label>
+	</div>
 </div>
 

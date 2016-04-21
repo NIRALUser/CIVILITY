@@ -201,7 +201,7 @@ function link($scope,$attrs,$filter){
         $scope.submitTractoButton = true;
       var job = {};
 
-      //job.executable = "scriptTestApp"; 
+      //job.executable = "tractoScriptTest.sh"; 
       job.executable ="tractographyScriptApp.sh";
 
       job.parameters = [];
