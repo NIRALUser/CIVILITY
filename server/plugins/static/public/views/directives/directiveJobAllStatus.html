@@ -12,52 +12,57 @@
 			Status : {{jobStatus}} <br>
 			</div>
 			<div ng-show="jobDone">
-			<button type="button" class="btn btn-primary" ng-click="plotVisu()" ng-if="!viewCirclePlot"> Connectivity visualisation </button> 
+			<button type="button" class="btn btn-primary" ng-click="plotDataCircle()" ng-if="!viewCirclePlot"> Connectivity visualisation </button> 
 			<button type="button" class="btn btn-primary" ng-click=
 			"removeOld()" ng-show="viewCirclePlot"> Hide Connectivity visualisation </button> 
 			<br>
 			<div ng-if="viewCirclePlot">
 			<circle-plot plot-data="plotParameters.data"  > </circle-plot> 
 			</div>
+
+			<div class="divLinkDir"> 
+	 		<a class="linkDownloadDir" href="/clusterpost/dataprovider/{{jobId}}/{{jobObject.outputs[2].name}}.tar.gz"> Download output directory </a><br>
+	 	</div>
+
 		</div>
 			
 		<button class="btn btn-info" ng-click="getJob()" ng-if="!getJobRequest"> Print job info </button> 	
 		<div class=jobInfo ng-if="getJobRequest">
 		<button class="btn btn-info" ng-click="hideJobInfo()" > Hide job info </button> <br/>
 			<div>
-			Execution server : {{jobInfo.data.executionserver}} <br/>
-			User email : {{jobInfo.data.userEmail}} <br/>
+			Execution server : {{jobObject.executionserver}} <br/>
+			User email : {{jobObject.userEmail}} <br/>
  			</div>
  			<div >
 
-			Executable :  {{jobInfo.data.executable}}
+			Executable :  {{jobObject.executable}}
 			<div class="parameters">
 			PARAMETERS : <br/>
-			Subject name :  {{jobInfo.data.parameters[0].name}} <br/>
-			DWI Image : {{jobInfo.data.parameters[1].name}} <br/>
-			T1 reference in DWI space : {{jobInfo.data.parameters[2].name}} <br/>
-			Brain mask in DWI space : {{jobInfo.data.parameters[3].name}} <br/>
-			Parcellation table (JSON file) : {{jobInfo.data.parameters[4].name}} <br/>
-			Inner surface : {{jobInfo.data.parameters[5].name}} <br/>
+			Subject name :  {{jobObject.parameters[0].name}} <br/>
+			DWI Image : {{jobObject.parameters[1].name}} <br/>
+			T1 reference in DWI space : {{jobObject.parameters[2].name}} <br/>
+			Brain mask in DWI space : {{jobObject.parameters[3].name}} <br/>
+			Parcellation table (JSON file) : {{jobObject.parameters[4].name}} <br/>
+			Inner surface : {{jobObject.parameters[5].name}} <br/>
 			<div ng-if="sameSurface" style="text-indent: 15px; font-style: italic;">
 				This surface contains color labels <br/>
 			</div>
 			<div ng-if="!sameSurface" style="text-indent: 15px; font-style: italic;">
-			Alternative surface corresponding with color labels : {{jobInfo.data.parameters[6].name}} <br/>
+			Alternative surface corresponding with color labels : {{jobObject.parameters[6].name}} <br/>
 			</div>
-			Label set name : {{jobInfo.data.parameters[7].name}} <br/> 
-			Ignore label : {{jobInfo.data.parameters[8].name}} <br/>
+			Label set name : {{jobObject.parameters[7].name}} <br/> 
+			Ignore label : {{jobObject.parameters[8].name}} <br/>
 			<div ng-if="ignoreLabelSet">
-				Label ignored : {{jobInfo.data.parameters[9].name}} <br/>
+				Label ignored : {{jobObject.parameters[9].name}} <br/>
 			</div>
 
-			Use overlapping for surfaces extraction: {{jobInfo.data.parameters[10].name}} <br/>
-			Use loopcheck in tractography : {{jobInfo.data.parameters[11].name}} <br/>
+			Use overlapping for surfaces extraction: {{jobObject.parameters[10].name}} <br/>
+			Use loopcheck in tractography : {{jobObject.parameters[11].name}} <br/>
 			</div>
 			</div>
 
 			</div>
-
+			<div ng-if="jobDone";
 			<div ng-show="!viewLogOutput">
 			<button class="btn btn-info-outline viewOutputLog" ng-click="getOutputLogFile()"> View log output  </button> 
 			<div ng-repeat="logLine in logFile track by $index"> {{logLine}} </div>
@@ -75,6 +80,8 @@
 			<button class="btn btn-info-outline viewOutputLogError" ng-click="hideOutputErrorLogFile()"> Hide log error output  </button> <br>
 			</div>
 
+			</div>
+
 
 		<div ng-if="!jobDone">
 			<div ng-if="!jobKill"> 
@@ -85,9 +92,8 @@
 					<span class="glyphicon glyphicon-ok" aria-hidden="true">  </span> 
 			</div> 
 		</div>
-{{jobDone}} {{jobKill}}
 		<div ng-show="jobDone">
-			<div ng-if="jobKill"> 
+			<div ng-if="!jobDelete"> 
 			<button class="btn btn-danger" ng-click="deleteJob()"> Delete Job in database </button> 
 			</div>
 

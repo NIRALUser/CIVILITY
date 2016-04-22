@@ -1,7 +1,5 @@
 <div >
-
  	<h3 id="title">Tractography with FSL tool : probtrackx2</h3> 
-
 	<div class=tracto>
 		<div class="tractoForm">
 		<form>
@@ -27,7 +25,7 @@
  			<input type="checkbox" name="colorExist" value="colorExist" ng-model="checkedSurfaceColored" ng-init="checkedSurfaceColored=true" /><br/>
 			
 			<div ng-show="!checkedSurfaceColored" style="text-indent: 20px; font-style: italic;">  
-Alternative surface corresponding with color labels : <input type = "file" id="colorSurface" ng-disabled="checkedSurfaceColored" style="text-indent: 20px;" file-model="alternativeSurface"/> <br>
+				Alternative surface corresponding with color labels : <input type = "file" id="colorSurface" ng-disabled="checkedSurfaceColored" style="text-indent: 20px;" file-model="alternativeSurface"/> <br>
 			</div>
 
 			Labelset name in vtk surface file : <input type="text" name="input" ng-model="Parameters.labelsetName" required ng-trim="false" pattern="([\w\-]+)" title="Pattern error"><br>
@@ -38,7 +36,6 @@ Alternative surface corresponding with color labels : <input type = "file" id="c
 				<input type="text" name="input" ng-model="Parameters.ignoreLabelID"
 			           required ng-trim="false"><br> 
 			</div>
-
 
 			<h5> Extract Label Surface options : </h5>
 			Overlapping
@@ -70,14 +67,6 @@ Alternative surface corresponding with color labels : <input type = "file" id="c
 			</button>
 		</form>
 		</div>
-
-		<!-- <div class="jobs" id="jobs">
-			<h2 class="jobsTitle"> Jobs submited: </h2>
-			<p  ng-if=noJobSubmit() class=jobNoInfo> No job submited </p>
-			<div ng-repeat="job in listJobs"> 
-			<job-status job-id="job"> </job-status>
-			</div>
-		</div> -->
 	</div>
 </div>
 

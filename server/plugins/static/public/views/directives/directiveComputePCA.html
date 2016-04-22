@@ -17,28 +17,27 @@
 	<label for="addmatrixFile">	Add matrix file : <input type="checkbox" name="addMatrixFile" value="addMatrixFile" ng-model="addMatrixFile" ng-init="addMatrixFile=false" id="addmatrixFile"/> </label>
 
 	<div class="addMatrixFile" ng-show="addMatrixFile">
-	<div class="fdt_mat_input">  
+		<div class="fdt_mat_input">  
 			<label for="subjectID">Subject id:
-	   				 <input type="text" name="input" ng-model="param.subjectID"
-	           required  pattern="([\w\-]+)" ng-trim="false" title="Pattern error" id="subjectID">
+		   	<input type="text" name="input" ng-model="param.subjectID"
+		           required  pattern="([\w\-]+)" ng-trim="false" title="Pattern error" id="subjectID">
 			</label>
 			<br>
 			<label for="fdtMatrixInput"> Connectivity matrix (probtrackx output : fdt_network_matrix ) 
 			<input id="fdtMatrixInput" type="file" on-read-file="showContentMatrix($fileContent)">
 			</label>
+		</div>
 
-	</div>
-
-	<button ng-click="addMatrixToList()"> Add matrix to list </button>
+		<button ng-click="addMatrixToList()"> Add matrix to list </button>
 	</div>
 	<br>
 
 
 	<h4> Parcellation description table : </h4>
 	<label for="useTableFileAdded">Use parcellation file 
-		<input id="useTableFileAdded" type="radio" value="useTableFile" ng-model="parcellationChose.type"/>
+		<input id="useTableFileAdded" type="radio" value="useTableFile" ng-model="parcellationChose.type">
 	</label>
-		<div class="json-file-input" ng-show="viewInputTableFile">  
+	<div class="json-file-input" ng-show="viewInputTableFile">  
 			Parcellation table (json file)
 			<input id="JSONFile" type="file" on-read-file="showContentJson($fileContent)">
 	</div>
@@ -57,7 +56,7 @@
 	<div ng-show="viewPlot">
 		<h6> Value of K  : {{valueK}}</h6>
 		<div ng-show="isMean">
-		This the mean of brain connectivity of all subjects selected for PCA computation.
+			This the mean of brain connectivity of all subjects selected for PCA computation. <br>
 		</div>
 		<input type="range" ng-model="valueK" max="1" min="-1" step="0.1">
 
