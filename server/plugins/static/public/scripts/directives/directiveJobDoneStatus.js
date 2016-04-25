@@ -10,7 +10,28 @@ angular.module('brainConnectivity')
     $scope.viewLogOutput = false;
     $scope.viewLogErrorOutput = false;
     $scope.viewCirclePlot = false;
-    console.log("lsit pca",$scope.listPca);
+        //get job object 
+    $scope.getJobObject = function(){
+      clusterpost.getJob($scope.jobId).then(function(res){
+        $scope.jobObject = res.data;
+        console.log($scope.jobObject)
+      })
+       .catch(function(e){
+          console.error(e);
+          throw e;
+        });
+    }
+    $scope.getJobObject();
+
+    if($scope.jobObject.jobstatus.status == "DONE")
+    {
+      $scope.jobDone = true;
+    }
+    else
+    {
+      $scope.jobDone = false;
+    }
+
     if(Array.isArray($scope.listPca))
     {
       $scope.computePCA = true;
@@ -20,17 +41,8 @@ angular.module('brainConnectivity')
       $scope.computePCA = false;
     }
 
-    //get job object 
-		$scope.getJobObject = function(){
-			clusterpost.getJob($scope.jobId).then(function(res){
-				$scope.jobObject = res.data;
-			})
-			 .catch(function(e){
-		      console.error(e);
-          throw e;
-		    });
-		}
-		$scope.getJobObject();
+
+
 
 		$scope.reRunJob = function(){
 			

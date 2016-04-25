@@ -3,7 +3,14 @@
 	<div class="idJob"> {{jobId}} </div> 
 	
 	<div class=jobStatus >
-		Status : {{jobObject.jobstatus.status}} <br>
+ 		<button type="button" class="btn btn-info" ng-click="reRunJob()" ng-if="jobKill"> Restart </button>
+
+			<div ng-if="!jobDone"> <button class="btn btn-success" ng-click="getStatus()" ng-if="getStatusRequest"> <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button> Status : {{jobObject.jobstatus.status}} <br>
+			</div> 
+			<div ng-if="jobDone"> 
+			Status : {{jobObject.jobstatus.status}} <br>
+			</div>
+ 		<div ng-show="jobDone">
 		<button type="button" class="btn btn-primary" ng-click="plotDataCircle()" ng-if="!viewCirclePlot"> Connectivity visualisation </button> 
 		
 		<button type="button" class="btn btn-primary" ng-click="removeCirclePlot()" ng-show="viewCirclePlot"> Hide Connectivity visualisation </button> 
@@ -15,6 +22,7 @@
 
 		<div class="divLinkDir"> 
 	 		<a class="linkDownloadDir" href="/clusterpost/dataprovider/{{jobId}}/{{jobObject.outputs[2].name}}.tar.gz"> Download output directory </a><br>
+	 	</div>
 	 	</div>
 	
 		<button class="btn btn-info" ng-click="getJobInfo()" ng-if="!getJobRequest"> Print job info </button> 
@@ -50,35 +58,47 @@
 				</div>
 			</div>
 		</div>
-		<div ng-show="!viewLogOutput">
-			<button class="btn btn-info-outline viewOutputLog" ng-click="getOutputLogFile()"> View log output  </button> 
-			<div ng-repeat="logLine in logFile track by $index"> {{logLine}} </div>
-		</div>
-		<div ng-show="viewLogOutput"> 
-			<button class="btn btn-info-outline viewOutputLog" ng-click="hideOutputLogFile()"> Hide log output  </button> 
-		</div>
+		<div ng-show="jobDone">
+			<div ng-show="!viewLogOutput">
+				<button class="btn btn-info-outline viewOutputLog" ng-click="getOutputLogFile()"> View log output  </button> 
+				<div ng-repeat="logLine in logFile track by $index"> {{logLine}} </div>
+			</div>
+			<div ng-show="viewLogOutput"> 
+				<button class="btn btn-info-outline viewOutputLog" ng-click="hideOutputLogFile()"> Hide log output  </button> 
+			</div>
 
-
-		<div ng-show="!viewLogErrorOutput">
-			<button class="btn btn-info-outline viewOutputLogError" ng-click="getOutputErrorLogFile()"> View log error output  </button> <br>
-			<div ng-repeat="errorLine in logErrorFile track by $index"> {{errorLine}} </div>
-		</div>
-		<div ng-show="viewLogErrorOutput">
-			<button class="btn btn-info-outline viewOutputLogError" ng-click="hideOutputErrorLogFile()"> Hide log error output  </button> <br>
+			<div ng-show="!viewLogErrorOutput">
+				<button class="btn btn-info-outline viewOutputLogError" ng-click="getOutputErrorLogFile()"> View log error output  </button> <br>
+				<div ng-repeat="errorLine in logErrorFile track by $index"> {{errorLine}} </div>
+			</div>
+			<div ng-show="viewLogErrorOutput">
+				<button class="btn btn-info-outline viewOutputLogError" ng-click="hideOutputErrorLogFile()"> Hide log error output  </button> <br>
+			</div>
 		</div>
 
 		<button type="button" class="btn btn-info" ng-click="reRunJob()"> Restart job </button>
-
+		<div ng-if="jobDone">
 		<div ng-if="!jobDelete"> 
 			<button class="btn btn-danger" ng-click="deleteJob()"> Delete Job in database </button> 
 		</div>
 
 		<div ng-if="jobDelete"> 
 			<button class="btn btn-danger" ng-click="deleteJob()"> Delete Job in database </button> 
-			<span class="glyphicon glyphicon-ok" aria-hidden="true">  </span>
+			<sp
+			an class="glyphicon glyphicon-ok" aria-hidden="true">  </span>
 		</div> 
 
-		<div ng-if="computePCA">
+		<div ng-if="!jobDone">
+			<div ng-if="!jobKill"> 
+				<button class="btn btn-danger" ng-click="killJob()"> Kill Job </button>  
+			</div> 
+			<div ng-if="jobKill"> 
+				<button class="btn btn-danger" ng-click="killJob()"> Kill Job </button> 
+					<span class="glyphicon glyphicon-ok" aria-hidden="true">  </span> 
+			</div> 
+		</div>
+
+		<div ng-if="computePCA && jobDone">
 		<label>	Select for compute PCA <input type="checkbox" name="selectJobPCA" value="selectJobPCA" ng-model="selectJobPCA" ng-init="selectJobPCA=false" id="checkbox_{{jobId}}" /> </label>
 		</div>
 	</div>
