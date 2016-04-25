@@ -8,15 +8,7 @@ function link($scope,$attrs,$filter){
   $scope.plotData = undefined;
   $scope.plotParam = {};
 
-   $scope.testD = undefined; 
-
-/*   $scope.nbPlot = -1;
-   $scope.plots = [];*/
-
-  $scope.Files = {
-    "json": "",
-    "matrix": ""
-  };
+  $scope.testD = undefined; 
 
   $scope.showContentJson = function($fileContent){
         $scope.contentJ = $fileContent;
@@ -26,8 +18,11 @@ function link($scope,$attrs,$filter){
         $scope.contentM = $fileContent;
     };
 
-    $scope.testTab = function(){
-
+    $scope.createJsonObjectForPlotConnectivity = function(){
+      $scope.jsonObjectForPlotConnectivity = {
+          "fdt_matrix" = $scope.contentM,
+          "jsonTableDescripton" = $scope.contentJ
+      }
     }
   
   $scope.plotBrainConnectivity = function(){
@@ -202,31 +197,9 @@ function link($scope,$attrs,$filter){
             $scope.plotParam.diameter = 960
             $scope.plotParam.upperValue = 1;
             $scope.plotParam.data = returnJSONobject; 
-            $scope.NewPlot;
-   
+            $scope.NewPlot; 
 
   }
-
-/*  $scope.submit = function(){
-
-    probtrack.getFDTMatrix()
-    .then(function(response){
-      $scope.ButtonClicked = true;
-      $scope.plotParameters.link1 = "";
-      $scope.plotParameters.link2 = "";
-      $scope.plotParameters.threshold = 0.1;
-      $scope.plotParameters.method = [true,false,false];
-      $scope.plotParameters.tension = 85;
-      $scope.plotParameters.diameter = 960
-      $scope.plotParameters.upperValue = 1;
-      $scope.plotParameters.data = response.data;
-      $scope.Plot;
-    }).catch(console.error);
-
-  }*/
-
-
-
 };
 return {
     restrict : 'E',
