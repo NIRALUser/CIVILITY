@@ -28,7 +28,6 @@ function link($scope,$attrs,$filter){
       $scope.plotParam.link1 = "";
       $scope.plotParam.link2 = "";
       $scope.plotParam.threshold = 0.1;
-      $scope.plotParam.method = [true,false,false];
       $scope.plotParam.tension = 85;
       $scope.plotParam.diameter = 960
       $scope.plotParam.upperValue = 1;

@@ -4,7 +4,6 @@ angular.module('brainConnectivity')
 	function link($scope,$attrs,$filter){
 		$scope.plotParameters = {};
 		$scope.plotParameters.threshold = 0.01;
-		$scope.plotParameters.method = [true,false,false];
 		$scope.plotParameters.diameter = 960;
 		$scope.plotParameters.tension = 0.85;
 		$scope.plotParameters.upperValue = 0.44;
@@ -245,30 +244,6 @@ angular.module('brainConnectivity')
 		$scope.scaleImgBrainTemplate.All = 80;
 		$scope.scaleImgBrainTemplate.Right = 80;
 	}
-
-		/*$scope.selectMethodMatrixProcess = function(){
-
-			var method = $scope.choiceSelection;
-			if(method == "Average")
-			{	
-				returnMethod = "average";
-			}
-			else if ( method[1] == true )
-			{
-				returnMethod = "max";
-			}
-			else if( method[2] == true )
-			{
-				returnMethod = "min";
-			}
-			else if(method[0] == false && method[1] == false && method[2] == false)
-			{	
-				$scope.choices[0]["checked"]=true;
-				$scope.plotParameters.method[0]=true;
-				returnMethod = "average";
-			}
-			return returnMethod;
-			};*/
 
 		//Average connectivity matrix 
 		$scope.AverageMatrix = function(matrix){
@@ -1280,43 +1255,6 @@ $scope.packageImports = function (nodes, threshold) {
 		    console.log("HelloWatch choiceSelection", $scope.choice.selection);
 		    $scope.NewPlot();
 		  });
-		/*$scope.$watch("plotParameters.method[0]", function(){
-
-		    if($scope.plotParameters.method[0]==true)
-		    {
-		    	$scope.choices[1]["checked"]=false;
-		    	$scope.choices[2]["checked"]=false;
-		    	$scope.plotParameters.method[1]=false;
-		    	$scope.plotParameters.method[2]=false;
-		    }
-		    console.log("HelloWatch processvalue", $scope.plotParameters.method);
-		    $scope.NewPlot();
-		  });
-
-		$scope.$watch("plotParameters.method[1]", function(){
-		    
-		    if($scope.plotParameters.method[1]==true)
-		    {
-		    	$scope.choices[0]["checked"]=false;
-		    	$scope.choices[2]["checked"]=false;
-		    	$scope.plotParameters.method[0]=false;
-		    	$scope.plotParameters.method[2]=false;
-		    }
-		    console.log("HelloWatch processvalue", $scope.plotParameters.method);
-		    $scope.NewPlot();
-		  });*/
-
-		/*$scope.$watch("plotParameters.method[2]", function(){
-		     if($scope.plotParameters.method[2]==true)
-		    {
-		    	$scope.choices[0]["checked"]=false;
-		    	$scope.choices[1]["checked"]=false;
-		    	$scope.plotParameters.method[0]=false;
-		    	$scope.plotParameters.method[1]=false;
-		    }
-		    $scope.NewPlot();
-		    console.log("HelloWatch processvalue", $scope.plotParameters.method);
-		  });*/
 
 		$scope.$watch("plotData", function()
 			{
