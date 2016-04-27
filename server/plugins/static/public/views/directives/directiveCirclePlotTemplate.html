@@ -4,12 +4,13 @@
 	<p class="matProc"> Matrix processing : </p>
 
   <ng-form name="myForm">
-  <span ng-repeat="choice in choices">
-    <label class="checkbox-inline" for="{{choice.id}}">
-      <input type="checkbox" value="{{choice.id}}" ng-model="plotParameters.method[$index]" name="group-one" id="{{choice.id}}" ng-checked="choice.checked" ng-change="selectMethodMatrixProcess"/>
-{{choice.label}}
-    </label>
-  </span>
+    <label for="average" class="methodChoice"> Average 
+     <input type="radio" ng-model="choice.selection" value="Average" id="average"> </label>
+     <label for="maximum"  class="methodChoice"> Maximum
+      <input type="radio" ng-model="choice.selection" value="Maximum" id="maximum"> </label>
+      <label for="minimum"  class="methodChoice"> Minimum
+       <input type="radio" ng-model="choice.selection" value="Minimum" id="minimum"> </label>
+
 
   <p ng-if="plotVisible"> <div class="text" ng-if="plotVisible"> Maximum upper value : </div>
 <input type="text" pattern="[0-9]+([,\.][0-9]+)?" value="1"

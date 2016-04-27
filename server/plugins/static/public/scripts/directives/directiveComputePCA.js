@@ -58,60 +58,71 @@ function link($scope,$attrs,$filter){
             $scope.isMean = false;
         } 
         $scope.viewCirclePlot = true;
-        $scope.matrixOut = $scope.getMatrixK($scope.valueK);
+        var matrixOut = $scope.getMatrixK($scope.valueK);
         if($scope.clickRunPCA == true &&  $scope.parcellationChose.type=="useTableFile"  )
         {
-            $scope.tableDescription = JSON.parse($scope.contentJ);
+            var tableDescription = JSON.parse($scope.contentJ);
         }
         else if($scope.clickRunPCA == true &&  $scope.parcellationChose.type=="useTableJob")
         {
-            $scope.tableDescription = $scope.jobsSelectedPCA[0].parcellationTable;
+            var tableDescription = $scope.jobsSelectedPCA[0].parcellationTable;
         }
-        $scope.plotBrainConnectivityJobDone();
-    };
-
-    $scope.plotBrainConnectivityJobDone = function(){
-
-     var matrix_norm = $scope.matrixOut ;
-    
-     var tableObject =  $scope.tableDescription;
-     if($scope.tableDescription == undefined) {
+        if(tableDescription == undefined) {
         console.error("No table description read ");
         return false;
-     }
+        }
+        $scope.jsonObjectForPlotConnectivity = {
+          "fdt_matrix" : matrixOut,
+          "jsonTableDescripton" : tableDescription
+        }
+        $scope.ButtonClicked = true;
+            $scope.plotVisible = true;
+            $scope.plotParametersValues = {};
+            $scope.plotParametersValues.link1 = "";
+            $scope.plotParametersValues.link2 = "";
+            $scope.plotParametersValues.threshold = 0.1;
+            $scope.plotParametersValues.method = [true,false,false];
+            $scope.plotParametersValues.tension = 85;
+            $scope.plotParametersValues.diameter = 960
+            $scope.plotParametersValues.upperValue = 1;
+            $scope.plotParametersValues.data = $scope.jsonObjectForPlotConnectivity;
+        //$scope.plotBrainConnectivityJobDone();
+    };
 
-                var table_Matrix = [];
-                var listFDT = [];
-                var listVisuOrder = [];
-                var coordList = {};
-                var MaxvisuOrder = 0;
+   /* $scope.plotBrainConnectivityJobDone = function(){
+        
+        var table_Matrix = [];
+        var listFDT = [];
+        var listVisuOrder = [];
+        var coordList = {};
+        var MaxvisuOrder = 0;
 
-                for(var i=0 ; i < matrix_norm.length ; i++)
+        for(var i=0 ; i < matrix_norm.length ; i++)
+        {
+            listFDT.push({});
+        }
+
+        for ( var seed in tableObject)
+        {
+            var matrixRow = tableObject[seed]["MatrixRow"];
+            if(matrixRow != "-1")
+            {
+                listFDT[matrixRow-1] = tableObject[seed]["VisuHierarchy"] + tableObject[seed]["name"];
+                var visuorder = tableObject[seed]["VisuOrder"];
+                //console.log(visuorder);
+                if(visuorder > MaxvisuOrder )
                 {
-                  listFDT.push({});
+                MaxvisuOrder = visuorder;
                 }
-
-                for ( var seed in tableObject)
-                {
-                  var matrixRow = tableObject[seed]["MatrixRow"];
-                  if(matrixRow != "-1")
-                  {
-                    listFDT[matrixRow-1] = tableObject[seed]["VisuHierarchy"] + tableObject[seed]["name"];
-                    var visuorder = tableObject[seed]["VisuOrder"];
-                    //console.log(visuorder);
-                    if(visuorder > MaxvisuOrder )
-                    {
-                      MaxvisuOrder = visuorder;
-                    }
-                    table_Matrix.push(tableObject[seed]);
-                  }
-                  else
-                  {
-                    //Don't use
-                  }
+                table_Matrix.push(tableObject[seed]);
+            }
+            else
+            {
+                //Don't use
+            }
                   
-                }
-                for(var i=0 ; i < MaxvisuOrder ; i++)
+        }
+        for(var i=0 ; i < MaxvisuOrder ; i++)
                 {
                   listVisuOrder.push("");
                 }
@@ -182,7 +193,7 @@ function link($scope,$attrs,$filter){
             $scope.plotParametersValues.upperValue = 1;
             $scope.plotParametersValues.data = returnJSONobject;
             $scope.NewPlot;
-    };
+    };*/
 
     //Content of the json file (input type="file")
     $scope.showContentJson = function($fileContent){

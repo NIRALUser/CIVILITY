@@ -50,8 +50,10 @@ angular.module('brainConnectivity')
 		$scope.brainTemplateImgRight =  "divBrainImgRight" + $scope.plotID;
 		$scope.brainTemplateLinkRight =  "divBrainLinkRight" + $scope.plotID;
 
-    	$scope.choices = [{"id":"average", "value":"1", "label":"Average", "checked":true}, {"id":"max", "value":"2","label":"Maximum","checked":false},{"id":"min", "value":"3","label":"Minumum","checked":false}];	 
-		
+    	//$scope.choices = [{"id":"average", "value":"1", "label":"Average", "checked":true}, {"id":"max", "value":"2","label":"Maximum","checked":false},{"id":"min", "value":"3","label":"Minumum","checked":false}];	 
+		//$scope.choices = ["Average", "Maximum", "Minumum"];
+		$scope.choice = {};
+		$scope.choice.selection = "Average";
 		 $scope.plotBrainTemplate = false;
 
 
@@ -68,7 +70,7 @@ angular.module('brainConnectivity')
 	      if(angular.isString(data))
 	      {
 	      var lines = data.split('\n');
-
+	      
 	       //GET MATRIX    
 	        for(var line = 0; line < lines.length; line++){      
 	        // console.log(lines[line]);
@@ -134,13 +136,11 @@ angular.module('brainConnectivity')
 	                {
 	                  listFDT.push({});
 	                }
-	                console.log(listFDT);
 	                for ( var seed in table)
 	                {
 	                  var matrixRow = table[seed]["MatrixRow"];
 	                  if(matrixRow != "-1")
 	                  {
-	                    console.log("HERE")
 	                    //console.log(table[seed]["MatrixRow"]);
 	                    //console.log(matrixRow-1);
 	                    listFDT[matrixRow-1] = table[seed]["VisuHierarchy"] + table[seed]["name"];
@@ -156,9 +156,7 @@ angular.module('brainConnectivity')
 	                  {
 	                    //Don't use
 	                  }
-	                  console.log(table_Matrix);
 	                }
-	                console.log(MaxvisuOrder);
 
 	                for(var i=0 ; i < MaxvisuOrder ; i++)
 	                {
@@ -193,8 +191,8 @@ angular.module('brainConnectivity')
 	                  }  
 	                }
 
-	                console.log("List visu order" + listVisuOrder);
-	                console.log("List fdt" + listFDT);
+	                //console.log("List visu order" + listVisuOrder);
+	                //console.log("List fdt" + listFDT);
 
 	                var NewMat = [];
 	                matrix_norm.forEach(function(line,i)
@@ -248,12 +246,10 @@ angular.module('brainConnectivity')
 		$scope.scaleImgBrainTemplate.Right = 80;
 	}
 
-		$scope.selectMethodMatrixProcess = function(){
+		/*$scope.selectMethodMatrixProcess = function(){
 
-			var method = $scope.plotParameters.method;
-			console.log(method);
-			var returnMethod;
-			if(method[0] == true)
+			var method = $scope.choiceSelection;
+			if(method == "Average")
 			{	
 				returnMethod = "average";
 			}
@@ -272,7 +268,7 @@ angular.module('brainConnectivity')
 				returnMethod = "average";
 			}
 			return returnMethod;
-			};
+			};*/
 
 		//Average connectivity matrix 
 		$scope.AverageMatrix = function(matrix){
@@ -380,11 +376,11 @@ angular.module('brainConnectivity')
 		 		 	var matrix = JSONInfo["matrix"];
 		 		 	var MatProcess = [];
 		 		 	//Process matrix 
-		 		 	if(checkbox == "average")
+		 		 	if(checkbox == "Average")
 		 		 	{
 						MatProcess=$scope.AverageMatrix(matrix)
 		 		 	}
-		 		 	else if (checkbox == "max")
+		 		 	else if (checkbox == "Maximum")
 		 		 	{
 		 		 		MatProcess=$scope.MaximumMatrix(matrix)
 		 		 	}
@@ -464,14 +460,14 @@ angular.module('brainConnectivity')
 		  	var jsonOject = $scope.plotBrainConnectivity();
 		  	$scope.removeOldPlot();
 		  	//Catch method used
-		  	var method = $scope.selectMethodMatrixProcess();
-		  	console.log(method + "method");
+		  	var method = $scope.choice.selection;
+		  	console.log(method + " method");
 
 		  	//Data 
 		    //var JSONInfo = $scope.plotData;
 
 		    //Create description object for d3 circle plot
-		    var classes = $scope.CreateDescription(jsonOject,$scope.selectMethodMatrixProcess());
+		    var classes = $scope.CreateDescription(jsonOject,method);
 		    
 
 		    if($scope.descriptionPlotDone == true)
@@ -1280,7 +1276,11 @@ $scope.packageImports = function (nodes, threshold) {
 		  });
 
 		//Checkboxes
-		$scope.$watch("plotParameters.method[0]", function(){
+		$scope.$watch("choice.selection", function(){
+		    console.log("HelloWatch choiceSelection", $scope.choice.selection);
+		    $scope.NewPlot();
+		  });
+		/*$scope.$watch("plotParameters.method[0]", function(){
 
 		    if($scope.plotParameters.method[0]==true)
 		    {
@@ -1304,9 +1304,9 @@ $scope.packageImports = function (nodes, threshold) {
 		    }
 		    console.log("HelloWatch processvalue", $scope.plotParameters.method);
 		    $scope.NewPlot();
-		  });
+		  });*/
 
-		$scope.$watch("plotParameters.method[2]", function(){
+		/*$scope.$watch("plotParameters.method[2]", function(){
 		     if($scope.plotParameters.method[2]==true)
 		    {
 		    	$scope.choices[0]["checked"]=false;
@@ -1316,7 +1316,7 @@ $scope.packageImports = function (nodes, threshold) {
 		    }
 		    $scope.NewPlot();
 		    console.log("HelloWatch processvalue", $scope.plotParameters.method);
-		  });
+		  });*/
 
 		$scope.$watch("plotData", function()
 			{
