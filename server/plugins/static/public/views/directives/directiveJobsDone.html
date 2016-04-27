@@ -14,7 +14,7 @@
 			<h2 class="jobsTitle"> Jobs done: </h2>
 			<p  ng-if="noResult" class=jobNoInfo> None </p>
         <div id="resultFindJob">
-			<job-done-status ng-repeat="job in jobFound" job-id="job._id" list-Pca="jobsSelectedPCA"> </job-done-status>
+			<job-status ng-repeat="job in jobFound" job-id="job._id" list-Pca="jobsSelectedPCA"> </job-status>
 		</div>
 		<div ng-show="!noResult">
 			<label>	Select all matrices to compute PCA <input type="checkbox" name="selectAllJobPCA" value="selectAllJobPCA" ng-model="selectAllJobPCA" ng-init="selectAllJobPCA=false" ng-click="clickCheckbox()"/> </label>
