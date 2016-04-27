@@ -58,16 +58,18 @@ angular.module('brainConnectivity')
 		$scope.plotBrainConnectivity = function(){
 
 	      $scope.plotView = true;
-	      var data =  $scope.jsonObjectForPlotConnectivity["fdt_matrix"];//$scope.contentM ;
+	      var data =  $scope.plotData["fdt_matrix"];//$scope.contentM ;
 	      console.log("MATRIX",data);
 
-	      var table =  $scope.jsonObjectForPlotConnectivity["jsonTableDescripton"];//$scope.contentJ ;
-	                console.log("DESCRIPTION TABLE",table);
-	  
+	      var table =  $scope.plotData["jsonTableDescripton"];//$scope.contentJ ;
+	      console.log("DESCRIPTION TABLE",table);
+	  	  var matrix = [];
+	  	  var matrix_norm = [];
+	      if(angular.isString(data))
+	      {
 	      var lines = data.split('\n');
 
 	       //GET MATRIX    
-	       var matrix = [];
 	        for(var line = 0; line < lines.length; line++){      
 	        // console.log(lines[line]);
 	            var rows = [];
@@ -83,22 +85,22 @@ angular.module('brainConnectivity')
 	                  matrix.push(rows);
 	              }
 	            }
-
-	            for(var blabla in matrix)
+	            console.log(matrix);
+	            for(var line in matrix)
 	             {
 	               //console.log(matrix[blabla]);
-	               if(matrix.length != matrix[blabla].length)
+	               if(matrix.length != matrix[line].length)
 	               {
 	                  console.log("Error dimension matrix");
 	               }
 	             }
 
-	                 var matrix_norm = [];
-	                 var waytotal = [];
-	                 //Matrix Normalization  
-	                 for(var i in matrix)
+	                
+	                var waytotal = [];
+	                //Matrix Normalization  
+	                for(var i in matrix)
 	                 {
-	                    var sum = 0.0;
+	                   var sum = 0.0;
 	                    for(var j in matrix[i])
 	                    {
 	                        sum = sum + parseFloat(matrix[i][j]);
@@ -115,11 +117,12 @@ angular.module('brainConnectivity')
 	                    }
 	                    matrix_norm.push(vals);
 	                 }
-
-
-
-	                var AALObject = JSON.parse(table);
-	                //console.log(AALObject);
+	                 }
+	          else
+	          {
+	          	matrix_norm = data;
+	          }
+	                //console.log(table);
 
 	                var table_Matrix = [];
 	                var listFDT = [];
@@ -127,31 +130,33 @@ angular.module('brainConnectivity')
 	                var coordList = {};
 	                var MaxvisuOrder = 0;
 
-	                for(var i=0 ; i < matrix.length ; i++)
+	                for(var i=0 ; i < matrix_norm.length ; i++)
 	                {
 	                  listFDT.push({});
 	                }
-
-	                for ( var seed in AALObject)
+	                console.log(listFDT);
+	                for ( var seed in table)
 	                {
-	                  var matrixRow = AALObject[seed]["MatrixRow"];
+	                  var matrixRow = table[seed]["MatrixRow"];
 	                  if(matrixRow != "-1")
 	                  {
-	                    //console.log(AALObject[seed]["MatrixRow"]);
-	                    listFDT[matrixRow-1] = AALObject[seed]["VisuHierarchy"] + AALObject[seed]["name"];
-	                    var visuorder = AALObject[seed]["VisuOrder"];
+	                    console.log("HERE")
+	                    //console.log(table[seed]["MatrixRow"]);
+	                    //console.log(matrixRow-1);
+	                    listFDT[matrixRow-1] = table[seed]["VisuHierarchy"] + table[seed]["name"];
+	                    var visuorder = table[seed]["VisuOrder"];
 	                    //console.log(visuorder);
 	                    if(visuorder > MaxvisuOrder )
 	                    {
 	                      MaxvisuOrder = visuorder;
 	                    }
-	                    table_Matrix.push(AALObject[seed]);
+	                    table_Matrix.push(table[seed]);
 	                  }
 	                  else
 	                  {
 	                    //Don't use
 	                  }
-	                  
+	                  console.log(table_Matrix);
 	                }
 	                console.log(MaxvisuOrder);
 
@@ -179,7 +184,7 @@ angular.module('brainConnectivity')
 	                    {
 	                      var seedInfo = {"name" : name};
 	                    }
-	                    listVisuOrder[visuOrder-1] = seedInfo
+	                    listVisuOrder[visuOrder-1] = seedInfo;
 	                    //listVisuOrder[visuOrder-1]=table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
 	                  } 
 	                  else
@@ -188,8 +193,8 @@ angular.module('brainConnectivity')
 	                  }  
 	                }
 
-	                //console.log("List visu order" + listVisuOrder);
-	                //console.log("List fdt" + listFDT);
+	                console.log("List visu order" + listVisuOrder);
+	                console.log("List fdt" + listFDT);
 
 	                var NewMat = [];
 	                matrix_norm.forEach(function(line,i)
@@ -215,20 +220,7 @@ angular.module('brainConnectivity')
 	            console.log(NewMat.length);
 
 	            var returnJSONobject = {"matrix" : NewMat, "listOrdered" : listVisuOrder}
-	            console.log(listVisuOrder);
-	            console.log(returnJSONobject);
-
-	            $scope.ButtonClicked = true;
-	            $scope.plotParam.link1 = "";
-	            $scope.plotParam.link2 = "";
-	            $scope.plotParam.threshold = 0.1;
-	            $scope.plotParam.method = [true,false,false];
-	            $scope.plotParam.tension = 85;
-	            $scope.plotParam.diameter = 960
-	            $scope.plotParam.upperValue = 1;
-	            $scope.plotParam.data = returnJSONobject; 
-	            $scope.NewPlot; 
-
+	            return returnJSONobject;
   }
 
 
@@ -469,17 +461,17 @@ angular.module('brainConnectivity')
 		  //Main function -- this function plot brain connectivity on circle and on brain Template
 		  $scope.Plot = function(){
 
-		  	$scope.plotBrainConnectivity();
+		  	var jsonOject = $scope.plotBrainConnectivity();
 		  	$scope.removeOldPlot();
 		  	//Catch method used
 		  	var method = $scope.selectMethodMatrixProcess();
 		  	console.log(method + "method");
 
 		  	//Data 
-		    var JSONInfo = $scope.plotData;
+		    //var JSONInfo = $scope.plotData;
 
 		    //Create description object for d3 circle plot
-		    var classes = $scope.CreateDescription(JSONInfo,$scope.selectMethodMatrixProcess());
+		    var classes = $scope.CreateDescription(jsonOject,$scope.selectMethodMatrixProcess());
 		    
 
 		    if($scope.descriptionPlotDone == true)
@@ -705,7 +697,7 @@ angular.module('brainConnectivity')
 		      d3.select(self.frameElement).style("height", diameter + "px");  
 
 		     //Plot brain template -- if coord specified in Json table 
-		    if(JSONInfo.listOrdered[1].x != undefined)  //should be improve
+		    if(jsonOject.listOrdered[1].x != undefined)  //should be improve
 		     {
 		     	$scope.plotBrainTemplate = true;
 		     //Whole brain connection
@@ -757,7 +749,7 @@ angular.module('brainConnectivity')
 		       .attr("class", "nodeTooltip")
 		       .attr("id", "nodeTooltip_"+$scope.plotID)        
 		       .style("opacity", 0);		       
-		       var CoordDescription = JSONInfo["listOrdered"];
+		       var CoordDescription = jsonOject["listOrdered"];
 
 		       var linefunction = d3.svg.line()
 		      				.interpolate("bundle")

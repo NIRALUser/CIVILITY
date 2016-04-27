@@ -14,7 +14,15 @@ angular.module('brainConnectivity')
     $scope.getJobObject = function(){
       clusterpost.getJob($scope.jobId).then(function(res){
         $scope.jobObject = res.data;
-        console.log($scope.jobObject)
+        console.log($scope.jobObject);
+        if($scope.jobObject.jobstatus.status == "DONE")
+        {
+          $scope.jobDone = true;
+        }
+        else
+        {
+          $scope.jobDone = false;
+        }
       })
        .catch(function(e){
           console.error(e);
@@ -23,14 +31,7 @@ angular.module('brainConnectivity')
     }
     $scope.getJobObject();
 
-    if($scope.jobObject.jobstatus.status == "DONE")
-    {
-      $scope.jobDone = true;
-    }
-    else
-    {
-      $scope.jobDone = false;
-    }
+    
 
     if(Array.isArray($scope.listPca))
     {
@@ -171,8 +172,23 @@ angular.module('brainConnectivity')
 			.then(function(res){
 				var matrixOut = res[0];
 				var tableDescription = res[1];
-				console.log(matrixOut, tableDescription);
-        $scope.plotBrainConnectivityJobDone(matrixOut,tableDescription);
+        $scope.jsonObjectForPlotConnectivity = {
+          "fdt_matrix" : matrixOut,
+          "jsonTableDescripton" : tableDescription
+        }
+        $scope.viewCirclePlot = true;
+        $scope.ButtonClicked = true;
+        $scope.plotParameters = {};
+        $scope.plotParameters.link1 = "";
+        $scope.plotParameters.link2 = "";
+        $scope.plotParameters.threshold = 0.1;
+        $scope.plotParameters.method = [true,false,false];
+        $scope.plotParameters.tension = 85;
+        $scope.plotParameters.diameter = 960;
+        $scope.plotParameters.upperValue = 1;
+        $scope.plotParameters.data = $scope.jsonObjectForPlotConnectivity;
+        $scope.$apply();
+        //$scope.plotBrainConnectivityJobDone(matrixOut,tableDescription);
 			})
 			.catch(function(e){
 				console.error(e);
@@ -180,7 +196,7 @@ angular.module('brainConnectivity')
 			});      
 		}
 
-		$scope.plotBrainConnectivityJobDone = function(matrix,tableDescription){      
+		/*$scope.plotBrainConnectivityJobDone = function(matrix,tableDescription){      
       
       $scope.viewCirclePlot = true;
       var data = matrix  	
@@ -326,7 +342,7 @@ angular.module('brainConnectivity')
       $scope.plotParameters.data = returnJSONobject;
       $scope.NewPlot;
       $scope.$apply();
-  };
+  };*/
 
   //Check list and update checkbox value according to the list 
   $scope.updateCheckboxWithList = function(){

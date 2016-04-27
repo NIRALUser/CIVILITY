@@ -20,12 +20,23 @@ function link($scope,$attrs,$filter){
 
     $scope.createJsonObjectForPlotConnectivity = function(){
       $scope.jsonObjectForPlotConnectivity = {
-          "fdt_matrix" = $scope.contentM,
-          "jsonTableDescripton" = $scope.contentJ
+          "fdt_matrix" : $scope.contentM,
+          "jsonTableDescripton" : JSON.parse($scope.contentJ)
       }
+      $scope.plotView = true;
+      $scope.ButtonClicked = true;
+      $scope.plotParam.link1 = "";
+      $scope.plotParam.link2 = "";
+      $scope.plotParam.threshold = 0.1;
+      $scope.plotParam.method = [true,false,false];
+      $scope.plotParam.tension = 85;
+      $scope.plotParam.diameter = 960
+      $scope.plotParam.upperValue = 1;
+      $scope.plotParam.data = $scope.jsonObjectForPlotConnectivity; 
+
     }
   
-  $scope.plotBrainConnectivity = function(){
+ /* $scope.plotBrainConnectivity = function(){
 
       $scope.plotView = true;
       var data =  $scope.contentM ;
@@ -199,7 +210,7 @@ function link($scope,$attrs,$filter){
             $scope.plotParam.data = returnJSONobject; 
             $scope.NewPlot; 
 
-  }
+  }*/
 };
 return {
     restrict : 'E',
