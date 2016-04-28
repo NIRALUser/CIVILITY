@@ -206,20 +206,15 @@ angular.module('brainConnectivity')
       {
         if(val.id == $scope.jobId)
         {
+          cpt++;
+          $scope.selection.jobSelect = true;
         }
       }
-      /*if(val.id == $scope.jobId)
-      {
-        
-        document.getElementById("checkbox_" + $scope.jobId).checked == true;
-        //$scope.selection.jobSelect == true;
-      }
-      else
-      {
-        document.getElementById("checkbox_" + $scope.jobId).checked == false;
-        //$scope.selection.jobSelect == false;
-      }*/
     });
+    if(cpt == 0 )
+    {
+        $scope.selection.jobSelect = false;
+    }
   };
 
   //List of jobs to compute PCA -- add or delete 
