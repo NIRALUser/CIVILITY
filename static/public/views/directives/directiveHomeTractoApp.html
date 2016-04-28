@@ -1,0 +1,50 @@
+<div>
+	<div class="homeHEAD">
+		<img class="logo" src="data/rsz_brainleft-example.png">
+		<div class="title">
+		<h3 id="title">Probtrack Brain Connectivity Application</h3> 
+		<p class="infoText"> This is an application for plotting connectivity matrix</p></div>
+
+	</div>
+
+
+	<div class="buttons" >	  
+		<div class="mainButton">
+
+			<div class="case1">
+				<div class=buttons>
+					<!-- <a class="buttonHome" href="#/tracto" >  Tractograpy </a> -->
+					<button type="button" ng-click="tabs[1].active = true"> test1</button>
+				</div>
+				<div class=textcase1>
+					<p> Input : surface(s) with color label, T1 image, DWI image, table description (jsonfile) <br/>
+	Output : Connectivity matrix and table description updated
+					</p> 
+				</div>
+			</div>
+
+			<hr>
+			<div class="case2">
+				<div class=buttons>
+					<a class="buttonHome" href="#/tracto" >  Jobs running and Results </a>
+				</div>
+				<div class=textcase1>
+					<p> List of jobs running <br/>
+	Find job by user email 
+					</p> 
+				</div>
+			</div>
+			<hr>
+		<div class="case3">
+			<div class=buttons>
+				<a class="buttonHome" href="#/visualisation" > Visualisation brain connectivity</a>
+			</div>
+			<div class=textcase2>
+				<p> Input : connectivity matrix (probtrackx output format), table description (jsonfile) <br/>
+	Output : Visualisation of brain connectivity
+				</p> 
+			</div>
+		</div>
+	</div>
+
+</div>
