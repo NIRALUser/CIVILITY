@@ -1,5 +1,5 @@
 angular.module('brainConnectivity')
-.directive('circlePlot',function($routeParams,$location,probtrack){
+.directive('circlePlot',function($routeParams,$location){
 
 	function link($scope,$attrs,$filter){
 		$scope.plotParameters = {};

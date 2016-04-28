@@ -1,6 +1,6 @@
 
 angular.module('brainConnectivity')
-.controller('tractographyAppController', ['$scope','$http','probtrack', function($scope, $http, probtrack) {
+.controller('tractographyAppController', ['$scope','$http', function($scope, $http) {
 
 
 /*$scope.tabs = [{

@@ -4,33 +4,33 @@ angular.module('brainConnectivity')
     getExecutionServers: function () {
       return $http({
         method: 'GET',
-        url: '/clusterpost/executionserver'
+        url: '/executionserver'
         
       });
     },
     getJobStatus: function (id) {
       return $http({
         method: 'GET',
-        url: '/clusterpost/executionserver/' + id       
+        url: '/executionserver/' + id       
       });
     },
     submitJob: function (id) {
       return $http({
         method: 'POST',
-        url: '/clusterpost/executionserver/' + id
+        url: '/executionserver/' + id
       });
     },
     killJob: function (id) {
       return $http({
         method: 'DELETE',
-        url: '/clusterpost/executionserver/' + id
+        url: '/executionserver/' + id
         
       });
     },
     createJob: function(job){
       return $http({
         method: 'POST',
-        url: '/clusterpost/dataprovider',
+        url: '/dataprovider',
         data: job
         
       });
@@ -38,7 +38,7 @@ angular.module('brainConnectivity')
     updateJob: function(job){
     	return $http({
         method: 'PUT',
-        url: '/clusterpost/dataprovider',
+        url: '/dataprovider',
         data: job
         
       });
@@ -46,20 +46,20 @@ angular.module('brainConnectivity')
     getJob: function(id){
     	return $http({
         method: 'GET',
-        url: '/clusterpost/dataprovider/' + id        
+        url: '/dataprovider/' + id        
       });
     },
     getAttachment: function(id, filename,responseType){
     	return $http({
         method: 'GET',
-        url: '/clusterpost/dataprovider/' + id + '/' + encodeURIComponent(filename),
+        url: '/dataprovider/' + id + '/' + encodeURIComponent(filename),
         responseType: responseType
       });
     },
     addAttachment: function(id, filename, data){
     	return $http({
         method: 'PUT',
-        url: '/clusterpost/dataprovider/' + id + '/' + filename,
+        url: '/dataprovider/' + id + '/' + filename,
         data: data
         
       });
@@ -67,20 +67,26 @@ angular.module('brainConnectivity')
     getJobUser: function(email, jobstatus, executable){
     	return $http({
         method: 'GET',
-        url: '/clusterpost/dataprovider/user',
+        url: '/dataprovider/user',
         params: {
         	userEmail: email, 
         	jobstatus: jobstatus,
         	executable: executable
-        }
-        
+        }        
       });
     },
     deleteJob: function(id){
        return $http({
          method: 'DELETE',
-         url: '/clusterpost/dataprovider/' + id
+         url: '/dataprovider/' + id
        })
+    },
+    createUser: function(user){
+      return $http({
+        method: 'POST',
+        url: '/clusterauth/user',
+        data: user
+      });
     }
   }
 });

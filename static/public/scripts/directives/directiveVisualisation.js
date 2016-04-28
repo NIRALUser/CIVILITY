@@ -1,6 +1,6 @@
 
 angular.module('brainConnectivity')
-.directive('connectivityVisualisation', function($routeParams,$location,clusterpost, probtrack){
+.directive('connectivityVisualisation', function($routeParams,$location,clusterpost){
 
 function link($scope,$attrs,$filter){
 

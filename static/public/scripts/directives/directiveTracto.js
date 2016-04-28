@@ -1,6 +1,6 @@
 
 angular.module('brainConnectivity')
-.directive('submitTracto', function($routeParams,$location,clusterpost, probtrack){
+.directive('submitTracto', function($routeParams,$location,clusterpost){
 
   function link($scope,$attrs,$filter){
 

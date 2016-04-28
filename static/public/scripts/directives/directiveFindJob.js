@@ -1,6 +1,6 @@
 
 angular.module('brainConnectivity')
-.directive('findJob', function($routeParams,$location,clusterpost, probtrack){
+.directive('findJob', function($routeParams,$location,clusterpost){
 
 function link($scope,$attrs,$filter){
 

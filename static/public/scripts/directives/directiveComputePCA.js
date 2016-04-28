@@ -1,6 +1,6 @@
 
 angular.module('brainConnectivity')
-.directive('computePca', function($routeParams,$location,clusterpost, probtrack){
+.directive('computePca', function($routeParams,$location,clusterpost){
 
 function link($scope,$attrs,$filter){
 
