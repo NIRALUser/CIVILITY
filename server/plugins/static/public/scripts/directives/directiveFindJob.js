@@ -10,6 +10,7 @@ function link($scope,$attrs,$filter){
   $scope.selectStatus.selection = "All status";
   $scope.statusAvail = ["All status","CREATE", "DOWNLOADING", "RUN", "FAIL", "KILL", "UPLOADING", "EXIT", "DONE"];
 
+  $scope.listPCA = "none";
   
 //get job according to login user 
   $scope.getJobByUser = function(){

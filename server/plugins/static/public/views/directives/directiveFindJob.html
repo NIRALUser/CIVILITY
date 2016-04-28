@@ -16,7 +16,7 @@
 	</div>
 
 	<div id="resultFindJob">	
-	 	<job-status ng-repeat="job in jobFound" job-id="job._id" list-pca="false"> </job-status>
+	 	<job-status ng-repeat="job in jobFound" job-id="job._id" list-pca="listPCA"> </job-status>
 	
 		<div ng-if="noResult" class="noJobFound"> <h5> No job found </h5> </div>
 	</div>
