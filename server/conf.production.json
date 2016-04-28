@@ -1,9 +1,0 @@
-{
-	"host": "localhost",
-	"port": 4000,
-	"plugins": {
-		"./plugins/static": {"env": "production"},
-		"./plugins/ProbtrackConnectivity":{"env": "production"},
-		"./plugins/Proxy": {"env": "production"}
-	}
-}
