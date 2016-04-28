@@ -12,13 +12,16 @@ angular.module('brainConnectivity')
     $scope.viewCirclePlot = false;
     $scope.selection = {};
     $scope.selection.jobSelect = false; 
-   // $scope.selectJob = false;
     
     //get job object 
     $scope.getJobObject = function(){
       clusterpost.getJob($scope.jobId).then(function(res){
         $scope.jobObject = res.data;
         console.log($scope.jobObject);
+        $scope.startTime= {
+          "day" : $scope.jobObject.timestamp.substring(0,10),
+          "hour" : $scope.jobObject.timestamp.substring(11,19)
+        }
         if($scope.jobObject.jobstatus.status == "DONE")
         {
           $scope.jobDone = true;
@@ -175,20 +178,11 @@ angular.module('brainConnectivity')
 			.then(function(res){
 				var matrixOut = res[0];
 				var tableDescription = res[1];
-        $scope.jsonObjectForPlotConnectivity = {
+        $scope.jsonObjectForPlotting = {
           "fdt_matrix" : matrixOut,
           "jsonTableDescripton" : tableDescription
         }
         $scope.viewCirclePlot = true;
-        $scope.ButtonClicked = true;
-        $scope.plotParameters = {};
-        $scope.plotParameters.link1 = "";
-        $scope.plotParameters.link2 = "";
-        $scope.plotParameters.threshold = 0.1;
-        $scope.plotParameters.tension = 85;
-        $scope.plotParameters.diameter = 960;
-        $scope.plotParameters.upperValue = 1;
-        $scope.plotParameters.data = $scope.jsonObjectForPlotConnectivity;
         $scope.$apply();
 			})
 			.catch(function(e){
@@ -222,7 +216,6 @@ angular.module('brainConnectivity')
     
     if($scope.selection.jobSelect == true)
     {
-
       var param = {
         id : "",
         subject : "",

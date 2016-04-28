@@ -167,9 +167,6 @@ function link($scope,$attrs,$filter){
 };
 return {
     restrict : 'E',
-/*    scope: {
-    	testID : "="
-    },*/
     link : link,
     templateUrl: 'views/directives/directiveJobsDone.html'
 }

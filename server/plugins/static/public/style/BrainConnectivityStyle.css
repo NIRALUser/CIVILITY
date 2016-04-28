@@ -360,8 +360,8 @@ input.boxMin, input.boxMax, input.boxAverage{
 
 .buttons{
   font-size: 15px;
-  margin: 1% 5% 1% 5%;
-  padding: 2% 2% 2% 2%;
+  margin: 1% 1% 1% 1%;
+  padding: 1% 1% 1% 1%;
   background-color :  #e6f9ff;
 }
 div.TensionText {

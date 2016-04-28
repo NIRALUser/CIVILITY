@@ -75,7 +75,6 @@ function link($scope,$attrs,$filter){
           "fdt_matrix" : matrixOut,
           "jsonTableDescripton" : tableDescription
         }
-        $scope.ButtonClicked = true;
             $scope.plotVisible = true;
             $scope.plotParametersValues = {};
             $scope.plotParametersValues.link1 = "";

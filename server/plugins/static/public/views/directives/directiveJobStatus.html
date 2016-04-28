@@ -5,11 +5,12 @@
 	<div class=jobStatus >
  		<button type="button" class="btn btn-info" ng-click="reRunJob()" ng-if="jobKill"> Restart </button>
 
-			<div ng-if="!jobDone"> <button class="btn btn-success" ng-click="getStatus()" ng-if="getStatusRequest"> <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button> Status : {{jobObject.jobstatus.status}} <br>
+			<div ng-if="!jobDone"> <button class="btn btn-success" ng-click="getStatus()" ng-if="getStatusRequest"> <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button> <u> Status</u> : {{jobObject.jobstatus.status}} <br>
 			</div> 
 			<div ng-if="jobDone"> 
-			Status : {{jobObject.jobstatus.status}} <br>
+			<u> Status</u> : {{jobObject.jobstatus.status}} <br>
 			</div>
+			<u> Job start</u> : {{startTime.day}} {{startTime.hour}} <br>
  		<div ng-show="jobDone">
 		<button type="button" class="btn btn-primary" ng-click="plotDataCircle()" ng-if="!viewCirclePlot"> Connectivity visualisation </button> 
 		
@@ -17,7 +18,7 @@
 		<br>
 				
 		<div ng-if="viewCirclePlot">
-			<circle-plot plot-data="plotParameters.data"  > </circle-plot> 
+			<circle-plot plot-data="jsonObjectForPlotting"  > </circle-plot> 
 		</div>
 
 		<div class="divLinkDir"> 
@@ -99,7 +100,7 @@
 		</div>
 
 		<div ng-if="computePCA && jobDone">
-		<label>	Select for compute PCA <input type="checkbox" name="selection.jobSelect" value="selection.jobSelect" ng-model="selection.jobSelect" ng-init="selection.jobSelect=false" id="checkbox_{{jobId}}" ng-change="change()"/> </label>  {{selection.jobSelect}}
+		<label>	Select for compute PCA <input type="checkbox" name="selection.jobSelect" value="selection.jobSelect" ng-model="selection.jobSelect" ng-init="selection.jobSelect=false" id="checkbox_{{jobId}}" ng-change="change()"/> </label> 
 		</div>
 	</div>
 </div>
