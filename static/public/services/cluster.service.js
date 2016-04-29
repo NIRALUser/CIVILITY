@@ -87,34 +87,34 @@ angular.module('brainConnectivity')
         url: '/clusterauth/user',
         data: user
       });
-
+     }, 
     deleteUser: function(user){
       return $http({
         method: 'DELETE',
         url: '/clusterauth/user',
         data: user
       });
+    },
     login: function(user){
       return $http({
         method: 'POST',
         url: '/clusterauth/login',
         data: user
       });
+    },
     loginUpdate: function(user){
       return $http({
         method: 'PUT',
         url: '/clusterauth/login',
         data: user
       });
+    },
     resetPassword: function(user){
        return $http({
         method: 'POST',
         url: '/clusterauth/reset',
         data: user
       });
-    }
-    }
-    }
     }
   }
 });
