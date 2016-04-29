@@ -8,12 +8,12 @@
 
 </div> -->
 
-<div class="containerSignin">
+<div ng-if="signin" class="containerSignin">
 
       <form class="form-signin">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputName" class="sr-only">User Name</label>
-        <input id="inputName" class="form-control" placeholder="Email address" required="" autofocus="" type="text" ng-model="newUser.name">
+        <input id="inputName" class="form-control" placeholder="User name" required="" autofocus="" type="text" ng-model="newUser.name">
         <label for="inputEmail" class="sr-only">Email address</label>
         <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" ng-model="newUser.email">
         <label for="inputPassword" class="sr-only">Password</label>
@@ -30,12 +30,12 @@
 
 
 
-<div class="containerLogin">
+<div ng-if="login" class="containerLogin">
 
       <form class="form-login">
         <h2 class="form-login-heading">Please login</h2>
         <label for="inputName" class="sr-only">User Name</label>
-        <input id="inputName" class="form-control" placeholder="Email address" required="" autofocus="" type="text" ng-model="user.name">
+        <input id="inputName" class="form-control" placeholder="User name" required="" autofocus="" type="text" ng-model="user.name">
         <label for="inputEmail" class="sr-only">Email address</label>
         <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" ng-model="user.email">
         <label for="inputPassword" class="sr-only">Password</label>
@@ -46,6 +46,40 @@
           </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login()">Login</button>
+        <div class="etc-login-form">
+			<p>forgot your password? <a href ng-click="resetPasswordDirective()">click here</a></p>
+			<p>new user? <a href ng-click="signinDirective()">create new account</a></p>
+		</div>
       </form>
 
 </div>
+
+
+ <div ng-if="isLog && updatePass"class="containerUpdatePassword">
+
+      <form class="form-update-passsword">
+        <h2 class="form-update-passsword-heading">Change Password</h2>
+
+        <input class="input-lg form-control" name="password1" id="password1" placeholder="New Password" autocomplete="off" type="password">
+
+        <input class="input-lg form-control" name="password2" id="password2" placeholder="Repeat Password" autocomplete="off" type="password">
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="updatePassword()">Login</button>
+      </form>
+
+</div> 
+
+
+
+ <div ng-if="resetPass" class="containerResetPassword">
+
+      <form class="form-reset-passsword">
+        <h2 class="form-reset-passsword-heading">Reset Password</h2>
+
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" ng-model="user.email">
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="resetPassword()">Reset Password</button>
+      </form>
+
+</div> 
