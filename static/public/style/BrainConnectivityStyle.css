@@ -1,3 +1,8 @@
+.containerSignin{
+  text-align: center;
+  width: 50%;
+  margin-left: 25%;
+}
 .methodChoice{
   font-weight: 500;
 }

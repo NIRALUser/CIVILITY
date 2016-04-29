@@ -1,9 +1,51 @@
-<div>
+<!-- <div>
 
 <input type="text" ng-model="newUser.name">
 <input type="text" ng-model="newUser.email">
 <input type="password" ng-model="newUser.password">
 <button ng-click="createUser()">Create</button>
 
+
+</div> -->
+
+<div class="containerSignin">
+
+      <form class="form-signin">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputName" class="sr-only">User Name</label>
+        <input id="inputName" class="form-control" placeholder="Email address" required="" autofocus="" type="text" ng-model="newUser.name">
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" ng-model="newUser.email">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" ng-model="newUser.password">
+        <div class="checkbox">
+          <label>
+            <input value="remember-me" type="checkbox"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="createUser()">Sign in</button>
+      </form>
+
+</div>
+
+
+
+<div class="containerLogin">
+
+      <form class="form-login">
+        <h2 class="form-login-heading">Please login</h2>
+        <label for="inputName" class="sr-only">User Name</label>
+        <input id="inputName" class="form-control" placeholder="Email address" required="" autofocus="" type="text" ng-model="user.name">
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" ng-model="user.email">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" ng-model="user.password">
+        <div class="checkbox">
+          <label>
+            <input value="remember-me" type="checkbox"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login()">Sign in</button>
+      </form>
 
 </div>
