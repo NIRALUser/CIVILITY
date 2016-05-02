@@ -1,21 +1,7 @@
 <div ng-controller="welcomeController" class="ng-col-12 se-slope" >
-	<div>
-		<img class="logo" src="data/rsz_brainleft-example.png">
-		<div class="title">
-		<h1> Welcome </h1>
+	<div class="row">
+		<div ng-include src="'header/appHeader.html'"></div>
 
-
-		<div class=buttons>
-					<a class="" href="#/tractographyApp" >  <h3 id="title">Probtrack Brain Connectivity Application</h3> 
-		<p class="infoText"> This is an application for plotting connectivity matrix</p> </a>
-		</div>
-
-		<div class=buttons>
-			<find-job> </find-job>
-		</div>
-
-		</div>
-
+		<user-login> </user-login>
 	</div>
-	<create-user-dir> </create-user-dir>
-
+</div>

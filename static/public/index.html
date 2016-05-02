@@ -17,8 +17,7 @@
 </head>
 <body ng-app="brainConnectivity">
 </span>
-
-  <div ng-include src="'header/appHeader.html'"></div>
+  
   <div ng-view></div>
 
   <!-- In production use: -->
@@ -30,7 +29,6 @@
   <script src="bower_components/underscore/underscore-min.js" ></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js" ></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js" ></script>
-  <script src="bower_components/angular-jwt/dist/angular-jwt.min.js" ></script>
 <!--   <script src="bower_components/numericjs/numeric-1.2.6.min.js" ></script>
  -->  <script src="bower_components/mathjs/dist/math.min.js" ></script>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -43,10 +41,14 @@
   <!-- Services --> 
   
   <script src="services/cluster.service.js"></script>
+  <script src="services/cluster.auth.js"></script>
   <script src="services/fileupload.service.js"></script>
   <!-- Controllers --> 
   <script src="scripts/controllers/tractographyApp.js"></script>
   <script src="scripts/controllers/welcome.js"></script>
+  <script src="scripts/controllers/login.js"></script>
+  
+  
 
 
     <!-- Directives --> 
@@ -58,15 +60,13 @@
   <script src="scripts/directives/directiveVisualisation.js"></script>
   <script src="scripts/directives/directiveJobsDone.js"></script>
   <script src="scripts/directives/directiveJobStatus.js"></script>
+  <script src="scripts/directives/directiveNavbar.js"></script>
 
   <script src="scripts/directives/directiveComputePCA.js"></script>
   <script src="scripts/directives/directiveFindJob.js"></script>
   <script src="scripts/directives/directiveHomeTractoApp.js"></script>
   <script src="scripts/directives/directiveTest.js"></script>
-  <script src="scripts/directives/directiveLogin.js"></script>
-  
-
-
+  <script src="scripts/directives/directiveUserLogin.js"></script>
 
 
 </body>
