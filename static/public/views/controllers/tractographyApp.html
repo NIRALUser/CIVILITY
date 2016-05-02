@@ -1,20 +1,11 @@
 <div ng-controller="tractographyAppController"> 
-  <div class="homeHEAD">
-    <img class="logo" src="data/rsz_brainleft-example.png">
-    <div class="title">
-    <h3 id="title">Probtrack Brain Connectivity Application</h3> 
-    <p class="infoText"> This is an application for plotting connectivity matrix</p></div>
 
-  </div>
-
-
-  
-
-
+  <navbar></navbar>
+  <div ng-include src="'header/appHeader.html'"></div>
 <!-- Tabs -->
-<div >
 
-<uib-tabset active="activePill" type="pills" class="tabsetAppMenu">
+
+  <uib-tabset active="activePill" type="pills" class="tabsetAppMenu">
 <!-- 	<uib-tab index="0" heading="Home" > -->
     	<!-- <div ng-include="'views/controllers/home.html'"></div>  -->
 <!--       <home-tracto> </home-tracto> -->
@@ -25,10 +16,10 @@
 
     <uib-tab index="1" heading="Tractography" active=>
       <div> <submit-tracto  > </submit-tracto> </div>  
- </uib-tab>
+    </uib-tab>
 
     <uib-tab index="2" heading="Jobs done" >
-  <jobs-done> </jobs-done>    
+      <jobs-done> </jobs-done>    
     </uib-tab>
 
     <uib-tab index="3" heading="Visualisation" >
@@ -45,5 +36,6 @@
 
   </uib-tabset> 
 
-</div>
 
+
+<div >
