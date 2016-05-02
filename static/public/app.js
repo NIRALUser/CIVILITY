@@ -13,5 +13,8 @@ config(['$routeProvider', function($routeProvider) {
   .when('/tractographyApp', {
     templateUrl: 'views/controllers/tractographyApp.html'
   })
+  .when('/login/reset', {
+    templateUrl: 'views/controllers/welcome.html'
+  })
   .otherwise({redirectTo: '/welcome'});
 }]);
