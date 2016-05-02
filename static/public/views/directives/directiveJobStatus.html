@@ -4,8 +4,8 @@
 	
 	<div class=jobStatus >
  		<button type="button" class="btn btn-info" ng-click="reRunJob()" ng-if="jobKill"> Restart </button>
-
-			<div ng-if="!jobDone"> <button class="btn btn-success" ng-click="getStatus()" ng-if="getStatusRequest"> <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button> <u> Status</u> : {{jobObject.jobstatus.status}} <br>
+ 			{{Status}}
+			<div ng-if="!jobDone"> <button class="btn btn-success" ng-click="getStatus()" > <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button> <u> Status</u> : {{jobObject.jobstatus.status}} <br>
 			</div> 
 			<div ng-if="jobDone"> 
 			<u> Status</u> : {{jobObject.jobstatus.status}} <br>

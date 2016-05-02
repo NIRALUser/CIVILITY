@@ -1,3 +1,4 @@
+
 .containerSignin, .containerLogin,
 .containerUpdatePassword, .containerResetPassword{
   text-align: center;
@@ -248,11 +249,17 @@ h4, h5{
   text-align: center;
 }
 
-.divBrainALL, .divBrainRight, .divBrainLeft{
+.divBrainALL, .divBrainRight{
     position: relative;
     display: inline-block;
     padding: 0% 2% 0% 2%;
 }
+
+.divBrainLeft{
+    position: relative;
+    display: inline-block;
+    padding: 0% -1% 0% -1%;
+  }
 
 .divBrainLinkRight, .divBrainImgRight{
   margin-left: -70px;

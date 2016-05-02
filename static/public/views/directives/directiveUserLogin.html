@@ -1,6 +1,8 @@
 
 
 <div ng-if="showLogin && !resetUser" class="containerLogin">
+{{resetUser}}
+{{user.password}}
   <form class="form-login">
     <h2 class="form-login-heading">Please login</h2>
     <label for="inputEmail" class="sr-only">Email address</label>
@@ -32,12 +34,12 @@
 </div>
 
 <div ng-if="resetUser" class="containerLogin">
-  <form class="form-login">
+  <form class="form-rest-password" >
     <h2 class="form-login-heading">Reset your password</h2>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" ng-model="resetUser.password0">
-    <label for="inputPassword" class="sr-only">Confirm password</label>
-    <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" ng-model="resetUser.password1">
+    <label for="inputPassword0" class="sr-only">Password</label>
+    <input id="inputPassword0" class="form-control" placeholder="Password" required="" type="password" ng-model="resetUser.password0" autocomplete="off">
+    <label for="inputPassword1" class="sr-only">Confirm Password</label>
+    <input id="inputPassword1" class="form-control" placeholder="Confirm assword" required="" type="password" ng-model="resetUser.password1" autocomplete="off">
     <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="resetPassword()">Reset</button>
   </form>
 </div>

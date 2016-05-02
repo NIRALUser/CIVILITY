@@ -7,6 +7,8 @@ angular.module('brainConnectivity')
 	$scope.newUser = {};
 	$scope.user = {};
 
+	$scope.resetUser = false;
+
 	if($routeParams.token){
 		$scope.showLogin = false;
 		$scope.resetUser = {
@@ -14,8 +16,6 @@ angular.module('brainConnectivity')
 		}
 	}
 	
-	
-
 	$scope.createUser = function(){
 		clusterauth.createUser($scope.newUser)
 		.then(function(){
@@ -39,7 +39,7 @@ angular.module('brainConnectivity')
 	$scope.resetPassword = function(){
 		if($scope.resetUser.password0 === $scope.resetUser.password1){
 			clusterauth.updatePassword({
-				password: $scope.resetUser.password0
+				password: $scope.resetUser.password1
 			}, $scope.resetUser.token)
 			.then(function(){
 				return clusterauth.getUser();
@@ -47,6 +47,10 @@ angular.module('brainConnectivity')
 			.then(function(res){
 				$rootScope.user = res.data;
 				$location.path('/tractographyApp');
+			})
+			.catch(function(e){
+				console.error(e);
+				throw e;
 			})
 		}
 	}

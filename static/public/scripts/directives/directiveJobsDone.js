@@ -5,7 +5,8 @@ angular.module('brainConnectivity')
 function link($scope,$attrs,$filter){
 
   //s$scope.listJobs = ["1234","56789"];
-  $scope.status = "DONE";
+  //$scope.status = "DONE";
+  $scope.status = undefined;
   $scope.jobFound = [];
   $scope.viewResult = false;
   $scope.noResult = false;

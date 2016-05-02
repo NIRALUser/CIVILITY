@@ -12,6 +12,19 @@ angular.module('brainConnectivity')
     $scope.viewCirclePlot = false;
     $scope.selection = {};
     $scope.selection.jobSelect = false; 
+
+    $scope.Status = {};
+
+    $scope.getStatus = function(){
+
+        clusterpost.getJobStatus($scope.jobId).then(function(res){
+           $scope.Status = res ; 
+        })
+        .catch(function(e){
+          console.error(e);
+          throw e;
+        })
+    }
     
     //get job object 
     $scope.getJobObject = function(){
