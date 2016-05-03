@@ -1,0 +1,42 @@
+<div>
+<table ng-table="vm.tableParams" class="table table-striped" show-filter="true">
+   <tr ng-repeat="user in jobs">
+       <td data-title="'Id'" filter="{ id: 'number'}">
+           {{user.id}}
+       </td>
+       <td data-title="'First Name'" filter="{ first_name: 'text'}" sortable="'first_name'">
+           {{user.email}}
+       </td>     
+       <td data-title="'Timestemp'" >
+           {{user.timestamp}}
+       </td>
+       <td data-title="'Status'" >
+           {{user.status}}
+       </td>  
+       <td data-title="'Add to PCA list'">
+       		<input type="checkbox">
+       </td>  
+       <td data-title="'UpdateStatus'">
+       		<button> <span class="glyphicon glyphicon-refresh" aria-hidden="true"></button>
+       </td> 
+   </tr>
+</table>
+
+<!-- <table ng-table="vm.tableParams" class="table" show-filter="true">
+    <tr ng-repeat="user in users">
+        <td title="'Name'" filter="{ first_name: 'text'}" sortable="'first_name'">
+            {{user.first_name}}</td>
+        <td title="'Age'" filter="{ email : 'text'}" sortable="'email'">
+            {{user.email}}</td>
+    </tr>
+</table> -->
+
+<!--  <table ng-table="demo.tableParams" class="table table-condensed table-bordered table-striped">
+        <tr ng-repeat="row in users">
+          <td title="'Name'" filter="{name: 'text'}" sortable="'name'">{{row.id}}</td>
+          <td title="'Age'" filter="{age: 'number'}" sortable="'age'">{{row.email}}</td>
+          <td title="'Money'" filter="{money: 'number'}" sortable="'money'">{{row.country}}</td>
+        </tr>
+      </table> -->
+
+ </div>

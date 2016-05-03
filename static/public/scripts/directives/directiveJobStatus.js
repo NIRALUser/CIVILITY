@@ -12,7 +12,7 @@ angular.module('brainConnectivity')
     $scope.viewCirclePlot = false;
     $scope.selection = {};
     $scope.selection.jobSelect = false; 
-
+    
     $scope.Status = {};
 
     $scope.getStatus = function(){
@@ -51,14 +51,7 @@ angular.module('brainConnectivity')
     }
     $scope.getJobObject();
 
-    if(Array.isArray($scope.listPca))
-    {
-      $scope.computePCA = true;
-    }
-    else
-    {
-      $scope.computePCA = false;
-    }
+
 
     $scope.change = function(){
 

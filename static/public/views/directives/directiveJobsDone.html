@@ -1,4 +1,4 @@
-
+<!-- 
 <div class=jobsDone>
 	<h3 id="title"> Find jobs done by user email address </h3>
 	<div class="userEmail" >
@@ -8,7 +8,7 @@
 
 	<button ng-click="getJobDoneByUser()"> Search Jobs  </button>
 
-</div>
+</div> -->
 
 <div class="jobs" id="jobs" ng-show="viewResult">
 			<h2 class="jobsTitle"> Jobs done: </h2>
@@ -17,7 +17,7 @@
 			<job-status ng-repeat="job in jobFound" job-id="job._id" list-Pca="jobsSelectedPCA"> </job-status>
 		</div>
 		<div ng-show="!noResult">
-			<label>	Select all matrices to compute PCA <input type="checkbox" name="selectAllJobPCA" value="selectAllJobPCA" ng-model="selectAllJobPCA" ng-init="selectAllJobPCA=false" ng-click="clickCheckbox()"/> </label>
+			<label ng-if="isAdmin">	Select all matrices to compute PCA <input type="checkbox" name="selectAllJobPCA" value="selectAllJobPCA" ng-model="selectAllJobPCA" ng-init="selectAllJobPCA=false" ng-click="clickCheckbox()"/> </label>
 			<br>
 			<button ng-click="deleteAllDatabase()"> Clean up database </button>
 		</div>

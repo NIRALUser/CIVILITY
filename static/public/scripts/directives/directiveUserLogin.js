@@ -28,6 +28,11 @@ angular.module('brainConnectivity')
 	}
 
 	$scope.recoverPassword = function(){
+		if(!$scope.user.email)
+		{
+			alert("No email address specified in email field.");
+			return false;
+		}
 		clusterauth.sendRecoverPassword({
 			email: $scope.user.email
 		})
@@ -51,7 +56,7 @@ angular.module('brainConnectivity')
 			.catch(function(e){
 				console.error(e);
 				throw e;
-			})
+			});
 		}
 	}
 

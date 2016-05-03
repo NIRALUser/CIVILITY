@@ -1,15 +1,32 @@
 
 angular.module('brainConnectivity')
-.directive('jobsDone', function($routeParams,$location,clusterpost){
+.directive('jobsDone', function($routeParams,$location,clusterpost, clusterauth){
 
 function link($scope,$attrs,$filter){
 
+
+
   //s$scope.listJobs = ["1234","56789"];
-  //$scope.status = "DONE";
-  $scope.status = undefined;
+  $scope.status = "DONE";
+  //$scope.status = undefined;
   $scope.jobFound = [];
   $scope.viewResult = false;
   $scope.noResult = false;
+  $scope.isAdmin = false;
+
+  clusterauth.getUser().then(function(res){
+      $scope.userEmailAddress = res.data.email;
+      _.each(res.data.scope, function(val){
+          if(val == "admin")
+          {
+            $scope.isAdmin = true;
+          } 
+        })
+  })
+  .catch(function(e){
+        console.error(e);
+        throw e;
+  })
 
    $scope.getJobDoneByUser = function(){
 
@@ -21,7 +38,7 @@ function link($scope,$attrs,$filter){
 
     //console.log($scope.selectStatus.selection);
 
-    clusterpost.getJobUser($scope.userEmail,  $scope.status, "tractographyScriptApp.sh").then(function(res){
+    clusterpost.getJobUser($scope.userEmailAddress,  $scope.status, "tractographyScriptApp.sh").then(function(res){
       console.log(res);
        var jobF = $scope.jobFound;
       _.each(res.data, function(val, ind){  
@@ -35,7 +52,7 @@ function link($scope,$attrs,$filter){
       }
     })
   }
-
+  $scope.getJobDoneByUser();
   $scope.getMatrix = function(id,filepath){ 
       return clusterpost.getAttachment(id,filepath,"text").then(function(res){
         return res.data;

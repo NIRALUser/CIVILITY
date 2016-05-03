@@ -35,6 +35,15 @@ angular.module('brainConnectivity')
         
       });
     },
+    getAllJobs: function(executable){
+      return $http({
+        method: 'GET',
+        url: '/dataprovider',
+        params: {
+          executable: executable
+        }
+      });
+    },
     updateJob: function(job){
     	return $http({
         method: 'PUT',

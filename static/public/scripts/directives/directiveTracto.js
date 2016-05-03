@@ -249,7 +249,7 @@ angular.module('brainConnectivity')
   $scope.submitJobX = function(jobid){
     clusterpost.submitJob(jobid).then(function(res){
         console.log("Job " + jobid + " submit");
-        $scope.submitTractoButton = true;
+        $scope.submitTractoButton = false;
     })
     .catch(function(e){
       console.error(e);

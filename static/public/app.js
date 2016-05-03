@@ -3,7 +3,8 @@
 // Declare app level module which depends on views, and components
 angular.module('brainConnectivity', [
   'ngRoute',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'ngTable'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider

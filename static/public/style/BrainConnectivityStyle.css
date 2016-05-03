@@ -524,9 +524,7 @@ div.nodeTooltip {
 /*Find job*/ 
 .findJob{
   text-align: center;
-  border : solid;
   margin : 1% 5% 1% 5%;
-  border-color: #286090;
   font-family: sans-serif;
   font-size: 15px;
 }

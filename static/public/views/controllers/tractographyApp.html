@@ -1,38 +1,35 @@
 <div ng-controller="tractographyAppController"> 
 
   <navbar></navbar>
+
   <div ng-include src="'header/appHeader.html'"></div>
+  
 <!-- Tabs -->
-
-
-  <uib-tabset active="activePill" type="pills" class="tabsetAppMenu">
-<!-- 	<uib-tab index="0" heading="Home" > -->
-    	<!-- <div ng-include="'views/controllers/home.html'"></div>  -->
-<!--       <home-tracto> </home-tracto> -->
-      <!-- <a ng-click="tabs[2].active = true"> test1</a> -->
-  <!--  </uib-tab> -->
-
-
+   <uib-tabset active="activePill" type="pills" class="tabsetAppMenu">
 
     <uib-tab index="1" heading="Tractography" active=>
       <div> <submit-tracto  > </submit-tracto> </div>  
     </uib-tab>
 
-    <uib-tab index="2" heading="Jobs done" >
-      <jobs-done> </jobs-done>    
+    <uib-tab index="2" heading="Jobs" >
+      <find-job> </find-job>    
     </uib-tab>
 
     <uib-tab index="3" heading="Visualisation" >
       <connectivity-visualisation > </connectivity-visualisation>
     </uib-tab>
 
-    <uib-tab index="4" heading="Compute PCA" >
+    <uib-tab index="4" heading="All jobs summary - Admin" >
+      <test-dir> </test-dir> 
+    </uib-tab>
+
+    <uib-tab index="5" heading="Compute PCA - Admin" ng-if="isAdmin">
      <compute-pca> </compute-pca> 
     </uib-tab>
 
-    <uib-tab index="6" heading="TEST" >
+<!--     <uib-tab index="5" heading="TEST" >
      <test-dir> </test-dir> 
-    </uib-tab>
+    </uib-tab> -->
 
   </uib-tabset> 
 
