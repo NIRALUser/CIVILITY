@@ -18,7 +18,7 @@ angular.module('brainConnectivity')
     $scope.getStatus = function(){
 
         clusterpost.getJobStatus($scope.jobId).then(function(res){
-           $scope.Status = res ; 
+           $scope.Status = res.data.status ; 
         })
         .catch(function(e){
           console.error(e);

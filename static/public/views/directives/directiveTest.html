@@ -1,23 +1,15 @@
 <div>
-<table ng-table="vm.tableParams" class="table table-striped" show-filter="true">
-   <tr ng-repeat="user in jobs">
-       <td data-title="'Id'" filter="{ id: 'number'}">
-           {{user.id}}
-       </td>
-       <td data-title="'First Name'" filter="{ first_name: 'text'}" sortable="'first_name'">
-           {{user.email}}
+<table ng-table="alljobs.tableParams" class="table table-condensed table-bordered table-striped" show-filter="true">
+   <tr ng-repeat="job in $data">
+       
+       <td data-title="'User email'" filter="{ 'userEmail': 'text'}" sortable="'userEmail'">
+           {{job.userEmail}}
        </td>     
-       <td data-title="'Timestemp'" >
-           {{user.timestamp}}
+       <td data-title="'Timestamp'" sortable="'timestamp'" filter="{ timestamp: 'text'}">
+           {{job.timestamp}}
        </td>
-       <td data-title="'Status'" >
-           {{user.status}}
-       </td>  
-       <td data-title="'Add to PCA list'">
-       		<input type="checkbox">
-       </td>  
-       <td data-title="'UpdateStatus'">
-       		<button> <span class="glyphicon glyphicon-refresh" aria-hidden="true"></button>
+       <td data-title="'Status'" filter="{status: 'select'}" filter-data="jobStates($column)">
+           {{job.jobstatus.status}}
        </td> 
    </tr>
 </table>

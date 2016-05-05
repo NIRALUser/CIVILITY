@@ -1,59 +1,93 @@
 
 angular.module('brainConnectivity')
-.directive('testDir', function($routeParams,$location,clusterpost, ngTableParams){
+.directive('testDir', function($routeParams,$location,clusterpost, ngTableParams, $filter, $q){
 
-function link($scope,$attrs,$filter){
-var self = this;
+	function link($scope,$attrs){
 
-clusterpost.getAllJobs("tractographyScriptApp.sh").then(function(res){
-	console.log(res.data);
-	$scope.jobs = [];
-	_.each(res.data, function(val){
-		var aJob = {
-		status: val.jobstatus.status,
-		email : val.userEmail,
-		timestamp : val.timestamp,
-		id : val._id
-		}; 
-		$scope.jobs.push(aJob);
-	})
-	console.log($scope.jobs);
-})
-.catch(function(e){
-	console.error(e);
-	throw e;
-});
+		$scope.alljobs = {};
 
-	$scope.tableParams	= new ngTableParams
-	({
-		page: 1,
-		count: 50
-	},
-	{
-		debugMode: true,
-		//total:	$scope.completedQueries.length,
-		getData:	function($defer, params) {
-			var orderedData = params.sorting() ?
-                    $filter('orderBy')($scope.completedQueries, params.orderBy()) :
-                    data;
-      orderedData	= $filter('filterFailed')(orderedData, $scope.showOnlyFailed);
-      orderedData	= $filter('filterMatchingKeys')(orderedData, $scope.keysFilter);
-            
-			params.total(orderedData.length);
-			$defer.resolve(orderedData.slice((params.page() - 1) * params.count(),
-					                                     params.page() * params.count()));
-		}
-	});
-};
+		clusterpost.getAllJobs("tractographyScriptApp.sh")
+		.then(function(res){
+			$scope.alljobs.jobs = res.data;
 
-return {
-    restrict : 'E',
-/*    scope: {
-    	testID : "="
-    },*/
-    link : link,
-    templateUrl: 'views/directives/directiveTest.html'
-}
+
+			$scope.alljobs.allstatus = [];
+      		_.each(_.unique(_.pluck(_.compact(_.pluck(res.data, "jobstatus")), "status")), function(status){
+        		$scope.alljobs.allstatus.push({
+         			 "id": status,
+          			 "title": status
+        		});
+      		});
+
+      		console.log($scope.alljobs.allstatus)
+      		 $scope.alljobs.$allstatus.resolve($scope.alljobs.allstatus);
+
+
+			$scope.alljobs.tableParams = new ngTableParams(
+		    {
+				page: 1,
+				count: 10,
+				sorting: {
+            		userEmail: 'asc',
+            		timestamp: 'asc'
+         		 },
+				filter: $scope.jobState
+			},
+			{
+				total : $scope.alljobs.jobs.length,
+				getData: function ($defer, params) {					
+					var data = $scope.alljobs.jobs;
+					if(params.filter()){
+						data = $filter('filter')(data, params.filter());
+					}
+					if (params.sorting()) {
+              		data = $filter('orderBy')(data, params.orderBy())
+            		}
+					data = data.slice((params.page() - 1) * params.count(), params.page() * params.count());
+					$defer.resolve(data);
+				}
+			});
+			
+
+/*		
+			$scope.getStatusData =(){
+				// var status = [];
+				// _.each($scope.alljobs.jobs, function(job){
+				// 	status.push({
+				// 		id: job.jobstatus.status,
+				// 		title: job.jobstatus.status
+				// 	});
+				// });
+				// return $q.when(status);
+				$scope.alljobs.$jobstatus = $q.defer();    
+	    		return $scope.alljobs.$jobstatus;
+			}*/
+		});
+		
+		$scope.jobStates = function(column){
+		console.log("HELLO jobstates ")    
+			    $scope.alljobs.$allstatus = $q.defer();    
+			    return $scope.alljobs.$allstatus;
+			  }
+
+		$scope.updateStatus = function(user){
+		    clusterpost.getJobStatus(user.id).then(function(res){
+	           user.status = res.data.status ; 
+	        })
+	        .catch(function(e){
+	          console.error(e);
+	          throw e;
+	        })
+	    }    
+
+
+	}
+
+	return {
+	    restrict : 'E',
+	    link : link,
+	    templateUrl: 'views/directives/directiveTest.html'
+	}
 
 });
 
