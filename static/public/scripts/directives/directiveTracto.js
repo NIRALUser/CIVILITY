@@ -246,8 +246,8 @@ angular.module('brainConnectivity')
     });
  };
 
-  $scope.submitJobX = function(jobid){
-    clusterpost.submitJob(jobid).then(function(res){
+  $scope.submitJobX = function(jobid,force){
+    clusterpost.submitJob(jobid,force).then(function(res){
         console.log("Job " + jobid + " submit");
         $scope.submitTractoButton = false;
     })

@@ -9,29 +9,17 @@ angular.module('brainConnectivity')
 		clusterpost.getAllJobs("tractographyScriptApp.sh")
 		.then(function(res){
 			$scope.alljobs.jobs = res.data;
-
-
-			$scope.alljobs.allstatus = [];
-      		_.each(_.unique(_.pluck(_.compact(_.pluck(res.data, "jobstatus")), "status")), function(status){
-        		$scope.alljobs.allstatus.push({
-         			 "id": status,
-          			 "title": status
-        		});
-      		});
-
-      		console.log($scope.alljobs.allstatus)
-      		 $scope.alljobs.$allstatus.resolve($scope.alljobs.allstatus);
-
-
+			$scope.allStatus = ["DOWNLOADING","DONE"]
 			$scope.alljobs.tableParams = new ngTableParams(
 		    {
 				page: 1,
 				count: 10,
 				sorting: {
             		userEmail: 'asc',
-            		timestamp: 'asc'
+            		timestamp: 'asc',
+            		status : 'asc'
          		 },
-				filter: $scope.jobState
+				filter: {}
 			},
 			{
 				total : $scope.alljobs.jobs.length,
@@ -48,7 +36,11 @@ angular.module('brainConnectivity')
 				}
 			});
 			
-
+			var getStatusData = function($column){
+      			if ($column.title() === "Status") {
+        			return [{ id: 55, title: "55"}, { id: 56, title: "56"}];
+      				}
+    }
 /*		
 			$scope.getStatusData =(){
 				// var status = [];
@@ -64,15 +56,12 @@ angular.module('brainConnectivity')
 			}*/
 		});
 		
-		$scope.jobStates = function(column){
-		console.log("HELLO jobstates ")    
-			    $scope.alljobs.$allstatus = $q.defer();    
-			    return $scope.alljobs.$allstatus;
-			  }
 
 		$scope.updateStatus = function(user){
-		    clusterpost.getJobStatus(user.id).then(function(res){
+
+		    clusterpost.getJobStatus(user._id).then(function(res){
 	           user.status = res.data.status ; 
+	           $scope.alljobs.tableParams.reload();
 	        })
 	        .catch(function(e){
 	          console.error(e);

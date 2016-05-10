@@ -40,12 +40,16 @@ function link($scope,$attrs,$filter){
 
     clusterpost.getJobUser($scope.userEmailAddress,  $scope.status, "tractographyScriptApp.sh").then(function(res){
       console.log(res);
-       var jobF = $scope.jobFound;
-      _.each(res.data, function(val, ind){  
-        jobF.push(val);
-      })
+      //  var jobF = $scope.jobFound;
+      // _.each(res.data, function(val, ind){  
+      //   jobF.push(val);
+      // })
       $scope.viewResult=true;
-      $scope.jobFound = jobF;
+      $scope.jobFound = _.map(res.data, function(job){
+        console.log(job._attachments);
+        return job;
+      });
+
       if(jobF.length == 0 )
       {
         $scope.noResult = true;

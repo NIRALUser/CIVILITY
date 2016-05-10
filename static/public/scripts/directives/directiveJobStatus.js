@@ -31,10 +31,9 @@ angular.module('brainConnectivity')
       clusterpost.getJob($scope.jobId).then(function(res){
         $scope.jobObject = res.data;
         console.log($scope.jobObject);
-        $scope.startTime= {
-          "day" : $scope.jobObject.timestamp.substring(0,10),
-          "hour" : $scope.jobObject.timestamp.substring(11,19)
-        }
+
+        $scope.jobObject.timestamp = new Date($scope.jobObject.timestamp)
+
         if($scope.jobObject.jobstatus.status == "DONE")
         {
           $scope.jobDone = true;
@@ -105,7 +104,8 @@ angular.module('brainConnectivity')
     $scope.getOutputLogFile = function(){
       clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[3].name,"text").then(function(res){
         var str = res.data;
-        $scope.logFile = str.split("\n");
+        console.log(str);
+        $scope.logFile = "HELLO"// str.split("\n");
         })
       .catch(function(e){
         console.error("Error getting log file", e);

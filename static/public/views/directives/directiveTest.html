@@ -8,9 +8,10 @@
        <td data-title="'Timestamp'" sortable="'timestamp'" filter="{ timestamp: 'text'}">
            {{job.timestamp}}
        </td>
-       <td data-title="'Status'" filter="{status: 'select'}" filter-data="jobStates($column)">
+       <td data-title="'Status'" filter="{status: 'select'}" filter-data="allStatus">
            {{job.jobstatus.status}}
        </td> 
+       <td data-title="'Restart Job'"> <button ng-click="updateStatus(job)"><span class="glyphicon glyphicon-refresh"></span> </button>  </td>
    </tr>
 </table>
 

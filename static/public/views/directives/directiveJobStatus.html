@@ -9,7 +9,7 @@
 			<div ng-if="jobDone"> 
 			<u> Status</u> : {{jobObject.jobstatus.status}} <br>
 			</div>
-			<u> Job start</u> : {{startTime.day}} {{startTime.hour}} <br>
+			<u> Job start</u> : {{jobObject.timestamp.toString('dd-MMM-yyyy')}} <br>
  		<div ng-show="jobDone">
 		<button type="button" class="btn btn-primary" ng-click="plotDataCircle()" ng-if="!viewCirclePlot"> Connectivity visualisation </button> 
 		

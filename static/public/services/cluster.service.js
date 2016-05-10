@@ -14,10 +14,13 @@ angular.module('brainConnectivity')
         url: '/executionserver/' + id       
       });
     },
-    submitJob: function (id) {
+    submitJob: function (id,force) {
       return $http({
         method: 'POST',
-        url: '/executionserver/' + id
+        url: '/executionserver/' + id,
+        date: {
+            force: force
+          }
       });
     },
     killJob: function (id) {
