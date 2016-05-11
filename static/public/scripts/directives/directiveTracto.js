@@ -181,7 +181,7 @@ angular.module('brainConnectivity')
       //Output 3 : {subject dir} -- all output dir (as tar.gz)
       var param3 = {}; 
       param3.type = "tar.gz";
-      param3.name = "neonate";
+      param3.name = $scope.Parameters.subject;
       job.outputs.push(param3);
       //Output 4 : output of job -- logFile
       var param4 = {}; 
@@ -247,6 +247,7 @@ angular.module('brainConnectivity')
  };
 
   $scope.submitJobX = function(jobid,force){
+    console.log(jobid,force)
     clusterpost.submitJob(jobid,force).then(function(res){
         console.log("Job " + jobid + " submit");
         $scope.submitTractoButton = false;
@@ -279,7 +280,7 @@ angular.module('brainConnectivity')
       var keys = _.keys($scope.Parameters.Files);
       $scope.uploadFiles(jobid, keys, 0).then(function(res){
           console.log(res);
-          $scope.submitJobX(jobid);
+          $scope.submitJobX(jobid,false);
       });
     };
 };

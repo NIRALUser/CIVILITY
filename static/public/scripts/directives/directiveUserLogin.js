@@ -54,9 +54,15 @@ angular.module('brainConnectivity')
 				$location.path('/tractographyApp');
 			})
 			.catch(function(e){
+				alert('Password must contains 8 characters including one uppercase letter, one special character, one number and alphanumeric characters')
 				console.error(e);
 				throw e;
 			});
+		}
+		else
+		{
+			alert('Passwords are not the same');
+			return false;
 		}
 	}
 

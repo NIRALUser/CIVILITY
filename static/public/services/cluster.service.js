@@ -18,7 +18,7 @@ angular.module('brainConnectivity')
       return $http({
         method: 'POST',
         url: '/executionserver/' + id,
-        date: {
+        data: {
             force: force
           }
       });

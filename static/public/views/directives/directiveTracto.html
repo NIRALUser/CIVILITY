@@ -19,13 +19,13 @@
 			Parcellation table (JSON file) : 
 <input type ="file" id="JSON" file-model="Parameters.Files.parcellationTable"/> <br>
 
-			Inner surface :<input type = "file" id="innerSurface" file-model="Parameters.Files.innerSurface"/> <br>
+			Inner surface in DWI space :<input type = "file" id="innerSurface" file-model="Parameters.Files.innerSurface"/> <br>
 
-			Inner surface contains color labels
+			Inner surface contains color labels 
  			<input type="checkbox" name="colorExist" value="colorExist" ng-model="checkedSurfaceColored" ng-init="checkedSurfaceColored=true" /><br/>
 			
 			<div ng-show="!checkedSurfaceColored" style="text-indent: 20px; font-style: italic;">  
-				Alternative surface corresponding with color labels : <input type = "file" id="colorSurface" ng-disabled="checkedSurfaceColored" style="text-indent: 20px;" file-model="alternativeSurface"/> <br>
+				Alternative surface corresponding with color labels in DWI space : <input type = "file" id="colorSurface" ng-disabled="checkedSurfaceColored" style="text-indent: 20px;" file-model="alternativeSurface"/> <br>
 			</div>
 
 			Labelset name in vtk surface file : <input type="text" name="input" ng-model="Parameters.labelsetName" required ng-trim="false" pattern="([\w\-]+)" title="Pattern error"><br>
