@@ -130,6 +130,7 @@ angular.module('brainConnectivity')
     //Get servers available 
     clusterpost.getExecutionServers().then(function(res){
       $scope.serverselect.servers = res.data;
+      $scope.serverselect.selection = res.data[0];
     });
 
 
