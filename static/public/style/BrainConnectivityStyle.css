@@ -1,3 +1,20 @@
+.titleAdminDB{
+  text-align: center;
+  background-color: grey;
+  border-color: grey;
+  border-width: 1px;
+  padding: 1px 1px 1px 1px;
+  border-radius: 20px;
+  margin: 0% 1% 0% 1%;
+}
+  .st-sort-ascent:before{
+    content: '\25B2';
+  }
+
+  .st-sort-descent:before{
+    content: '\25BC';
+  }
+
 
 .containerSignin, .containerLogin,
 .containerUpdatePassword, .containerResetPassword{

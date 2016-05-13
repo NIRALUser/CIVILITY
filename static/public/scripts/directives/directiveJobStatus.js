@@ -59,7 +59,7 @@ angular.module('brainConnectivity')
 		$scope.reRunJob = function(){
 			
       //Submit job 
-		  clusterpost.submitJob($scope.jobId).then(function(res){
+		  clusterpost.submitJob($scope.jobId,false).then(function(res){
 		        console.log("Job " + $scope.jobId + " submit");
 		    })
 		    .catch(function(e){

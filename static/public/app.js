@@ -4,7 +4,7 @@
 angular.module('brainConnectivity', [
   'ngRoute',
   'ui.bootstrap',
-  'ngTable'
+  'smart-table'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider
