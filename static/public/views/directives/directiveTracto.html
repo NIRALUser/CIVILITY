@@ -36,18 +36,29 @@
 				<input type="text" name="input" ng-model="Parameters.ignoreLabelID"
 			           required ng-trim="false"><br> 
 			</div>
-			<h5> bedpostx options : </h5>
-			Number of fiber per vowel 
-			Extra options (MODIFY ONLY IF YOU KNOW WHAT TO DO)
+			<h4> Bedpostx options :</h4>
+			<i> By default  : number of tensors in the voxel fitting = 2  </i> <br> <br>
+			Command line parameters: <br>
+			<i> Modify ?<input type="checkbox" ng-model="tools.bedpostx.modify"/> (MODIFY ONLY IF YOU KNOW WHAT TO DO)</i><br>
+			<input type="text" ng-model="tools.bedpostx.param" id="{{tools.bedpostx.id}}" disabled> </input> <a href="" data-toggle="tooltip" title="{{tools.bedpostx.help}}"> Help <i class="glyphicon glyphicon-info-sign"> </i> </a>
 			
-			<h5> Extract Label Surface options : </h5>
+			<h4> Extract Label Surface options : </h4>
 			Overlapping
 			<input type="checkbox" name="overlapping" value="overlapping" ng-model="overlapping" ng-init="overlapping=true"  />
 
-			<h5> Tractography / Probtrackx2 options : </h5>
+			<h4> Tractography / Probtrackx2 options : </h4> 
+			
+			<!-- <div class="probtrackxInfo"> Probtrackx help
+        	 <i class="glyphicon glyphicon-info-sign"> </i>
+      		</div> -->
 
 			Loopcheck
-			<input type="checkbox" name="loopcheck" value="loopcheck" ng-model="loopcheck" ng-init="loopcheck=true" />
+			<input type="checkbox" name="loopcheck" value="loopcheck" ng-model="loopcheck" ng-init="loopcheck=true" /> <br> <br>
+
+			Command line parameters: <br>
+			<i> Modify ?<input type="checkbox" ng-model="tools.probtrackx2.modify"/> (MODIFY ONLY IF YOU KNOW WHAT TO DO) </i> <br>
+			<input type="text" ng-model="tools.probtrackx2.param" id="{{tools.probtrackx2.id}}" disabled> </input>
+			<a href="" data-toggle="tooltip" title="{{tools.probtrackx2.help}}"> Help <i class="glyphicon glyphicon-info-sign"> </i> </a> 
 
 			<div  class="jobOptions">
 				<h5> Option for submit job :</h5>

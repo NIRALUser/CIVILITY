@@ -1,8 +1,39 @@
 
 angular.module('brainConnectivity')
-.directive('submitTracto', function($routeParams,$location,clusterpost){
+.directive('submitTracto', function($routeParams,$location,clusterpost, $http){
 
   function link($scope,$attrs,$filter){
+
+    
+    $scope.tools = {
+      bedpostx : {},
+      probtrackx2 : {}
+    };
+    //Bedpostx
+    $scope.tools.bedpostx.param = "-n 2";
+    $scope.tools.bedpostx.id = "bedpostxInfo";
+    $scope.tools.bedpostx.modify = false;
+    $http({
+      method: 'GET',
+      url: '/public/data/bedpostxHelp-FSL-5.0.8.txt'
+    })
+    .then(function(res){
+      $scope.tools.bedpostx.help = res.data;
+    });
+
+    //Probtrackx
+     $scope.tools.probtrackx2.param = "-P 3000 --steplength=0.75 --sampvox=0.5";
+    $scope.tools.probtrackx2.id = "probtrackx2Info";
+    $scope.tools.probtrackx2.modify = false;
+    $http({
+      method: 'GET',
+      url: '/public/data/probtrackx2Help-FSL-5.0.8.txt'
+    })
+    .then(function(res){
+      $scope.tools.probtrackx2.help = res.data;
+    });
+
+    
 
     $scope.formOK = false;
     $scope.submitTractoButton = false;
@@ -10,7 +41,7 @@ angular.module('brainConnectivity')
       selection : null
     };
     $scope.Parameters = {
-      subject : "neonate",
+      subject : "",
       Files : {
                 DWI : "",
                 T1 : "",
@@ -25,6 +56,22 @@ angular.module('brainConnectivity')
       overlapping: true,
       loopcheck: true
     };
+
+    $scope.usableInputBedpostx = function(toolX){
+
+      var bool = toolX.modify;
+      console.log(toolX.id);
+      if(bool === true && confirm('Do you really want to modify bedpostx parameters ?') == true)
+      {
+        
+        document.getElementById(toolX.id).disabled = false;
+      }
+      else
+      {
+        document.getElementById(toolX.id).disabled = true;
+      }
+      
+    }
 
     $scope.paramSubmitJob = function(){
       console.log("Submit");
@@ -284,6 +331,15 @@ angular.module('brainConnectivity')
           $scope.submitJobX(jobid,false);
       });
     };
+    $scope.$watch("tools.bedpostx.modify", function(){
+        console.log("HelloWatch tools.bedpostx.modify", $scope.tools.bedpostx.modify);
+        $scope.usableInputBedpostx($scope.tools.bedpostx);
+      });
+
+    $scope.$watch("tools.probtrackx2.modify", function(){
+        console.log("HelloWatch tools.probtrackx2.modify", $scope.tools.probtrackx2.modify);
+        $scope.usableInputBedpostx($scope.tools.probtrackx2);
+      });
 };
 return {
     restrict : 'E',

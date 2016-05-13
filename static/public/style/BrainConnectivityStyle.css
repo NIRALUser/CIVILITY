@@ -445,7 +445,11 @@ div.TensionText {
   stroke-opacity: .6;
   fill: none;
 }
-    
+
+#probtrackx2Info, #bedpostxInfo{
+  width : 50%;
+}
+
 div.tooltip { 
     position: absolute;     
     text-align: center;     

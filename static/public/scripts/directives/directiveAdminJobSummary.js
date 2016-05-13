@@ -65,10 +65,6 @@ angular.module('brainConnectivity')
 		$scope.rowCollection = [];
 		$scope.getDB();
 		$scope.forceRunJob = false;
-
-	
-
-
 	}
 
 	return {
