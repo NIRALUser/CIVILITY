@@ -41,23 +41,36 @@ function link($scope,$attrs,$filter){
     }
     
     clusterpost.getJobUser($scope.userEmail, $scope.status, "tractographyScriptApp.sh").then(function(res){
-      //console.log(res);
-      var alloutputsfound = true;
+      //console.log(res);      
       $scope.jobFound = _.compact(_.map(res.data, function(job){
-        _.each(job.outputs, function(output){
+
+        var alloutputsfound = true;
+
+        for(var i = 0; i < job.outputs.length && alloutputsfound; i++){
           if(!job._attachments[output.name]){
             alloutputsfound = false;
           }
-        });
-
+        }        
         
-        if(!alloutputsfound && $scope.status==="UPLOADING"){
+        if(!alloutputsfound && job.jobstatus.status==="UPLOADING"){
           //resubmit job
-          clusterpost.submitJob(job._id,true).then(function(res){
+          clusterpost.getAttachment(job._id, "stdout.out")
+          .then(function(data){
+            
+            var okcontinue = false;
+
+            //parse data.res;
+
+            if(okcontinue){
+              clusterpost.submitJob(job._id,true).then(function(res){
+              })
+              .catch(function(e){
+                console.error(e);
+              })
+
+            }            
           })
-          .catch(function(e){
-            console.error(e);
-          })
+          
         }
           //return null;
               

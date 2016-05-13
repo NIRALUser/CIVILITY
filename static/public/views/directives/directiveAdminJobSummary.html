@@ -7,7 +7,7 @@
 			<thead>
 			<tr>
 				<th colspan="5">  Search <input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
-				<th colspan="3"> Number of jobs per page <input class="form-control" placeholder="Item by page ..." type="text" ng-model="itemsByPage"/></th>
+				<th colspan="5"> Number of jobs per page <input class="form-control" placeholder="Item by page ..." type="text" ng-model="itemsByPage"/></th>
 			</tr>
 			<tr>
 				<th st-sort="userEmail">User email</th>
@@ -16,6 +16,8 @@
 				<th st-sort="_id"> ID </th>
 				<th st-sort="jobstatus.jobid">Job ID </th>
 				<th>Update status</th>
+				<th>Run job</th>
+				<th>Force run job</th>
 				<th>Kill job</th>
 				<th>Delete job in DB</th>
 			</tr>
@@ -47,22 +49,31 @@
 				<td>{{row._id}}</td>
 				<td>{{row.jobstatus.jobid}}</td>
 				<td>
-				<button type="button" ng-click="updateStatus(row)" class="btn btn-sm btn-default">
-					<i class="glyphicon glyphicon-refresh">
-					</i>
-				</button>
+					<button type="button" ng-click="updateStatus(row)" class="btn btn-sm btn-default">
+						<i class="glyphicon glyphicon-refresh">
+						</i>
+					</button>
 				</td>
 				<td>
-				<button type="button" ng-click="killJob(row)" class="btn btn-sm btn-danger">
-					<i class="glyphicon glyphicon-remove-circle">
-					</i>
-				</button>
+					<button type="button" ng-click="runJob(row,forceRunJob)" class="btn btn-sm btn-success">
+					<i class="glyphicon glyphicon-play">
+						</i>
+					</button>
 				</td>
 				<td>
-				<button type="button" ng-click="removeInDB(row)" class="btn btn-sm btn-warning">
-					<i class="glyphicon glyphicon-trash">
-					</i>
-				</button>
+					<input type="checkbox" ng-model="forceRunJob"/>
+				</td>
+				<td>
+					<button type="button" ng-click="killJob(row)" class="btn btn-sm btn-danger">
+						<i class="glyphicon glyphicon-remove-circle">
+						</i>
+					</button>
+				</td>
+				<td>
+					<button type="button" ng-click="removeInDB(row)" class="btn btn-sm btn-warning">
+						<i class="glyphicon glyphicon-trash">
+						</i>
+					</button>
 				</td>
 			</tr>
 			</tbody>

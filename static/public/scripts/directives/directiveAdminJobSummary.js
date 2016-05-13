@@ -43,19 +43,29 @@ angular.module('brainConnectivity')
 	          throw e;
 	        })
 	    }
+	    $scope.runJob = function(job,force){
+			clusterpost.submitJob(job._id,force).then(function(res){
+				$scope.getDB();
+			})
+			.catch(function(e){
+                console.error(e);
+            });
+		}
 
 	    $scope.getDB = function(){
 			clusterpost.getAllJobs("tractographyScriptApp.sh").then(function(res){
 			$scope.rowCollection = res.data;
-			});
+			})
+			.catch(function(e){
+                console.error(e);
+            });
 		}
 
 		$scope.itemsByPage = "10";
 		$scope.rowCollection = [];
-		
-
 		$scope.getDB();
-		
+		$scope.forceRunJob = false;
+
 	
 
 
