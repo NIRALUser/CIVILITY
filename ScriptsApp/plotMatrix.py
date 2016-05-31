@@ -4,6 +4,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib import pylab as pl
 from sys import argv
+from matplotlib.backends.backend_pdf import PdfPages
 
 #args : ${SUBJECT} ${network_DIR} ${overlapName} ${loopcheck}
 subject = argv[1]
@@ -59,4 +60,7 @@ ax = fig.add_subplot(1,1,1)
 cax = ax.imshow(a, interpolation='nearest', vmin=0.0, vmax=0.99)
 fig.colorbar(cax)
 #pl.show()
+#pdf = PdfPages(fileMatrix + '_normalized.pdf')
+#pdf.savefig(fig)
 fig.savefig(fileMatrix + '_normalized.pdf', format='pdf')
+#pdf.close()
