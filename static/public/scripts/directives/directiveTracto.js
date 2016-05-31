@@ -22,7 +22,7 @@ angular.module('brainConnectivity')
     });
 
     //Probtrackx
-     $scope.tools.probtrackx2.param = "-P 3000 --steplength=0.75 --sampvox=0.5";
+    $scope.tools.probtrackx2.param = "-P 3000 --steplength=0.75 --sampvox=0.5";
     $scope.tools.probtrackx2.id = "probtrackx2Info";
     $scope.tools.probtrackx2.modify = false;
     $http({
@@ -54,7 +54,10 @@ angular.module('brainConnectivity')
       ignoreLabel: false,
       ignoreLabelID : "setlabelID",
       overlapping: true,
-      loopcheck: true
+      loopcheck: true,
+      bedpostX : $scope.tools.bedpostx.param,
+      probtrackParam : $scope.tools.probtrackx2.param
+
     };
 
     $scope.usableInputBedpostx = function(toolX){
@@ -287,6 +290,7 @@ angular.module('brainConnectivity')
       console.log(res.data);
       var doc = res.data;
       job_id = doc.id;
+      console.log("JOB", job)
       var val = $scope.readFilesAndSubmit(job_id); 
     })
     .catch(function(e){

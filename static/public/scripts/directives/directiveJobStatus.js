@@ -13,12 +13,11 @@ angular.module('brainConnectivity')
     $scope.selection = {};
     $scope.selection.jobSelect = false; 
     
-    $scope.Status = {};
-
+   
     $scope.getStatus = function(){
 
         clusterpost.getJobStatus($scope.jobId).then(function(res){
-           $scope.Status = res.data.status ; 
+           $scope.jobObject.jobstatus.status = res.data.status ; 
         })
         .catch(function(e){
           console.error(e);
@@ -26,14 +25,20 @@ angular.module('brainConnectivity')
         })
     }
     
-    //get job object 
+    //get job object  and update status
     $scope.getJobObject = function(){
       clusterpost.getJob($scope.jobId).then(function(res){
         $scope.jobObject = res.data;
         console.log($scope.jobObject);
 
         $scope.jobObject.timestamp = new Date($scope.jobObject.timestamp)
-
+        clusterpost.getJobStatus($scope.jobId).then(function(res){
+           $scope.jobObject.jobstatus.status = res.data.status ; 
+        })
+        .catch(function(e){
+          console.error(e);
+          throw e;
+        });
         if($scope.jobObject.jobstatus.status == "DONE")
         {
           $scope.jobDone = true;

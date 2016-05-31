@@ -10,22 +10,22 @@
 
 			<h4> Load data :</h4>
 
-			DWI Image :<input type="file" id="DWI" file-model="Parameters.Files.DWI"/><br>
+			DWI Image <i>(.nrrd)</i> :<input type="file" id="DWI" file-model="Parameters.Files.DWI"/><br>
 
-			T1 reference in DWI space :<input type = "file" id="T1" file-model="Parameters.Files.T1"/> <br>
+			T1 reference in DWI space <i>(.nrrd)</i> :<input type = "file" id="T1" file-model="Parameters.Files.T1"/> <br>
 
-			Brain mask in DWI space :<input type = "file" id="BrainMask" file-model="Parameters.Files.BrainMask" /> <br>
+			Brain mask in DWI space <i>(.nrrd)</i> :<input type = "file" id="BrainMask" file-model="Parameters.Files.BrainMask" /> <br>
 
-			Parcellation table (JSON file) : 
+			Parcellation table <i>(.json)</i> : 
 <input type ="file" id="JSON" file-model="Parameters.Files.parcellationTable"/> <br>
 
-			Inner surface in DWI space :<input type = "file" id="innerSurface" file-model="Parameters.Files.innerSurface"/> <br>
+			Inner surface in DWI space <i>(.vtk)</i> :<input type = "file" id="innerSurface" file-model="Parameters.Files.innerSurface"/> <br>
 
 			Inner surface contains color labels 
  			<input type="checkbox" name="colorExist" value="colorExist" ng-model="checkedSurfaceColored" ng-init="checkedSurfaceColored=true" /><br/>
 			
 			<div ng-show="!checkedSurfaceColored" style="text-indent: 20px; font-style: italic;">  
-				Alternative surface corresponding with color labels in DWI space : <input type = "file" id="colorSurface" ng-disabled="checkedSurfaceColored" style="text-indent: 20px;" file-model="alternativeSurface"/> <br>
+				Alternative surface corresponding with color labels in DWI space (.vtk) : <input type = "file" id="colorSurface" ng-disabled="checkedSurfaceColored" style="text-indent: 20px;" file-model="alternativeSurface"/> <br>
 			</div>
 
 			Labelset name in vtk surface file : <input type="text" name="input" ng-model="Parameters.labelsetName" required ng-trim="false" pattern="([\w\-]+)" title="Pattern error"><br>
@@ -36,16 +36,19 @@
 				<input type="text" name="input" ng-model="Parameters.ignoreLabelID"
 			           required ng-trim="false"><br> 
 			</div>
+			<br>
 			<h4> Bedpostx options :</h4>
 			<i> By default  : number of tensors in the voxel fitting = 2  </i> <br> <br>
 			Command line parameters: <br>
 			<i> Modify ?<input type="checkbox" ng-model="tools.bedpostx.modify"/> (MODIFY ONLY IF YOU KNOW WHAT TO DO)</i><br>
 			<input type="text" ng-model="tools.bedpostx.param" id="{{tools.bedpostx.id}}" disabled> </input> <a href="" data-toggle="tooltip" title="{{tools.bedpostx.help}}"> Help <i class="glyphicon glyphicon-info-sign"> </i> </a>
-			
+			<br>
+			<br>
 			<h4> Extract Label Surface options : </h4>
 			Overlapping
 			<input type="checkbox" name="overlapping" value="overlapping" ng-model="overlapping" ng-init="overlapping=true"  />
-
+			<br>
+			<br>
 			<h4> Tractography / Probtrackx2 options : </h4> 
 			
 			<!-- <div class="probtrackxInfo"> Probtrackx help

@@ -47,29 +47,40 @@ function link($scope,$attrs,$filter){
         var alloutputsfound = true;
 
         for(var i = 0; i < job.outputs.length && alloutputsfound; i++){
-          if(!job._attachments[output.name]){
+          if(!job._attachments[job.outputs.name]){
             alloutputsfound = false;
           }
         }        
         
         if(!alloutputsfound && job.jobstatus.status==="UPLOADING"){
           //resubmit job
-          clusterpost.getAttachment(job._id, "stdout.out")
-          .then(function(data){
-            
-            var okcontinue = false;
-
+          clusterpost.getAttachment(job._id, job.outputs[3].name, "text")
+          .then(function(res){
+            var str = res.data;
+            //console.log(str);
+            var found = str.search("ERROR_PIPELINE_PROBTRACKBRAINCONNECTIVITY");
+            if(found == -1) var okcontinue = true;
+            else var okcontinue = false;
+            console.log("OK CONTINUE ?? ", okcontinue);
             //parse data.res;
 
-            if(okcontinue){
+            if(okcontinue)
+            {
               clusterpost.submitJob(job._id,true).then(function(res){
               })
               .catch(function(e){
                 console.error(e);
               })
-
-            }            
+            }
+            else
+            {
+              //Set status to DONE ? 
+            }          
           })
+          .catch(function(e){
+          console.error("Error getting log file", e);
+          throw e;
+         });
           
         }
           //return null;
