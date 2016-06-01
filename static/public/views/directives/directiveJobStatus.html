@@ -61,22 +61,22 @@
 		<div ng-show="jobDone">
 			<div ng-show="!viewLogOutput">
 				<button class="btn btn-info-outline viewOutputLog" ng-click="getOutputLogFile()"> View log output  </button> 
-				<div ng-repeat="logLine in logFile track by $index"> {{logLine}} </div>
 			</div>
 			<div ng-show="viewLogOutput"> 
 				<button class="btn btn-info-outline viewOutputLog" ng-click="hideOutputLogFile()"> Hide log output  </button> 
+				<div ng-repeat="logLine in logFile track by $index"> {{logLine}} </div>
 			</div>
 
 			<div ng-show="!viewLogErrorOutput">
 				<button class="btn btn-info-outline viewOutputLogError" ng-click="getOutputErrorLogFile()"> View log error output  </button> <br>
-				<div ng-repeat="errorLine in logErrorFile track by $index"> {{errorLine}} </div>
 			</div>
 			<div ng-show="viewLogErrorOutput">
-				<button class="btn btn-info-outline viewOutputLogError" ng-click="hideOutputErrorLogFile()"> Hide log error output  </button> <br>
+				<button class="btn btn-info-outline viewOutputLogError" ng-click="hideOutputErrorLogFile()"> Hide log error output  </button> <div ng-repeat="errorLine in logErrorFile track by $index"> {{errorLine}} </div>
+				
 			</div>
 		</div>
 
-		<button type="button" class="btn btn-info" ng-click="reRunJob()"> Restart job </button>
+		<button ng-if="!jobDone" type="button" class="btn btn-info" ng-click="reRunJob()"> Restart job </button>
 		<div ng-if="jobDone">
 		<div ng-if="!jobDelete"> 
 			<button class="btn btn-danger" ng-click="deleteJob()"> Delete Job in database </button> 

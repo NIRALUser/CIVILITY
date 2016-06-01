@@ -16,8 +16,8 @@
 
 			Brain mask in DWI space <i>(.nrrd)</i> :<input type = "file" id="BrainMask" file-model="Parameters.Files.BrainMask" /> <br>
 
-			Parcellation table <i>(.json)</i> : 
-<input type ="file" id="JSON" file-model="Parameters.Files.parcellationTable"/> <br>
+			Parcellation table <i>(.json)</i> : <a href="" data-toggle="tooltip" title="{{jsonTemplate}}"> Help <i class="glyphicon glyphicon-info-sign"> </i> </a>
+<input type ="file" id="JSON" file-model="Parameters.Files.parcellationTable"/>  <br>
 
 			Inner surface in DWI space <i>(.vtk)</i> :<input type = "file" id="innerSurface" file-model="Parameters.Files.innerSurface"/> <br>
 
@@ -40,6 +40,7 @@
 			<h4> Bedpostx options :</h4>
 			<i> By default  : number of tensors in the voxel fitting = 2  </i> <br> <br>
 			Command line parameters: <br>
+			<i> <u>Default</u> : <b>bedpostx DiffusionDirectory </b>-n 2 </i> <br>
 			<i> Modify ?<input type="checkbox" ng-model="tools.bedpostx.modify"/> (MODIFY ONLY IF YOU KNOW WHAT TO DO)</i><br>
 			<input type="text" ng-model="tools.bedpostx.param" id="{{tools.bedpostx.id}}" disabled> </input> <a href="" data-toggle="tooltip" title="{{tools.bedpostx.help}}"> Help <i class="glyphicon glyphicon-info-sign"> </i> </a>
 			<br>
@@ -59,8 +60,7 @@
 			<input type="checkbox" name="loopcheck" value="loopcheck" ng-model="loopcheck" ng-init="loopcheck=true" /> <br> <br>
 
 			Command line parameters: <br>
-
-			
+			<i> <u>Default</u> : <b> probtrackx2 --samples=Diffusion.bedpostX/merged --mask=Diffusion.bedpostX/nodif_brain_mask --seed=seeds.txt --seedref=T1_image.nii.gz --forcedir --network --omatrix1 -V 0 --dir=NetworkNameDirectory --stop=seeds.txt (--loopcheck) </b> -P 3000 --steplength=0.75 --sampvox=0.5 </i> <br>
 			<i> Modify ?<input type="checkbox" ng-model="tools.probtrackx2.modify"/> (MODIFY ONLY IF YOU KNOW WHAT TO DO) </i> <br>
 			<input type="text" ng-model="tools.probtrackx2.param" id="{{tools.probtrackx2.id}}" disabled> </input>
 			<a href="" data-toggle="tooltip" title="{{tools.probtrackx2.help}}"> Help <i class="glyphicon glyphicon-info-sign"> </i> </a> 

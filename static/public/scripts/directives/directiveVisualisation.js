@@ -1,10 +1,18 @@
 
 angular.module('brainConnectivity')
-.directive('connectivityVisualisation', function($routeParams,$location,clusterpost){
+.directive('connectivityVisualisation', function($routeParams,$location,clusterpost, $http){
 
 function link($scope,$attrs,$filter){
 
   $scope.plotParam = {};
+
+  $http({
+      method: 'GET',
+      url: '/public/data/jsonDescriptionTableTemplate.txt'
+    })
+    .then(function(res){
+      $scope.jsonTemplate = res.data;
+    });
 
   $scope.showContentJson = function($fileContent){
         $scope.contentJ = $fileContent;

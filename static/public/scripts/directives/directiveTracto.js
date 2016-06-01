@@ -21,6 +21,14 @@ angular.module('brainConnectivity')
       $scope.tools.bedpostx.help = res.data;
     });
 
+    $http({
+      method: 'GET',
+      url: '/public/data/jsonDescriptionTableTemplate.txt'
+    })
+    .then(function(res){
+      $scope.jsonTemplate = res.data;
+    });
+
     //Probtrackx
     $scope.tools.probtrackx2.param = "-P 3000 --steplength=0.75 --sampvox=0.5";
     $scope.tools.probtrackx2.id = "probtrackx2Info";

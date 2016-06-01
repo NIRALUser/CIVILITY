@@ -32,13 +32,13 @@ angular.module('brainConnectivity')
         console.log($scope.jobObject);
 
         $scope.jobObject.timestamp = new Date($scope.jobObject.timestamp)
-        clusterpost.getJobStatus($scope.jobId).then(function(res){
+        /*clusterpost.getJobStatus($scope.jobId).then(function(res){
            $scope.jobObject.jobstatus.status = res.data.status ; 
         })
         .catch(function(e){
           console.error(e);
           throw e;
-        });
+        });*/
         if($scope.jobObject.jobstatus.status == "DONE")
         {
           $scope.jobDone = true;
@@ -110,7 +110,8 @@ angular.module('brainConnectivity')
       clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[3].name,"text").then(function(res){
         var str = res.data;
         console.log(str);
-        $scope.logFile = "HELLO"// str.split("\n");
+        $scope.logFile = str.split("\n");
+        $scope.viewLogOutput = true;
         })
       .catch(function(e){
         console.error("Error getting log file", e);
@@ -126,6 +127,7 @@ angular.module('brainConnectivity')
       clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[4].name,"text").then(function(res){
            var str = res.data;
            $scope.logErrorFile = str.split("\n");
+            $scope.viewLogErrorOutput = true;
         })
         .catch(function(e){
             console.error("Error getting log error file", e);
