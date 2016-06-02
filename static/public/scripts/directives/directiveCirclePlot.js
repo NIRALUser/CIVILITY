@@ -933,13 +933,13 @@ angular.module('brainConnectivity')
 		               		nodeTooltip.html( "Seed : " + KeyName ) 
 		                   	.style("left", (d3.event.pageX) + "px")   
 		                   	.style("top", (d3.event.pageY) + "px");  
-		        				})
-		        			.on("mouseout", function(d) {   
+		        		})
+		        		.on("mouseout", function(d) {   
 		        			
 		        			nodeTooltip.transition()    
 		                   .duration(500)    
 		                   .style("opacity", 0); 
-		        			});
+		        		});
 		           }
 
 		       })
@@ -1020,6 +1020,7 @@ angular.module('brainConnectivity')
 		      		var linkRatioBrain = 10
 		      		var linegraph = svgBrainRight.append("path")
 		        .attr("d",linefunction(line))
+		        .on()
 		        .attr("stroke",  function() { 
 		         			if(size[n] >= upperValue)
 		         			{
