@@ -4,6 +4,7 @@ angular.module('brainConnectivity')
 
   function link($scope,$attrs,$filter){
 
+    $scope.jobSumitConfirmation = [];
     
     $scope.tools = {
       bedpostx : {},
@@ -85,10 +86,7 @@ angular.module('brainConnectivity')
     }
 
     $scope.paramSubmitJob = function(){
-      console.log("Submit");
-      console.log("Emailfield", $scope.userEmail);
       $scope.formOK = $scope.formValidation();
-      console.log("Valid",$scope.formOK);
       if($scope.formOK == true)
       {
         $scope.Parameters.overlapping = $scope.overlapping;
@@ -311,8 +309,11 @@ angular.module('brainConnectivity')
     clusterpost.submitJob(jobid,force).then(function(res){
         console.log("Job " + jobid + " submit");
         $scope.submitTractoButton = false;
+        $scope.jobSumitConfirmation.push("Job " + jobid + " is submited.");
     })
     .catch(function(e){
+      $scope.submitTractoButton = false;
+      $scope.jobSumitConfirmation.push("Job " + jobid + " submission failed.");
       console.error(e);
       throw e;
     });

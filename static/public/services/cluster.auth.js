@@ -38,6 +38,10 @@ angular.module('brainConnectivity')
         if(rejection.status === 401 && !localStorage.getItem('clusterpost_token')){
           $location.path('/welcome');
         }
+
+        if(rejection.status === 404) {
+          $location.path('/notFound');
+        }
         
         
         return $q.reject(rejection);

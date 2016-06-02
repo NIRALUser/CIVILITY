@@ -17,5 +17,8 @@ config(['$routeProvider', function($routeProvider) {
   .when('/login/reset', {
     templateUrl: 'views/controllers/welcome.html'
   })
+  .when('/notFound', {
+    templateUrl: 'views/controllers/notFound.html'
+  })
   .otherwise({redirectTo: '/welcome'});
 }]);

@@ -1,3 +1,14 @@
+.listJobSubmited{
+  border-color: #B0B0B0;
+  border-width: 1px;
+  background-color: #B0B0B0;
+  width: 50%;
+  margin-left: 25%;
+}
+.jobSubmission{
+  margin : 1% 20% 1% 20%;
+}
+
 .titleAdminDB{
   text-align: center;
   background-color: #B0B0B0;

@@ -6,7 +6,10 @@
     <label for="inputEmail" class="sr-only">Email address</label>
     <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" ng-model="user.email">
     <label for="inputPassword" class="sr-only">Password</label>
-    <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" ng-model="user.password">
+    <input id="inputPassword" class="form-control" placeholder="Password" required type="password" ng-model="user.password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters">
+
+    <div style="color:red;"> {{errorMsg}}</div>
+
     <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login()">Login</button>
     <div class="etc-login-form">
 			<p>forgot your password? <a href="" ng-click="recoverPassword()">click here</a></p>
@@ -22,8 +25,11 @@
     <input id="inputName" class="form-control" placeholder="User name" required="" autofocus="" type="text" ng-model="newUser.name">
     <label for="inputEmail" class="sr-only">Email address</label>
     <input id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" type="email" ng-model="newUser.email">
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" ng-model="newUser.password">
+    <label for="inputPassword" class="sr-only" >Password</label> 
+    <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password" ng-model="newUser.password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters"> <a href="" data-toggle="tooltip" title="Password must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters"> Help <i class="glyphicon glyphicon-info-sign"> </i> </a>
+
+    <div style="color:red;"> {{errorMsg}}</div>
+
     <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="createUser()">Create and Login</button>
     <div class="etc-login-form">
       <p>existing user? <a href="" ng-click="switchForm()">Login with your account</a></p>
