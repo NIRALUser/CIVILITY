@@ -7,7 +7,7 @@ function link($scope,$attrs,$filter){
   $scope.jobFound = [];
   $scope.noResult = false;
   $scope.selectStatus ={};
-  $scope.selectStatus.selection = "DONE";
+  $scope.selectStatus.selection = "All status";
   $scope.statusAvail = ["All status","CREATE", "DOWNLOADING", "RUN", "FAIL", "KILL", "UPLOADING", "EXIT", "DONE"];
 
   $scope.listPCA = "none";
@@ -63,7 +63,7 @@ function link($scope,$attrs,$filter){
             else var restartJobForce = false;
             console.log("OK CONTINUE ?? ", restartJobForce);
             //parse data.res;
-
+            console.log(restartJobForce);
             if(restartJobForce)
             {
               clusterpost.submitJob(job._id,true).then(function(res){

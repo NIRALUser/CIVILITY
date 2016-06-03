@@ -4,7 +4,7 @@ angular.module('cTRIVIAL')
 	function link($scope,$attrs,$filter){
 		$scope.plotParameters = {};
 		$scope.plotParameters.threshold = 0.01;
-		$scope.plotParameters.diameter = 960;
+		$scope.plotParameters.diameter = 600
 		$scope.plotParameters.tension = 0.85;
 		$scope.plotParameters.upperValue = 0.44;
 		$scope.plotParameters.link1 = "";

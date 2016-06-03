@@ -12,17 +12,15 @@ angular.module('cTRIVIAL')
     $scope.viewCirclePlot = false;
     $scope.selection = {};
     $scope.selection.jobSelect = false; 
-    
-   
-    $scope.getStatus = function(){
 
-        clusterpost.getJobStatus($scope.jobId).then(function(res){
-           $scope.jobObject.jobstatus.status = res.data.status ; 
+    $scope.updateStatus = function(){
+         clusterpost.getJobStatus($scope.jobId).then(function(res2){
+           $scope.jobObject.jobstatus.status = res2.data.status ; 
         })
         .catch(function(e){
           console.error(e);
           throw e;
-        })
+        });
     }
     
     //get job object  and update status
@@ -31,22 +29,10 @@ angular.module('cTRIVIAL')
         $scope.jobObject = res.data;
         console.log($scope.jobObject);
 
-        $scope.jobObject.timestamp = new Date($scope.jobObject.timestamp)
-        /*clusterpost.getJobStatus($scope.jobId).then(function(res){
-           $scope.jobObject.jobstatus.status = res.data.status ; 
-        })
-        .catch(function(e){
-          console.error(e);
-          throw e;
-        });*/
-        if($scope.jobObject.jobstatus.status == "DONE")
-        {
-          $scope.jobDone = true;
-        }
-        else
-        {
-          $scope.jobDone = false;
-        }
+        $scope.jobObject.timestamp = new Date($scope.jobObject.timestamp);
+
+        //Update status automatically when the page is loading 
+       $scope.updateStatus();
       })
        .catch(function(e){
           console.error(e);
@@ -55,17 +41,34 @@ angular.module('cTRIVIAL')
     }
     $scope.getJobObject();
 
-
-
-    $scope.change = function(){
-
+    $scope.killJob = function() {
+      clusterpost.killJob($scope.jobId).then(function(res){
+        console.log("Job " + $scope.jobId + " is killed");
+        $scope.updateStatus();
+      })
+      .catch(function(e){
+        throw e;
+      });
     }
+
+
 
 		$scope.reRunJob = function(){
 			
-      //Submit job 
-		  clusterpost.submitJob($scope.jobId,false).then(function(res){
+  		  var force = false;
+        if($scope.jobObject.status != "CREATE") 
+        {
+          if(confirm("Did you check outputs log file ? Be sure you have correct inputs file. \n Are you sure you want to force the job submission ? ")){
+            force = true;
+          }
+          else
+          {
+            return 0;
+          }
+        }
+        clusterpost.submitJob($scope.jobId,force).then(function(res){
 		        console.log("Job " + $scope.jobId + " submit");
+            $scope.updateStatus();
 		    })
 		    .catch(function(e){
 		      console.error(e);
@@ -109,7 +112,6 @@ angular.module('cTRIVIAL')
     $scope.getOutputLogFile = function(){
       clusterpost.getAttachment($scope.jobId,$scope.jobObject.outputs[3].name,"text").then(function(res){
         var str = res.data;
-        console.log(str);
         $scope.logFile = str.split("\n");
         $scope.viewLogOutput = true;
         })
@@ -141,11 +143,14 @@ angular.module('cTRIVIAL')
 
     //Delete job document and data 
     $scope.deleteJob = function(){
-      console.log("DeleteJob");
       clusterpost.deleteJob($scope.jobId).then(function(res){
           console.log("Job " + $scope.jobId + " is delete ");
           $scope.jobDelete = true;
-      });
+          $scope.updateStatus();
+      })
+      .catch(function(e){
+            throw e;
+      });    
     };
 
     //Remove circle plot 
