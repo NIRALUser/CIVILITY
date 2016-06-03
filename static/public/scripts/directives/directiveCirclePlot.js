@@ -1,4 +1,4 @@
-angular.module('brainConnectivity')
+angular.module('cTRIVIAL')
 .directive('circlePlot',function($routeParams,$location){
 
 	function link($scope,$attrs,$filter){

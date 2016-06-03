@@ -1,5 +1,5 @@
 
-angular.module('brainConnectivity')
+angular.module('cTRIVIAL')
 .directive('submitTracto', function($routeParams,$location,clusterpost, $http){
 
   function link($scope,$attrs,$filter){

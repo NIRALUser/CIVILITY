@@ -1,4 +1,4 @@
-angular.module('brainConnectivity')
+angular.module('cTRIVIAL')
 .factory('clusterpost', function ($q, $http, $location) {
   return {
     getExecutionServers: function () {

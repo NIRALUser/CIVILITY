@@ -1,4 +1,4 @@
-angular.module('brainConnectivity').directive('onReadFile', function ($parse) {
+angular.module('cTRIVIAL').directive('onReadFile', function ($parse) {
 	return {
 		restrict: 'A',
 		scope: false,

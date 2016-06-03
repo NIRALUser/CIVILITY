@@ -1,4 +1,4 @@
-angular.module('brainConnectivity')
+angular.module('cTRIVIAL')
 .directive('jobStatus', function($routeParams,$location,clusterpost){
 
 	function link($scope,$attrs,$filter){

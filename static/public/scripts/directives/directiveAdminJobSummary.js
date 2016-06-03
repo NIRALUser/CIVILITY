@@ -1,5 +1,5 @@
 
-angular.module('brainConnectivity')
+angular.module('cTRIVIAL')
 .directive('adminJob', function($routeParams,$location,clusterpost, $filter, $q){
 
 	function link($scope,$attrs){

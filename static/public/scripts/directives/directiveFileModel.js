@@ -1,4 +1,4 @@
-angular.module('brainConnectivity')
+angular.module('cTRIVIAL')
 .directive('fileModel', ['$parse', function ($parse) {
     return {
         restrict: 'A',

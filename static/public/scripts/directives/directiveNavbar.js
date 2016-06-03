@@ -1,5 +1,5 @@
 
-angular.module('brainConnectivity')
+angular.module('cTRIVIAL')
 .directive('navbar', function($routeParams, $location, $rootScope, clusterauth){
 
 	function link($scope,$attrs,$filter){

@@ -1,4 +1,4 @@
-angular.module('brainConnectivity')
+angular.module('cTRIVIAL')
 .config(['$httpProvider', '$provide', function ($httpProvider, $provide) {
   // register the interceptor as a service
   $provide.factory('jwtInterceptor', function($q, $location) {

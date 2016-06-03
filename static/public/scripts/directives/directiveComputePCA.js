@@ -1,5 +1,5 @@
 
-angular.module('brainConnectivity')
+angular.module('cTRIVIAL')
 .directive('computePca', function($routeParams,$location,clusterpost){
 
 function link($scope,$attrs,$filter){

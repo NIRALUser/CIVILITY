@@ -1,5 +1,5 @@
 
-angular.module('brainConnectivity')
+angular.module('cTRIVIAL')
 .directive('findJob', function($routeParams,$location,clusterpost, clusterauth){
 
 function link($scope,$attrs,$filter){

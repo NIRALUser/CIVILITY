@@ -1,4 +1,4 @@
-angular.module('brainConnectivity')
+angular.module('cTRIVIAL')
 .directive('newWindow', ['$window', '$compile',
   function($window, $compile) {
     return {
