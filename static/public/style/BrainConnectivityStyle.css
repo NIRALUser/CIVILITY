@@ -1,0 +1,594 @@
+.jobInfo{
+  font-size : 12px;
+}
+
+.listJobSubmited{
+  border-color: #B0B0B0;
+  border-width: 1px;
+  background-color: #B0B0B0;
+  width: 50%;
+  margin-left: 25%;
+}
+.jobSubmission{
+  margin : 1% 20% 1% 20%;
+}
+
+.titleAdminDB{
+  text-align: center;
+  background-color: #B0B0B0;
+  border-color: #B0B0B0;
+  border-width: 1px;
+  padding: 1px 1px 1px 1px;
+  border-radius: 20px;
+  margin: 0% 1% 0% 1%;
+}
+  .st-sort-ascent:before{
+    content: '\25B2';
+  }
+
+  .st-sort-descent:before{
+    content: '\25BC';
+  }
+
+
+.containerSignin, .containerLogin,
+.containerUpdatePassword, .containerResetPassword{
+  text-align: center;
+  width: 50%;
+  margin-left: 25%;
+}
+.methodChoice{
+  font-weight: 500;
+}
+
+.linkDownloadDir{
+  background-color: #5CB85C;
+  border-radius: 5px;
+  padding : 7px 10px 7px 10px;
+  border-color:  #5CB85C;
+  border-width: 1px;
+  font-size: 15px;
+  color: #fff;
+}
+
+.divLinkDir{
+  margin : 7px 0px 7px 0px;
+}
+
+.viewOutputLogError{
+  border-color: #fd9b0f;
+}
+
+.viewOutputLog{
+  border-color: #ffcc33;
+}
+
+.addMatrixFile{
+  background-color: #f6f6f6;
+  border-width: 1px;
+  width: 50%;
+  margin-left: 25%;
+}
+
+.PCAslider {
+  width : 95%;
+  z-index: 2;
+  margin : 1% 2% 1% 2%;
+  text-align: center;
+}
+
+.parameters{
+  margin : 20px auto;
+}
+
+.jobNoInfo{
+  font-style: italic;
+}
+
+.jobIdTitle{
+  font-size: 15px;
+  font-weight: bold;
+  display: inline;
+  text-decoration: underline;
+}
+
+.idJob{
+  font-style: italic;
+}
+
+.job{
+  margin: 1% 0.5% 2% 0.5%;
+  padding: 1% 1% 2% 1%;
+  background-color :  #ffffff;
+  color : #286090;
+  font : 13px sans-serif;
+  border-width:1px 1px 1px 1px;
+  border-style:solid;
+  border-color:#286090;
+}
+.serverChoiceText{
+  display: inline;
+}
+.userEmail{
+  margin : 5px auto;
+}
+
+.emailField{
+  color:#000;
+}
+
+.jobs{
+    margin: 1% 1% 2% 1%;
+  padding: 1% 1% 2% 1%;
+  background-color :  #e6f9ff;
+  color : #286090;
+  font : 13px sans-serif;
+}
+
+.jobsDone{
+  margin: 1% 1% 2% 1%;
+  padding: 1% 1% 2% 1%;
+  background-color :  #e6f9ff;
+  color : #286090;
+  font : 13px sans-serif;
+  text-align: center;
+}
+
+.jobLine{
+  background-color: #f5f5dc;
+  border-color: #f5f5dc;
+  border-width: 5px;
+  padding: 10px 5px 10px 10px ;
+  border-radius: 5px;
+  margin: 10px 40px 10px 40px;
+}
+
+.jobsTitle{
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.modifCoordTitles{
+  text-align: left;
+  font-weight : bold;
+}
+
+.serverChoice{
+ display: inline-block;
+}
+
+.visuCheckbox{
+  color: #286090;
+  font-size: 15px;
+  margin-bottom : 50px;
+  z-index: 10;
+position: relative;
+}
+
+.changePositonCheckbox{
+  color: #286090;
+  font-size: 12px;
+  font-style: italic;
+  padding:  10px 10px 10px 10px ;
+}
+
+.serverSelect{
+  color:#000;
+}
+
+.jobOptions{
+   background-color: #274ED0;
+   color:#fff;
+  border-color: #274ED0;
+  border-width: 3px;
+  padding: 10px 5px 10px 10px ;
+  border-radius: 5px;
+  margin-top: 10px;
+
+}
+.title{
+  margin-top: -80px;
+}
+
+.nodeCircle{
+
+}
+.case1 , .case2, .case3{
+  font-style: italic;
+  font-size: 15px;
+}
+
+.homeHEAD{
+  border-style: solid;
+  border-color: #286090;
+  border-width: 3px;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 2%;
+
+}
+
+
+
+
+body {
+  font: 10px sans-serif;
+  /*shape-rendering: crispEdges;*/
+}
+
+
+
+.buttonHome {
+  font: 20px sans-serif;
+  text-decoration: none;
+  background-color: #286090;
+  color: #ffffff;
+  padding: 9px;
+  border-radius: 5px;
+}
+
+.nav > li > a:focus
+{
+  background-color: #286090;
+  color: #fff
+}
+
+
+h4, h5{
+  text-decoration: underline;
+}
+
+/* Circle Plot*/
+
+.resetCoordPos{
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-family: sans-serif;
+}
+.grid-background {
+  fill: #ddd;
+}
+
+.grid line {
+  stroke: #fff;
+}
+
+.grid .minor line {
+  stroke-opacity: .5;
+}
+
+.grid text {
+  display: none;
+}
+
+.axis line {
+  stroke: #000;
+}
+
+.axis path,
+.grid path {
+  display: none;
+}
+
+.modifCoord{
+  margin : 2%;
+  vertical-align:bottom;
+}
+.modifCoordPosition{
+  text-align: left;
+}
+.brainTemplatePlot{
+  text-align: center;
+}
+
+.divBrainALL, .divBrainRight{
+    position: relative;
+    display: inline-block;
+    padding: 0% 2% 0% 2%;
+}
+
+.divBrainLeft{
+    position: relative;
+    display: inline-block;
+    padding: 0% 1% 0% 1%;
+  }
+
+.divBrainLinkRight, .divBrainImgRight{
+  margin-left: -70px;
+
+}
+.divBrainImgRLeft{
+  margin-bottom: 50px;
+}
+
+.divBrainImgRight{
+  margin-bottom: 20px;
+}
+
+.AllPlotTemplate, .rightPlotTemplate, .leftPlotTemplate{
+  margin : 0px 0px 20px 0px;
+}
+/*.leftPlotTemplate{
+  position:absolute;
+}*/
+
+.leftPlotTemplate{
+  margin-right : -40px;
+}
+.rightPlotTemplate{
+
+}
+
+.divBrainImgALL, .divBrainImgLeft, .divBrainImgRight{
+  position: relative;
+}
+
+.divBrainLinkALL, .divBrainLinkLeft, .divBrainLinkRight{
+  position: relative;
+}
+
+.divBrainLinkALL{
+  margin-top: -430px;
+}
+.divBrainLinkLeft{
+  margin-top: -410px;
+}
+.divBrainLinkRight{
+  margin-top: -430px;
+}
+
+.bgimg {
+    z-index: -1;
+    overflow: hidden;
+    left: 0px;
+    position: relative;
+    display: block;
+      /*max-width:50%;
+   max-height:50%;*/
+}
+
+input.boxMin, input.boxMax, input.boxAverage{
+  margin-top: -12px;
+}
+
+.circleAndBar{
+  display: inline;
+}
+.text{
+  display: inline; 
+}
+
+#textMargin{
+  margin-left:15px;
+}
+
+.divPlot{
+
+  text-align: center;
+}
+
+.circlePlot, .colorBar{
+  margin : 0 auto;
+}
+.circlePlot{
+  padding-left: 2.3%;
+}
+
+#tensionBar, #diameterBar {
+     height:10px;
+    width:60%;
+    margin: 0 auto;
+    margin-left: 15%;
+}
+
+.ValueThreshold, .upperValue {
+     height:40px;
+    width:40px;
+    margin: 0 auto;
+}
+
+.slides{
+  margin-bottom: 6px;
+}
+
+.matProc{
+  text-decoration: underline;
+}
+
+.mainButton{
+  text-align: center;
+}
+
+.checkgroup{
+  margin-bottom: 15px;
+}
+
+.buttons{
+  font-size: 15px;
+  margin: 1% 1% 1% 1%;
+  padding: 1% 1% 1% 1%;
+  background-color :  #e6f9ff;
+}
+div.TensionText {
+    height:10px;
+    width:200px;
+   margin: 0 auto;
+   margin-left: 25%;
+}
+
+
+#title{
+  font-size: 22px;
+  color: #286090;
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.infoText{
+  font-size: 18px;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+
+.infoTextNotes{
+  font-size: 16px;
+  text-align: center;
+  font-family: sans-serif;
+  font-style:italic;
+  line-height: 1.5;
+}
+
+.btn{
+  margin: 5px auto;
+}
+
+.active {
+   background-color: #ff0000;
+ }
+
+ a{
+  font-size: 12px;
+ }
+
+.node {
+  font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.link {
+  stroke-opacity: .6;
+  fill: none;
+}
+
+#probtrackx2Info, #bedpostxInfo{
+  width : 50%;
+}
+
+div.tooltip { 
+    position: absolute;     
+    text-align: center;     
+    width: 80px;          
+    height: 50px;         
+    padding: 2px;       
+    font: 12px sans-serif;    
+    background: lightsteelblue; 
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;     
+}
+
+div.nodeTooltip { 
+    position: absolute;     
+    text-align: center;     
+    width: 200px;          
+    height: 20px;         
+    padding: 2px;       
+    font: 12px sans-serif;    
+    background: lightcoral ; 
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;  
+    z-index: 5;   
+}
+
+    
+.link:hover{
+        stroke-opacity:1;
+    }
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+.rect{
+  fill-opacity: 0.6;
+}
+
+.rect:hover{
+  fill-opacity: 1;
+}
+
+#tooltipColor{
+      position: absolute;     
+    text-align: center;     
+    width: 250px;         
+    height: 18px;         
+    padding: 2px;       
+    font: 12px sans-serif;    
+    background: lightsteelblue; 
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;   
+}
+
+/*Tractography Form*/
+.tractoForm{
+  margin: 2% 5% 2% 5%;
+  padding: 2% 2% 2% 2%;
+  background-color :  #e6f9ff;
+  color : #286090;
+  font : 13px sans-serif;
+}
+
+/*navbar */
+.container-fluid{
+  background-color: #f6f6f6
+}
+
+.tab-content > .active{
+
+  background-color: #fff
+}
+
+.tabsetJobs{
+  background-color: #fff
+}
+
+.tabsetAppMenu{
+  background-color: #fff;
+}
+
+#appLogin{
+  margin-left: 90%;
+}
+
+/*Find job*/ 
+.findJob{
+  text-align: center;
+  margin : 1% 5% 1% 5%;
+  font-family: sans-serif;
+  font-size: 15px;
+}
+
+.noJobFound{
+  background-color: #E6F9FF;
+  margin: 2% 5% 2% 5%;
+  color : #286090;
+  font-style: italic;
+  font-family: sans-serif;
+  font-size: 15px;
+}
+
+/* Visualisation */
+.Plot{
+  text-align: center;
+  border : solid;
+  margin : 1% 5% 1% 5%;
+  border-color: #286090;
+  font-family: sans-serif;
+  font-size: 15px;
+ 
+}
+
+#matrix , #JSONFile{
+  margin-left: 40%;
+}
+
+.fdt_mat_input, .json-file-input{
+  margin: 2% 2% 2% 2%;
+}

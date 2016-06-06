@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="cTRIVIAL" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  
+  <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="bower_components/ng-table/dist/ng-table.min.css" rel="stylesheet"/>
+
+   <!-- <link href="bower_components/angular-smart-table/dist/smart-table.min.css" rel="stylesheet"/> -->
+  <link rel="stylesheet" href="style/BrainConnectivityStyle.css" type="text/css">
+
+  
+  <title>cTRIVIAL</title>
+
+</head>
+<body ng-app="cTRIVIAL">
+</span>
+  
+  <div ng-view></div>
+
+  <!-- In production use: -->
+  <!-- <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-route/angular.min.js"></script> -->
+  
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/underscore/underscore-min.js" ></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js" ></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js" ></script>
+   <script src="bower_components/ag-grid/dist/ag-grid.js" ></script>
+  <script src="bower_components/ag-grid/dist/ag-grid.min.js" ></script>
+  <script src="bower_components/angular-smart-table/dist/smart-table.min.js" ></script>
+<!--   <script src="bower_components/numericjs/numeric-1.2.6.min.js" ></script>
+ -->  <script src="bower_components/mathjs/dist/math.min.js" ></script>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="bower_components/d3/d3.min.js"></script>
+
+  <!-- Application scripts -->
+  <script src="app.js"></script>
+  <!-- Services --> 
+  
+  <script src="services/cluster.service.js"></script>
+  <script src="services/cluster.auth.js"></script>
+  <script src="services/fileupload.service.js"></script>
+  <!-- Controllers --> 
+  <script src="scripts/controllers/tractographyApp.js"></script>
+  <script src="scripts/controllers/welcome.js"></script>
+    <!-- Directives --> 
+  <script src="scripts/directives/directiveCirclePlot.js"></script>
+  <script src="scripts/directives/directiveFileModel.js"></script>
+  <script src="scripts/directives/directiveReadFile.js"></script>
+  <script src="scripts/directives/directiveOpenWindow.js"></script>
+  <script src="scripts/directives/directiveTracto.js"></script>
+  <script src="scripts/directives/directiveVisualisation.js"></script>
+  <script src="scripts/directives/directiveJobStatus.js"></script>
+  <script src="scripts/directives/directiveNavbar.js"></script>
+
+  <script src="scripts/directives/directiveComputePCA.js"></script>
+  <script src="scripts/directives/directiveFindJob.js"></script>
+  <script src="scripts/directives/directiveAdminJobSummary.js"></script>
+  <script src="scripts/directives/directiveUserLogin.js"></script>
+
+
+</body>
+</html>

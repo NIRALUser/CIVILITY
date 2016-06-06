@@ -1,0 +1,108 @@
+<div>
+		<div class="titleAdminDB">
+		<h2> DATABASE </h2> 
+		Refresh database <button class="btn btn-sm btn-primary" ng-click="getDB()"><i class="glyphicon glyphicon-refresh"></i> </button> 
+		</div>
+		<table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+			<thead>
+			<tr>
+				<th colspan="5">  Search <input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+				<th colspan="5"> Number of jobs per page <input class="form-control" placeholder="Item by page ..." type="text" ng-model="itemsByPage"/></th>
+			</tr>
+			<tr>
+				<th st-sort="userEmail">User email</th>
+				<th st-sort="timestamp">Timestamp</th>
+				<th st-sort="jobsstatus.status">Job status</th>
+				<th st-sort="_id"> ID </th>
+				<th st-sort="jobstatus.jobid">Job ID </th>
+				<th>Update status</th>
+				<th>Run job</th>
+				<th>Force run job</th>
+				<th>Kill job</th>
+				<th>Delete job in DB</th>
+			</tr>
+			<tr>
+				<th>
+					<input st-search="userEmail" placeholder="search for userEmail" class="input-sm form-control" type="search"/>
+				</th>
+				<th>
+					<input st-search="timestamp" placeholder="search for timestamp" class="input-sm form-control" type="search"/>
+				</th>
+				<th> <i style="font-size:10px; color:grey; font-weight: normal;">Status : CREATE, DOWNLOADING, RUN, FAIL, KILL, UPLOADING, EXIT, DONE </i>
+				<input st-search="jobstatus.status" placeholder="search for status" class="input-sm form-control" type="search"/> 
+					
+				</th>
+				<th>
+					<input st-search="_id" placeholder="search for id" class="input-sm form-control" type="search"/>
+				</th>
+				<th>
+					<input st-search="jobstatus.jobid" placeholder="search for jobid" class="input-sm form-control" type="search"/>
+				</th>				
+			</tr>
+			
+			</thead>
+			<tbody>
+			<tr ng-repeat="row in displayedCollection">
+				<td>{{row.userEmail}}</td>
+				<td>{{row.timestamp}}</td>
+				<td>{{row.jobstatus.status}}</td>
+				<td>{{row._id}}</td>
+				<td>{{row.jobstatus.jobid}}</td>
+				<td>
+					<button type="button" ng-click="updateStatus(row)" class="btn btn-sm btn-default">
+						<i class="glyphicon glyphicon-refresh">
+						</i>
+					</button>
+				</td>
+				<td>
+					<button type="button" ng-click="runJob(row,forceRunJob)" class="btn btn-sm btn-success">
+					<i class="glyphicon glyphicon-play">
+						</i>
+					</button>
+				</td>
+				<td>
+					<input type="checkbox" ng-model="forceRunJob"/>
+				</td>
+				<td>
+					<button type="button" ng-click="killJob(row)" class="btn btn-sm btn-danger">
+						<i class="glyphicon glyphicon-remove-circle">
+						</i>
+					</button>
+				</td>
+				<td>
+					<button type="button" ng-click="removeInDB(row)" class="btn btn-sm btn-warning">
+						<i class="glyphicon glyphicon-trash">
+						</i>
+					</button>
+				</td>
+			</tr>
+			</tbody>
+			<tfoot>
+			<tr>
+				<td colspan="10" class="text-center">
+					<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+				</td>
+			</tr>
+		</tfoot>
+		</table>
+
+
+
+<!-- <table ng-table="vm.tableParams" class="table" show-filter="true">
+    <tr ng-repeat="user in users">
+        <td title="'Name'" filter="{ first_name: 'text'}" sortable="'first_name'">
+            {{user.first_name}}</td>
+        <td title="'Age'" filter="{ email : 'text'}" sortable="'email'">
+            {{user.email}}</td>
+    </tr>
+</table> -->
+
+<!--  <table ng-table="demo.tableParams" class="table table-condensed table-bordered table-striped">
+        <tr ng-repeat="row in users">
+          <td title="'Name'" filter="{name: 'text'}" sortable="'name'">{{row.id}}</td>
+          <td title="'Age'" filter="{age: 'number'}" sortable="'age'">{{row.email}}</td>
+          <td title="'Money'" filter="{money: 'number'}" sortable="'money'">{{row.country}}</td>
+        </tr>
+      </table> -->
+
+ </div>
