@@ -143,14 +143,16 @@ angular.module('cTRIVIAL')
 
     //Delete job document and data 
     $scope.deleteJob = function(){
-      clusterpost.deleteJob($scope.jobId).then(function(res){
-          console.log("Job " + $scope.jobId + " is delete ");
-          $scope.jobDelete = true;
-          $scope.updateStatus();
-      })
-      .catch(function(e){
-            throw e;
-      });    
+      if(confirm("Do you really want delete this job : " + $scope.jobObject.inputs[0].name + "fromn de database ? This action is irreversible."))
+      {
+        clusterpost.deleteJob($scope.jobId).then(function(res){
+            console.log("Job " + $scope.jobId + " is delete ");
+            $scope.jobDelete = true;
+        })
+        .catch(function(e){
+              throw e;
+        }); 
+      }   
     };
 
     //Remove circle plot 

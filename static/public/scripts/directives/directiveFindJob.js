@@ -7,7 +7,7 @@ function link($scope,$attrs,$filter){
   $scope.jobFound = [];
   $scope.noResult = false;
   $scope.selectStatus ={};
-  $scope.selectStatus.selection = "All status";
+  $scope.selectStatus.selection = "DONE";
   $scope.statusAvail = ["All status","CREATE", "DOWNLOADING", "RUN", "FAIL", "KILL", "UPLOADING", "EXIT", "DONE"];
 
   $scope.listPCA = "none";
