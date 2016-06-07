@@ -1,0 +1,34 @@
+{
+  "name": "ctrivial",
+  "version": "1.0.0",
+  "description": "This is the main server of cTRIVIAL",
+  "main": "server.js",
+  "directories": {
+    "doc": "Documents related to cTRIVIAL.",
+    "server": "The server application of cTRIVIAL."
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "juanprietob@gmail.com",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "clusterpost-server": "^1.0.5"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danaele/ProbtrackBrainConnectivity.git"
+  },
+  "keywords": [
+    "tractography",
+    "visualization",
+    "brain",
+    "connectivity",
+    "cloud"
+  ],
+  "bugs": {
+    "url": "https://github.com/danaele/ProbtrackBrainConnectivity/issues"
+  },
+  "homepage": "https://github.com/danaele/ProbtrackBrainConnectivity#readme"
+}
