@@ -1,11 +1,11 @@
 {
-  "name": "ctrivial",
+  "name": "civility",
   "version": "1.0.0",
-  "description": "This is the main server of cTRIVIAL",
+  "description": "This is the main server of CIVILITY",
   "main": "server.js",
   "directories": {
-    "doc": "Documents related to cTRIVIAL.",
-    "server": "The server application of cTRIVIAL."
+    "doc": "Documents related to CIVILITY.",
+    "server": "The server application of CIVILITY."
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,7 +25,9 @@
     "visualization",
     "brain",
     "connectivity",
-    "cloud"
+    "cloud",
+    "interactive",
+    "connectome"
   ],
   "bugs": {
     "url": "https://github.com/danaele/ProbtrackBrainConnectivity/issues"

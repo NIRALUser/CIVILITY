@@ -1,4 +1,4 @@
-angular.module('cTRIVIAL')
+angular.module('CIVILITY')
 .directive('newWindow', ['$window', '$compile',
   function($window, $compile) {
     return {

@@ -1,5 +1,5 @@
 
-angular.module('cTRIVIAL')
+angular.module('CIVILITY')
 .directive('userLogin', function($routeParams, $location, $rootScope, clusterauth){
 	function link($scope,$attrs,$filter){
 	

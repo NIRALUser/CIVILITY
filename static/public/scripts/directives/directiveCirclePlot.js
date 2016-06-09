@@ -1,4 +1,4 @@
-angular.module('cTRIVIAL')
+angular.module('CIVILITY')
 .directive('circlePlot',function($routeParams,$location){
 
 	function link($scope,$attrs,$filter){

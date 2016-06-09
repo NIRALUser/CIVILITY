@@ -1,4 +1,4 @@
-angular.module('cTRIVIAL')
+angular.module('CIVILITY')
 .factory('clusterpost', function ($q, $http, $location) {
   return {
     getExecutionServers: function () {

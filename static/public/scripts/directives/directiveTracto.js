@@ -1,5 +1,5 @@
 
-angular.module('cTRIVIAL')
+angular.module('CIVILITY')
 .directive('submitTracto', function($routeParams,$location,clusterpost, $http){
 
   function link($scope,$attrs,$filter){
@@ -291,12 +291,9 @@ angular.module('cTRIVIAL')
     //Create Job   
     clusterpost.createJob(job)
     .then(function(res){
-      console.log($scope.Parameters.Files);
       //Upload data
-      console.log(res.data);
       var doc = res.data;
       job_id = doc.id;
-      console.log("JOB", job)
       var val = $scope.readFilesAndSubmit(job_id); 
     })
     .catch(function(e){
@@ -305,15 +302,14 @@ angular.module('cTRIVIAL')
  };
 
   $scope.submitJobX = function(jobid,force){
-    console.log(jobid,force)
     clusterpost.submitJob(jobid,force).then(function(res){
         console.log("Job " + jobid + " submit");
         $scope.submitTractoButton = false;
-        $scope.jobSumitConfirmation.push("Job " + jobid + " is submited.");
+        $scope.jobSumitConfirmation.push("Job " + $scope.Parameters.subject + " is submited.");
     })
     .catch(function(e){
       $scope.submitTractoButton = false;
-      $scope.jobSumitConfirmation.push("Job " + jobid + " submission failed.");
+      $scope.jobSumitConfirmation.push("Job " + $scope.Parameters.subject + " submission failed.");
       console.error(e);
       throw e;
     });

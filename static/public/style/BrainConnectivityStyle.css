@@ -284,13 +284,12 @@ h4, h5{
 .divBrainALL, .divBrainRight{
     position: relative;
     display: inline-block;
-    padding: 0% 2% 0% 2%;
 }
 
 .divBrainLeft{
     position: relative;
     display: inline-block;
-    padding: 0% 1% 0% 1%;
+    margin-right: -60px;
   }
 
 .divBrainLinkRight, .divBrainImgRight{
