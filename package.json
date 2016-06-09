@@ -10,10 +10,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "juanprietob@gmail.com",
+  "author": "dana.puechmaille@gmail.com",
   "license": "Apache-2.0",
   "dependencies": {
-    "clusterpost-server": "^1.0.5"
+    "clusterpost-server": "^1.0.7"
   },
   "devDependencies": {},
   "repository": {
