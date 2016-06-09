@@ -1,5 +1,5 @@
 
-angular.module('cTRIVIAL')
+angular.module('CIVILITY')
 .directive('computePca', function($routeParams,$location,clusterpost){
 
 function link($scope,$attrs,$filter){

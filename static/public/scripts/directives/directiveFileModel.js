@@ -1,4 +1,4 @@
-angular.module('cTRIVIAL')
+angular.module('CIVILITY')
 .directive('fileModel', ['$parse', function ($parse) {
     return {
         restrict: 'A',

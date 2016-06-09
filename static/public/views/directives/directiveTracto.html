@@ -37,6 +37,11 @@
 			           required ng-trim="false"><br> 
 			</div>
 			<br>
+			<h4> Extract Label Surfaces options : </h4>
+			Overlapping
+			<input type="checkbox" name="overlapping" value="overlapping" ng-model="overlapping" ng-init="overlapping=true"  />
+			<br>
+			<br>
 			<h4> Bedpostx options :</h4>
 			<i> By default  : number of tensors in the voxel fitting = 2  </i> <br> <br>
 			Command line parameters: <br>
@@ -45,11 +50,7 @@
 			<input type="text" ng-model="tools.bedpostx.param" id="{{tools.bedpostx.id}}" disabled> </input> <a href="" data-toggle="tooltip" title="{{tools.bedpostx.help}}"> Help <i class="glyphicon glyphicon-info-sign"> </i> </a>
 			<br>
 			<br>
-			<h4> Extract Label Surfaces options : </h4>
-			Overlapping
-			<input type="checkbox" name="overlapping" value="overlapping" ng-model="overlapping" ng-init="overlapping=true"  />
-			<br>
-			<br>
+			
 			<h4> Tractography / Probtrackx2 options : </h4> 
 			
 			<!-- <div class="probtrackxInfo"> Probtrackx help

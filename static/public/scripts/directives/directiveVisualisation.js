@@ -1,5 +1,5 @@
 
-angular.module('cTRIVIAL')
+angular.module('CIVILITY')
 .directive('connectivityVisualisation', function($routeParams,$location,clusterpost, $http){
 
 function link($scope,$attrs,$filter){

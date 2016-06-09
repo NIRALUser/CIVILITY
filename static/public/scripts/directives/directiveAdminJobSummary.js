@@ -1,5 +1,5 @@
 
-angular.module('cTRIVIAL')
+angular.module('CIVILITY')
 .directive('adminJob', function($routeParams,$location,clusterpost, $filter, $q){
 
 	function link($scope,$attrs){

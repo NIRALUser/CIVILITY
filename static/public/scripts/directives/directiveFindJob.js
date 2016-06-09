@@ -1,5 +1,5 @@
 
-angular.module('cTRIVIAL')
+angular.module('CIVILITY')
 .directive('findJob', function($routeParams,$location,clusterpost, clusterauth){
 
 function link($scope,$attrs,$filter){
@@ -61,9 +61,7 @@ function link($scope,$attrs,$filter){
             var errorFound = str.search("ERROR_PIPELINE_PROBTRACKBRAINCONNECTIVITY");
             if(errorFound == -1) var restartJobForce = true;
             else var restartJobForce = false;
-            console.log("OK CONTINUE ?? ", restartJobForce);
             //parse data.res;
-            console.log(restartJobForce);
             if(restartJobForce)
             {
               clusterpost.submitJob(job._id,true).then(function(res){

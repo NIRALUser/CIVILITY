@@ -1,4 +1,4 @@
-angular.module('cTRIVIAL')
+angular.module('CIVILITY')
 .directive('jobStatus', function($routeParams,$location,clusterpost){
 
 	function link($scope,$attrs,$filter){
@@ -27,8 +27,6 @@ angular.module('cTRIVIAL')
     $scope.getJobObject = function(){
       clusterpost.getJob($scope.jobId).then(function(res){
         $scope.jobObject = res.data;
-        console.log($scope.jobObject);
-
         $scope.jobObject.timestamp = new Date($scope.jobObject.timestamp);
 
         //Update status automatically when the page is loading 
