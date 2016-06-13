@@ -5,8 +5,10 @@ angular.module('CIVILITY')
 	function link($scope,$attrs){
 
 
+
 		$scope.updateStatus = function(job){
 
+			console.log(job);
 		    clusterpost.getJobStatus(job._id).then(function(res){
 	           job.jobstatus = res.data;
 	        })

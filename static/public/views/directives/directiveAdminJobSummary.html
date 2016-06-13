@@ -6,7 +6,7 @@
 		<table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
 			<thead>
 			<tr>
-				<th colspan="5">  Search <input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+				<th colspan="6">  Search <input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
 				<th colspan="5"> Number of jobs per page <input class="form-control" placeholder="Item by page ..." type="text" ng-model="itemsByPage"/></th>
 			</tr>
 			<tr>
@@ -14,6 +14,7 @@
 				<th st-sort="timestamp">Timestamp</th>
 				<th st-sort="jobsstatus.status">Job status</th>
 				<th st-sort="_id"> ID </th>
+				<th st-sort="row.parameters[0].name"> job name </th>
 				<th st-sort="jobstatus.jobid">Job ID </th>
 				<th>Update status</th>
 				<th>Run job</th>
@@ -47,6 +48,7 @@
 				<td>{{row.timestamp}}</td>
 				<td>{{row.jobstatus.status}}</td>
 				<td>{{row._id}}</td>
+				<td>{{row.parameters[0].name}}</td>
 				<td>{{row.jobstatus.jobid}}</td>
 				<td>
 					<button type="button" ng-click="updateStatus(row)" class="btn btn-sm btn-default">
