@@ -84,7 +84,7 @@
 			<br>
 			<div class="listJobSubmited">
 				<ul > 
-					<li class="jobSubmission" ng-repeat="sub in jobSumitConfirmation"> {{sub}} </li> 	
+					<li class="jobSubmission" ng-repeat="sub in jobSumitConfirmation track by $index"> {{sub}} </li> 	
 				</ul> 
 			</div>
 		</form>
