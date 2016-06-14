@@ -2,6 +2,30 @@
   font-size : 12px;
 }
 
+.widget {
+    display: inline-block;
+    background-color: white;
+    font-size: 14px !important;
+    line-height: 20px !important;
+
+    margin: 5px;
+    vertical-align: top;
+    color: #333;
+
+    border-radius: 5px;
+    margin: 10px;
+    padding-bottom: 20px;
+    border: 1px solid lightgray;
+
+
+    border-radius:5px;
+    -webkit-border-radius: 5px;
+
+
+    display: inline-block;
+    page-break-after: always;
+}
+
 .listJobSubmited{
   border-color: #B0B0B0;
   border-width: 1px;

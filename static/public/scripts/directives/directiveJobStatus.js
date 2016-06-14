@@ -1,5 +1,5 @@
 angular.module('CIVILITY')
-.directive('jobStatus', function($routeParams,$location,clusterpost){
+.directive('jobStatus', function($routeParams,$location,clusterpost, $http){
 
 	function link($scope,$attrs,$filter){
 
@@ -13,6 +13,7 @@ angular.module('CIVILITY')
     $scope.selection = {};
     $scope.selection.jobSelect = false; 
 
+   
     $scope.updateStatus = function(){
          clusterpost.getJobStatus($scope.jobId).then(function(res2){
            $scope.jobObject.jobstatus.status = res2.data.status ; 

@@ -35,8 +35,9 @@
     "numericjs": "^1.2.6",
     "mathjs": "^3.1.4",
     "angular-jwt": "^0.0.9",
-    "angular-smart-table": "^2.1.8"
-    },
+    "angular-smart-table": "^2.1.8",
+    "canvas2image": "*"
+  },
   "resolutions": {
     "angular": "~1.3.11"
   }
