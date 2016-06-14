@@ -305,11 +305,11 @@ angular.module('CIVILITY')
     clusterpost.submitJob(jobid,force).then(function(res){
         console.log("Job " + jobid + " submit");
         $scope.submitTractoButton = false;
-        $scope.jobSumitConfirmation.push("Job " + $scope.Parameters.subject + " is submited.");
+        $scope.jobSumitConfirmation.push("Job " + $scope.Parameters.subject + " is created and is running.");
     })
     .catch(function(e){
       $scope.submitTractoButton = false;
-      $scope.jobSumitConfirmation.push("Job " + $scope.Parameters.subject + " submission failed.");
+      $scope.jobSumitConfirmation.push("Job " + $scope.Parameters.subject + " is created but it's not running. \n --Try to restart the job in the Jobs summary view");
       console.error(e);
       throw e;
     });
