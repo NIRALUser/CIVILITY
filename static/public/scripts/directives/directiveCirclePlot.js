@@ -60,10 +60,8 @@ angular.module('CIVILITY')
 
 	      $scope.plotView = true;
 	      var data =  $scope.plotData["fdt_matrix"];//$scope.contentM ;
-	      console.log("MATRIX",data);
 
 	      var table =  $scope.plotData["jsonTableDescripton"];//$scope.contentJ ;
-	      console.log("DESCRIPTION TABLE",table);
 	  	  var matrix = [];
 	  	  var matrix_norm = [];
 	      if(angular.isString(data))
@@ -72,12 +70,10 @@ angular.module('CIVILITY')
 	      
 	       //GET MATRIX    
 	        for(var line = 0; line < lines.length; line++){      
-	        // console.log(lines[line]);
 	            var rows = [];
 	            var values = lines[line].split('  ');
 	            for(var val = 0; val < values.length; val++){
 	              if(values[val] != ""){
-	                  //console.log(values[val]);
 	                   rows.push(values[val]);
 	                }           
 	              }
@@ -86,10 +82,8 @@ angular.module('CIVILITY')
 	                  matrix.push(rows);
 	              }
 	            }
-	            console.log(matrix);
 	            for(var line in matrix)
 	             {
-	               //console.log(matrix[blabla]);
 	               if(matrix.length != matrix[line].length)
 	               {
 	                  console.log("Error dimension matrix");
@@ -123,8 +117,6 @@ angular.module('CIVILITY')
 	          {
 	          	matrix_norm = data;
 	          }
-	                //console.log(table);
-
 	                var table_Matrix = [];
 	                var listFDT = [];
 	                var listVisuOrder = [];
@@ -140,11 +132,8 @@ angular.module('CIVILITY')
 	                  var matrixRow = table[seed]["MatrixRow"];
 	                  if(matrixRow != "-1")
 	                  {
-	                    //console.log(table[seed]["MatrixRow"]);
-	                    //console.log(matrixRow-1);
 	                    listFDT[matrixRow-1] = table[seed]["VisuHierarchy"] + table[seed]["name"];
 	                    var visuorder = table[seed]["VisuOrder"];
-	                    //console.log(visuorder);
 	                    if(visuorder > MaxvisuOrder )
 	                    {
 	                      MaxvisuOrder = visuorder;
@@ -167,7 +156,6 @@ angular.module('CIVILITY')
 	                  var visuOrder = table_Matrix[seed]["VisuOrder"];
 	                  if(visuOrder != "-1")
 	                  {
-	                    //console.log("hello");
 	                    var name = table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
 	                    if(table_Matrix[seed]["coord"] != undefined)
 	                    {
@@ -190,9 +178,6 @@ angular.module('CIVILITY')
 	                  }  
 	                }
 
-	                //console.log("List visu order" + listVisuOrder);
-	                //console.log("List fdt" + listFDT);
-
 	                var NewMat = [];
 	                matrix_norm.forEach(function(line,i)
 	                {
@@ -213,8 +198,6 @@ angular.module('CIVILITY')
 	                }                       
 	             });
 	            
-	            console.log("Matrix ordered");
-	            console.log(NewMat.length);
 
 	            var returnJSONobject = {"matrix" : NewMat, "listOrdered" : listVisuOrder}
 	            return returnJSONobject;
@@ -344,10 +327,8 @@ angular.module('CIVILITY')
 
 		//This function create the description object for d3 plotting
 		$scope.CreateDescription = function(JSONInfo, checkbox){
-				console.log($scope.plotData)
 				 if($scope.plotData)
 		 		 {		 		 	
-		 		 	console.log("valueCheck" + checkbox);
 		 		 	var matrix = JSONInfo["matrix"];
 		 		 	var MatProcess = [];
 		 		 	//Process matrix 
@@ -405,7 +386,6 @@ angular.module('CIVILITY')
 		  //---This function is call when $scope variable are changing - before call Plot()
 		  $scope.removeOldPlot = function()
 		  {
-		  	console.log("REMOVE");
 		  	var circlePlot = document.getElementById("divPlot_"+$scope.plotID);
 		  	if(circlePlot != null) 	circlePlot.parentNode.removeChild(circlePlot);
 		  	var tooltipPlot = document.getElementById("tooltip_"+$scope.plotID);
@@ -436,7 +416,6 @@ angular.module('CIVILITY')
 		  	$scope.removeOldPlot();
 		  	//Catch method used
 		  	var method = $scope.choice.selection;
-		  	console.log(method + " method");
 
 		  	//Data 
 		    //var JSONInfo = $scope.plotData;
@@ -636,7 +615,6 @@ angular.module('CIVILITY')
 		       svg.selectAll(".node")
 		          .data(nodes.filter(function(n) { 
 		          	//if(n.parent["depth"]==1)
-		          //console.log(n) ;
 		          	return !n.children; }))
 		        .enter().append("g")
 		          .attr("class", "node")
@@ -689,7 +667,6 @@ angular.module('CIVILITY')
 		     
 
 		     var scaleImgAll = $scope.scaleImgBrainTemplate.All + "%";
-		     console.log("scaleImgAll",scaleImgAll);
 		     var imgBrain = divBrainImgALL.append("img")
 		     .attr("src","data/rsz_brainall.png")
 		     .attr("class","bgimgAll")
@@ -917,7 +894,6 @@ angular.module('CIVILITY')
 
 		       		var coordXScale = coordY*parseFloat($scope.positionNodes.Left.scalePointLeft);
 		       		var coordYScale = coordZ*parseFloat($scope.positionNodes.Left.scalePointLeft);
-		       		//console.log("coord");
 		       		svgBrainLeft.append("circle")
 		       			.attr("cx", coordXScale)
 		       			.attr("cy", coordYScale)
