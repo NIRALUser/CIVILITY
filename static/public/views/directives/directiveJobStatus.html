@@ -7,7 +7,7 @@
  	</div>	
  	<div ng-if="jobObject.jobstatus.status == 'RUN'">
 			 <button class="btn btn-warning" ng-click="killJob()"> Kill Job </button>  
-				<span class="glyphicon glyphicon-ok" aria-hidden="true" ng-if="jobObject.jobstatus.status == 'KILL'"></span> <br>
+			 <br>
 	</div> 		
  	<div ng-show="jobObject.jobstatus.status == 'DONE'">
 		<button type="button" class="btn btn-primary" ng-click="plotDataCircle()" ng-if="!viewCirclePlot"> Connectivity visualisation </button> 
@@ -19,7 +19,7 @@
 		</div>
 
 		<div class="divLinkDir"> 
-	 		<a class="linkDownloadDir" href="/clusterpost/dataprovider/{{jobId}}/{{jobObject.outputs[2].name}}.tar.gz"> Download output directory </a><br>
+	 		<a class="linkDownloadDir" href="" ng-click="getOutputDirectory(jobId,jobObject.outputs[2].name+'.tar.gz')"> Download output directory </a><br>
 	 	</div>
 	 </div>
 	
