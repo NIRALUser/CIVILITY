@@ -55,16 +55,7 @@ angular.module('CIVILITY')
 		$scope.choice.selection = "Average";
 		 $scope.plotBrainTemplate = false;
 
-		 $scope.saveAsImage = function(){
-		 	html2canvas("#plotCircleDiv"), {
-		 		onrendered:function(canvas){
-		 			theCanvas = canvas;
-		 			document.body.appendChild(canvas);
 
-		 			
-		 		}
-		 	}
-		 }
 
 
 		$scope.plotBrainConnectivity = function(){
@@ -498,6 +489,8 @@ angular.module('CIVILITY')
 		        .append("g")
 		        .attr("transform", "translate(" + radius + "," + radius + ")");
 		  
+
+
 		    var y = d3.scale.linear()
 		        .range([height/2, 0])
 		        .domain([thresholdDefaultValue, upperValue]);	     
