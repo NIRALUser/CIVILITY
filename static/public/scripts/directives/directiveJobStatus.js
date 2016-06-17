@@ -1,5 +1,5 @@
 angular.module('CIVILITY')
-.directive('jobStatus', function($routeParams,$location,clusterpost){
+.directive('jobStatus', function($routeParams,$location,clusterpost, $http){
 
 	function link($scope,$attrs,$filter){
 
@@ -13,6 +13,8 @@ angular.module('CIVILITY')
     $scope.selection = {};
     $scope.selection.jobSelect = false; 
 
+
+   
     $scope.updateStatus = function(){
          clusterpost.getJobStatus($scope.jobId).then(function(res2){
            $scope.jobObject.jobstatus.status = res2.data.status ; 
@@ -94,6 +96,35 @@ angular.module('CIVILITY')
 	    		$scope.sameSurface= false;
 	    	}
   	};
+
+    $scope.getOutputDirectory = function(jobid, name)
+    {
+
+      clusterpost.getAttachment(jobid, name, 'blob')
+      .then(function(res){
+        console.log("create fake link")
+          var pom = document.createElement('a');
+          document.body.appendChild(a);
+          a.style = "display: none";
+          var filename = name + "tar.gz";
+
+          return function(blob,filename)
+          {
+            var url = window.URL.createObjectURL(res.data);
+            a.href = url;
+            a.download = filename;
+            a.click();
+            window.URL.revokeObjectURL(url);
+          }
+      /*    var bb = new Blob([csv], {type: 'text/plain'});*/
+
+          /*pom.setAttribute('href', window.URL.createObjectURL(res.data));
+          pom.setAttribute('download', name+"tar.gz");
+
+        pom.dataset.downloadurl = ['text/plain', pom.download, pom.href].join(':');
+        pom.click();        */
+      });
+    }
 
 		//Get job document information 
     $scope.getJobInfo = function(){

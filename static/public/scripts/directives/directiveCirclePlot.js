@@ -56,6 +56,8 @@ angular.module('CIVILITY')
 		 $scope.plotBrainTemplate = false;
 
 
+
+
 		$scope.plotBrainConnectivity = function(){
 
 	      $scope.plotView = true;
@@ -487,6 +489,8 @@ angular.module('CIVILITY')
 		        .append("g")
 		        .attr("transform", "translate(" + radius + "," + radius + ")");
 		  
+
+
 		    var y = d3.scale.linear()
 		        .range([height/2, 0])
 		        .domain([thresholdDefaultValue, upperValue]);	     
