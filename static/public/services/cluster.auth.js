@@ -57,7 +57,7 @@ angular.module('CIVILITY')
     createUser: function(user){
       return $http({
         method: 'POST',
-        url: '/clusterauth/user',
+        url: '/auth/user',
         data: user
       })
       .then(function(res){
@@ -67,20 +67,20 @@ angular.module('CIVILITY')
     getUser: function(){
       return $http({
         method: 'GET',
-        url: '/clusterauth/user'
+        url: '/auth/user'
       });
     },    
     deleteUser: function(user){
       return $http({
         method: 'DELETE',
-        url: '/clusterauth/user',
+        url: '/auth/user',
         data: user
       });
     },
     login: function(user){
       return $http({
         method: 'POST',
-        url: '/clusterauth/login',
+        url: '/auth/login',
         data: user
       })
       .then(function(res){
@@ -90,7 +90,7 @@ angular.module('CIVILITY')
     updatePassword: function(user, token){
       return $http({
         method: 'PUT',
-        url: '/clusterauth/login',
+        url: '/auth/login',
         data: user,
         headers: {
           authorization: "Bearer " + token
@@ -103,7 +103,7 @@ angular.module('CIVILITY')
     sendRecoverPassword: function(email){
        return $http({
         method: 'POST',
-        url: '/clusterauth/reset',
+        url: '/auth/reset',
         data: email
       });
     },
