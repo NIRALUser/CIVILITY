@@ -21,6 +21,8 @@ angular.module('CIVILITY')
 		$scope.errorMsg = "";
 		clusterauth.createUser($scope.newUser)
 		.then(function(){
+
+			alert("If you want be able to run jobs (tratography computation) on the computing grid server, you must send a request by email to : \n juan_prieto@med.unc.edu");
 			return clusterauth.getUser();
 		})
 		.then(function(res){
@@ -32,6 +34,10 @@ angular.module('CIVILITY')
 			{
 				$scope.errorMsg = "An account already exist with this email address. Login with your account or create a new one with a new email address";
 				//alert("An account already exist with this email address. Recover password or create a new account with a new email address");
+			}
+			else
+			{
+				//
 			}
 			throw e;
 		});
