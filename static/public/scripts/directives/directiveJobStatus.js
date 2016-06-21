@@ -104,16 +104,16 @@ angular.module('CIVILITY')
       .then(function(res){
         console.log("create fake link")
           var pom = document.createElement('a');
-          document.body.appendChild(a);
-          a.style = "display: none";
-          var filename = name + "tar.gz";
+          document.body.appendChild(pom);
+          pom.style = "display: none";
+          var filename = name + ".tar.gz";
 
           return function(blob,filename)
           {
             var url = window.URL.createObjectURL(res.data);
-            a.href = url;
-            a.download = filename;
-            a.click();
+            pom.href = url;
+            pom.download = filename;
+            pom.click();
             window.URL.revokeObjectURL(url);
           }
       /*    var bb = new Blob([csv], {type: 'text/plain'});*/
