@@ -106,7 +106,7 @@ angular.module('CIVILITY')
           var pom = document.createElement('a');
           document.body.appendChild(pom);
           pom.style = "display: none";
-          var filename = name + "tar.gz";
+          var filename = name + ".tar.gz";
 
           return function(blob,filename)
           {
