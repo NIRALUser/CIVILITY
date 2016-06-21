@@ -13,7 +13,7 @@
   "author": "dana.puechmaille@gmail.com",
   "license": "Apache-2.0",
   "dependencies": {
-    "clusterpost-server": "^1.1.2",
+    "clusterpost-server": "^1.2.1",
     "probtrack-brain-connectivity-static": "1.0.0"
   },
   "devDependencies": {},
