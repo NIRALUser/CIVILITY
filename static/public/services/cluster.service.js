@@ -68,6 +68,12 @@ angular.module('CIVILITY')
         responseType: responseType
       });
     },
+    getAttachmentURL: function(id, name){
+      return $http({
+        method: 'GET',
+        url: '/dataprovider/download/' + id + '/' + encodeURIComponent(name)
+      });      
+    },
     addAttachment: function(id, filename, data){
     	return $http({
         method: 'PUT',
