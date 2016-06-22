@@ -18,9 +18,9 @@ angular.module('CIVILITY')
 						$scope.loginName += " (admin)";
 						$scope.isAdmin = true;
 					}
-					else if (val = "useComputingGrid")	
+					else if (val = "clusterpost")	
 					{
-						$scope.useComputingGrid = true;
+						$scope.clusterpost = true;
 					}
 				})
 			})

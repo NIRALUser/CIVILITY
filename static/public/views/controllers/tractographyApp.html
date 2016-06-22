@@ -7,11 +7,11 @@
 <!-- Tabs -->
    <uib-tabset active="activePill" type="pills" class="tabsetAppMenu">
 
-    <uib-tab index="1" heading="Tractography" ng-if="useComputingGrid" active="true"> 
+    <uib-tab index="1" heading="Tractography" ng-if="login.scope.indexOf('clusterpost') > -1" active="true"> 
       <div> <submit-tracto  > </submit-tracto> </div>  
     </uib-tab>
 
-    <uib-tab index="2" heading="Jobs" ng-if="useComputingGrid">
+    <uib-tab index="2" heading="Jobs" ng-if="login.scope.indexOf('clusterpost') > -1">
       <find-job> </find-job>    
     </uib-tab>
 
@@ -19,7 +19,7 @@
       <connectivity-visualisation > </connectivity-visualisation>
     </uib-tab>
 
-    <uib-tab index="4" heading="Database - Admin" ng-if="isAdmin">
+    <uib-tab index="4" heading="Database - Admin" ng-if="login.scope.indexOf('admin') > -1">
       <admin-job> </admin-job> 
     </uib-tab>
 
