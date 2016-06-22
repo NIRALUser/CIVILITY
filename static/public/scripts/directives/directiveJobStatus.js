@@ -1,5 +1,13 @@
 angular.module('CIVILITY')
+<<<<<<< HEAD
 .directive('jobStatus', function($routeParams,$location,clusterpost, $http, $window){
+=======
+<<<<<<< HEAD
+.directive('jobStatus', function($routeParams,$location,clusterpost, $window){
+=======
+.directive('jobStatus', function($routeParams,$location,clusterpost, $http, $window){
+>>>>>>> BUG : fix bug to download directory, but not optimized for memory
+>>>>>>> TemporaryToken
 
 	function link($scope,$attrs,$filter){
 
@@ -95,25 +103,27 @@ angular.module('CIVILITY')
 	    	{
 	    		$scope.sameSurface= false;
 	    	}
-  	};
+  	};    
 
-    $scope.getOutputDirectory = function(jobid, name)
+    $scope.getOutputDirectoryURL = function(jobid, name)
     {
-     //   $window.open('/dataprovider/' + jobid + '/' + name, "_blank");
-      clusterpost.getAttachment(jobid, name, 'blob')
-      .then(function(res){
-        console.log("create fake link")
-          var pom = document.createElement('a');
-          document.body.appendChild(pom);
-          pom.style = "display: none";
-          var filename = name + ".tar.gz";
 
-          var url = window.URL.createObjectURL(res.data);
-          pom.href = url;
-          pom.download = filename;
-          pom.click();
-          //window.URL.revokeObjectURL(url);
-          document.body.removeChild(pom);
+      clusterpost.getDownloadToken(jobid, name)
+      .then(function(res){
+
+        var pom = document.createElement('a');
+          
+        document.body.appendChild(pom);
+        pom.style = "display: none";
+        var filename = name;        
+        pom.href = "/dataprovider/download/" + res.data.token;
+        pom.download = filename;
+        pom.click();        
+        document.body.removeChild(pom);
+        
+      })
+      .catch(function(err){
+        console.error(err);
       });
     }
 
