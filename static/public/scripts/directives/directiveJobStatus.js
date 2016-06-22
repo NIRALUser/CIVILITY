@@ -1,13 +1,5 @@
 angular.module('CIVILITY')
-<<<<<<< HEAD
-.directive('jobStatus', function($routeParams,$location,clusterpost, $http, $window){
-=======
-<<<<<<< HEAD
-.directive('jobStatus', function($routeParams,$location,clusterpost, $window){
-=======
-.directive('jobStatus', function($routeParams,$location,clusterpost, $http, $window){
->>>>>>> BUG : fix bug to download directory, but not optimized for memory
->>>>>>> TemporaryToken
+.directive('jobStatus', function($routeParams,$location,clusterpost, $http){
 
 	function link($scope,$attrs,$filter){
 
