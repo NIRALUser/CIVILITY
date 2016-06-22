@@ -1,8 +1,13 @@
 
 angular.module('CIVILITY')
-.directive('submitTracto', function($routeParams,$location,clusterpost, $http){
+.directive('submitTracto', function($routeParams,$location,clusterpost, $http, clusterauth){
 
   function link($scope,$attrs,$filter){
+
+    clusterauth.getUser()
+    .then(function(res){
+      $scope.userEmail = res.data.email;
+    });
 
     $scope.jobSumitConfirmation = [];
     
