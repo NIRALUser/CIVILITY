@@ -1,2 +1,3 @@
+#CIVILITY
 
-This is a readme file
+CIVILITY (cloud based Interractive Visualization of Tractography Brain Connectome) is a HAPI plugins used to visualized easily brain connectomes within an interactive web interface. This plugin configured with the HAPI plugin execution-server launches tractography scripts on a computing grid and uses a database to store data. The brain connectome is computed with a probabilistic tractography method (FSL tools) using surfaces as seeds.
