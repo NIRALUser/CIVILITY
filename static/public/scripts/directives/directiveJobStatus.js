@@ -56,7 +56,7 @@ angular.module('CIVILITY')
 		$scope.reRunJob = function(){
 			
   		  var force = false;
-        if($scope.jobObject.status != "CREATE") 
+        if($scope.jobObject.jobstatus.status != "CREATE") 
         {
           if(confirm("Did you check outputs log file ? Be sure you have correct inputs file. \n Are you sure you want to force the job submission ? ")){
             force = true;
