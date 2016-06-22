@@ -1,5 +1,5 @@
 angular.module('CIVILITY')
-.directive('jobStatus', function($routeParams,$location,clusterpost, $http){
+.directive('jobStatus', function($routeParams,$location,clusterpost, $window){
 
 	function link($scope,$attrs,$filter){
 
@@ -124,6 +124,16 @@ angular.module('CIVILITY')
         pom.dataset.downloadurl = ['text/plain', pom.download, pom.href].join(':');
         pom.click();        */
       });
+    }
+
+    $scope.getOutputDirectoryURL = function(jobid, name)
+    {
+
+      clusterpost.getAttachmentURL(jobid, name)
+      .then(function(url){        
+        $window.open(url, '_blank');
+      });
+      
     }
 
 		//Get job document information 
