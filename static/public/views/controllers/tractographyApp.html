@@ -7,11 +7,11 @@
 <!-- Tabs -->
    <uib-tabset active="activePill" type="pills" class="tabsetAppMenu">
 
-    <uib-tab index="1" heading="Tractography" active=>
+    <uib-tab index="1" heading="Tractography" ng-if="useComputingGrid" active="true"> 
       <div> <submit-tracto  > </submit-tracto> </div>  
     </uib-tab>
 
-    <uib-tab index="2" heading="Jobs" >
+    <uib-tab index="2" heading="Jobs" ng-if="useComputingGrid">
       <find-job> </find-job>    
     </uib-tab>
 
