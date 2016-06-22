@@ -11,6 +11,7 @@
 		</div> 
 
 		<button type="button" class="btn btn-default btn-lg center-block" ng-click="createJsonObjectForPlotConnectivity()">PLOT</button>
+		<img src="data/ajax-loader.gif" alt="loading" ng-if="load"> 
 	</div>
 	<div ng-if="plotView">
 		<circle-plot plot-data="jsonObjectForPlotConnectivity"  > </circle-plot>
