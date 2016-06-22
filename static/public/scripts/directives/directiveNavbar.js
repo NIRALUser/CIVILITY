@@ -10,19 +10,7 @@ angular.module('CIVILITY')
 		$scope.getName = function(){
 			clusterauth.getUser().then(function(res)
 			{
-				$scope.login.name = res.data.name;
-				$scope.login.email = res.data.email;
-				_.each(res.data.scope, function(val){
-					if(val == "admin")
-					{
-						$scope.loginName += " (admin)";
-						$scope.isAdmin = true;
-					}
-					else if (val = "clusterpost")	
-					{
-						$scope.clusterpost = true;
-					}
-				})
+				$scope.login = res.data				
 			})
 			.catch(function(e){
 				console.error(e);

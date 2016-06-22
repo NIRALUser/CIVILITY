@@ -99,17 +99,19 @@ angular.module('CIVILITY')
 
     $scope.getOutputDirectoryURL = function(jobid, name)
     {
-
+      console.log("IN");
+      $scope.load = true;
       clusterpost.getDownloadToken(jobid, name)
       .then(function(res){
-
+        console.log("IN2")
         var pom = document.createElement('a');
-          
+            
         document.body.appendChild(pom);
         pom.style = "display: none";
         var filename = name;        
         pom.href = "/dataprovider/download/" + res.data.token;
         pom.download = filename;
+        $scope.load = false;
         pom.click();        
         document.body.removeChild(pom);
         
