@@ -19,8 +19,12 @@
       <connectivity-visualisation > </connectivity-visualisation>
     </uib-tab>
 
-    <uib-tab index="4" heading="Database - Admin" ng-if="login.scope.indexOf('admin') > -1">
+    <uib-tab index="4" heading="Job Database - Admin" ng-if="login.scope.indexOf('admin') > -1">
       <admin-job> </admin-job> 
+    </uib-tab>
+
+    <uib-tab index="5" heading="User Database - Admin" ng-if="login.scope.indexOf('admin') > -1">
+      <admin-user-privileges> </admin-user-privileges>
     </uib-tab>
 
     <!-- <uib-tab index="5" heading="Compute PCA - Admin" ng-if="isAdmin">
