@@ -129,9 +129,12 @@ angular.module('CIVILITY')
     $scope.getOutputDirectoryURL = function(jobid, name)
     {
 
-      clusterpost.getAttachmentURL(jobid, name)
-      .then(function(url){        
-        $window.open(url, '_blank');
+      clusterpost.getDownloadToken(jobid, name)
+      .then(function(res){        
+        $window.open("/dataprovider/download/" + res.data.token, '_blank');
+      })
+      .catch(function(err){
+        console.error(err);
       });
       
     }

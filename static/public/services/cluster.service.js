@@ -68,7 +68,7 @@ angular.module('CIVILITY')
         responseType: responseType
       });
     },
-    getAttachmentURL: function(id, name){
+    getDownloadToken: function(id, name){
       return $http({
         method: 'GET',
         url: '/dataprovider/download/' + id + '/' + encodeURIComponent(name)
