@@ -15,7 +15,7 @@
       <find-job> </find-job>    
     </uib-tab>
 
-    <uib-tab index="3" heading="Visualization" >
+    <uib-tab index="3" heading="Visualization" ng-if="login.scope.indexOf('default') > -1">
       <connectivity-visualisation > </connectivity-visualisation>
     </uib-tab>
 
