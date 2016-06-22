@@ -23,12 +23,48 @@ function link($scope,$attrs,$filter){
     };
 
     $scope.createJsonObjectForPlotConnectivity = function(){
-      $scope.jsonObjectForPlotConnectivity = {
+    $scope.load = true;
+     if($scope.contentM === undefined )
+     {
+       alert("You must select a matrix file");
+       $scope.load = false;
+       return false;
+     }
+     else if($scope.contentJ === undefined )
+     {
+       alert("You must select a json file which describe de parcellation table");
+       $scope.load = false;
+       return false;
+     }
+
+     if(testJSON($scope.contentJ))
+      {
+         $scope.jsonObjectForPlotConnectivity = {
           "fdt_matrix" : $scope.contentM,
           "jsonTableDescripton" : JSON.parse($scope.contentJ)
+          }
+        console.log($scope.jsonObjectForPlotConnectivity)
+        $scope.plotView = true;
+        $scope.load = false;
       }
-      $scope.plotView = true;
+      else
+      {
+        alert("Parcellation file upload is not a JSON file");
+        $scope.load = false;
+        return false;
+      }
     }
+
+    function testJSON(text){
+      try{
+          JSON.parse(text);
+          return true;
+      }
+      catch (error){
+          return false;
+      }
+    }
+
 };
 return {
     restrict : 'E',

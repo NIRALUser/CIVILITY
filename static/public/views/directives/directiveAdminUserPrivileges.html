@@ -1,0 +1,69 @@
+<div>
+	<div class="titleAdminDB">
+		<h2> Users Database </h2> 
+		Refresh database <button class="btn btn-sm btn-primary" ng-click="getAllUsers()"><i class="glyphicon glyphicon-refresh"></i> </button> 
+	</div>
+
+	<table st-table="displayedCollection2" st-safe-src="rowCollection" class="table table-striped">
+			<thead>
+			<tr>
+				<th colspan="6">  Search <input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+				<th colspan="5"> Number of user per page <input class="form-control" placeholder="Item by page ..." type="text" ng-model="itemsByPage"/></th>
+			</tr>
+			<tr>
+				<th st-sort="email">User email</th>
+				<th st-sort="name">User name </th>
+				<th st-sort="_id"> ID </th>
+				<th st-sort="scope"> Privileges (scope)</th>
+				<th>Update status</th>
+				<th>Run job</th>
+				<th>Force run job</th>
+			</tr>
+			<tr>
+				<th>
+					<input st-search="email" placeholder="search for email" class="input-sm form-control" type="search"/>
+				</th>
+				<th>
+					<input st-search="name" placeholder="search for name" class="input-sm form-control" type="search"/>
+				</th>
+				<th>
+					<input st-search="_id" placeholder="search for id" class="input-sm form-control" type="search"/>
+				</th>
+				<th>
+					<input st-search="scope" placeholder="search for scope" class="input-sm form-control" type="search"/>
+				</th>				
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-repeat="row in displayedCollection2">
+				<td>{{row.email}}</td>
+				<td>{{row.name}}</td>
+				<td>{{row._id}}</td>
+				<td>{{row.scope}}</td>
+				<td>
+					<button type="button" ng-click="updateStatus(row)" class="btn btn-sm btn-default">
+						<i class="glyphicon glyphicon-refresh">
+						</i>
+					</button>
+				</td>
+				<td>
+					<button type="button" ng-click="runJob(row,forceRunJob)" class="btn btn-sm btn-success">
+					<i class="glyphicon glyphicon-play">
+						</i>
+					</button>
+				</td>
+				<td>
+					<input type="checkbox" ng-model="forceRunJob"/>
+				</td>
+			</tr>
+			</tbody>
+			<tfoot>
+			<tr>
+				<td colspan="10" class="text-center">
+					<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+				</td>
+			</tr>
+			</tfoot>
+		</table>
+
+</div>
