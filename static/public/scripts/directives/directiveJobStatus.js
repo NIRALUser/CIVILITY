@@ -1,5 +1,5 @@
 angular.module('CIVILITY')
-.directive('jobStatus', function($routeParams,$location,clusterpost, $window){
+.directive('jobStatus', function($routeParams,$location,clusterpost, $http){
 
 	function link($scope,$attrs,$filter){
 
@@ -117,7 +117,6 @@ angular.module('CIVILITY')
       .catch(function(err){
         console.error(err);
       });
-      
     }
 
 		//Get job document information 

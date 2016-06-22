@@ -5,11 +5,11 @@ angular.module('CIVILITY')
 	function link($scope,$attrs,$filter){
 
 		$scope.isAdmin = false;
+		$scope.useComputingGrid = true;
 		$scope.login={};
 		$scope.getName = function(){
 			clusterauth.getUser().then(function(res)
 			{
-				console.log(res);
 				$scope.login.name = res.data.name;
 				$scope.login.email = res.data.email;
 				_.each(res.data.scope, function(val){
@@ -17,7 +17,11 @@ angular.module('CIVILITY')
 					{
 						$scope.loginName += " (admin)";
 						$scope.isAdmin = true;
-					}	
+					}
+					else if (val = "clusterpost")	
+					{
+						$scope.clusterpost = true;
+					}
 				})
 			})
 			.catch(function(e){
