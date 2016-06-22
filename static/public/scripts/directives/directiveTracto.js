@@ -1,8 +1,13 @@
 
 angular.module('CIVILITY')
-.directive('submitTracto', function($routeParams,$location,clusterpost, $http){
+.directive('submitTracto', function($routeParams,$location,clusterpost, $http, clusterauth){
 
   function link($scope,$attrs,$filter){
+
+    clusterauth.getUser()
+    .then(function(res){
+      $scope.userEmail = res.data.email;
+    });
 
     $scope.jobSumitConfirmation = [];
     
@@ -173,12 +178,6 @@ angular.module('CIVILITY')
           return false;
         }
       }  
-      //Check email select 
-      if($scope.userEmail == undefined)
-      {
-        alert ("You must specify your email to receive tractography results");
-        return false;
-      }
       return true;
     };
 
