@@ -19,7 +19,8 @@
 		</div>
 
 		<div class="divLinkDir"> 
-	 		<a class="linkDownloadDir" href="" ng-click="getOutputDirectory(jobId,jobObject.outputs[2].name+'.tar.gz')"> Download output directory </a>
+	 		<a class="linkDownloadDir" href="" ng-click="getOutputDirectoryURL(jobId,jobObject.outputs[2].name+'.tar.gz')"> Download output directory </a>
+	 		<img src="data/ajax-loader.gif" alt="loadingDirectory" ng-if="load">
 	 	</div>
 	 </div>
 	
