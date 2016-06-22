@@ -1,5 +1,5 @@
 angular.module('CIVILITY')
-.directive('jobStatus', function($routeParams,$location,clusterpost, $http){
+.directive('jobStatus', function($routeParams,$location,clusterpost, $http, $window){
 
 	function link($scope,$attrs,$filter){
 
@@ -99,7 +99,7 @@ angular.module('CIVILITY')
 
     $scope.getOutputDirectory = function(jobid, name)
     {
-
+     //   $window.open('/dataprovider/' + jobid + '/' + name, "_blank");
       clusterpost.getAttachment(jobid, name, 'blob')
       .then(function(res){
         console.log("create fake link")
@@ -108,21 +108,12 @@ angular.module('CIVILITY')
           pom.style = "display: none";
           var filename = name + ".tar.gz";
 
-          return function(blob,filename)
-          {
-            var url = window.URL.createObjectURL(res.data);
-            pom.href = url;
-            pom.download = filename;
-            pom.click();
-            window.URL.revokeObjectURL(url);
-          }
-      /*    var bb = new Blob([csv], {type: 'text/plain'});*/
-
-          /*pom.setAttribute('href', window.URL.createObjectURL(res.data));
-          pom.setAttribute('download', name+"tar.gz");
-
-        pom.dataset.downloadurl = ['text/plain', pom.download, pom.href].join(':');
-        pom.click();        */
+          var url = window.URL.createObjectURL(res.data);
+          pom.href = url;
+          pom.download = filename;
+          pom.click();
+          //window.URL.revokeObjectURL(url);
+          document.body.removeChild(pom);
       });
     }
 
