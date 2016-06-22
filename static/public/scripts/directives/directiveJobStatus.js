@@ -56,6 +56,7 @@ angular.module('CIVILITY')
 		$scope.reRunJob = function(){
 			
   		  var force = false;
+        $scope.loadRestart = true;
         if($scope.jobObject.jobstatus.status != "CREATE") 
         {
           if(confirm("Did you check outputs log file ? Be sure you have correct inputs file. \n Are you sure you want to force the job submission ? ")){
@@ -67,6 +68,7 @@ angular.module('CIVILITY')
           }
         }
         clusterpost.submitJob($scope.jobId,force).then(function(res){
+            $scope.loadRestart = false;
 		        console.log("Job " + $scope.jobId + " submit");
             $scope.updateStatus();
 		    })
@@ -100,7 +102,7 @@ angular.module('CIVILITY')
     $scope.getOutputDirectoryURL = function(jobid, name)
     {
       console.log("IN");
-      $scope.load = true;
+      $scope.loadDir = true;
       clusterpost.getDownloadToken(jobid, name)
       .then(function(res){
         console.log("IN2")
@@ -111,7 +113,7 @@ angular.module('CIVILITY')
         var filename = name;        
         pom.href = "/dataprovider/download/" + res.data.token;
         pom.download = filename;
-        $scope.load = false;
+        $scope.loadDir = false;
         pom.click();        
         document.body.removeChild(pom);
         
@@ -167,10 +169,13 @@ angular.module('CIVILITY')
 
     //Delete job document and data 
     $scope.deleteJob = function(){
+
+      $scope.loadDeleteDB = true;
       if(confirm("Do you really want delete this job : " + $scope.jobObject.inputs[0].name + "fromn de database ? This action is irreversible."))
       {
         clusterpost.deleteJob($scope.jobId).then(function(res){
             console.log("Job " + $scope.jobId + " is delete ");
+            $scope.loadDeleteDB = false;
             $scope.jobDelete = true;
         })
         .catch(function(e){
@@ -213,6 +218,8 @@ angular.module('CIVILITY')
 		};
 
 		$scope.plotDataCircle = function(){
+
+      $scope.loadPlot =true;
 			var promarray = [
 				$scope.getMatrix(),
 				$scope.getParcellationTable()
@@ -226,6 +233,8 @@ angular.module('CIVILITY')
           "fdt_matrix" : matrixOut,
           "jsonTableDescripton" : tableDescription
         }
+                $scope.loadPlot =false;
+
         $scope.viewCirclePlot = true;
         $scope.$apply();
 			})

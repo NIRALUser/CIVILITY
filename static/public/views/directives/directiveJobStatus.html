@@ -11,6 +11,8 @@
 	</div> 		
  	<div ng-show="jobObject.jobstatus.status == 'DONE'">
 		<button type="button" class="btn btn-primary" ng-click="plotDataCircle()" ng-if="!viewCirclePlot"> Connectivity visualisation </button> 
+		<img src="data/ajax-loader.gif" alt="loadingDirectory" ng-if="loadPlot">
+
 		<button type="button" class="btn btn-primary" ng-click="removeCirclePlot()" ng-show="viewCirclePlot"> Hide Connectivity visualisation </button> 
 		<br>
 				
@@ -20,7 +22,7 @@
 
 		<div class="divLinkDir"> 
 	 		<a class="linkDownloadDir" href="" ng-click="getOutputDirectoryURL(jobId,jobObject.outputs[2].name+'.tar.gz')"> Download output directory </a>
-	 		<img src="data/ajax-loader.gif" alt="loadingDirectory" ng-if="load">
+	 		<img src="data/ajax-loader.gif" alt="loadingDirectory" ng-if="loadDir">
 	 	</div>
 	 </div>
 	
@@ -62,6 +64,7 @@
 			</div>
 		</div>
 		<button type="button" class="btn btn-info" ng-click="reRunJob()" ng-if="jobObject.jobstatus.status != 'RUN'"> Restart</button>
+		<img src="data/ajax-loader.gif" alt="loadingDirectory" ng-if="loadRestart">
 
 		<div ng-if="jobObject.jobstatus.status == 'DONE' || jobObject.jobstatus.status == 'FAIL'">
 			<div ng-show="!viewLogOutput">
@@ -83,7 +86,8 @@
 
 		
 		<div> 
-			<button class="btn btn-danger" ng-click="deleteJob()"> Delete Job in database </button> 
+			<button class="btn btn-danger" ng-click="deleteJob()"> Delete Job in database </button>
+			<img src="data/ajax-loader.gif" alt="loadingDirectory" ng-if="loadDeleteDB"> 
 			<span class="glyphicon glyphicon-ok" aria-hidden="true" ng-if="jobDelete">  </span>
 		</div> 
 
