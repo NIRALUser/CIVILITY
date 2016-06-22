@@ -95,43 +95,24 @@ angular.module('CIVILITY')
 	    	{
 	    		$scope.sameSurface= false;
 	    	}
-  	};
-
-    $scope.getOutputDirectory = function(jobid, name)
-    {
-
-      clusterpost.getAttachment(jobid, name, 'blob')
-      .then(function(res){
-        console.log("create fake link")
-          var pom = document.createElement('a');
-          document.body.appendChild(pom);
-          pom.style = "display: none";
-          var filename = name + ".tar.gz";
-
-          return function(blob,filename)
-          {
-            var url = window.URL.createObjectURL(res.data);
-            pom.href = url;
-            pom.download = filename;
-            pom.click();
-            window.URL.revokeObjectURL(url);
-          }
-      /*    var bb = new Blob([csv], {type: 'text/plain'});*/
-
-          /*pom.setAttribute('href', window.URL.createObjectURL(res.data));
-          pom.setAttribute('download', name+"tar.gz");
-
-        pom.dataset.downloadurl = ['text/plain', pom.download, pom.href].join(':');
-        pom.click();        */
-      });
-    }
+  	};    
 
     $scope.getOutputDirectoryURL = function(jobid, name)
     {
 
       clusterpost.getDownloadToken(jobid, name)
-      .then(function(res){        
-        $window.open("/dataprovider/download/" + res.data.token, '_blank');
+      .then(function(res){
+
+        var pom = document.createElement('a');
+          
+        document.body.appendChild(pom);
+        pom.style = "display: none";
+        var filename = name;        
+        pom.href = "/dataprovider/download/" + res.data.token;
+        pom.download = filename;
+        pom.click();        
+        document.body.removeChild(pom);
+        
       })
       .catch(function(err){
         console.error(err);
