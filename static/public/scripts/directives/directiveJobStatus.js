@@ -1,5 +1,9 @@
 angular.module('CIVILITY')
+<<<<<<< HEAD
 .directive('jobStatus', function($routeParams,$location,clusterpost, $window){
+=======
+.directive('jobStatus', function($routeParams,$location,clusterpost, $http, $window){
+>>>>>>> BUG : fix bug to download directory, but not optimized for memory
 
 	function link($scope,$attrs,$filter){
 
@@ -117,7 +121,6 @@ angular.module('CIVILITY')
       .catch(function(err){
         console.error(err);
       });
-      
     }
 
 		//Get job document information 
