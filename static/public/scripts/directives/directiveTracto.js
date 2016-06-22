@@ -173,12 +173,6 @@ angular.module('CIVILITY')
           return false;
         }
       }  
-      //Check email select 
-      if($scope.userEmail == undefined)
-      {
-        alert ("You must specify your email to receive tractography results");
-        return false;
-      }
       return true;
     };
 
