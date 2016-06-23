@@ -7,7 +7,7 @@
 	<table st-table="displayedCollection2" st-safe-src="rowCollection" class="table table-striped">
 			<thead>
 			<tr>
-				<th colspan="6">  Search <input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+				<th colspan="4">  Search <input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
 				<th colspan="5"> Number of user per page <input class="form-control" placeholder="Item by page ..." type="text" ng-model="itemsByPage"/></th>
 			</tr>
 			<tr>
@@ -15,9 +15,11 @@
 				<th st-sort="name">User name </th>
 				<th st-sort="_id"> ID </th>
 				<th st-sort="scope"> Privileges (scope)</th>
-				<th>Update status</th>
-				<th>Run job</th>
-				<th>Force run job</th>
+				<th>default</th>
+				<th>clusterpost</th>
+				<th>admin</th>
+				<th>Save user privileges</th>
+				<th>Delete User </th>
 			</tr>
 			<tr>
 				<th>
@@ -41,19 +43,26 @@
 				<td>{{row._id}}</td>
 				<td>{{row.scope}}</td>
 				<td>
-					<button type="button" ng-click="updateStatus(row)" class="btn btn-sm btn-default">
-						<i class="glyphicon glyphicon-refresh">
+					<input type="checkbox" ng-checked="row.scope.indexOf('default') > -1" ng-model="defaultVal" ng-init="defaultVal = row.scope.indexOf('default') > -1"> 
+				</td>
+				<td>
+					<input type="checkbox" ng-checked="row.scope.indexOf('clusterpost') > -1" ng-model="clusterpostVal" ng-init="clusterpostVal = row.scope.indexOf('clusterpost') > -1">  
+				</td>
+				<td>
+					<input type="checkbox" ng-checked="row.scope.indexOf('admin') > -1" ng-model="adminVal" ng-init="adminVal = row.scope.indexOf('admin') > -1">
+				</td>
+				<td>
+					
+					<button type="button" ng-click="saveUserDoc(row,defaultVal,clusterpostVal,adminVal)" class="btn btn-sm btn-success">
+						<i class="glyphicon glyphicon-floppy-save">
 						</i>
 					</button>
 				</td>
 				<td>
-					<button type="button" ng-click="runJob(row,forceRunJob)" class="btn btn-sm btn-success">
-					<i class="glyphicon glyphicon-play">
+					<button type="button" ng-click="deleteUser(row)" class="btn btn-sm btn-danger">
+						<i class="glyphicon glyphicon-trash">
 						</i>
-					</button>
-				</td>
-				<td>
-					<input type="checkbox" ng-model="forceRunJob"/>
+					</button>	
 				</td>
 			</tr>
 			</tbody>
@@ -65,5 +74,5 @@
 			</tr>
 			</tfoot>
 		</table>
-
+{{bonjour}} 
 </div>

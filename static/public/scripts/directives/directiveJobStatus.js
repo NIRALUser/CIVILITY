@@ -20,7 +20,6 @@ angular.module('CIVILITY')
            $scope.jobObject.jobstatus.status = res2.data.status ; 
         })
         .catch(function(e){
-          console.error(e);
           throw e;
         });
     }
@@ -64,6 +63,7 @@ angular.module('CIVILITY')
           }
           else
           {
+            $scope.loadRestart = false;
             return 0;
           }
         }
