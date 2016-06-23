@@ -98,6 +98,26 @@ angular.module('CIVILITY')
          method: 'DELETE',
          url: '/dataprovider/' + id
        })
+    },
+    getAllUsers : function(){
+      return $http({
+        method: 'GET',
+        url : '/auth/users'
+      })
+    },
+    saveUser : function(user){
+      return $http({
+        method: 'PUT',
+        url : '/auth/user',
+        data : user
+      })
+    },
+    deleteUser : function(user){
+      return $http({
+        method: 'DELETE',
+        url : '/auth/user',
+        data : user
+      })
     }
   }
 });
