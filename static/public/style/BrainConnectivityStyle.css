@@ -1,7 +1,12 @@
 #loadTracto{
   margin-left : 49%;
 }
-
+.notFound{
+  color : #286090;
+  text-align: center;
+  margin : 5% 5% 5% 5%;
+  font-size: 20px;
+}
 .jobInfo{
   font-size : 12px;
 }

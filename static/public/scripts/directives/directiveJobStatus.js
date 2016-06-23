@@ -63,6 +63,7 @@ angular.module('CIVILITY')
           }
           else
           {
+            $scope.loadRestart = false;
             return 0;
           }
         }

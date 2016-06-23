@@ -115,7 +115,7 @@ angular.module('CIVILITY')
     deleteUser : function(user){
       return $http({
         method: 'DELETE',
-        url : '/auth/user',
+        url : '/auth/users',
         data : user
       })
     }
