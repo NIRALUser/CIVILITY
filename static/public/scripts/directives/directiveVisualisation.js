@@ -43,7 +43,6 @@ function link($scope,$attrs,$filter){
           "fdt_matrix" : $scope.contentM,
           "jsonTableDescripton" : JSON.parse($scope.contentJ)
           }
-        console.log($scope.jsonObjectForPlotConnectivity)
         $scope.plotView = true;
         $scope.load = false;
       }

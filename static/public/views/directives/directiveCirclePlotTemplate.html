@@ -1,4 +1,4 @@
-<div class="plotCircleDiv" id="plotCircleDiv">
+<div class="plotCircleDiv" id="plotCircleDiv" ng-if="!error">
 <div class="buttons" ng-if="plotVisible">
 	<div class="checkgroup" >
 		<p class="matProc"> Matrix processing : </p>
@@ -103,4 +103,8 @@
 </div>
 </div>
 
-
+<div ng-if="error" class="errorVisu">
+	<button class="btn btn-danger"> <span class="glyphicon glyphicon-warning-sign"> </span> </button> <br>
+	ERROR : Connectivity matrix and parcellation description table are not matching. <br>
+	Check out your data, or review your tractography parameters
+</div>
