@@ -173,6 +173,14 @@
 position: relative;
 }
 
+.errorVisu{
+  color: red;
+  font-size: 20px;
+  font-weight: bold;
+  z-index: 10;
+  text-align: center;
+}
+
 .changePositonCheckbox{
   color: #286090;
   font-size: 12px;

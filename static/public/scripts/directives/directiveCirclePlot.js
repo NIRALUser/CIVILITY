@@ -60,6 +60,7 @@ angular.module('CIVILITY')
 
 		$scope.plotBrainConnectivity = function(){
 
+		  var error = false;		
 	      $scope.plotView = true;
 	      var data =  $scope.plotData["fdt_matrix"];//$scope.contentM ;
 
@@ -89,6 +90,7 @@ angular.module('CIVILITY')
 	               if(matrix.length != matrix[line].length)
 	               {
 	                  console.log("Error dimension matrix");
+	                  error = true;
 	               }
 	             }
 
@@ -181,27 +183,48 @@ angular.module('CIVILITY')
 	                }
 
 	                var NewMat = [];
+	              
 	                matrix_norm.forEach(function(line,i)
 	                {
-	                var indexLine = listFDT.indexOf(listVisuOrder[i]["name"])  //1
-	                if(indexLine != -1)
+	                   if(listVisuOrder[i] != undefined)
+	                 {
+		                var indexLine = listFDT.indexOf(listVisuOrder[i]["name"])  //1
+		                if(indexLine != -1)
+		                {
+		                  var row=matrix_norm[indexLine];
+		                  var NewRow =[];
+		                  row.forEach(function(val,j)
+		                  {
+		                   if(listVisuOrder[j] != undefined)
+		                   {
+		                    var indexRow = listFDT.indexOf(listVisuOrder[j]["name"]);
+		                    if(indexRow  != -1)
+		                    {
+		                      NewRow.push(row[indexRow]);
+		                    }
+		                   }
+		                   else
+		                   {
+		                   		error = true;
+		                   }      
+		                  });
+		                  NewMat.push(NewRow); 
+		                } 
+	                }
+	                else
 	                {
-	                  var row=matrix_norm[indexLine];
-	                  var NewRow =[];
-	                  row.forEach(function(val,j)
-	                  {
-	                    var indexRow = listFDT.indexOf(listVisuOrder[j]["name"]);
-	                    if(indexRow  != -1)
-	                    {
-	                      NewRow.push(row[indexRow]);
-	                    }      
-	                  });
-	                  NewMat.push(NewRow); 
-	                }                       
+	                   	error = true;
+	                }                      
 	             });
 	            
-
-	            var returnJSONobject = {"matrix" : NewMat, "listOrdered" : listVisuOrder}
+				if(error)
+				{
+					var returnJSONobject = {"matrix" : 0, "listOrdered" : 0} 
+				}
+				else
+				{
+				    var returnJSONobject = {"matrix" : NewMat, "listOrdered" : listVisuOrder}
+	            }
 	            return returnJSONobject;
   }
 
@@ -415,652 +438,662 @@ angular.module('CIVILITY')
 		  $scope.Plot = function(){
 
 		  	var jsonOject = $scope.plotBrainConnectivity();
-		  	$scope.removeOldPlot();
-		  	//Catch method used
-		  	var method = $scope.choice.selection;
-
-		  	//Data 
-		    //var JSONInfo = $scope.plotData;
-
-		    //Create description object for d3 circle plot
-		    var classes = $scope.CreateDescription(jsonOject,method);
-		    
-
-		    if($scope.descriptionPlotDone == true)
-		    {
-		    //Options
-		    var thresholdDefaultValue = $scope.plotParameters.threshold;
-		    var diameter = $scope.plotParameters.diameter;
-		    var tensionSplines = $scope.plotParameters.tension;
-		    var upperValue = $scope.plotParameters.upperValue;
-
-		    //Alert if upper value specified is inferior to threshold value specified
-		    if(upperValue != 0)
-		    {
-		    	if(upperValue <= thresholdDefaultValue) alert("The maximum upper value should be superior to the threshold value");
-
-		    }
-		    $scope.plotVisible = true ;
-		    
-		    var radius = diameter / 2,
-		        innerRadius = radius - 120;
-
-		    var cluster = d3.layout.cluster()
-		        .size([360, innerRadius])
-		        .sort(null)
-		        .value(function(d) { return d.size; });
-
-		    var bundle = d3.layout.bundle();
-
-		    var line = d3.svg.line.radial()
-		        .interpolate("bundle")
-		        .tension(tensionSplines)
-		        .radius(function(d) { return d.y; })
-		        .angle(function(d) { return d.x / 180 * Math.PI; });
-
-		    // Define the div for the tooltip
-		    var div = d3.select('#'+$scope.plotID).append("div") 
-		        .attr("class", "tooltip")
-		        .attr("id", "tooltip_"+$scope.plotID)        
-		        .style("opacity", 0);
-
-		      var margin = {top: 30, right: 10, bottom: 15, left: 50},
-		        width = 100 - margin.right - margin.left,
-		        height = diameter;
-
-		    var intDiameter = parseInt(diameter) + 50;
-		    var diamMargin = intDiameter + 100;
-
-		    var bottom = margin.bottom;
-		    var newHeight = intDiameter +  bottom;
-
-		    var divPlot = d3.select('#'+$scope.plotID).append("div")
-		     	.attr("width", diamMargin)
-		        .attr("height", newHeight)
-		        .attr("class", "divPlot")
-		        .attr("id", "divPlot_"+$scope.plotID);
-
-		    var splines = [];    
-		    var svg = divPlot.append("svg")
-		         .attr("width", intDiameter )
-		         .attr("height", newHeight)
-		        .attr("class", "circlePlot")
-		        .attr("id", "circlePlot")   
-		        .append("g")
-		        .attr("transform", "translate(" + radius + "," + radius + ")");
-		  
-
-
-		    var y = d3.scale.linear()
-		        .range([height/2, 0])
-		        .domain([thresholdDefaultValue, upperValue]);	     
-
-		    //Colorbar 
-		    var svgColorbar = divPlot.append("svg")
-		        .attr("width", 100)
-		        .attr("height", newHeight+10)//+ margin.top + margin.bottom )
-		        .attr("id", "colorBar")
-		        .attr("class", "colorBar")
-		      .append("g")
-		        .attr("transform", "translate(" + margin.left + "," + newHeight/4 + ")");
-		    
-		    //Define gradient for color bar    
-		    var gradient = svgColorbar.append("defs")
-		      .append("linearGradient")
-		        .attr("id", "gradient"+ $scope.plotID)
-		        .attr("x1", "0%")
-		        .attr("y1", "100%")
-		        .attr("x2", "0%")
-		        .attr("y2", "0%")
-		        .attr("spreadMethod", "pad");
-
-		    gradient.append("stop")
-		        .attr("offset", "0%")
-		        .attr("stop-color", d3.hsl(240,1,0.5))
-		        .attr("stop-opacity", 1);
-
-		    gradient.append("stop")
-		        .attr("offset", "25%")
-		        .attr("stop-color", d3.hsl(180,1,0.5))
-		        .attr("stop-opacity", 1);
-
-		    gradient.append("stop")
-		        .attr("offset", "50%")
-		        .attr("stop-color", d3.hsl(120,1,0.5))
-		        .attr("stop-opacity", 1);
-
-		    gradient.append("stop")
-		        .attr("offset", "75%")
-		        .attr("stop-color", d3.hsl(60,1,0.5))
-		        .attr("stop-opacity", 1);
-		        
-		    gradient.append("stop")
-		        .attr("offset", "100%")
-		        .attr("stop-color", d3.hsl(0,1,0.5))
-		        .attr("stop-opacity", 1);
-
-		        var gradUrl = "gradient"+ $scope.plotID ; 
-		        
-		    svgColorbar.append("rect")
-		        .attr("class", "grid-background")
-		        .attr("width", width/1.5)
-		        .attr("height", height/2)
-		        .style("fill", "url(#gradient" + $scope.plotID +")");
-
-		    //Add gradient to colorbar
-		    svgColorbar.append("g")
-		        .attr("class", "axis")
-		        .call(d3.svg.axis().scale(y).orient("left").ticks(10));
-
-		     var nodes = cluster.nodes($scope.packageHierarchy(classes));
-		     var links = $scope.packageImports(nodes,thresholdDefaultValue);
-		     splines = bundle(links);
-		      
-		      var size = $scope.sizeMap(nodes,thresholdDefaultValue);
-
-		      var sizeOfLinksRatio = diameter/35;
-		      var MinMax = upperValue - thresholdDefaultValue; 
-
-		      var valLink1=$scope.plotParameters.link1;
-		      var valLink2=$scope.plotParameters.link2;
-		      var path = svg.selectAll(".link")
-		          .data(splines)
-		          .enter()
-		            .append("path")
-		          .attr("class", "link")
-		          .attr("stroke-width", function(d, i) { return (size[i]*sizeOfLinksRatio+MinMax) + "px"; })
-		          .attr("stroke",  function(d, i) { 
-		          			if(size[i] >= upperValue)
-		          			{
-		          				return $scope.colorHSV("max",0,1);
-
-		          			}
-		          			else
-		          			{
-		          				return $scope.colorHSV(size[i],thresholdDefaultValue,upperValue); 	
-		          			}
-		          	})            
-		          .attr("d", line)
-		          .on("mouseover", function(d,i) {
-		          		var sized = d.length;
-		          		valLink1=d[0].key + $scope.plotID;
-		          		valLink2=d[sized-1].key + $scope.plotID;
-		          		var Text1 = document.getElementById(valLink1);
-		          		var Text2 = document.getElementById(valLink2);
-		          		Text1.setAttribute("font-weight", "bold");
-		          		Text2.setAttribute("font-weight", "bold");
-		          		Text1.setAttribute("font-size", "13px");
-		          		Text2.setAttribute("font-size", "13px");
-		          	
-		                div.transition()    
-		                    .duration(200)    
-		                    .style("opacity", .9);    
-		                div.html( "Connectivity value : " + size[i].toFixed(5) ) 
-		                    .style("left", (d3.event.pageX) + "px")   
-		                    .style("top", (d3.event.pageY + 28) + "px");  
-		                })          
-		            .on("mouseout", function(d) {   
-		            	var sized = d.length;
-		          		valLink1=d[0].key + $scope.plotID;
-		          		valLink2=d[sized-1].key + $scope.plotID;
-		          		var Text1 = document.getElementById(valLink1);
-		          		var Text2 = document.getElementById(valLink2);
-		          		Text1.setAttribute("font-weight", "normal");
-		          		Text2.setAttribute("font-weight", "normal");
-		          		Text1.setAttribute("font-size", "11px");
-		          		Text2.setAttribute("font-size", "11px");
-
-		                div.transition()    
-		                    .duration(500)    
-		                    .style("opacity", 0); 
-		            })
-		          ;
-
-		       svg.selectAll(".node")
-		          .data(nodes.filter(function(n) { 
-		          	//if(n.parent["depth"]==1)
-		          	return !n.children; }))
-		        .enter().append("g")
-		          .attr("class", "node")
-		          .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-		        .append("text")
-		          .attr("id",function(d){ return d.key + $scope.plotID; })
-		          .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
-		          .attr("dy", ".31em")
-		          .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-		          .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; }) 
-		          //.attr("font-weight", "bold")      
-		          .text(function(d) { 
-		          	// if(d.key == "Precentral_L"){
-		          	// 	d.attr("font-weight", "bold");
-		          	// }
-		          	return d.key; })
-		          .attr("font-weight",function(d){
-		          	if(d.key == valLink2 )
-		          	{
-		          		return "bold";
-		          	}
-		          else
-		          {
-		          	return "normal";
-		          }
-		          });
-
-				//document.body.style.backgroundImage = "url('data/brainALL.jpg')";
-		      d3.select(self.frameElement).style("height", diameter + "px");  
-
-		     //Plot brain template -- if coord specified in Json table 
-		    if(jsonOject.listOrdered[1].x != undefined)  //should be improve
-		     {
-		     	$scope.plotBrainTemplate = true;
-		     //Whole brain connection
-		     var divBrainImgALL = d3.select("." + $scope.brainTemplateAllClass)
-		     	.append("div")
-		     	.attr("class","divBrainImgALL")
-		     	.attr("id",$scope.brainTemplateImgAll);
-
-		     var divBrainLinkALL = d3.select("." + $scope.brainTemplateAllClass)
-		     	.append("div")
-		     	.attr("class","divBrainLinkALL")
-		     	.attr("id",$scope.brainTemplateLinkAll);
-
-		     var svgBrain = divBrainLinkALL.append("svg")
-		     	.attr("id","linksTemplate")
-		    	.attr("width", 350 )
-		        .attr("height", 420);
-		     
-
-		     var scaleImgAll = $scope.scaleImgBrainTemplate.All + "%";
-		     var imgBrain = divBrainImgALL.append("img")
-		     .attr("src","data/rsz_brainall.png")
-		     .attr("class","bgimgAll")
-		     .attr("id","bgimgAll")
-		     .attr("width", scaleImgAll );			
-
-			//Gradient for nodes 
-		    var gradientCircle = svgBrain.append("defs")
-		        .append("radialGradient")
-		        .attr("id","blueCircle" + $scope.plotID)
-		        .attr("gradientUnits", "objectBoundingBox")
-		        .attr("fx","30%")
-		        .attr("fy","30%")
-
-		       gradientCircle.append("stop")
-		       .attr("offset","0%")
-		       .attr("stop-color","#FFFFFF");
-
-		       gradientCircle.append("stop")
-		       .attr("offset","40%")
-		       .attr("stop-color","#AA0000");
-
-		       gradientCircle.append("stop")
-		       .attr("offset","100%")
-		       .attr("stop-color","#660000");
-
-		       var nodeTooltip = d3.select('#'+$scope.plotID).append("div") 
-		       .attr("class", "nodeTooltip")
-		       .attr("id", "nodeTooltip_"+$scope.plotID)        
-		       .style("opacity", 0);		       
-		       var CoordDescription = jsonOject["listOrdered"];
-
-		       var linefunction = d3.svg.line()
-		      				.interpolate("bundle")
-		       			.tension(tensionSplines)
-		        			.x(function(d){return d.x})
-		        			.y(function(d){return d.y})
-
-			splines.forEach(function(d,n){
-		      		var sized = d.length;
-		      		var seedName = d[0].key;
-		      		var targetName = d[sized-1].key;
-		      		var x1,x2,y1,y2;
-
-		      		CoordDescription.forEach(function(c,i){
-
-		      			var last = c["name"].lastIndexOf(".");
-		               var KeyName = c["name"].substring(last+1);
-		      			if(KeyName == seedName)
-		      			{
-		      				x1 = c["x"] + parseFloat($scope.positionNodes.All.offsetXAll);
-		      				x1 = x1 * parseFloat($scope.positionNodes.All.scalePointAll);
-		      				
-		      				y1 = - c["y"];
-		      				y1 = y1 + parseFloat($scope.positionNodes.All.offsetYAll);
-		      				y1 = y1 * parseFloat($scope.positionNodes.All.scalePointAll);
-		      			}
-		      			else if(KeyName == targetName)
-		      			{
-		      				x2 = c["x"] + parseFloat($scope.positionNodes.All.offsetXAll);
-		      				x2 = x2 * parseFloat($scope.positionNodes.All.scalePointAll);
-		      				y2 = - c["y"];
-		      				y2 = y2 + parseFloat($scope.positionNodes.All.offsetYAll);
-		      				y2 = y2  * parseFloat($scope.positionNodes.All.scalePointAll);
-		      			}
-		      			
-		      		})
-
-		      		var line = [{"x":x1,"y":y1},{"x":x2,"y":y2}];
-		      		var linkRatioBrain = 10
-		      		var linegraph = svgBrain.append("path")
-		        .attr("d",linefunction(line))
-		        .attr("stroke",  function() { 
-		         			if(size[n] >= upperValue)
-		         			{
-		         				return $scope.colorHSV("max",0,1);
-
-		         			}
-		         			else
-		         			{
-		         				return $scope.colorHSV(size[n],thresholdDefaultValue,upperValue); 	
-		         			}
-		         	})            
-		        .attr("stroke-width",function() { return (size[n]*linkRatioBrain) + "px"; })
-		        .attr("fill","none");
-		         		
-		      })
-
-
-		       CoordDescription.forEach(function(d,i){
-		       	var coordX = d["x"]+parseFloat($scope.positionNodes.All.offsetXAll);
-
-		       	var coordY = -d["y"];
-		       	coordY = coordY+parseFloat($scope.positionNodes.All.offsetYAll);
-
-		       	svgBrain.append("circle")
-		       		.attr("cx", coordX*parseFloat($scope.positionNodes.All.scalePointAll))
-		       		.attr("cy", coordY*parseFloat($scope.positionNodes.All.scalePointAll))
-		       		.attr("r", 4)
-		        	.style("fill", "url(#blueCircle"+ $scope.plotID +")")
-		        	.on("mouseover", function(e,i) {  
-		        		nodeTooltip.transition()    
-		                   .duration(200)    
-		                   .style("opacity", .9);  
-		               var last = d["name"].lastIndexOf(".");
-		               var KeyName = d["name"].substring(last+1);
-
-		               nodeTooltip.html( "Seed : " + KeyName ) 
-		                   .style("left", (d3.event.pageX) + "px")   
-		                   .style("top", (d3.event.pageY) + "px");  
-		        	})
-		        	.on("mouseout", function(d) {   
-		        			
-		        			nodeTooltip.transition()    
-		                   .duration(500)    
-		                   .style("opacity", 0); 
-		        	});
-		       })	    	
-
-		       //Left brain template
-		      var divBrainImgLeft = d3.select("." + $scope.brainTemplateLeftClass )
-		      	.append("div")
-		     	.attr("class","divBrainImgLeft")
-		     	.attr("id",$scope.brainTemplateImgLeft);
-
-		     var divBrainLinkLeft = d3.select("." + $scope.brainTemplateLeftClass )
-		     	.append("div")
-		     	.attr("class","divBrainLinkLeft")
-		     	.attr("id",$scope.brainTemplateLinkLeft);
-
-		     var svgBrainLeft = divBrainLinkLeft.append("svg")
-		     	.attr("id","linksTemplate")
-		    	.attr("width", 410 )
-		        .attr("height", 400 );
-		     
-		     var scaleImgLeft = $scope.scaleImgBrainTemplate.Left + "%";
-		     var imgBrainLeft = divBrainImgLeft.append("img")
-		     .attr("src","data/rsz_brainleft.jpg")
-		     .attr("class","bgimgLeft")
-		     .attr("id","bgimgLeft")
-		     .attr("width", scaleImgLeft );
-		     /*.attr("height", "auto" )
-		     .attr("max-width", 400 )
-		     .attr("max-height", 400 );*/
-			
-			splines.forEach(function(d,n){
-		      		var sized = d.length;
-		      		var seedName = d[0].key;
-		      		var targetName = d[sized-1].key;
-		      		var y1=0;
-		      		var y2=0;
-		      		var z1=0;
-		      		var z2=0;
-
-
-		       	var last1 = seedName.lastIndexOf("_");
-		       	var End1 = seedName.substring(last1+1);
-		       	var last2 = targetName.lastIndexOf("_");
-		       	var End2 = targetName.substring(last2+1);
-		      		if( End1 == "L" && End2 == "L" )
-		      		{
-		      			CoordDescription.forEach(function(c,i){
-
-		      			var last = c["name"].lastIndexOf(".");
-		               var KeyName = c["name"].substring(last+1);
-
-
-		      			if(KeyName == seedName)
-		      			{
-		      				y1 = parseFloat(-c["y"]) + parseFloat($scope.positionNodes.Left.offsetXLeft);
-		      				y1 = y1 * parseFloat($scope.positionNodes.Left.scalePointLeft);
-		      				
-		      				z1 = parseFloat(-c["z"]) + parseFloat($scope.positionNodes.Left.offsetYLeft);
-		      				z1= z1 *  parseFloat($scope.positionNodes.Left.scalePointLeft);
-		      			//	z1 = z1 + $scope.positionNodes.Left.offsetYLeft;
-		      			//	z1 = z1 * $scope.positionNodes.Left.scalePointLeft;
-
-
-		      			}
-		      			else if(KeyName == targetName)
-		      			{
-		      				y2 = parseFloat(-c["y"]);
-		      				y2 = y2 + parseFloat($scope.positionNodes.Left.offsetXLeft);
-		      				y2 = y2 * parseFloat($scope.positionNodes.Left.scalePointLeft);
-		      				
-		      				z2 = parseFloat(-c["z"]);
-		      				z2 = z2+ parseFloat($scope.positionNodes.Left.offsetYLeft);
-		      				z2 = z2 * parseFloat($scope.positionNodes.Left.scalePointLeft);
-
-
-		      			}
-		      			
-		      		})    				      		
-		      		var line = [{"x":y1,"y":z1},{"x":y2,"y":z2}];
-		      		var linkRatioBrain = 10
-		      		var linegraph = svgBrainLeft.append("path")
-		        			.attr("d",linefunction(line))
-		        			.attr("stroke",  function() { 
-		         				if(size[n] >= upperValue)
-		         				{
-		         					return $scope.colorHSV("max",0,1);
-		         				}
-		         				else
-		         				{
-		         					return $scope.colorHSV(size[n],thresholdDefaultValue,upperValue); 	
-		         				}
-		         			})            
-		        			.attr("stroke-width",function() { return (size[n]*linkRatioBrain) + "px"; })
-		        			.attr("fill","none");
-		        				} 		
-		      	})
-
-		     CoordDescription.forEach(function(d,i){
-
-		       	var name = d["name"];
-		       	var last = d["name"].lastIndexOf("_");
-		           var side = d["name"].substring(last+1);
-		           if(side == "L")
-		           {
-		           	var coordY = parseFloat(-d["y"]);
-		           	var coordY = coordY+parseFloat($scope.positionNodes.Left.offsetXLeft);
-
-		       		var coordZ = parseFloat(-d["z"]);
-		       		coordZ = coordZ+parseFloat($scope.positionNodes.Left.offsetYLeft);
-
-		       		var coordXScale = coordY*parseFloat($scope.positionNodes.Left.scalePointLeft);
-		       		var coordYScale = coordZ*parseFloat($scope.positionNodes.Left.scalePointLeft);
-		       		svgBrainLeft.append("circle")
-		       			.attr("cx", coordXScale)
-		       			.attr("cy", coordYScale)
-		       			.attr("r", 4)
-		        		.style("fill", "url(#blueCircle"+$scope.plotID+")")
-		        		.on("mouseover", function(e,i) {  
-		        				nodeTooltip.transition()    
-		                   			.duration(200)    
-		                   			.style("opacity", .9);  
-		               		var last = d["name"].lastIndexOf(".");
-		               		var KeyName = d["name"].substring(last+1);
-
-		               		nodeTooltip.html( "Seed : " + KeyName ) 
-		                   	.style("left", (d3.event.pageX) + "px")   
-		                   	.style("top", (d3.event.pageY) + "px");  
-		        		})
-		        		.on("mouseout", function(d) {   
-		        			
-		        			nodeTooltip.transition()    
-		                   .duration(500)    
-		                   .style("opacity", 0); 
-		        		});
-		           }
-
-		       })
-
-
+		  	if(jsonOject.matrix === 0 && jsonOject.listOrdered === 0)
+		  	{
+		  		
+		  		$scope.error =true ;
+		  		return 0;
+		  	}
+		  	else 
+		  	{
+		  		$scope.error =false ;
+		  	  	$scope.removeOldPlot();
+			  	//Catch method used
+			  	var method = $scope.choice.selection;
+
+			  	//Data 
+			    //var JSONInfo = $scope.plotData;
+
+			    //Create description object for d3 circle plot
+			    var classes = $scope.CreateDescription(jsonOject,method);
+			    
+
+			    if($scope.descriptionPlotDone == true)
+			    {
+			    //Options
+			    var thresholdDefaultValue = $scope.plotParameters.threshold;
+			    var diameter = $scope.plotParameters.diameter;
+			    var tensionSplines = $scope.plotParameters.tension;
+			    var upperValue = $scope.plotParameters.upperValue;
+
+			    //Alert if upper value specified is inferior to threshold value specified
+			    if(upperValue != 0)
+			    {
+			    	if(upperValue <= thresholdDefaultValue) alert("The maximum upper value should be superior to the threshold value");
+
+			    }
+			    $scope.plotVisible = true ;
+			    
+			    var radius = diameter / 2,
+			        innerRadius = radius - 120;
+
+			    var cluster = d3.layout.cluster()
+			        .size([360, innerRadius])
+			        .sort(null)
+			        .value(function(d) { return d.size; });
+
+			    var bundle = d3.layout.bundle();
+
+			    var line = d3.svg.line.radial()
+			        .interpolate("bundle")
+			        .tension(tensionSplines)
+			        .radius(function(d) { return d.y; })
+			        .angle(function(d) { return d.x / 180 * Math.PI; });
+
+			    // Define the div for the tooltip
+			    var div = d3.select('#'+$scope.plotID).append("div") 
+			        .attr("class", "tooltip")
+			        .attr("id", "tooltip_"+$scope.plotID)        
+			        .style("opacity", 0);
+
+			      var margin = {top: 30, right: 10, bottom: 15, left: 50},
+			        width = 100 - margin.right - margin.left,
+			        height = diameter;
+
+			    var intDiameter = parseInt(diameter) + 50;
+			    var diamMargin = intDiameter + 100;
+
+			    var bottom = margin.bottom;
+			    var newHeight = intDiameter +  bottom;
+
+			    var divPlot = d3.select('#'+$scope.plotID).append("div")
+			     	.attr("width", diamMargin)
+			        .attr("height", newHeight)
+			        .attr("class", "divPlot")
+			        .attr("id", "divPlot_"+$scope.plotID);
+
+			    var splines = [];    
+			    var svg = divPlot.append("svg")
+			         .attr("width", intDiameter )
+			         .attr("height", newHeight)
+			        .attr("class", "circlePlot")
+			        .attr("id", "circlePlot")   
+			        .append("g")
+			        .attr("transform", "translate(" + radius + "," + radius + ")");
+			  
+
+
+			    var y = d3.scale.linear()
+			        .range([height/2, 0])
+			        .domain([thresholdDefaultValue, upperValue]);	     
+
+			    //Colorbar 
+			    var svgColorbar = divPlot.append("svg")
+			        .attr("width", 100)
+			        .attr("height", newHeight+10)//+ margin.top + margin.bottom )
+			        .attr("id", "colorBar")
+			        .attr("class", "colorBar")
+			      .append("g")
+			        .attr("transform", "translate(" + margin.left + "," + newHeight/4 + ")");
+			    
+			    //Define gradient for color bar    
+			    var gradient = svgColorbar.append("defs")
+			      .append("linearGradient")
+			        .attr("id", "gradient"+ $scope.plotID)
+			        .attr("x1", "0%")
+			        .attr("y1", "100%")
+			        .attr("x2", "0%")
+			        .attr("y2", "0%")
+			        .attr("spreadMethod", "pad");
+
+			    gradient.append("stop")
+			        .attr("offset", "0%")
+			        .attr("stop-color", d3.hsl(240,1,0.5))
+			        .attr("stop-opacity", 1);
+
+			    gradient.append("stop")
+			        .attr("offset", "25%")
+			        .attr("stop-color", d3.hsl(180,1,0.5))
+			        .attr("stop-opacity", 1);
+
+			    gradient.append("stop")
+			        .attr("offset", "50%")
+			        .attr("stop-color", d3.hsl(120,1,0.5))
+			        .attr("stop-opacity", 1);
+
+			    gradient.append("stop")
+			        .attr("offset", "75%")
+			        .attr("stop-color", d3.hsl(60,1,0.5))
+			        .attr("stop-opacity", 1);
+			        
+			    gradient.append("stop")
+			        .attr("offset", "100%")
+			        .attr("stop-color", d3.hsl(0,1,0.5))
+			        .attr("stop-opacity", 1);
+
+			        var gradUrl = "gradient"+ $scope.plotID ; 
+			        
+			    svgColorbar.append("rect")
+			        .attr("class", "grid-background")
+			        .attr("width", width/1.5)
+			        .attr("height", height/2)
+			        .style("fill", "url(#gradient" + $scope.plotID +")");
+
+			    //Add gradient to colorbar
+			    svgColorbar.append("g")
+			        .attr("class", "axis")
+			        .call(d3.svg.axis().scale(y).orient("left").ticks(10));
+
+			     var nodes = cluster.nodes($scope.packageHierarchy(classes));
+			     var links = $scope.packageImports(nodes,thresholdDefaultValue);
+			     splines = bundle(links);
+			      
+			      var size = $scope.sizeMap(nodes,thresholdDefaultValue);
+
+			      var sizeOfLinksRatio = diameter/35;
+			      var MinMax = upperValue - thresholdDefaultValue; 
+
+			      var valLink1=$scope.plotParameters.link1;
+			      var valLink2=$scope.plotParameters.link2;
+			      var path = svg.selectAll(".link")
+			          .data(splines)
+			          .enter()
+			            .append("path")
+			          .attr("class", "link")
+			          .attr("stroke-width", function(d, i) { return (size[i]*sizeOfLinksRatio+MinMax) + "px"; })
+			          .attr("stroke",  function(d, i) { 
+			          			if(size[i] >= upperValue)
+			          			{
+			          				return $scope.colorHSV("max",0,1);
+
+			          			}
+			          			else
+			          			{
+			          				return $scope.colorHSV(size[i],thresholdDefaultValue,upperValue); 	
+			          			}
+			          	})            
+			          .attr("d", line)
+			          .on("mouseover", function(d,i) {
+			          		var sized = d.length;
+			          		valLink1=d[0].key + $scope.plotID;
+			          		valLink2=d[sized-1].key + $scope.plotID;
+			          		var Text1 = document.getElementById(valLink1);
+			          		var Text2 = document.getElementById(valLink2);
+			          		Text1.setAttribute("font-weight", "bold");
+			          		Text2.setAttribute("font-weight", "bold");
+			          		Text1.setAttribute("font-size", "13px");
+			          		Text2.setAttribute("font-size", "13px");
+			          	
+			                div.transition()    
+			                    .duration(200)    
+			                    .style("opacity", .9);    
+			                div.html( "Connectivity value : " + size[i].toFixed(5) ) 
+			                    .style("left", (d3.event.pageX) + "px")   
+			                    .style("top", (d3.event.pageY + 28) + "px");  
+			                })          
+			            .on("mouseout", function(d) {   
+			            	var sized = d.length;
+			          		valLink1=d[0].key + $scope.plotID;
+			          		valLink2=d[sized-1].key + $scope.plotID;
+			          		var Text1 = document.getElementById(valLink1);
+			          		var Text2 = document.getElementById(valLink2);
+			          		Text1.setAttribute("font-weight", "normal");
+			          		Text2.setAttribute("font-weight", "normal");
+			          		Text1.setAttribute("font-size", "11px");
+			          		Text2.setAttribute("font-size", "11px");
+
+			                div.transition()    
+			                    .duration(500)    
+			                    .style("opacity", 0); 
+			            })
+			          ;
+
+			       svg.selectAll(".node")
+			          .data(nodes.filter(function(n) { 
+			          	//if(n.parent["depth"]==1)
+			          	return !n.children; }))
+			        .enter().append("g")
+			          .attr("class", "node")
+			          .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+			        .append("text")
+			          .attr("id",function(d){ return d.key + $scope.plotID; })
+			          .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
+			          .attr("dy", ".31em")
+			          .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+			          .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; }) 
+			          //.attr("font-weight", "bold")      
+			          .text(function(d) { 
+			          	// if(d.key == "Precentral_L"){
+			          	// 	d.attr("font-weight", "bold");
+			          	// }
+			          	return d.key; })
+			          .attr("font-weight",function(d){
+			          	if(d.key == valLink2 )
+			          	{
+			          		return "bold";
+			          	}
+			          else
+			          {
+			          	return "normal";
+			          }
+			          });
+
+					//document.body.style.backgroundImage = "url('data/brainALL.jpg')";
+			      d3.select(self.frameElement).style("height", diameter + "px");  
+
+			     //Plot brain template -- if coord specified in Json table 
+			    if(jsonOject.listOrdered[1].x != undefined)  //should be improve
+			     {
+			     	$scope.plotBrainTemplate = true;
+			     //Whole brain connection
+			     var divBrainImgALL = d3.select("." + $scope.brainTemplateAllClass)
+			     	.append("div")
+			     	.attr("class","divBrainImgALL")
+			     	.attr("id",$scope.brainTemplateImgAll);
+
+			     var divBrainLinkALL = d3.select("." + $scope.brainTemplateAllClass)
+			     	.append("div")
+			     	.attr("class","divBrainLinkALL")
+			     	.attr("id",$scope.brainTemplateLinkAll);
+
+			     var svgBrain = divBrainLinkALL.append("svg")
+			     	.attr("id","linksTemplate")
+			    	.attr("width", 350 )
+			        .attr("height", 420);
+			     
+
+			     var scaleImgAll = $scope.scaleImgBrainTemplate.All + "%";
+			     var imgBrain = divBrainImgALL.append("img")
+			     .attr("src","data/rsz_brainall.png")
+			     .attr("class","bgimgAll")
+			     .attr("id","bgimgAll")
+			     .attr("width", scaleImgAll );			
+
+				//Gradient for nodes 
+			    var gradientCircle = svgBrain.append("defs")
+			        .append("radialGradient")
+			        .attr("id","blueCircle" + $scope.plotID)
+			        .attr("gradientUnits", "objectBoundingBox")
+			        .attr("fx","30%")
+			        .attr("fy","30%")
+
+			       gradientCircle.append("stop")
+			       .attr("offset","0%")
+			       .attr("stop-color","#FFFFFF");
+
+			       gradientCircle.append("stop")
+			       .attr("offset","40%")
+			       .attr("stop-color","#AA0000");
+
+			       gradientCircle.append("stop")
+			       .attr("offset","100%")
+			       .attr("stop-color","#660000");
+
+			       var nodeTooltip = d3.select('#'+$scope.plotID).append("div") 
+			       .attr("class", "nodeTooltip")
+			       .attr("id", "nodeTooltip_"+$scope.plotID)        
+			       .style("opacity", 0);		       
+			       var CoordDescription = jsonOject["listOrdered"];
+
+			       var linefunction = d3.svg.line()
+			      				.interpolate("bundle")
+			       			.tension(tensionSplines)
+			        			.x(function(d){return d.x})
+			        			.y(function(d){return d.y})
+
+				splines.forEach(function(d,n){
+			      		var sized = d.length;
+			      		var seedName = d[0].key;
+			      		var targetName = d[sized-1].key;
+			      		var x1,x2,y1,y2;
+
+			      		CoordDescription.forEach(function(c,i){
+
+			      			var last = c["name"].lastIndexOf(".");
+			               var KeyName = c["name"].substring(last+1);
+			      			if(KeyName == seedName)
+			      			{
+			      				x1 = c["x"] + parseFloat($scope.positionNodes.All.offsetXAll);
+			      				x1 = x1 * parseFloat($scope.positionNodes.All.scalePointAll);
+			      				
+			      				y1 = - c["y"];
+			      				y1 = y1 + parseFloat($scope.positionNodes.All.offsetYAll);
+			      				y1 = y1 * parseFloat($scope.positionNodes.All.scalePointAll);
+			      			}
+			      			else if(KeyName == targetName)
+			      			{
+			      				x2 = c["x"] + parseFloat($scope.positionNodes.All.offsetXAll);
+			      				x2 = x2 * parseFloat($scope.positionNodes.All.scalePointAll);
+			      				y2 = - c["y"];
+			      				y2 = y2 + parseFloat($scope.positionNodes.All.offsetYAll);
+			      				y2 = y2  * parseFloat($scope.positionNodes.All.scalePointAll);
+			      			}
+			      			
+			      		})
+
+			      		var line = [{"x":x1,"y":y1},{"x":x2,"y":y2}];
+			      		var linkRatioBrain = 10
+			      		var linegraph = svgBrain.append("path")
+			        .attr("d",linefunction(line))
+			        .attr("stroke",  function() { 
+			         			if(size[n] >= upperValue)
+			         			{
+			         				return $scope.colorHSV("max",0,1);
+
+			         			}
+			         			else
+			         			{
+			         				return $scope.colorHSV(size[n],thresholdDefaultValue,upperValue); 	
+			         			}
+			         	})            
+			        .attr("stroke-width",function() { return (size[n]*linkRatioBrain) + "px"; })
+			        .attr("fill","none");
+			         		
+			      })
+
+
+			       CoordDescription.forEach(function(d,i){
+			       	var coordX = d["x"]+parseFloat($scope.positionNodes.All.offsetXAll);
+
+			       	var coordY = -d["y"];
+			       	coordY = coordY+parseFloat($scope.positionNodes.All.offsetYAll);
+
+			       	svgBrain.append("circle")
+			       		.attr("cx", coordX*parseFloat($scope.positionNodes.All.scalePointAll))
+			       		.attr("cy", coordY*parseFloat($scope.positionNodes.All.scalePointAll))
+			       		.attr("r", 4)
+			        	.style("fill", "url(#blueCircle"+ $scope.plotID +")")
+			        	.on("mouseover", function(e,i) {  
+			        		nodeTooltip.transition()    
+			                   .duration(200)    
+			                   .style("opacity", .9);  
+			               var last = d["name"].lastIndexOf(".");
+			               var KeyName = d["name"].substring(last+1);
+
+			               nodeTooltip.html( "Seed : " + KeyName ) 
+			                   .style("left", (d3.event.pageX) + "px")   
+			                   .style("top", (d3.event.pageY) + "px");  
+			        	})
+			        	.on("mouseout", function(d) {   
+			        			
+			        			nodeTooltip.transition()    
+			                   .duration(500)    
+			                   .style("opacity", 0); 
+			        	});
+			       })	    	
+
+			       //Left brain template
+			      var divBrainImgLeft = d3.select("." + $scope.brainTemplateLeftClass )
+			      	.append("div")
+			     	.attr("class","divBrainImgLeft")
+			     	.attr("id",$scope.brainTemplateImgLeft);
+
+			     var divBrainLinkLeft = d3.select("." + $scope.brainTemplateLeftClass )
+			     	.append("div")
+			     	.attr("class","divBrainLinkLeft")
+			     	.attr("id",$scope.brainTemplateLinkLeft);
+
+			     var svgBrainLeft = divBrainLinkLeft.append("svg")
+			     	.attr("id","linksTemplate")
+			    	.attr("width", 410 )
+			        .attr("height", 400 );
+			     
+			     var scaleImgLeft = $scope.scaleImgBrainTemplate.Left + "%";
+			     var imgBrainLeft = divBrainImgLeft.append("img")
+			     .attr("src","data/rsz_brainleft.jpg")
+			     .attr("class","bgimgLeft")
+			     .attr("id","bgimgLeft")
+			     .attr("width", scaleImgLeft );
+			     /*.attr("height", "auto" )
+			     .attr("max-width", 400 )
+			     .attr("max-height", 400 );*/
 				
-	
-		     var divBrainImgRight = d3.select("." + $scope.brainTemplateRightClass).append("div")
-		     	.attr("class","divBrainImgRight")
-		     	.attr("id",$scope.brainTemplateImgRight);
-
-		     var divBrainLinkRight = d3.select("." + $scope.brainTemplateRightClass).append("div")
-		     	.attr("class","divBrainLinkRight")
-		     	.attr("id",$scope.brainTemplateLinkRight);
-
-		     var svgBrainRight = divBrainLinkRight.append("svg")
-		     	.attr("id","linksTemplate")
-		    	.attr("width", 410 )
-		        .attr("height", 400);
-		     
-		     var scaleImgRight = $scope.scaleImgBrainTemplate.Right + "%";
-		     var imgBrainRight = divBrainImgRight.append("img")
-		     .attr("src","data/rsz_brainright.jpg")
-		     .attr("class","bgimgRight")
-		     .attr("id","bgimgRight")
-		     .attr("width", scaleImgRight );/*
-		     .attr("max-width", "50%" )
-		     .attr("max-height", "50%" );*/
-		     /*.attr("width", "auto" )
-		     .attr("height", "auto" )
-		     .attr("max-width", 400 )
-		     .attr("max-height", 400 );*/
-
-			splines.forEach(function(d,n){
-
-		      	var sized = d.length;
-		      	var seedName = d[0].key;
-		      	var targetName = d[sized-1].key;
-		      	var y1,y2,z1,z2;
-		       	var last1 = seedName.lastIndexOf("_");
-		       	var End1 = seedName.substring(last1+1);
-		       	var last2 = targetName.lastIndexOf("_");
-		       	var End2 = targetName.substring(last2+1);
-		      		if( End1 == "R" && End2 == "R" )
-		      		{
-		      			CoordDescription.forEach(function(c,i){
-
-		      			var last = c["name"].lastIndexOf(".");
-		               var KeyName = c["name"].substring(last+1);
+				splines.forEach(function(d,n){
+			      		var sized = d.length;
+			      		var seedName = d[0].key;
+			      		var targetName = d[sized-1].key;
+			      		var y1=0;
+			      		var y2=0;
+			      		var z1=0;
+			      		var z2=0;
 
 
-		      			if(KeyName == seedName)
-		      			{
-		      				y1 =  c["y"] 
-		      				y1 = y1 + parseFloat($scope.positionNodes.Right.offsetXRight);
-		      				y1 = y1 * parseFloat($scope.positionNodes.Right.scalePointRight);
-		      				
-		      				z1 = -c["z"];
-		      				z1 = z1 + parseFloat($scope.positionNodes.Right.offsetYRight);
-		      				z1 = z1 * parseFloat($scope.positionNodes.Right.scalePointRight);
-		      			}
-		      			else if(KeyName == targetName)
-		      			{
-		      				y2 = c["y"]
-		      				y2 = y2 + parseFloat($scope.positionNodes.Right.offsetXRight);
-		      				y2 = y2 * parseFloat($scope.positionNodes.Right.scalePointRight);
-		      				
-		      				z2 = -c["z"];
-		      				z2 = z2 + parseFloat($scope.positionNodes.Right.offsetYRight);
-		      				z2 = z2  * parseFloat($scope.positionNodes.Right.scalePointRight);
-		      			}
-		      			
-		      		})
+			       	var last1 = seedName.lastIndexOf("_");
+			       	var End1 = seedName.substring(last1+1);
+			       	var last2 = targetName.lastIndexOf("_");
+			       	var End2 = targetName.substring(last2+1);
+			      		if( End1 == "L" && End2 == "L" )
+			      		{
+			      			CoordDescription.forEach(function(c,i){
 
-		      				      		
+			      			var last = c["name"].lastIndexOf(".");
+			               var KeyName = c["name"].substring(last+1);
 
-		      		var line = [{"x":y1,"y":z1},{"x":y2,"y":z2}];
-		      		var linkRatioBrain = 10
-		      		var linegraph = svgBrainRight.append("path")
-		        .attr("d",linefunction(line))
-		        .on()
-		        .attr("stroke",  function() { 
-		         			if(size[n] >= upperValue)
-		         			{
-		         				return $scope.colorHSV("max",0,1);
-		         			}
-		         			else
-		         			{
-		         				return $scope.colorHSV(size[n],thresholdDefaultValue,upperValue); 	
-		         			}
-		         	})            
-		        .attr("stroke-width",function() { return (size[n]*linkRatioBrain) + "px"; })
-		        .attr("fill","none");
-		        	} 		
-		      })
 
-				CoordDescription.forEach(function(d,i){
+			      			if(KeyName == seedName)
+			      			{
+			      				y1 = parseFloat(-c["y"]) + parseFloat($scope.positionNodes.Left.offsetXLeft);
+			      				y1 = y1 * parseFloat($scope.positionNodes.Left.scalePointLeft);
+			      				
+			      				z1 = parseFloat(-c["z"]) + parseFloat($scope.positionNodes.Left.offsetYLeft);
+			      				z1= z1 *  parseFloat($scope.positionNodes.Left.scalePointLeft);
+			      			//	z1 = z1 + $scope.positionNodes.Left.offsetYLeft;
+			      			//	z1 = z1 * $scope.positionNodes.Left.scalePointLeft;
 
-		       	var name = d["name"];
-		       	var last = d["name"].lastIndexOf("_");
-		           var side = d["name"].substring(last+1);
-		           if(side == "R")
-		           {
-		           	var coordY = d["y"];
-		           	var coordY = coordY +parseFloat($scope.positionNodes.Right.offsetXRight);
 
-		       		var coordZ = - d["z"];
-		       		coordZ = coordZ+parseFloat($scope.positionNodes.Right.offsetYRight);
-		       			       	
-		       		svgBrainRight.append("circle")
-		       			.attr("cx", coordY*parseFloat($scope.positionNodes.Right.scalePointRight))
-		       			.attr("cy", coordZ*parseFloat($scope.positionNodes.Right.scalePointRight))
-		       			.attr("r", 4)
-		        			.style("fill", "url(#blueCircle"+ $scope.plotID + ")")
-		        			.on("mouseover", function(e,i) {  
-		        				nodeTooltip.transition()    
-		                   			.duration(200)    
-		                   			.style("opacity", .9);  
-		               		var last = d["name"].lastIndexOf(".");
-		               		var KeyName = d["name"].substring(last+1);
+			      			}
+			      			else if(KeyName == targetName)
+			      			{
+			      				y2 = parseFloat(-c["y"]);
+			      				y2 = y2 + parseFloat($scope.positionNodes.Left.offsetXLeft);
+			      				y2 = y2 * parseFloat($scope.positionNodes.Left.scalePointLeft);
+			      				
+			      				z2 = parseFloat(-c["z"]);
+			      				z2 = z2+ parseFloat($scope.positionNodes.Left.offsetYLeft);
+			      				z2 = z2 * parseFloat($scope.positionNodes.Left.scalePointLeft);
 
-		               		nodeTooltip.html( "Seed : " + KeyName ) 
-		                   	.style("left", (d3.event.pageX) + "px")   
-		                   	.style("top", (d3.event.pageY) + "px");  
-		        				})
-		        			.on("mouseout", function(d) {   
-		        			
-		        			nodeTooltip.transition()    
-		                   .duration(500)    
-		                   .style("opacity", 0); 
-		        			});
-		           }
-		       })
-		     }
-		     else
-		     {
-		     	//alert("Brain templates can't be plot. There is no coordonation specified in the parcellation table descritption.")
-		     	$scope.plotBrainTemplate = false;
-		     }
 
-		 }
+			      			}
+			      			
+			      		})    				      		
+			      		var line = [{"x":y1,"y":z1},{"x":y2,"y":z2}];
+			      		var linkRatioBrain = 10
+			      		var linegraph = svgBrainLeft.append("path")
+			        			.attr("d",linefunction(line))
+			        			.attr("stroke",  function() { 
+			         				if(size[n] >= upperValue)
+			         				{
+			         					return $scope.colorHSV("max",0,1);
+			         				}
+			         				else
+			         				{
+			         					return $scope.colorHSV(size[n],thresholdDefaultValue,upperValue); 	
+			         				}
+			         			})            
+			        			.attr("stroke-width",function() { return (size[n]*linkRatioBrain) + "px"; })
+			        			.attr("fill","none");
+			        				} 		
+			      	})
+
+			     CoordDescription.forEach(function(d,i){
+
+			       	var name = d["name"];
+			       	var last = d["name"].lastIndexOf("_");
+			           var side = d["name"].substring(last+1);
+			           if(side == "L")
+			           {
+			           	var coordY = parseFloat(-d["y"]);
+			           	var coordY = coordY+parseFloat($scope.positionNodes.Left.offsetXLeft);
+
+			       		var coordZ = parseFloat(-d["z"]);
+			       		coordZ = coordZ+parseFloat($scope.positionNodes.Left.offsetYLeft);
+
+			       		var coordXScale = coordY*parseFloat($scope.positionNodes.Left.scalePointLeft);
+			       		var coordYScale = coordZ*parseFloat($scope.positionNodes.Left.scalePointLeft);
+			       		svgBrainLeft.append("circle")
+			       			.attr("cx", coordXScale)
+			       			.attr("cy", coordYScale)
+			       			.attr("r", 4)
+			        		.style("fill", "url(#blueCircle"+$scope.plotID+")")
+			        		.on("mouseover", function(e,i) {  
+			        				nodeTooltip.transition()    
+			                   			.duration(200)    
+			                   			.style("opacity", .9);  
+			               		var last = d["name"].lastIndexOf(".");
+			               		var KeyName = d["name"].substring(last+1);
+
+			               		nodeTooltip.html( "Seed : " + KeyName ) 
+			                   	.style("left", (d3.event.pageX) + "px")   
+			                   	.style("top", (d3.event.pageY) + "px");  
+			        		})
+			        		.on("mouseout", function(d) {   
+			        			
+			        			nodeTooltip.transition()    
+			                   .duration(500)    
+			                   .style("opacity", 0); 
+			        		});
+			           }
+
+			       })
+
+
+					
+		
+			     var divBrainImgRight = d3.select("." + $scope.brainTemplateRightClass).append("div")
+			     	.attr("class","divBrainImgRight")
+			     	.attr("id",$scope.brainTemplateImgRight);
+
+			     var divBrainLinkRight = d3.select("." + $scope.brainTemplateRightClass).append("div")
+			     	.attr("class","divBrainLinkRight")
+			     	.attr("id",$scope.brainTemplateLinkRight);
+
+			     var svgBrainRight = divBrainLinkRight.append("svg")
+			     	.attr("id","linksTemplate")
+			    	.attr("width", 410 )
+			        .attr("height", 400);
+			     
+			     var scaleImgRight = $scope.scaleImgBrainTemplate.Right + "%";
+			     var imgBrainRight = divBrainImgRight.append("img")
+			     .attr("src","data/rsz_brainright.jpg")
+			     .attr("class","bgimgRight")
+			     .attr("id","bgimgRight")
+			     .attr("width", scaleImgRight );/*
+			     .attr("max-width", "50%" )
+			     .attr("max-height", "50%" );*/
+			     /*.attr("width", "auto" )
+			     .attr("height", "auto" )
+			     .attr("max-width", 400 )
+			     .attr("max-height", 400 );*/
+
+				splines.forEach(function(d,n){
+
+			      	var sized = d.length;
+			      	var seedName = d[0].key;
+			      	var targetName = d[sized-1].key;
+			      	var y1,y2,z1,z2;
+			       	var last1 = seedName.lastIndexOf("_");
+			       	var End1 = seedName.substring(last1+1);
+			       	var last2 = targetName.lastIndexOf("_");
+			       	var End2 = targetName.substring(last2+1);
+			      		if( End1 == "R" && End2 == "R" )
+			      		{
+			      			CoordDescription.forEach(function(c,i){
+
+			      			var last = c["name"].lastIndexOf(".");
+			               var KeyName = c["name"].substring(last+1);
+
+
+			      			if(KeyName == seedName)
+			      			{
+			      				y1 =  c["y"] 
+			      				y1 = y1 + parseFloat($scope.positionNodes.Right.offsetXRight);
+			      				y1 = y1 * parseFloat($scope.positionNodes.Right.scalePointRight);
+			      				
+			      				z1 = -c["z"];
+			      				z1 = z1 + parseFloat($scope.positionNodes.Right.offsetYRight);
+			      				z1 = z1 * parseFloat($scope.positionNodes.Right.scalePointRight);
+			      			}
+			      			else if(KeyName == targetName)
+			      			{
+			      				y2 = c["y"]
+			      				y2 = y2 + parseFloat($scope.positionNodes.Right.offsetXRight);
+			      				y2 = y2 * parseFloat($scope.positionNodes.Right.scalePointRight);
+			      				
+			      				z2 = -c["z"];
+			      				z2 = z2 + parseFloat($scope.positionNodes.Right.offsetYRight);
+			      				z2 = z2  * parseFloat($scope.positionNodes.Right.scalePointRight);
+			      			}
+			      			
+			      		})
+
+			      				      		
+
+			      		var line = [{"x":y1,"y":z1},{"x":y2,"y":z2}];
+			      		var linkRatioBrain = 10
+			      		var linegraph = svgBrainRight.append("path")
+			        .attr("d",linefunction(line))
+			        .on()
+			        .attr("stroke",  function() { 
+			         			if(size[n] >= upperValue)
+			         			{
+			         				return $scope.colorHSV("max",0,1);
+			         			}
+			         			else
+			         			{
+			         				return $scope.colorHSV(size[n],thresholdDefaultValue,upperValue); 	
+			         			}
+			         	})            
+			        .attr("stroke-width",function() { return (size[n]*linkRatioBrain) + "px"; })
+			        .attr("fill","none");
+			        	} 		
+			      })
+
+					CoordDescription.forEach(function(d,i){
+
+			       	var name = d["name"];
+			       	var last = d["name"].lastIndexOf("_");
+			           var side = d["name"].substring(last+1);
+			           if(side == "R")
+			           {
+			           	var coordY = d["y"];
+			           	var coordY = coordY +parseFloat($scope.positionNodes.Right.offsetXRight);
+
+			       		var coordZ = - d["z"];
+			       		coordZ = coordZ+parseFloat($scope.positionNodes.Right.offsetYRight);
+			       			       	
+			       		svgBrainRight.append("circle")
+			       			.attr("cx", coordY*parseFloat($scope.positionNodes.Right.scalePointRight))
+			       			.attr("cy", coordZ*parseFloat($scope.positionNodes.Right.scalePointRight))
+			       			.attr("r", 4)
+			        			.style("fill", "url(#blueCircle"+ $scope.plotID + ")")
+			        			.on("mouseover", function(e,i) {  
+			        				nodeTooltip.transition()    
+			                   			.duration(200)    
+			                   			.style("opacity", .9);  
+			               		var last = d["name"].lastIndexOf(".");
+			               		var KeyName = d["name"].substring(last+1);
+
+			               		nodeTooltip.html( "Seed : " + KeyName ) 
+			                   	.style("left", (d3.event.pageX) + "px")   
+			                   	.style("top", (d3.event.pageY) + "px");  
+			        				})
+			        			.on("mouseout", function(d) {   
+			        			
+			        			nodeTooltip.transition()    
+			                   .duration(500)    
+			                   .style("opacity", 0); 
+			        			});
+			           }
+			       })
+			     }
+			     else
+			     {
+			     	//alert("Brain templates can't be plot. There is no coordonation specified in the parcellation table descritption.")
+			     	$scope.plotBrainTemplate = false;
+			     }
+
+			 }
+			}
  }
 
 	//This function return a color accordinf to a value (size) a a range specified in inputs  
