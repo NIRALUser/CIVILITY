@@ -11,11 +11,19 @@ CIVILITY (cloud based Interractive Visualization of Tractography Brain Connectom
 #### - T1 image (in diffusion space, nrrd format)
 #### - Brain mask (in diffusion space, nrrd format)
 #### - Parcellation table, json file which describe the brain atlas in brain surfaces (format json)
-#### - Surface
+#### - Brain Surface. This is a VTK file which represent the white matter surface. This surface must be in the diffusion space. 
+		If white matter surface doesn't contain labels informations, upload another surface (same mesh, in diffusion space, vtk format) containning labels informations.
 
 
 ### 2. Output connectivity matrix  
 
+(example : 5 seeds )
+
+0  0  713804  0  22 
+6  0  12  628238  0
+564497  10  0  47  148119
+0  693669  289  0  8
+27  0  194885  2  0
 
 
 ##USAGE for VISUALISATION 
@@ -24,8 +32,20 @@ CIVILITY (cloud based Interractive Visualization of Tractography Brain Connectom
 
 #### - Connectivity matrix
 
+(example : 5 seeds )
+
+0  0  713804  0  22 
+6  0  12  628238  0
+564497  10  0  47  148119
+0  693669  289  0  8
+27  0  194885  2  0
+
+
 #### - Parcellation table 
-<p> [
+
+(example : 5 ROIs)
+
+[
   {
     "VisuOrder": 78, 
     "MatrixRow": 1, 
@@ -92,6 +112,7 @@ CIVILITY (cloud based Interractive Visualization of Tractography Brain Connectom
     "AAL_ID": 5
   }
  ]
- <p>
 
 ### 2. Output visualisation 
+
+![Connectivity matrix visualization](https://www.google.fr/images/srpr/logo11w.png "google logo")
