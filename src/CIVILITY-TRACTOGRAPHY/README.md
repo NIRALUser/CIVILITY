@@ -4,12 +4,12 @@ This directory contains scripts which must be executable in the computing grid.
 
 The main scripts : 
 
- 	- tractographyScriptApp.sh
+- tractographyScriptApp.sh
  	
 is calling two python scripts : 
 
-  - writeSeedList.py
- 	- plotMatrix.py
+- writeSeedList.py
+- plotMatrix.py
 
 Others addtionnal tools must be installed in the computing grid : 
 
