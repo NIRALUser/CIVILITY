@@ -29,7 +29,7 @@ See documentation in Documentation/ directory.
 27  0  194885  2  0<br/>
 
 
-##USAGE for VISUALISATION 
+##USAGE for VISUALIZATION 
 
 ### 1. Inputs file 
 
