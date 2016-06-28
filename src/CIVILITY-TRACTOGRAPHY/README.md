@@ -5,7 +5,7 @@ This directory contains scripts which must be executable in the computing grid.
 The main scripts : 
  	tractographyScriptApp.sh
  	
-is calling the two python scripts : 
+is calling two python scripts : 
   writeSeedList.py
  	plotMatrix.py
 
