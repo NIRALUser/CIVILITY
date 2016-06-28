@@ -50,17 +50,17 @@ See documentation in Documentation/ directory.
 
 [ <br/>
   { <br/>
-    "VisuOrder": 78, <br/>
-    "MatrixRow": 1, <br/>
-    "name": "Precentral_L", <br/>
-    "VisuHierarchy": "seed.left.frontal.", <br/>
-    "coord": [<br/>
-      -38.649999999999999, <br/>
-      -5.6799999999999997, <br/>
-      50.939999999999998<br/>
+    "VisuOrder": 78, //This is the rank in the circle plotting <br/> 
+    "MatrixRow": 1, // Rank in the connectivity matrix - first row = 1 = first column ( if = -1 not in the matrix )  <br/> 
+    "name": "Precentral_L", //Name of the region/seed  <br/>
+    "VisuHierarchy": "seed.left.frontal.", //Hierachy of the seed (for circle plotting)  <br/>
+    "coord": [ //Coordinates of the seed <br/> 
+      -38.649999999999999, //X <br/> 
+      -5.6799999999999997, //Y <br/>
+      50.939999999999998 //Z <br/>
     ], <br/>
-    "labelValue": "131 44 78", <br/>
-    "AAL_ID": 1<br/>
+    "labelValue": "131 44 78", //Value of the label in the vtk file  <br/> 
+    "AAL_ID": 1  // label/seed ID in the table/atlas <br/> 
   }, <br/>
   {<br/>
     "VisuOrder": 1, <br/>
