@@ -323,7 +323,7 @@ angular.module('CIVILITY')
         }
         else
         {
-        return 'Done';
+          //
         }
       })//upload file        
       .catch(function(e){
