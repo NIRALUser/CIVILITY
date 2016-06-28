@@ -1,0 +1,24 @@
+Example :
+
+[
+  {  //Seed description 
+    "VisuOrder": 78,    //Rank in the circle plotting 
+    "MatrixRow": 1,     // Rank in the connectivity matrix - first row = 1 = first column ( if = -1 not in the matrix )
+    "name": "Precentral_L",     //Name of the region/seed
+    "VisuHierarchy": "seed.left.frontal.",    //Hierachy of the seed (for circle plotting)
+    "coord": [    //Coordinates of the seed 
+      -38.65,     //X
+      -5.68,       //Y
+      50.94       //Z
+    ], 
+    "labelValue": "131 44 78",    //Value of the label in the vtk file (optional)
+    "AAL_ID": 1   //label/seed ID in corresponding parcellation table
+  }, 
+  {
+    ...   //seed 2 description 
+  },
+  ...   //list of each seed
+]
+
+All fields are required except "coord" field.
+The field "coord" is required to visualize the connectivity on brains templates.

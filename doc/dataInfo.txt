@@ -1,0 +1,38 @@
+CIVILITY Application 
+NEONATE DATA 
+
+All unprocess data are available here : /Human2/Neonate-1-2yr/unproc in each subdirectory. 
+All images and surfaces to provide are in the DTI directory in the subject directory
+
+Example for : /Human2/Neonate-1-2yr/unproc/neonate/neo-0092-3
+
+1. DWI images
+DTI/neo-0092-3_42_DWI_QCed_VC.nrrd
+
+2. T1 in DWI space
+DTI/neo-0092-3_T1_regDTI.nrrd
+
+3.Brainmask
+DTI/neo-0092-3-brainmask.nrrd
+
+4. Parcellation table
+file attached with this email : TABLE_AAL.json
+
+5. Inner surface in DWI space
+DTI/neo-0092-3_combined_InnerSurf.vtk
+
+6.Then uncheck the box : Inner surface contains color labels -- this surface doesn't have label information
+
+7. The other surface containning labels is :
+DTI/neo-0092-3_combined_MiddleSurf_AALcolorSDFS.vtk
+
+8. Labelset name in vtk surface file is :
+colour
+
+9. You want ignore label : (check the box and specify the label to ignore )
+0 0 0
+
+10. Overlapping : ckecked
+
+11. Submit the job 
+
