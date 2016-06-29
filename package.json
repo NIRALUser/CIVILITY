@@ -8,7 +8,7 @@
     "server": "The server application of CIVILITY."
   },
   "scripts": {
-    "preinstall": "npm link ./static; npm link probtrack-brain-connectivity-static",
+    "preinstall": "npm link src/CIVILITY-HAPI; npm link probtrack-brain-connectivity-static",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "dana.puechmaille@gmail.com",
@@ -20,7 +20,7 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danaele/ProbtrackBrainConnectivity.git"
+    "url": "git+https://github.com/danaele/CIVILITY.git"
   },
   "keywords": [
     "tractography",
@@ -32,7 +32,7 @@
     "connectome"
   ],
   "bugs": {
-    "url": "https://github.com/danaele/ProbtrackBrainConnectivity/issues"
+    "url": "https://github.com/danaele/CIVILITY/issues"
   },
-  "homepage": "https://github.com/danaele/ProbtrackBrainConnectivity#readme"
+  "homepage": "https://github.com/danaele/CIVILITY#readme"
 }
