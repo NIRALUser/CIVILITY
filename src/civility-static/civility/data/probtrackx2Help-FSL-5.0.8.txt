@@ -1,0 +1,82 @@
+
+Part of FSL (build 508)
+probtrackx
+
+Usage: 
+probtrackx2 -s <basename> -m <maskname> -x <seedfile> -o <output> --targetmasks=<textfile>
+ probtrackx2 --help
+
+
+Compulsory arguments (You MUST set one or more of):
+	-s,--samples	Basename for samples files - e.g. 'merged'
+	-m,--mask	Bet binary mask file in diffusion space
+	-x,--seed	Seed volume or list (ascii text file) of volumes and/or surfaces
+
+Optional arguments (You may optionally specify one or more of):
+	-V,--verbose	Verbose level, [0-2]
+	-h,--help	Display this message
+
+
+	-o,--out	Output file (default='fdt_paths')
+	--dir		Directory to put the final volumes in - code makes this directory - default='logdir'
+	--forcedir	Use the actual directory name given - i.e. don't add + to make a new directory
+
+
+	--simple		Track from a list of voxels (seed must be a ASCII list of coordinates)
+	--network	Activate network mode - only keep paths going through at least one of the other seed masks
+	--opd		Output path distribution
+	--pd		Correct path distribution for the length of the pathways
+	--fopd		Other mask for binning tract distribution
+	--os2t		Output seeds to targets
+	--s2tastext	Output seed-to-target counts as a text file (default in simple mode)
+
+
+	--targetmasks	File containing a list of target masks - for seeds_to_targets classification
+	--waypoints	Waypoint mask or ascii list of waypoint masks - only keep paths going through ALL the masks
+	--waycond	Waypoint condition. Either 'AND' (default) or 'OR'
+	--wayorder	Reject streamlines that do not hit waypoints in given order. Only valid if waycond=AND
+	--onewaycondition	Apply waypoint conditions to each half tract separately
+	--avoid		Reject pathways passing through locations given by this mask
+	--stop		Stop tracking at locations given by this mask file
+
+
+	--omatrix1	Output matrix1 - SeedToSeed Connectivity
+	--distthresh1	Discards samples (in matrix1) shorter than this threshold (in mm - default=0)
+	--omatrix2	Output matrix2 - SeedToLowResMask
+	--target2	Low resolution binary brain mask for storing connectivity distribution in matrix2 mode
+	--omatrix3	Output matrix3 (NxN connectivity matrix)
+	--target3	Mask used for NxN connectivity matrix (or Nxn if lrtarget3 is set)
+	--lrtarget3	Column-space mask used for Nxn connectivity matrix
+	--distthresh3	Discards samples (in matrix3) shorter than this threshold (in mm - default=0)
+	--omatrix4	Output matrix4 - DtiMaskToSeed (special Oxford Sparse Format)
+	--colmask4	Mask for columns of matrix4 (default=seed mask)
+	--target4	Brain mask in DTI space
+
+
+	--xfm		Transform taking seed space to DTI space (either FLIRT matrix or FNIRT warpfield) - default is identity
+	--invxfm	Transform taking DTI space to seed space (compulsory when using a warpfield for seeds_to_dti)
+	--seedref	Reference vol to define seed space in simple mode - diffusion space assumed if absent
+	--meshspace	Mesh reference space - either 'caret' (default) or 'freesurfer' or 'first' or 'vox' 
+
+
+	-P,--nsamples	Number of samples - default=5000
+	-S,--nsteps	Number of steps per sample - default=2000
+	--steplength	Steplength in mm - default=0.5
+
+
+	--distthresh	Discards samples shorter than this threshold (in mm - default=0)
+	-c,--cthr	Curvature threshold - default=0.2
+	--fibthresh	Volume fraction before subsidary fibre orientations are considered - default=0.01
+	-l,--loopcheck	Perform loopchecks on paths - slower, but allows lower curvature threshold
+	-f,--usef	Use anisotropy to constrain tracking
+	--modeuler	Use modified euler streamlining
+
+
+	--sampvox	Sample random points within x mm sphere seed voxels (e.g. --sampvox=5). Default=0
+	--randfib	Default 0. Set to 1 to randomly sample initial fibres (with f > fibthresh). 
+                        Set to 2 to sample in proportion fibres (with f>fibthresh) to f. 
+                        Set to 3 to sample ALL populations at random (even if f<fibthresh)
+	--fibst		Force a starting fibre for tracking - default=1, i.e. first fibre orientation. Only works if randfib==0
+	--rseed		Random seed
+
+	

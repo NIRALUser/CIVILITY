@@ -1,0 +1,21 @@
+<div >
+	<h3 id="title">Visualization of brain connectivity</h3> 
+	<div class="Plot" >	
+		<div class="fdt_mat_input">  
+			Connectivity matrix (probtrackx output : fdt_network_matrix )
+			<input id="matrix" type="file" on-read-file="showContentMatrix($fileContent)"/>
+		</div>
+		<div class="json-file-input">  
+			Parcellation table (json file)  <a href="" data-toggle="tooltip" title="{{jsonTemplate}}"> Help <i class="glyphicon glyphicon-info-sign"> </i> </a>
+			<input id="JSONFile" type="file" on-read-file="showContentJson($fileContent)"/>
+		</div> 
+
+		<button type="button" class="btn btn-default btn-lg center-block" ng-click="createJsonObjectForPlotConnectivity()">PLOT</button>
+	</div>
+
+			<img src="data/ajax-loader.gif" alt="loading" ng-if="load"> 
+
+	<div ng-if="plotView">
+		<circle-plot plot-data="jsonObjectForPlotConnectivity"  > </circle-plot>
+	</div>	
+</div>

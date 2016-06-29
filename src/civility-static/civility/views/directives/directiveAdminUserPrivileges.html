@@ -1,0 +1,78 @@
+<div>
+	<div class="titleAdminDB">
+		<h2> Users Database </h2> 
+		Refresh database <button class="btn btn-sm btn-primary" ng-click="getAllUsers()"><i class="glyphicon glyphicon-refresh"></i> </button> 
+	</div>
+
+	<table st-table="displayedCollection2" st-safe-src="rowCollection" class="table table-striped">
+			<thead>
+			<tr>
+				<th colspan="4">  Search <input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+				<th colspan="5"> Number of user per page <input class="form-control" placeholder="Item by page ..." type="text" ng-model="itemsByPage"/></th>
+			</tr>
+			<tr>
+				<th st-sort="email">User email</th>
+				<th st-sort="name">User name </th>
+				<th st-sort="_id"> ID </th>
+				<th st-sort="scope"> Privileges (scope)</th>
+				<th>default</th>
+				<th>clusterpost</th>
+				<th>admin</th>
+				<th>Save user privileges</th>
+				<th>Delete User </th>
+			</tr>
+			<tr>
+				<th>
+					<input st-search="email" placeholder="search for email" class="input-sm form-control" type="search"/>
+				</th>
+				<th>
+					<input st-search="name" placeholder="search for name" class="input-sm form-control" type="search"/>
+				</th>
+				<th>
+					<input st-search="_id" placeholder="search for id" class="input-sm form-control" type="search"/>
+				</th>
+				<th>
+					<input st-search="scope" placeholder="search for scope" class="input-sm form-control" type="search"/>
+				</th>				
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-repeat="row in displayedCollection2">
+				<td>{{row.email}}</td>
+				<td>{{row.name}}</td>
+				<td>{{row._id}}</td>
+				<td>{{row.scope}}</td>
+				<td>
+					<input type="checkbox" ng-checked="row.scope.indexOf('default') > -1" ng-model="defaultVal" ng-init="defaultVal = row.scope.indexOf('default') > -1"> 
+				</td>
+				<td>
+					<input type="checkbox" ng-checked="row.scope.indexOf('clusterpost') > -1" ng-model="clusterpostVal" ng-init="clusterpostVal = row.scope.indexOf('clusterpost') > -1">  
+				</td>
+				<td>
+					<input type="checkbox" ng-checked="row.scope.indexOf('admin') > -1" ng-model="adminVal" ng-init="adminVal = row.scope.indexOf('admin') > -1">
+				</td>
+				<td>
+					
+					<button type="button" ng-click="saveUserDoc(row,defaultVal,clusterpostVal,adminVal)" class="btn btn-sm btn-success">
+						<i class="glyphicon glyphicon-floppy-save">
+						</i>
+					</button>
+				</td>
+				<td>
+					<button type="button" ng-click="deleteUser(row)" class="btn btn-sm btn-danger">
+						<i class="glyphicon glyphicon-trash">
+						</i>
+					</button>	
+				</td>
+			</tr>
+			</tbody>
+			<tfoot>
+			<tr>
+				<td colspan="10" class="text-center">
+					<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+				</td>
+			</tr>
+			</tfoot>
+		</table>
+{{bonjour}} 
+</div>
