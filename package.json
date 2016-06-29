@@ -8,7 +8,8 @@
     "server": "The server application of CIVILITY."
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "preinstall":"npm link src/civility-static; npm link civility-static",  
+  "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "dana.puechmaille@gmail.com",
   "license": "Apache-2.0",
