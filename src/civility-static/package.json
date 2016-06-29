@@ -1,0 +1,26 @@
+{
+  "name": "civility-static",
+  "version": "1.0.0",
+  "description": "This is the client side of Cloud Based Interractive Visualization of Tractography Brain Connectome (CIVILITY) application",
+  "main": "index",
+  "scripts": {
+    "postinstall" : "cd civility; bower install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/danaele/CIVLITY.git"
+  },
+  "keywords": [
+    "connectivity",
+    "brain",
+    "probtrackx",
+    "tractography"
+  ],
+  "author": "Danaele Puechmaille <dana.puechmaille@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/danaele/CIVILITY/issues"
+  },
+  "homepage": "https://github.com/danaele/CIVILITY#readme"
+}

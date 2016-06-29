@@ -5,18 +5,18 @@ exports.register = function (server, options, next) {
 		path: '/',
 		method: '*',
 		handler: function (request, reply) {
-			reply.redirect('/public/');
+			reply.redirect('/civility/');
 		}
 	});
 	
 	server.route({
-		path: '/public/{path*}',
+		path: '/civility/{path*}',
 		method: 'GET',
 		config: {
 			handler: {
-				directory: { path: './public', listing: false, index: true }
+				directory: { path: './civility', listing: false, index: true }
 			},
-			description: 'This route serves the static website of ProbtrackBrainConnectivity. Everything inside the plugins/static/public/ directory will be directly accessible under this route.'
+			description: 'This route serves the static website of CIVILITY. Everything inside the plugins src/CIVILITY-PUBLIC/ directory will be directly accessible under this route.'
 		}
 	});
     next();

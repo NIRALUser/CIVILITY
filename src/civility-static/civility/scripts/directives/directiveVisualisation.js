@@ -8,7 +8,7 @@ function link($scope,$attrs,$filter){
 
   $http({
       method: 'GET',
-      url: '/public/data/jsonDescriptionTableTemplate.txt'
+      url: 'data/jsonDescriptionTableTemplate.txt'
     })
     .then(function(res){
       $scope.jsonTemplate = res.data;

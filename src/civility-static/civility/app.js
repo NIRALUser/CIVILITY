@@ -7,7 +7,7 @@ angular.module('CIVILITY', [
   'smart-table'
 ]).
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider
+  $routeProvider    
   .when('/welcome', {
     templateUrl: 'views/controllers/welcome.html'
   })

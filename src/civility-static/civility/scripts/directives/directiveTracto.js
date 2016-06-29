@@ -21,7 +21,7 @@ angular.module('CIVILITY')
     $scope.tools.bedpostx.modify = false;
     $http({
       method: 'GET',
-      url: '/public/data/bedpostxHelp-FSL-5.0.8.txt'
+      url: 'data/bedpostxHelp-FSL-5.0.8.txt'
     })
     .then(function(res){
       $scope.tools.bedpostx.help = res.data;
@@ -29,7 +29,7 @@ angular.module('CIVILITY')
 
     $http({
       method: 'GET',
-      url: '/public/data/jsonDescriptionTableTemplate.txt'
+      url: 'data/jsonDescriptionTableTemplate.txt'
     })
     .then(function(res){
       $scope.jsonTemplate = res.data;
@@ -41,7 +41,7 @@ angular.module('CIVILITY')
     $scope.tools.probtrackx2.modify = false;
     $http({
       method: 'GET',
-      url: '/public/data/probtrackx2Help-FSL-5.0.8.txt'
+      url: 'data/probtrackx2Help-FSL-5.0.8.txt'
     })
     .then(function(res){
       $scope.tools.probtrackx2.help = res.data;
@@ -323,7 +323,7 @@ angular.module('CIVILITY')
         }
         else
         {
-        return 'Done';
+          //
         }
       })//upload file        
       .catch(function(e){
