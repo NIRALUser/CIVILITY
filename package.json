@@ -8,14 +8,14 @@
     "server": "The server application of CIVILITY."
   },
   "scripts": {
-    "preinstall": "npm link civility-static; npm link probtrack-brain-connectivity-static",
+    "preinstall": "npm link src/civility-static; npm link civility-static",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "dana.puechmaille@gmail.com",
   "license": "Apache-2.0",
   "dependencies": {
     "clusterpost-server": "^1.2.1",
-    "probtrack-brain-connectivity-static": "^1.0.0"
+    "civility-static": "^1.0.0"
   },
   "devDependencies": {},
   "repository": {
