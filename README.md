@@ -118,4 +118,4 @@ See documentation in Documentation/ directory.
 
 ### 2. Output visualization 
 
-![Connectivity matrix visualization](static/public/data/CIVILITY_visualization.png "Connectivity matrix visualization")
+![Connectivity matrix visualization](src/civility-static/civility/data/CIVILITY_visualization.png "Connectivity matrix visualization")
