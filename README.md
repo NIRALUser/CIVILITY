@@ -9,7 +9,7 @@ CIVILITY is a web application and has mainly 2 components.
 - CIVILITY-tractography ; analysis pipeline. The analysis of the brain connectome is computed with a probabilistic method (FSL tools) using surfaces as seeds.
 Main steps of the pipeline are : 
   * bedpostX (FSL): Fitting of the probabilistic diffusion model on corrected data (by default number of tensors = 2 )
-  * ExtractLabelSurfaces : creation label surfaces (ASCII files) from a VTK surface containing labels formations.
+  * ExtractLabelSurfaces : creation label surfaces (ASCII files) from a VTK surface containing labels formations.(https://github.com/NIRALUser/ExtractLabelSurfaces)
   * Creation of a seeds list : text file listing all path of labels surfaces created by ExtractLabelSurfaces tool
   * probtrackx2 (FSL): compute tractography according to the seeds list created.
 
