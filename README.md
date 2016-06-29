@@ -1,6 +1,23 @@
 #CIVILITY
 
-CIVILITY (cloud based Interractive Visualization of Tractography Brain Connectome) is a HAPI plugins used to visualized easily brain connectomes within an interactive web interface. This plugin configured with the HAPI plugin execution-server launches tractography scripts on a computing grid and uses a database to store data. The brain connectome is computed with a probabilistic tractography method (FSL tools) using surfaces as seeds.
+Cloud Based Interactive Visualization of Tractography Brain Connectome (CIVILITY) is an interactive visualization tool of brain connectome in the web.
+
+CIVILITY is a web application and has mainly 2 components.
+
+- CIVILITY-visualization ; front end of the application. This is a circle plot of the brain connectivity using the method of visualization : Hierarchical Edge Bundling. The graphic visualization of the brain connectivity is generated using Data Driven Documents (D3.js).
+
+- CIVILITY-tractography ; analysis pipeline. The analysis of the brain connectome is computed with a probabilistic method (FSL tools) using surfaces as seeds.
+Main steps of the pipeline are : 
+  * bedpostX (FSL): Fitting of the probabilistic diffusion model on corrected data (by default number of tensors = 2 )
+  * ExtractLabelSurfaces : creation label surfaces (ASCII files) from a VTK surface containing labels formations.
+  * Creation of a seeds list : text file listing all path of labels surfaces created by ExtractLabelSurfaces tool
+  * probtrackx2 (FSL): compute tractography according to the seeds list created.
+
+CIVILITY performs the brain connectivity analysis in remote computing grids where the CIVILITY-tractography pipeline is deployed. CIVILITY uses clusterpost (https://github.com/NIRALUser/clusterpost) to submit the jobs to the computing grid. 
+
+NOTE: clusterpost
+clusterpost is a server application providing a REST api to submit jobs in remote computing grids using. Data transfer, job execution and monitoring are all handled by clusterpost.
+The front end of CIVILITY submits tasks to clusterpost and retrieves the results when they are finished. 
 
 
 See documentation in Documentation/ directory. 
