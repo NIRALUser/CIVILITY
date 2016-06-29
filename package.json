@@ -8,7 +8,7 @@
     "server": "The server application of CIVILITY."
   },
   "scripts": {
-    "preinstall": "npm link src/CIVILITY-HAPI; npm link probtrack-brain-connectivity-static",
+    "preinstall": "npm link civility-static; npm link probtrack-brain-connectivity-static",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "dana.puechmaille@gmail.com",

@@ -46,7 +46,7 @@ See documentation in Documentation/ directory.
 
 #### - Parcellation table 
 
-(example : 5 ROIs)
+(example : 5 ROIs, atlas AAL90)
 
 [ <br/>
   { <br/>
