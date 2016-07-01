@@ -20,7 +20,7 @@ clusterpost is a server application providing a REST api to submit jobs in remot
 The front end of CIVILITY submits tasks to clusterpost and retrieves the results when they are finished. 
 
 
-See documentation in Documentation/ directory. 
+See documentation in doc/ directory. 
 
 
 ##USAGE for TRACTOGRAPHY 
