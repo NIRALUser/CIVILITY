@@ -69,46 +69,27 @@ This paper is submitted to the SPIE Medical Imaging 2016 conference in the categ
 Tractography has found many applications over the past decade. Some applications include neurosurgical planning; assessment and study of neurological diseases such as multiple sclerosis  or schizophrenia; and post-surgical validation. However the analyze of the connectivity matrix is not intuitive and easy to interpret. That's why this application offer to researchers an interactive web interface to show the connectivity clearly according to some parameters. 
 
 In this paper, we present CIVILITY, an open source web application hosted in a cloud. This tool offer to researchers the possibility to launch an unique tractography script and the visualize the brain connectome interactively. Each user is identifying by an user account associated with privileges and can access to his results from anywhere in the cloud.
-<<<<<<< HEAD
-The tractography pipeline uses the probabilistic method  of tractography \footnote{describe all possible trajectories} using surfaces as seeds (FSL tools : bedpostx and probtrackx). User must upload data (all of them must be in the same space : diffusion space) and set tractography parameters in the tractography form. The tractography pipeline is executed on the computing grid and once is finished results are retrieved and brain connectome visualization is possible. 
-The graphic visualization of the brain connectome is generated using Data Driven Documents (D3.js) and more precisely the method Hierarchical Edge Bundling. This is a circle plotting representing the brain connectivity. All links can be threshold between two values, their shape can also be modified for an easier visualization. This tool is submitted at the SPIE Medical Imaging 2016 conference in the category Image processing and we seek to enable further clinical and research applications of tractography.
-
-In summary, CIVILITY performs tractography by sending jobs in remote computing grid using the tool clusterpost. Once the tractography is finished, results are retrived and the brain connectome is visualized interactively
-In order to validate this pipeline and show visualization results, we applied the tractography pipeline to a dataset and retrieves results for using the visualization 
-=======
 The tractography pipeline uses the probabilistic method  of tractography \footnote{describe all possible trajectories} using surfaces as seeds (FSL tools : bedpostx and probtrackx). The tractography pipeline is executed on the computing grid and once is finished results are retrieved and brain connectome visualization is available. 
 The graphic visualization of the brain connectome is generated using Data Driven Documents (D3.js) and more precisely the method Hierarchical Edge Bundling. This is a circle plotting representing the brain connectivity. All links can be threshold between two values, their shape can also be modified for an easier visualization. This tool is submitted at the SPIE Medical Imaging 2016 conference in the category Image processing and we seek to enable further clinical and research applications of tractography.
 
 In summary, CIVILITY performs tractography by sending jobs in remote computing grid using the tool clusterpost. Once the tractography is finished, results are retrived and the brain connectome is visualized interactively. Results and visualization are accessible from any system in the cloud.
 In order to validate this pipeline, we applied the tractography pipeline to a dataset and retrieves results for analyzing the brain connectome through the visualization tool.
->>>>>>> 3499e63f2f6466a65e3cb8fbc321bb005040213a
 
 The following section explains in detail the methods used in CIVILITY.
 
 \section{METHODS} 
 \label{sec:METHODS}
 
-<<<<<<< HEAD
-This section explains in detail the two components of CIVILITY : tractography and visualization.
-
-\subsection{Tractography}
-
-=======
 This section explains in details the two components of CIVILITY : tractography and visualization.
 
 \subsection{Tractography}
 
 The tractography is the computation of the brain connectivity. First, the form to complete for launch a tractography job will be describe. Then, the tractography pipeline is explained in details.
->>>>>>> 3499e63f2f6466a65e3cb8fbc321bb005040213a
 
 \subsubsection{Tractography form}
 
 First, a tractography form is used to upload data and set tractography parameters.
-<<<<<<< HEAD
-All data required for the tractography must be already been registered in the same space : DWI space. The images to provide are : Diffusion weighted imaging (DWI), T1 reference image, brainmask and must be in the NRRD format. The tractography pipeline uses the probabilistic method of tractography using surfaces as seeds, thus a brain surface representing the white matter must be upload. The surface to provide must be a VTK file and must contain label information ( and must be also in DWI space). If there isn't label information, another VTK surface, with the same mesh and containing labels, must be upload. The name of the labelset in the VTK file must be known and specified to the tractography form. All label are identify by an ID, it is possible to ignore a ROI in the tractography by setting the label ID in the form. 
-=======
 All data required for the tractography must be already been registered in the same space : DWI space (or Diffusion space). The images to provide are : Diffusion weighted imaging (DWI), T1 reference image, brainmask and must be in the NRRD format. The tractography pipeline uses the probabilistic method of tractography using surfaces as seeds. Thus a brain surface representing the white matter must be upload. The surface to provide must be a VTK file and must contain label information ( and must be also in DWI space). If there isn't label information, another VTK surface, with the same mesh and containing labels, must be upload. The name of the labelset in the VTK file must be known and specified in the tractography form. All labels are identified by an ID, it is possible to ignore a ROI in the tractography by setting the label ID in the form. 
->>>>>>> 3499e63f2f6466a65e3cb8fbc321bb005040213a
 In addition, a JSON file must be upload. This file describe the parcellation table: seeds names, labels id, matrix order, etc.). 
 As explained before, the tratography uses FSL tools : bedpostx and probtrackx. The number of tensors in the voxel fitting is set to 2 by default, but can be modified by the user.
 
@@ -117,35 +98,15 @@ As explained before, the tratography uses FSL tools : bedpostx and probtrackx. T
 In this section the pipeline is describe. 
 
 First, The tool DWIConvert \footnote{https://github.com/BRAINSia/BRAINSTools/tree/master/DWIConvert} is used to convert nrrd to nifti images, this last format is required to use FSL tools in tractography.
-<<<<<<< HEAD
-Then, bedpostx tool is used to build default distributions of diffusion parameters at each voxel.
-The tractography is using surfaces as seeds. The tool ExtractLabelSurfaces is extracting label surfaces (ASCII format) from the White Matter surface (VTK file). From surfaces created a seed list is created (file containing list of path of the seeds surfaces). 
-
-Probtrackx2 is the probabilistic tractography, it run on the output of bedpostX and according to a seed list. The seed list is created according to the atlas describe in the json file. Each seeds are label surfaces. These surfaces are created with the C++ tool : ExtractLabelSurfaces apply on the vtk brain surface containing labels. The label extraction can used overlapping or not. The tractography results is a connectivity matrix.
-Once the tractography done, CIVILITY allow users to visualize easily the connectivity matrix like explain in the following section. 
-
-
-=======
 Then, bedpostx tool is used to build default distributions of diffusion parameters at each voxel(2 tensors in the voxel fitting).
 This method of tractography is using surfaces as seeds. These surfaces  (ASCII format) are created with the C++ tool : ExtractLabelSurfaces apply on the White Matter surface (VTK file) containing labels.
 Probtrackx2 is the probabilistic tractography, it run on the output of bedpostX and according to a seed list. The seed list is created according to the atlas describe in the json file. Each seeds are label surfaces.  The label extraction can used overlapping or not between each ROIs. The tractography results is a connectivity matrix.
 Once the tractography done, CIVILITY allow users to visualize easily the connectivity matrix like explain in the following section. 
 
->>>>>>> 3499e63f2f6466a65e3cb8fbc321bb005040213a
 The entire pipeline is available in the github project repository.
 
 \subsection{Visualization}
 
-<<<<<<< HEAD
-\subsubsection{Matrix Computation}
-
-CIVILITY-visualization is the front end of the application. The brain connectome can be visualized using results from the tractography compute in the computing grinds 
-
-Tractography results are shown in a summary jobs table. For each jobs, the job status is print and when a job is done, an interactive plotting is available. The matrix is first normalized by the number of fiber per rows. The circle plot show  a triangular matrix computed by the maximum, minimum or average between upper and lower triangular matrix according to the user selection in the web interface. The brain connectivity can also be threshold. The shape of connectivity matrix can be modify for a better visualization.
-
-\subsubsection{Visualization parameters}
-
-=======
 CIVILITY-visualization is the front end of the application. The brain connectome can be visualized using results from the tractography computed in the computing grind. 
 Tractography results are shown in a summary jobs table. For each jobs, the job status is print and when a job is done, an interactive plotting is available. The interactive visualization is also usable by uploading files from user sytem. Files required are : the connectivity matrix (outpout of probtrackx2 : fdt\_network\_matrix) and the parcellation table description (JSON file).
 
@@ -162,7 +123,6 @@ A tension value can be set to change the shape of the links, also the diameter o
 For an easier visualization, the connectivity visualized is threshold between 2 values set : the maximun upper value and the threshold value. Users can change these values to print the brain connectome as precisely as they want. Links under the threshold value are not print and links above the maximum upper value are print in red. 
 Links colors  indicate the connectivity value according to the colorbar corresponding. The thickness of links is proportional to the connectivity value.
 
->>>>>>> 3499e63f2f6466a65e3cb8fbc321bb005040213a
 The following section describe materials used in CIVILITY.
 
 \section{MATERIALS}
@@ -176,15 +136,6 @@ The following section shows the results of this pipeline.
 
 
 Tractography 1year / 2year 
-<<<<<<< HEAD
-
-
-Average 
-Variability
-Main differents 1y/2y
-	-- time of computation 
-	-- 
-=======
 Nb voxel fitting
 probtrack param
 ROIs ignored
@@ -203,18 +154,12 @@ Main differents 1y/2y
 
 	-- 
 
->>>>>>> 3499e63f2f6466a65e3cb8fbc321bb005040213a
 Results Matrix result / matrix computation / visualization 
 
 
 
 \section{CONCLUSIONS} 
 
-<<<<<<< HEAD
-We presented CIVILITY,
-
-
-=======
 We presented CIVILITY, a cloub based Interaction Visualization of Brain Visualization
 
 ..
@@ -224,7 +169,6 @@ We presented CIVILITY, a cloub based Interaction Visualization of Brain Visualiz
 ..
 
 ..
->>>>>>> 3499e63f2f6466a65e3cb8fbc321bb005040213a
 
 \acknowledgments
 
