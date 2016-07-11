@@ -13,7 +13,7 @@
 \usepackage{amsmath}
 
 
-\graphicspath{{../images/}}
+\graphicspath{{images/}}
 
 \title{CIVILITY: Cloud based Interactive Visualization of Tractography Brain Connectome} 
 
@@ -139,40 +139,75 @@ We make some statistics on this dataset presented in the next section.
 
 \subsection{Brain connectome average}
 
-We compute the average of the brain connectome at each year (Figure 1 and Figure 2). We threshold the plotting between : 0.01 and 0.4 for a better visualization.
-Figures 3 and 4 show the average of brain connectome on brain template with the same threshold.
+We compute on our dataset the average brain connectome at each year : 1 and 2 years. 
 
+\begin{equation}
+	A_{i,j} = \frac{\sum_{i=0}^n M_i}{n}
+	\label{equ:average}
+\end{equation}
+
+Equation \ref{equ:average} define the average brain connectome for n matrices. 
+
+We threshold the plotting between : 0.01 and 0.4 for a better visualization.
+The connectivity visualized is computed with the average value between the lower and upper triangles of the connectivity matrix.
 
 \begin{figure}
 \centering 
 \subfigure[]{\includegraphics[width=8cm]{average_1y.png}}
 \subfigure[]{\includegraphics[width=8cm]{average_2y.png}}
-\caption[Average brain connectome at 1 (a) and 2 (b) year old]{Average brain connectome at 1 and 2 year old}
+\caption[Average brain connectome at 1 (a) and 2 (b) year old using the circle plotting ]{Average brain connectome at 1 (a) and 2 (b) year old using the circle plotting}
 \label{fig:AverageBrainConnectome}
 \end{figure} 
 
+Figure \ref{fig:AverageBrainConnectome} is the circle plotting of the average brain connectome of our dataset. Figures \ref{fig:AverageBrainConnectomeBrainTemplate} shows the average brain connectome on brain template with the same threshold.
+
 \begin{figure}
 \centering 
-\subfigure[]{\includegraphics[width=15cm]{average_brainTemplate_1y.png}}
-\subfigure[]{\includegraphics[width=15cm]{average_brainTemplate_2y.png}}
-\caption[Average brain connectome at 1 and 2 year old]{Average brain connectome at 1 and 2 year old}
+\subfigure[]{\includegraphics[width=8cm]{average_brainTemplate_1y.png}}
+\subfigure[]{\includegraphics[width=8cm]{average_brainTemplate_2y.png}}
+\caption[Average brain connectome at 1 (a) and 2 (b) year old on brain templates ]{Average brain connectome at 1 (a) and 2 (b) year old on brain templates }
 \label{fig:AverageBrainConnectomeBrainTemplate}
 \end{figure} 
 
-Results show ....
+First, we visualized that the shape of the connectivity is very similar at both ages. However some links are missing in the brain connectome for 1 year old subject. Moreover, the connectivity is lower for 1 year old children compare to 2 year children.
 
 
-\subsection{Variability of the brain connectome}
+\subsection{Variability and deviation of the brain connectome}
 
-We compute the unbiased sample variance to ....
+We compute the unbiased sample variance  (equation \ref{equ:unbiasedSampleVariance}) to show the variability of the brain connectome in a dataset. 
 
+\begin{equation}
+	V_{i,j} = \frac{1}{n-1} * \sum_{i=0}^n {(M_{i,j} - A_{i,j})^2}
+	\label{equ:unbiasedSampleVariance}
+\end{equation}
+
+
+We also compute the standard deviation of this dataset at 1 and 2 year old (equation \ref{equ:standardDeviation}).
+
+\begin{equation}
+	D_{i,j} = \sqrt{V_{i,j}}
+	\label{equ:standardDeviation}
+\end{equation}
+
+
+Deviation threshold : 0.2 0.05
+
+Figure shows the variabilty 
 
 \begin{figure}
 \centering 
-\subfigure[]{\includegraphics[width=15cm]{variance_1y.png}}
-\subfigure[]{\includegraphics[width=15cm]{variance_2y.png}}
-\caption[Variability of brain connectome at 1 and 2 year old]{Average brain connectome at 1 and 2 year old}
-\label{fig:VariabilityBrainConnectome1YearOld}
+\subfigure[]{\includegraphics[width=8cm]{variance_1y.png}}
+\subfigure[]{\includegraphics[width=8cm]{variance_2y.png}}
+\caption[Variability of brain connectome at 1 (a) and 2 (a) year old using the circle plotting ]{Average brain connectome at 1 and 2 year old using the circle plotting }
+\label{fig:VariabilityBrainConnectome}
+\end{figure} 
+
+\begin{figure}
+\centering 
+\subfigure[]{\includegraphics[width=8cm]{deviation_1y.png}}
+\subfigure[]{\includegraphics[width=8cm]{deviation_2y.png}}
+\caption[Standard deviation of the brain connectome at 1 (a) and 2 (b) year old on brain templates ]{Standard deviation of the brain connectome at 1 (a) and 2 (b) year old on brain templates }
+\label{fig:DeviationBrainConnectome}
 \end{figure} 
 
 \subsection{Observations}
