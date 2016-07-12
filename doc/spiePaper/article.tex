@@ -1,4 +1,3 @@
-
 \documentclass[]{spie}  %>>> use for US letter paper
 %%\documentclass[a4paper]{spie}  %>>> use this instead for A4 paper
 %%\documentclass[nocompress]{spie}  %>>> to avoid compression of citations
@@ -17,7 +16,7 @@
 
 \title{CIVILITY: Cloud based Interactive Visualization of Tractography Brain Connectome} 
 
-\author{Dana\"{e}le Puechmaille.\supit{a}, Juan C. Prieto.\supit{a} and Martin Styner\supit{a}
+\author{Dana\"{e}le Puechmaille\supit{a}, Juan C. Prieto\supit{a} and Martin Styner\supit{a}
 \skiplinehalf
 \supit{a}Neuro Imaging Reasearch and Analysis Laboratory, Department of Psychiatry, \\
  University of North Carolina, Chapel Hill, North Carolina, United States;
@@ -48,9 +47,9 @@ CIVILITY is a web application and has mainly 2 components.
 
 - CIVILITY-visualization ; front end of the application. This is a circle plot of the brain connectivity using the method of visualization : Hierarchical Edge Bundling. The graphic visualization of the brain connectivity is generated using Data Driven Documents (D3.js) \footnote{https://github.com/d3/d3}.
 
-- CIVILITY-tractography ; analysis pipeline. The analysis of the brain connectome is computed with a probabilistic tractography method (FSL tools : bepostx and probtrackx2) using surfaces as seeds. Seeds surfaces are created with the ExtractLabelSurfaces \footnote{https://github.com/NIRALUser/ExtractLabelSurfaces}.
+- CIVILITY-tractography ; analysis pipeline. The analysis of the brain connectome is computed with a probabilistic tractography method (FSL tools : bepostx and probtrackx2) using surfaces as seeds. Seeds surfaces are created with the ExtractLabelSurfaces\footnote{https://github.com/NIRALUser/ExtractLabelSurfaces}.
 
-CIVILITY performs the brain connectivity analysis in remote computing grids where the CIVILITY-tractography pipeline is deployed. CIVILITY uses clusterpost \footnote{https://github.com/NIRALUser/clusterpost} to submit the jobs to the computing grid. Clusterpost is a server application providing a REST api to submit jobs in remote computing grids using. Data transfer, job execution and monitoring are all handled by clusterpost.
+CIVILITY performs the brain connectivity analysis in remote computing grids where the CIVILITY-tractography pipeline is deployed. CIVILITY uses clusterpost\footnote{https://github.com/NIRALUser/clusterpost} to submit the jobs to the computing grid. Clusterpost is a server application providing a REST api to submit jobs in remote computing grids using. Data transfer, job execution and monitoring are all handled by clusterpost.
 The front end of CIVILITY submits tasks to clusterpost and retrieves results when they are finished.
 This work is motivated by medical applications in which brain connectivities need to be compute automatically and analyzed easily.
 
@@ -66,10 +65,10 @@ This paper is submitted to the SPIE Medical Imaging 2016 conference in the categ
 \section{INTRODUCTION}
 \label{sec:intro}
 
-Tractography has found many applications over the past decade. Some applications include neurosurgical planning; assessment and study of neurological diseases such as multiple sclerosis  or schizophrenia; and post-surgical validation. However the analyze of the connectivity matrix is not intuitive and easy to interpret. That's why this application offer to researchers an interactive web interface to show the connectivity clearly according to some parameters. 
+Tractography has found many applications over the past decade. Some applications include neurosurgical planning; assessment and study of neurological diseases such as multiple sclerosis  or schizophrenia; and post-surgical validation. However the analyze of the connectivity matrix is not intuitive and easy to interpret. That's why this application offers to researchers an interactive web interface to show the connectivity clearly according to some parameters. 
 
 In this paper, we present CIVILITY, an open source web application hosted in a cloud. This tool offer to researchers the possibility to launch an unique tractography script and the visualize the brain connectome interactively. Each user is identifying by an user account associated with privileges and can access to his results from anywhere in the cloud.
-The tractography pipeline uses the probabilistic method  of tractography \footnote{describe all possible trajectories} using surfaces as seeds (FSL tools : bedpostx and probtrackx). The tractography pipeline is executed on the computing grid and once is finished results are retrieved and brain connectome visualization is available. 
+The tractography pipeline uses the probabilistic method  of tractography\footnote{describe all possible trajectories} using surfaces as seeds (FSL tools : bedpostx and probtrackx). The tractography pipeline is executed on the computing grid and once is finished results are retrieved and brain connectome visualization is available. 
 The graphic visualization of the brain connectome is generated using Data Driven Documents (D3.js) and more precisely the method Hierarchical Edge Bundling. This is a circle plotting representing the brain connectivity. All links can be threshold between two values, their shape can also be modified for an easier visualization. This tool is submitted at the SPIE Medical Imaging 2016 conference in the category Image processing and we seek to enable further clinical and research applications of tractography.
 
 In summary, CIVILITY performs tractography by sending jobs in remote computing grid using the tool clusterpost. Once the tractography is finished, results are retrived and the brain connectome is visualized interactively. Results and visualization are accessible from any system in the cloud.
@@ -97,11 +96,11 @@ As explained before, the tratography uses FSL tools : bedpostx and probtrackx. T
 
 In this section the pipeline is describe. 
 
-First, The tool DWIConvert \footnote{https://github.com/BRAINSia/BRAINSTools/tree/master/DWIConvert} is used to convert nrrd to nifti images, this last format is required to use FSL tools in tractography.
+First, The tool DWIConvert\footnote{https://github.com/BRAINSia/BRAINSTools/tree/master/DWIConvert} is used to convert nrrd to nifti images, this last format is required to use FSL tools in tractography.
 Then, bedpostx tool is used to build default distributions of diffusion parameters at each voxel(2 tensors in the voxel fitting).
 This method of tractography is using surfaces as seeds. These surfaces  (ASCII format) are created with the C++ tool : ExtractLabelSurfaces apply on the White Matter surface (VTK file) containing labels.
 Probtrackx2 is the probabilistic tractography, it run on the output of bedpostX and according to a seed list. The seed list is created according to the atlas describe in the json file. Each seeds are label surfaces.  The label extraction can used overlapping or not between each ROIs. The tractography results is a connectivity matrix.
-Once the tractography done, CIVILITY allow users to visualize easily the connectivity matrix like explain in the following section. 
+Once the tractography done, CIVILITY allow users to visualize easily the connectivity matrix like explained in the following section. 
 
 The entire pipeline is available in the github project repository.
 
@@ -118,7 +117,7 @@ Finally, each value in the triangular matrix represents the connectivity value b
 \subsubsection{Visualization parameters}
 
 The brain connectome is plotting as circle plot, generated using Data Driven Documents (D3.js) and more precisely the method Hierarchical Edge Bundling. Another, connectivity visualization is avalable : brain connectivity on brain templates\footnote{https://www.nitrc.org/projects/bnv}.
-As explained before, the user selects the way how to compute the triangular matrix : average, maximun or munimum between lower and upper triangles matrices. 
+As explained before, the user selects the way how to compute the triangular matrix : average, maximum or munimum between lower and upper triangles of the matrix. 
 A tension value can be set to change the shape of the links, also the diameter of the circle is adjustable.
 For an easier visualization, the connectivity visualized is threshold between 2 values set : the maximun upper value and the threshold value. Users can change these values to print the brain connectome as precisely as they want. Links under the threshold value are not print and links above the maximum upper value are print in red. 
 Links colors  indicate the connectivity value according to the colorbar corresponding. The thickness of links is proportional to the connectivity value.
@@ -128,12 +127,14 @@ The following section describe materials used in CIVILITY.
 \section{MATERIALS}
 
 We apply our tractography pipeline to 19 infants (scanned at 1 year and 2 years approximately).
-All data had previously been QC and registered in the same space : DWI space. The Middle surface is containing labels information according to the brain atlas AAL90. 
+All data had previously been Quality Control (QC) and registered in the same space : DWI space. The surface is containing labels information according to the brain atlas AAL90. 
 The following section shows the results of this pipeline. 
 
 \section{RESULTS} 
 
 We compute the brain connectome of these 19 infants at two ages : 1 year and 2 years. The tractography computed with FSL tools is using 2 tensors in the voxel fitting. The method of computation we have choosen is using surfaces as seeds. Each surfaces corresponds to a brain region in the atlas Automated Anatomical Labeling (AAL). All ROIs surfaces overlap on each others. The cerebellum regions is ignored in the brain connectome computation. The number of samples is set to 3000 (number of streamlines per voxel) with a step length of 0.75mm and a seed sphere sampling of 0.5. 
+
+The first observation we can do is : an higher time of compuation for 2 year old subjects compare to 1 year old subjects. This time difference is explained by the size of the brain of the infant, more the brain is big, more the time of computation is high.
 
 We make some statistics on this dataset presented in the next section.
 
@@ -155,7 +156,7 @@ The connectivity visualized is computed with the average value between the lower
 \centering 
 \subfigure[]{\includegraphics[width=8cm]{average_1y.png}}
 \subfigure[]{\includegraphics[width=8cm]{average_2y.png}}
-\caption[Average brain connectome at 1 (a) and 2 (b) year old using the circle plotting ]{Average brain connectome at 1 (a) and 2 (b) year old using the circle plotting}
+\caption[Average brain connectome at 1 (a) and 2 (b) year old using the circle plotting ]{Average brain connectome at 1 (a) and 2 (b) year old using the circle plotting. Threshold : 0.01 - 0.4}
 \label{fig:AverageBrainConnectome}
 \end{figure} 
 
@@ -165,11 +166,11 @@ Figure \ref{fig:AverageBrainConnectome} is the circle plotting of the average br
 \centering 
 \subfigure[]{\includegraphics[width=8cm]{average_brainTemplate_1y.png}}
 \subfigure[]{\includegraphics[width=8cm]{average_brainTemplate_2y.png}}
-\caption[Average brain connectome at 1 (a) and 2 (b) year old on brain templates ]{Average brain connectome at 1 (a) and 2 (b) year old on brain templates }
+\caption[Average brain connectome at 1 (a) and 2 (b) year old on brain templates ]{Average brain connectome at 1 (a) and 2 (b) year old on brain templates. Threshold : 0.01 - 0.4}
 \label{fig:AverageBrainConnectomeBrainTemplate}
 \end{figure} 
 
-First, we visualized that the shape of the connectivity is very similar at both ages. However some links are missing in the brain connectome for 1 year old subject. Moreover, the connectivity is lower for 1 year old children compare to 2 year children.
+First, we visualized that the shape of the connectivity is very similar at both ages. However some links are missing in the brain connectome for 1 year old subjects. Moreover, the connectivity is lower for 1 year old children compare to 2 year children.
 
 
 \subsection{Variability and deviation of the brain connectome}
@@ -181,7 +182,6 @@ We compute the unbiased sample variance  (equation \ref{equ:unbiasedSampleVarian
 	\label{equ:unbiasedSampleVariance}
 \end{equation}
 
-
 We also compute the standard deviation of this dataset at 1 and 2 year old (equation \ref{equ:standardDeviation}).
 
 \begin{equation}
@@ -189,16 +189,11 @@ We also compute the standard deviation of this dataset at 1 and 2 year old (equa
 	\label{equ:standardDeviation}
 \end{equation}
 
-
-Deviation threshold : 0.2 0.05
-
-Figure shows the variabilty 
-
 \begin{figure}
 \centering 
 \subfigure[]{\includegraphics[width=8cm]{variance_1y.png}}
 \subfigure[]{\includegraphics[width=8cm]{variance_2y.png}}
-\caption[Variability of brain connectome at 1 (a) and 2 (a) year old using the circle plotting ]{Average brain connectome at 1 and 2 year old using the circle plotting }
+\caption[Variability of brain connectome at 1 (a) and 2 (a) year old using the circle plotting ]{Variability brain connectome at 1 and 2 year old using the circle plotting. Threshold : 0.05 - 0.5 }
 \label{fig:VariabilityBrainConnectome}
 \end{figure} 
 
@@ -206,25 +201,36 @@ Figure shows the variabilty
 \centering 
 \subfigure[]{\includegraphics[width=8cm]{deviation_1y.png}}
 \subfigure[]{\includegraphics[width=8cm]{deviation_2y.png}}
-\caption[Standard deviation of the brain connectome at 1 (a) and 2 (b) year old on brain templates ]{Standard deviation of the brain connectome at 1 (a) and 2 (b) year old on brain templates }
+\caption[Standard deviation of the brain connectome at 1 (a) and 2 (b) year old on brain templates ]{Standard deviation of the brain connectome at 1 (a) and 2 (b) year old on brain templates. Threshold : 0.05 - 0.5}
 \label{fig:DeviationBrainConnectome}
 \end{figure} 
 
-\subsection{Observations}
+The connectivity visualized in both figures is computed with the average value between the lower and upper triangles of the connectivity matrix.
 
-The time of computation is higher for 2 year old subjects because of the size of the brain.
+Figure \ref{fig:VariabilityBrainConnectome} is showing the variability of the brain connectome at both ages. We threshold the plotting between 0.05 and 0.5 for a better visualization.
+These results show a variability pretty constant between 1 and 2 year old, but a little bit higher at 2 years old.
+
+Figure \ref{fig:DeviationBrainConnectome} shows the deviation if the brain connectome. 
+We threshold the plotting between 0.05 and 0.2 for a better visualization. The circle plotting of the deviation of 1 year old infants shows a high deviation. The deviation of 2 year old infants dataset is much lower. This observation disclose brains connectome of 1 years infants are much different between them compare to the set of 2 years infants which are much similar between them.
 
 \section{CONCLUSIONS} 
 
-We presented CIVILITY, a cloub based Interaction Visualization of Brain Visualization
+We presented CIVILITY, Cloub based Interactive Visualization of Tractography Brain Connectome which is a  web tool in the cloud. The application is running a tractography pipeline and had visualization components. 
 
-..
+The tractography is using a probabilitic method (FSL tools) using surfaces as seeds. 
+The visualization is showing the brain connectome by plotting the matrix in an interactive circle. 
 
-..
+CIVILITY offers to users the possibility to launch tractography really easily by only setting parameters and uploading files. 
+The results of tractography are accessible from any station in the institution that which allows users to visualized results from any station connected to the institution. 
 
-..
+We shown some statistics about infants brains connectome and we expect thanks to this easy visualization to underline new aspect of brain development during childhood in the future.
 
-..
+
+
+
+
+
+
 
 \acknowledgments
 
