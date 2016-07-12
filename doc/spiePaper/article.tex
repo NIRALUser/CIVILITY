@@ -68,7 +68,7 @@ This paper is submitted to the SPIE Medical Imaging 2016 conference in the categ
 
 Tractography has found many applications over the past decade. Some applications include neurosurgical planning; assessment and study of neurological diseases such as multiple sclerosis  or schizophrenia; and post-surgical validation. However the analyze of the connectivity matrix is not intuitive and easy to interpret. That's why this application offers to researchers an interactive web interface to show the connectivity clearly according to some parameters. 
 
-In this paper, we present CIVILITY, an open source web application hosted in a cloud. This tool offers to researchers the possibility to launch a unique tractography script and to visualize the brain connectome interactively. Each user is identified by a user account associated with privileges and can access to his results from anywhere in the cloud.
+In this paper, we present CIVILITY an open source web application hosted in a cloud. This tool offers to researchers the possibility to launch a unique tractography script and to visualize the brain connectome interactively. Each user is identified by a user account associated with privileges and can access to his results from anywhere in the cloud.
 The tractography pipeline uses the probabilistic method  of tractography\footnote{describe all possible trajectories} using surfaces as seeds (FSL tools : bedpostx and probtrackx). The tractography pipeline is executed on the computing grid and once is finished results are retrieved and brain connectome visualization is available. 
 The graphic visualization of the brain connectome is generated using Data Driven Documents (D3.js) and more precisely the method Hierarchical Edge Bundling. This is a circle plotting representing the brain connectivity. All links can be threshold between two values, their shape can also be modified for an easier visualization. This tool is submitted at the SPIE Medical Imaging 2016 conference in the category Image processing and we seek to enable further clinical and research applications of tractography.
 
@@ -81,6 +81,14 @@ The following section explains in detail the methods used in CIVILITY.
 \label{sec:METHODS}
 
 This section explains in details the two components of CIVILITY : tractography and visualization.
+The figure \ref{fig:architectureCIVILITY} shows the architecture of the application CIVILITY. 
+
+\begin{figure}
+\centering 
+\subfigure[]{\includegraphics[width=15cm]{architectureCIVILITY.png}}
+\caption[Architecture of the application CIVILITY]{Architecture of the application CIVILITY}
+\label{fig:architectureCIVILITY}
+\end{figure} 
 
 \subsection{Tractography}
 
@@ -103,7 +111,7 @@ This method of tractography is using surfaces as seeds. These surfaces  (ASCII f
 Probtrackx2 is the probabilistic tractography, it runs on the output of bedpostX and according to a seed list. The seed list is created according to the atlas describe in the json file. Each seed is a surface.  The label extraction can used overlapping or not between each ROIs. The tractography result is a connectivity matrix.
 Once the tractography done, CIVILITY allow users to visualize easily the connectivity matrix like explained in the following section. 
 
-The entire pipeline is available in the github project repository.
+The entire pipeline is available in the github project repository\footnote{https://github.com/NIRALUser/CIVILITY} or in the NITRC page\footnote{https://www.nitrc.org/projects/civility/}.
 
 \subsection{Visualization}
 
