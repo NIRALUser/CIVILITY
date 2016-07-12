@@ -49,7 +49,8 @@ CIVILITY is a web application and has mainly 2 components.
 
 - CIVILITY-tractography ; analysis pipeline. The analysis of the brain connectome is computed using a probabilistic tractography method (FSL tools : bedpostx and probtrackx2) using surfaces as seeds. Seeds surfaces are created with the ExtractLabelSurfaces\footnote{https://github.com/NIRALUser/ExtractLabelSurfaces}.
 
-CIVILITY performs the brain connectivity analysis in remote computing grids where the CIVILITY-tractography pipeline is deployed. CIVILITY uses clusterpost\footnote{https://github.com/NIRALUser/clusterpost} to submit the jobs to the computing grid. $Clusterpost is a server application providing a REST api to submit jobs in remote computing grids using. Data transfer, job execution and monitoring are all handled by clusterpost.$
+CIVILITY performs the brain connectivity analysis in remote computing grids where the CIVILITY-tractography pipeline is deployed. CIVILITY uses clusterpost\footnote{https://github.com/NIRALUser/clusterpost} to submit the jobs to the computing grid. 
+%Clusterpost is a server application providing a REST api to submit jobs in remote computing grids using. Data transfer, job execution and monitoring are all handled by clusterpost.
 The front end of CIVILITY submits tasks to clusterpost and retrieves results when they are finished.
 This work is motivated by medical applications in which brain connectivities need to be computed automatically and analyzed easily.
 
