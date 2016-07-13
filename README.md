@@ -6,11 +6,11 @@ CIVILITY is a web application and has mainly 2 components.
 
 - CIVILITY-visualization ; front end of the application. This is a circle plot of the brain connectivity using the method of visualization : Hierarchical Edge Bundling. The graphic visualization of the brain connectivity is generated using Data Driven Documents (D3.js).
 
-- CIVILITY-tractography ; analysis pipeline. The analysis of the brain connectome is computed with a probabilistic method (FSL tools) using surfaces as seeds.
-Main steps of the pipeline are : 
+- CIVILITY-tractography ; analysis pipeline. The analysis of the brain connectome is computed by a probabilistic method (FSL tools) using surfaces as seeds.
+The main steps of the pipeline are : 
   * bedpostX (FSL): Fitting of the probabilistic diffusion model on corrected data (by default number of tensors = 2 )
-  * ExtractLabelSurfaces : creation label surfaces (ASCII files) from a VTK surface containing labels formations.(https://github.com/NIRALUser/ExtractLabelSurfaces)
-  * Creation of a seeds list : text file listing all path of labels surfaces created by ExtractLabelSurfaces tool
+  * ExtractLabelSurfaces : creation label surfaces (ASCII files) from a VTK surface containing labels information.(https://github.com/NIRALUser/ExtractLabelSurfaces)
+  * Creation of a seeds list : text file listing all path of label surfaces created by ExtractLabelSurfaces tool
   * probtrackx2 (FSL): compute tractography according to the seeds list created.
 
 CIVILITY performs the brain connectivity analysis in remote computing grids where the CIVILITY-tractography pipeline is deployed. CIVILITY uses clusterpost (https://github.com/NIRALUser/clusterpost) to submit the jobs to the computing grid. 
@@ -20,7 +20,7 @@ clusterpost is a server application providing a REST api to submit jobs in remot
 The front end of CIVILITY submits tasks to clusterpost and retrieves the results when they are finished. 
 
 
-See documentation in Documentation/ directory. 
+See documentation in doc/ directory. 
 
 
 ##USAGE for TRACTOGRAPHY 
@@ -30,9 +30,9 @@ See documentation in Documentation/ directory.
  - DWI image (in diffusion space, nrrd format)
  - T1 image (in diffusion space, nrrd format)
  - Brain mask (in diffusion space, nrrd format)
- - Parcellation table, json file which describe the brain atlas in brain surfaces (format json)
- - Brain Surface. This is a VTK file which represent the white matter surface. This surface must be in the diffusion space. 
-		If white matter surface doesn't contain labels informations, upload another surface (same mesh, in diffusion space, vtk format) containning labels informations.
+ - Parcellation table, json file which describes the brain atlas in brain surfaces (format json)
+ - Brain Surface. This is a VTK file which represents the white matter surface. This surface must be in the diffusion space. 
+		If the white matter surface doesn't contain label information, upload another surface (same mesh, in diffusion space, vtk format) containning labels informations.
 
 
 ### 2. Output connectivity matrix  
