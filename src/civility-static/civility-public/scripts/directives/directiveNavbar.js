@@ -10,7 +10,7 @@ angular.module('CIVILITY')
 		$scope.getName = function(){
 			clusterauth.getUser().then(function(res)
 			{
-				$scope.login = res.data				
+				$scope.login = res;
 			})
 			.catch(function(e){
 				console.error(e);

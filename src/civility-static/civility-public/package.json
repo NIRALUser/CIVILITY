@@ -1,0 +1,37 @@
+{
+  "name": "civility-public",
+  "version": "1.0.0",
+  "description": "Front end for civility application",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/NIRALUser/CIVILITY.git"
+  },
+  "keywords": [
+    "Front-end",
+    "civility"
+  ],
+  "author": "juanprietob@gmail.com",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/NIRALUser/CIVILITY/issues"
+  },
+  "homepage": "https://github.com/NIRALUser/CIVILITY#readme",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-route": "^1.5.8",
+    "angular-smart-table": "^2.1.8",
+    "angular-ui-bootstrap": "^2.2.0",
+    "bootstrap": "^3.3.7",
+    "clusterpost-list": "^1.0.0",
+    "d3": "^3.5.12",
+    "jsonformatter": "^0.6.0",
+    "jwt-user-login": "^1.0.3",
+    "mathjs": "^3.5.3",
+    "ui-bootstrap": "^0.1.5",
+    "underscore": "^1.8.3"
+  }
+}

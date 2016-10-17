@@ -1,10 +1,10 @@
 angular.module('CIVILITY')
-.directive('adminUserPrivileges', function($routeParams,$location,clusterpost, $filter, $q){
+.directive('adminUserPrivileges', function($routeParams,$location, clusterauth, $filter, $q){
 
 	function link($scope,$attrs){
 
 		$scope.getAllUsers = function(){
-			clusterpost.getAllUsers().then(function(res){
+			clusterauth.getUsers().then(function(res){
 				console.log(res.data);
 				$scope.rowCollection = res.data;
 			})
@@ -19,7 +19,7 @@ angular.module('CIVILITY')
 
 		$scope.saveUser = function(user)
 		{
-			clusterpost.saveUser(user).then(function(res){
+			clusterauth.updateUser(user).then(function(res){
 				console.log(res);
 			})
 			.catch(function(e){
@@ -71,7 +71,7 @@ angular.module('CIVILITY')
 		}
 
 		$scope.deleteUser = function(user){
-			clusterpost.deleteUser(user).then(function(){
+			clusterauth.deleteUser(user).then(function(){
 			})
 			.catch(function(e){
                 console.error(e);

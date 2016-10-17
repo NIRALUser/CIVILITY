@@ -1,5 +1,5 @@
 angular.module('CIVILITY')
-.directive('jobStatus', function($routeParams,$location,clusterpost, $http){
+.directive('jobStatus', function($routeParams,$location,clusterpostService, $http){
 
 	function link($scope,$attrs,$filter){
 
@@ -16,7 +16,7 @@ angular.module('CIVILITY')
 
    
     $scope.updateStatus = function(){
-         clusterpost.getJobStatus($scope.jobId).then(function(res2){
+         clusterpostService.getJobStatus($scope.jobId).then(function(res2){
            $scope.jobObject.jobstatus.status = res2.data.status ; 
         })
         .catch(function(e){
@@ -26,7 +26,7 @@ angular.module('CIVILITY')
     
     //get job object  and update status
     $scope.getJobObject = function(){
-      clusterpost.getJob($scope.jobId).then(function(res){
+      clusterpostService.getJob($scope.jobId).then(function(res){
         $scope.jobObject = res.data;
         $scope.jobObject.timestamp = new Date($scope.jobObject.timestamp);
 
@@ -41,7 +41,7 @@ angular.module('CIVILITY')
     $scope.getJobObject();
 
     $scope.killJob = function() {
-      clusterpost.killJob($scope.jobId).then(function(res){
+      clusterpostService.killJob($scope.jobId).then(function(res){
         console.log("Job " + $scope.jobId + " is killed");
         $scope.updateStatus();
       })

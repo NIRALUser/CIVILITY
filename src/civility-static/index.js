@@ -14,7 +14,7 @@ exports.register = function (server, options, next) {
 		method: 'GET',
 		config: {
 			handler: {
-				directory: { path: './civility', listing: false, index: true }
+				directory: { path: './civility-public', listing: false, index: true }
 			},
 			description: 'This route serves the static website of CIVILITY. Everything inside the plugins src/CIVILITY-PUBLIC/ directory will be directly accessible under this route.'
 		}

@@ -1,6 +1,6 @@
 
 angular.module('CIVILITY')
-.directive('connectivityVisualisation', function($routeParams,$location,clusterpost, $http){
+.directive('connectivityVisualisation', function($routeParams,$location, $http){
 
 function link($scope,$attrs,$filter){
 

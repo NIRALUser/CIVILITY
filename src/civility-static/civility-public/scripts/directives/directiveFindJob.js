@@ -1,6 +1,6 @@
 
 angular.module('CIVILITY')
-.directive('findJob', function($routeParams,$location,clusterpost, clusterauth){
+.directive('findJob', function($routeParams,$location,clusterpostService, clusterauth){
 
 function link($scope,$attrs,$filter){
 
@@ -12,8 +12,8 @@ function link($scope,$attrs,$filter){
 
   $scope.listPCA = "none";
   clusterauth.getUser().then(function(res){
-      $scope.userEmail = res.data.email;
-      _.each(res.data.scope, function(val){
+      $scope.user = res;
+      _.each($scope.user.scope, function(val){
           if(val == "admin")
           {
             $scope.isAdmin = true;
@@ -40,7 +40,7 @@ function link($scope,$attrs,$filter){
         $scope.status = $scope.selectStatus.selection;
     }
     
-    clusterpost.getJobUser($scope.userEmail, $scope.status, "tractographyScriptApp.sh").then(function(res){
+    clusterpostService.getJobUser($scope.userEmail, $scope.status, "tractographyScriptApp.sh").then(function(res){
       //console.log(res);      
       $scope.jobFound = _.compact(_.map(res.data, function(job){
 
@@ -54,7 +54,7 @@ function link($scope,$attrs,$filter){
         
         if(!alloutputsfound && job.jobstatus.status==="UPLOADING"){
           //resubmit job
-          clusterpost.getAttachment(job._id, job.outputs[3].name, "text")
+          clusterpostService.getAttachment(job._id, job.outputs[3].name, "text")
           .then(function(res){
             var str = res.data;
             //console.log(str);
@@ -64,7 +64,7 @@ function link($scope,$attrs,$filter){
             //parse data.res;
             if(restartJobForce)
             {
-              clusterpost.submitJob(job._id,true).then(function(res){
+              clusterpostService.submitJob(job._id,true).then(function(res){
               })
               .catch(function(e){
                 console.error(e);
@@ -92,7 +92,7 @@ function link($scope,$attrs,$filter){
   //Delete single job
   $scope.deleteJob = function(id){
       console.log("DeleteJob");
-      clusterpost.deleteJob(id).then(function(res){
+      clusterpostService.deleteJob(id).then(function(res){
           console.log("Job " + id + " is delete ");
           })
   }

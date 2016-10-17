@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   
-  <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
    <!-- <link href="bower_components/angular-smart-table/dist/smart-table.min.css" rel="stylesheet"/> -->
   <link rel="stylesheet" href="style/BrainConnectivityStyle.css" type="text/css">
 
@@ -26,25 +26,28 @@
   <!-- <script src="bower_components/angular/angular.min.js"></script>
   <script src="bower_components/angular-route/angular.min.js"></script> -->
   
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="bower_components/underscore/underscore-min.js" ></script>
-  <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js" ></script>
-  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js" ></script>
-  <script src="bower_components/angular-smart-table/dist/smart-table.min.js" ></script>
+  <script src="node_modules/angular/angular.min.js"></script>
+  <script src="node_modules/angular-route/angular-route.min.js"></script>
+  <script src="node_modules/underscore/underscore-min.js" ></script>
+  <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js" ></script>
+  <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js" ></script>
+  <script src="node_modules/angular-smart-table/dist/smart-table.min.js" ></script>
+
 <!--   <script src="bower_components/numericjs/numeric-1.2.6.min.js" ></script>
- -->  <script src="bower_components/mathjs/dist/math.min.js" ></script>
+ -->  <script src="node_modules/mathjs/dist/math.min.js" ></script>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="bower_components/d3/d3.min.js"></script>
+  <!-- // <script src="node_modules/d3/d3.min.js"></script> -->
+  
+  <script src="node_modules/clusterpost-list/dist/clusterpost-list.min.js" ></script>
+  <script src="node_modules/jwt-user-login/dist/jwt-user-login.min.js" ></script>
+   
 
   <!-- Application scripts -->
   <script src="app.js"></script>
   <!-- Services --> 
   
-  <script src="services/cluster.service.js"></script>
-  <script src="services/cluster.auth.js"></script>
+  
   <script src="services/fileupload.service.js"></script>
   <!-- Controllers --> 
   <script src="scripts/controllers/tractographyApp.js"></script>
@@ -61,8 +64,11 @@
   <script src="scripts/directives/directiveAdminUserPrivileges.js"></script>
   <script src="scripts/directives/directiveComputePCA.js"></script>
   <script src="scripts/directives/directiveFindJob.js"></script>
-  <script src="scripts/directives/directiveAdminJobSummary.js"></script>
-  <script src="scripts/directives/directiveUserLogin.js"></script>
+
+  <!-- // <script src="services/cluster.service.js"></script> -->
+  <!-- // <script src="services/cluster.auth.js"></script> -->
+  <!-- // <script src="scripts/directives/directiveAdminJobSummary.js"></script> -->
+  <!-- // <script src="scripts/directives/directiveUserLogin.js"></script> -->
 
 
 </body>

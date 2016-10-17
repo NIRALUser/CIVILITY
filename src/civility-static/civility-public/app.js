@@ -4,12 +4,16 @@
 angular.module('CIVILITY', [
   'ngRoute',
   'ui.bootstrap',
-  'smart-table'
+  'smart-table',
+  'clusterpost-list'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider    
   .when('/welcome', {
     templateUrl: 'views/controllers/welcome.html'
+  })
+  .when('/home', {
+    redirectTo: '/tractographyApp'
   })
   .when('/tractographyApp', {
     templateUrl: 'views/controllers/tractographyApp.html'
