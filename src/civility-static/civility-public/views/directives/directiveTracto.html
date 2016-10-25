@@ -1,80 +1,184 @@
-<div >
- 	<h3 id="title">Probabilistic tractography with FSL tools</h3> 
-	<div class=tracto>
-		<div class="tractoForm">
+
+<div id="tracto" class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">Probabilistic tractography with FSL tools</h3>
+	</div>
+	<div class="panel-body">
 		<form>
-			<label>Job name :
-   				 <input type="text" name="input" ng-model="Parameters.subject"
-           required  pattern="([\w\-]+)" ng-trim="false" title="Pattern error">
-			</label>
-
-			<h4> Load data :</h4>
-
-			DWI Image <i>(.nrrd)</i> :<input type="file" id="DWI" file-model="Parameters.Files.DWI"/><br>
-
-			T1 reference in DWI space <i>(.nrrd)</i> :<input type = "file" id="T1" file-model="Parameters.Files.T1"/> <br>
-
-			Brain mask in DWI space <i>(.nrrd)</i> :<input type = "file" id="BrainMask" file-model="Parameters.Files.BrainMask" /> <br>
-
-			Parcellation table <i>(.json)</i> : <a href="" data-toggle="tooltip" title="{{jsonTemplate}}"> Help <i class="glyphicon glyphicon-info-sign"> </i> </a>
-<input type ="file" id="JSON" file-model="Parameters.Files.parcellationTable"/>  <br>
-
-			Inner surface in DWI space <i>(.vtk)</i> :<input type = "file" id="innerSurface" file-model="Parameters.Files.innerSurface"/> <br>
-
-			Inner surface contains color labels 
- 			<input type="checkbox" name="colorExist" value="colorExist" ng-model="checkedSurfaceColored" ng-init="checkedSurfaceColored=true" /><br/>
-			
-			<div ng-show="!checkedSurfaceColored" style="text-indent: 20px; font-style: italic;">  
-				Alternative surface corresponding with color labels in DWI space (.vtk) : <input type = "file" id="colorSurface" ng-disabled="checkedSurfaceColored" style="text-indent: 20px;" file-model="alternativeSurface"/> <br>
+			<div class="input-group">
+			  <span class="input-group-addon" id="basic-addon1">Job name:</span>
+			  <input type="text" class="form-control" name="input" ng-model="Parameters.subject" required  pattern="([\w\-]+)" ng-trim="false" title="Pattern error">
 			</div>
 
-			Labelset name in vtk surface file : <input type="text" name="input" ng-model="Parameters.labelsetName" required ng-trim="false" pattern="([\w\-]+)" title="Pattern error"><br>
+			<br>
 
-			Ignore label  <input type="checkbox" name="ignore" value="ignore" ng-model="Parameters.ignoreLabel" ng-init="Parameters.ignoreLabel=false" /><br/>
-			
-			<div ng-if="Parameters.ignoreLabel"> 
-				<input type="text" name="input" ng-model="Parameters.ignoreLabelID"
-			           required ng-trim="false"><br> 
-			</div>
-			<br>
-			<h4> Extract Label Surfaces options : </h4>
-			Overlapping
-			<input type="checkbox" name="overlapping" value="overlapping" ng-model="overlapping" ng-init="overlapping=true"  />
-			<br>
-			<br>
-			<h4> Bedpostx options :</h4>
-			<i> By default  : number of tensors in the voxel fitting = 2  </i> <br> <br>
-			Command line parameters: <br>
-			<i> <u>Default</u> : <b>bedpostx DiffusionDirectory </b>-n 2 </i> <br>
-			<i> Modify ?<input type="checkbox" ng-model="tools.bedpostx.modify"/> (MODIFY ONLY IF YOU KNOW WHAT TO DO)</i><br>
-			<input type="text" ng-model="tools.bedpostx.param" id="{{tools.bedpostx.id}}" disabled> </input> <a href="" data-toggle="tooltip" title="{{tools.bedpostx.help}}"> Help <i class="glyphicon glyphicon-info-sign"> </i> </a>
-			<br>
-			<br>
-			
-			<h4> Tractography / Probtrackx2 options : </h4> 
-			
-			<!-- <div class="probtrackxInfo"> Probtrackx help
-        	 <i class="glyphicon glyphicon-info-sign"> </i>
-      		</div> -->
-
-			Loopcheck
-			<input type="checkbox" name="loopcheck" value="loopcheck" ng-model="loopcheck" ng-init="loopcheck=true" /> <br> <br>
-
-			Command line parameters: <br>
-			<i> <u>Default</u> : <b> probtrackx2 --samples=Diffusion.bedpostX/merged --mask=Diffusion.bedpostX/nodif_brain_mask --seed=seeds.txt --seedref=T1_image.nii.gz --forcedir --network --omatrix1 -V 0 --dir=NetworkNameDirectory --stop=seeds.txt (--loopcheck) </b> -P 3000 --steplength=0.75 --sampvox=0.5 </i> <br>
-			<i> Modify ?<input type="checkbox" ng-model="tools.probtrackx2.modify"/> (MODIFY ONLY IF YOU KNOW WHAT TO DO) </i> <br>
-			<input type="text" ng-model="tools.probtrackx2.param" id="{{tools.probtrackx2.id}}" disabled> </input>
-			<a href="" data-toggle="tooltip" title="{{tools.probtrackx2.help}}"> Help <i class="glyphicon glyphicon-info-sign"> </i> </a> 
-
-			<div  class="jobOptions">
-				<h5> Option for submit job :</h5>
-				<div class="serverChoice">
-					<p class="serverChoiceText"> Select server to run job :</p>
-					<select class="serverSelect" id="serverSelect" ng-model="serverselect.selection" ng-options="server.name for server in serverselect.servers"> 
-					</select>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h2 class="panel-title">Input files</h2>
 				</div>
+				<div class="panel-body">
+					<div class="input-group">
+					  <span class="input-group-addon" id="basic-addon1">DWI Image <i>(.nrrd)</i></span>
+					  <input type="file" class="form-control"  id="DWI" file-model="Parameters.Files.DWI">
+					</div>
+					<br>
+					<div class="input-group">
+					  <span class="input-group-addon" id="basic-addon1">T1 reference in DWI space <i>(.nrrd)</i></span>
+					  <input type="file" id="T1" class="form-control" file-model="Parameters.Files.T1">
+					</div>
+					<br>
+					<div class="input-group">
+					  <span class="input-group-addon" id="basic-addon1">Brain mask in DWI space <i>(.nrrd)</i></span>
+					  <input type = "file" id="BrainMask" class="form-control" file-model="Parameters.Files.BrainMask">
+					</div>
+					<br>
+					<div class="input-group">
+					  <span class="input-group-addon" id="basic-addon1">Parcellation table <i>(.json)</i></span>
+					  <input type ="file" id="JSON" class="form-control" file-model="Parameters.Files.parcellationTable">
+					  <span class="input-group-btn">
+					  	<button id="buttonpop" class="btn btn-info" type="button"
+					  		data-container="#tracto" data-toggle="popover" data-content="{{jsonTemplate}}" 
+					  		data-placement="left"
+					  		ng-click="showPop()">
+					  		<span class="glyphicon glyphicon-info-sign"> </span>
+					  	</button>
+					  </span>
+					</div>
+					<br>
+					<div class="input-group">
+					  <span class="input-group-addon" id="basic-addon1">Inner surface in DWI space <i>(.vtk)</i></span>
+					  <input type = "file" id="innerSurface" class="form-control" file-model="Parameters.Files.innerSurface">
+					</div>
+					<br>
+					<div class="input-group">
+					  <span class="input-group-addon">
+					  	<input type="checkbox" aria-label="..." name="colorExist" value="colorExist" ng-model="checkedSurfaceColored" ng-init="checkedSurfaceColored=true">
+					  </span>
+					  <label class="form-control ng-binding">Inner surface contains color labels</label>
+					</div>
+					<br>
+					<div ng-show="!checkedSurfaceColored" style="text-indent: 20px; font-style: italic;">  
+						Alternative surface corresponding with color labels in DWI space (.vtk) : <input type = "file" id="colorSurface" ng-disabled="checkedSurfaceColored" style="text-indent: 20px;" file-model="alternativeSurface"/> <br>
+					</div>
+					<br>
+					
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">Labelset name in vtk surface file</span>
+						<input type="text" class="form-control" name="input" ng-model="Parameters.labelsetName" required ng-trim="false" pattern="([\w\-]+)" title="Pattern error">
+					</div>
 
+					<br>
+					
+					<div class="input-group">
+						<span class="input-group-addon">
+					  		<input type="checkbox" name="ignore" value="ignore" ng-model="Parameters.ignoreLabel" ng-init="Parameters.ignoreLabel=false" aria-label="...">
+						</span>
+					  	<label class="form-control ng-binding">Ignore label</label>
+					</div>
+					
+					<br>
+					
+					<div ng-if="Parameters.ignoreLabel"> 
+						<input type="text" name="input" ng-model="Parameters.ignoreLabelID"
+					           required ng-trim="false"><br> 
+					</div>
+				</div>
 			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h2 class="panel-title">Extract Label Surfaces options</h2>
+				</div>
+				<div class="panel-body">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<input type="checkbox" name="overlapping" value="overlapping" ng-model="overlapping" ng-init="overlapping=true" aria-label="...">
+						</span>
+					  	<label class="form-control ng-binding">Overlapping</label>
+					</div>
+				</div>
+			</div>
+			<br>
+
+			<div class="panel panel-danger">
+				<div class="panel-heading">
+					<h2 class="panel-title">Bedpostx options</h2>
+				</div>
+				<div class="panel-body">
+					<div class="input-group">
+						<div class="alert alert-danger" role="alert">
+							MODIFY ONLY IF YOU KNOW WHAT TO DO
+							<br>
+							<br>
+							<br>
+							<i> By default  : number of tensors in the voxel fitting = 2  </i> 
+							<br>
+							<br>
+							Command line parameters: <br>
+							<i> <u>Default</u> : <b>bedpostx DiffusionDirectory </b>-n 2 </i> <br>
+						</div>
+						<div class="input-group">
+							<label class="form-control ng-binding">Enable <a href="" data-toggle="tooltip" title="{{tools.bedpostx.help}}"> 
+						 Help <i class="glyphicon glyphicon-info-sign"> </i> </a></label>
+							<span class="input-group-addon">
+								<input type="checkbox" ng-model="tools.bedpostx.modify">
+							</span>
+							<input type="text" class="form-control" ng-model="tools.bedpostx.param" id="{{tools.bedpostx.id}}" disabled>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h2 class="panel-title">Tractography / Probtrackx2 options</h2>
+				</div>
+				<div class="panel-body">
+
+					<div class="alert alert-danger" role="alert">
+							MODIFY ONLY IF YOU KNOW WHAT TO DO
+							<br>
+							<br>
+							Command line parameters: <br>
+						<i> <u>Default</u> : <b> probtrackx2 --samples=Diffusion.bedpostX/merged --mask=Diffusion.bedpostX/nodif_brain_mask --seed=seeds.txt --seedref=T1_image.nii.gz --forcedir --network --omatrix1 -V 0 --dir=NetworkNameDirectory --stop=seeds.txt (--loopcheck) </b> -P 3000 --steplength=0.75 --sampvox=0.5 </i> <br>
+					</div>
+
+					<div class="input-group">
+						<span class="input-group-addon">
+							<input type="checkbox" ng-model="tools.probtrackx2.modify">
+						</span>
+						<label class="form-control ng-binding">Edit</label>
+					</div>
+
+					<div class="input-group">
+						<label class="form-control ng-binding">Loopcheck</label>
+						<span class="input-group-addon">
+							<input type="checkbox" name="loopcheck" value="loopcheck" ng-model="loopcheck" ng-init="loopcheck=true" aria-label="..." ng-disabled="!tools.probtrackx2.modify">
+						</span>
+						<input type="text" class="form-control" ng-model="tools.probtrackx2.param" id="{{tools.probtrackx2.id}}" ng-disabled="!tools.probtrackx2.modify">
+					</div>
+					<div class="alert alert-info col-md-6" role="info" ng-if="tools.probtrackx2.modify" ng-bind-html="tools.probtrackx2.help">
+						</div>
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h2 class="panel-title">Select computing grid to run job</h2>
+				</div>
+				<div class="panel-body">
+					<div class="input-group">
+						<div  class="jobOptions">
+							<div class="serverChoice">
+								<select class="form-control"  id="serverSelect" ng-model="serverselect.selection" ng-options="server.name for server in serverselect.servers"> 
+								</select>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			
 			<button type="button" class="btn btn-default btn-lg center-block submitTractoButton" ng-click="paramSubmitJob()" ng-if="!submitTractoButton">
 			Start tractography
 			</button>
@@ -89,7 +193,6 @@
 				</ul> 
 			</div>
 		</form>
-		</div>
 	</div>
 </div>
 

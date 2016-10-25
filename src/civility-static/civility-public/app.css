@@ -1,0 +1,286 @@
+/* Circle Plot*/
+
+.resetCoordPos{
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-family: sans-serif;
+}
+.grid-background {
+  fill: #ddd;
+}
+
+.grid line {
+  stroke: #fff;
+}
+
+.grid .minor line {
+  stroke-opacity: .5;
+}
+
+.grid text {
+  display: none;
+}
+
+.axis line {
+  stroke: #000;
+}
+
+.axis path,
+.grid path {
+  display: none;
+}
+
+.modifCoord{
+  margin : 2%;
+  vertical-align:bottom;
+}
+.modifCoordPosition{
+  text-align: left;
+}
+.brainTemplatePlot{
+  text-align: center;
+}
+
+.divBrainALL, .divBrainRight{
+    position: relative;
+    display: inline-block;
+}
+
+.divBrainLeft{
+    position: relative;
+    display: inline-block;
+    margin-right: -60px;
+  }
+
+.divBrainLinkRight, .divBrainImgRight{
+  margin-left: -50px;
+
+}
+.divBrainImgRLeft{
+  margin-bottom: 50px;
+}
+
+.divBrainImgRight{
+  margin-bottom: 20px;
+}
+
+.AllPlotTemplate, .rightPlotTemplate, .leftPlotTemplate{
+  margin : 0px 0px 20px 0px;
+}
+/*.leftPlotTemplate{
+  position:absolute;
+}*/
+
+.leftPlotTemplate{
+  margin-right : -40px;
+}
+.rightPlotTemplate{
+
+}
+
+.divBrainImgALL, .divBrainImgLeft, .divBrainImgRight{
+  position: relative;
+}
+
+.divBrainLinkALL, .divBrainLinkLeft, .divBrainLinkRight{
+  position: relative;
+}
+
+.divBrainLinkALL{
+  margin-top: -430px;
+}
+.divBrainLinkLeft{
+  margin-top: -410px;
+}
+.divBrainLinkRight{
+  margin-top: -430px;
+}
+
+.bgimg {
+    z-index: -1;
+    overflow: hidden;
+    left: 0px;
+    position: relative;
+    display: block;
+      /*max-width:50%;
+   max-height:50%;*/
+}
+
+input.boxMin, input.boxMax, input.boxAverage{
+  margin-top: -12px;
+}
+
+.circleAndBar{
+  display: inline;
+}
+.text{
+  display: inline; 
+}
+
+#textMargin{
+  margin-left:15px;
+}
+
+.divPlot{
+
+  text-align: center;
+}
+
+.circlePlot, .colorBar{
+  margin : 0 auto;
+}
+.circlePlot{
+  padding-left: 2.3%;
+}
+
+#tensionBar, #diameterBar {
+     height:10px;
+    width:60%;
+    margin: 0 auto;
+    margin-left: 15%;
+}
+
+.ValueThreshold, .upperValue {
+     height:40px;
+    width:40px;
+    margin: 0 auto;
+}
+
+.slides{
+  margin-bottom: 6px;
+}
+
+.matProc{
+  text-decoration: underline;
+}
+
+.mainButton{
+  text-align: center;
+}
+
+.checkgroup{
+  margin-bottom: 15px;
+}
+
+.buttons{
+  font-size: 15px;
+  margin: 1% 1% 1% 1%;
+  padding: 1% 1% 1% 1%;
+  background-color :  #e6f9ff;
+}
+div.TensionText {
+    height:10px;
+    width:200px;
+   margin: 0 auto;
+   margin-left: 25%;
+}
+
+
+#title{
+  font-size: 22px;
+  color: #286090;
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.infoText{
+  font-size: 18px;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+
+.infoTextNotes{
+  font-size: 16px;
+  text-align: center;
+  font-family: sans-serif;
+  font-style:italic;
+  line-height: 1.5;
+}
+
+.btn{
+  margin: 5px auto;
+}
+
+/*.active {
+   background-color: #ff0000;
+ }
+
+ a{
+  font-size: 12px;
+ }*/
+
+.node {
+  font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.link {
+  stroke-opacity: .6;
+  fill: none;
+}
+
+#probtrackx2Info, #bedpostxInfo{
+  width : 50%;
+}
+
+div.tooltip { 
+    position: absolute;     
+    text-align: center;     
+    width: 80px;          
+    height: 50px;         
+    padding: 2px;       
+    font: 12px sans-serif;    
+    background: lightsteelblue; 
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;     
+}
+
+div.nodeTooltip { 
+    position: absolute;     
+    text-align: center;     
+    width: 200px;          
+    height: 20px;         
+    padding: 2px;       
+    font: 12px sans-serif;    
+    background: lightcoral ; 
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;  
+    z-index: 5;   
+}
+
+    
+.link:hover{
+        stroke-opacity:1;
+    }
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+.rect{
+  fill-opacity: 0.6;
+}
+
+.rect:hover{
+  fill-opacity: 1;
+}
+
+#tooltipColor{
+      position: absolute;     
+    text-align: center;     
+    width: 250px;         
+    height: 18px;         
+    padding: 2px;       
+    font: 12px sans-serif;    
+    background: lightsteelblue; 
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;   
+}

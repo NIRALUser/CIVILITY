@@ -1,7 +1,8 @@
 angular.module('CIVILITY')
-.directive('circlePlot',function($routeParams,$location){
+.directive('circlePlot',function($routeParams,$location,clusterpostService){
 
 	function link($scope,$attrs,$filter){
+
 		$scope.plotParameters = {};
 		$scope.plotParameters.threshold = 0.01;
 		$scope.plotParameters.diameter = 600
@@ -53,7 +54,7 @@ angular.module('CIVILITY')
 		//$scope.choices = ["Average", "Maximum", "Minumum"];
 		$scope.choice = {};
 		$scope.choice.selection = "Average";
-		 $scope.plotBrainTemplate = false;
+		$scope.plotBrainTemplate = false;
 
 
 
@@ -226,7 +227,7 @@ angular.module('CIVILITY')
 				    var returnJSONobject = {"matrix" : NewMat, "listOrdered" : listVisuOrder}
 	            }
 	            return returnJSONobject;
-  }
+  		}
 
 
 
@@ -234,24 +235,24 @@ angular.module('CIVILITY')
 
 		//Select method for Matrix processing : Average / Max values / Min values
 		
-	$scope.resetCoord = function()
-	{
-		$scope.positionNodes.Left.scalePointLeft = 1.9;
-		$scope.positionNodes.Right.scalePointRight = 1.9;
-		$scope.positionNodes.All.scalePointAll = 2.0;
+		$scope.resetCoord = function()
+		{
+			$scope.positionNodes.Left.scalePointLeft = 1.9;
+			$scope.positionNodes.Right.scalePointRight = 1.9;
+			$scope.positionNodes.All.scalePointAll = 2.0;
 
-		$scope.positionNodes.Left.offsetXLeft = 95;
-		$scope.positionNodes.Right.offsetXRight = 130;
-		$scope.positionNodes.All.offsetXAll = 85;
+			$scope.positionNodes.Left.offsetXLeft = 95;
+			$scope.positionNodes.Right.offsetXRight = 130;
+			$scope.positionNodes.All.offsetXAll = 85;
 
-		$scope.positionNodes.Left.offsetYLeft = 150;
-		$scope.positionNodes.Right.offsetYRight = 150;
-		$scope.positionNodes.All.offsetYAll = 110;
+			$scope.positionNodes.Left.offsetYLeft = 150;
+			$scope.positionNodes.Right.offsetYRight = 150;
+			$scope.positionNodes.All.offsetYAll = 110;
 
-		$scope.scaleImgBrainTemplate.Left = 80;
-		$scope.scaleImgBrainTemplate.All = 80;
-		$scope.scaleImgBrainTemplate.Right = 80;
-	}
+			$scope.scaleImgBrainTemplate.Left = 80;
+			$scope.scaleImgBrainTemplate.All = 80;
+			$scope.scaleImgBrainTemplate.Right = 80;
+		}
 
 		//Average connectivity matrix 
 		$scope.AverageMatrix = function(matrix){
@@ -259,8 +260,7 @@ angular.module('CIVILITY')
 			var MatrixProc = [];
 			matrix.forEach(function(line,i){
 				var row = [];
-				line.forEach(function(val,j)
-				{
+				line.forEach(function(val,j){
 					if(i==j)
 					{
 						row.push(0);
@@ -277,126 +277,123 @@ angular.module('CIVILITY')
 					}
 				})
 				MatrixProc.push(row);
-				})
+			})
 			return MatrixProc;
-			}
+		}
 
 		//Connectivty matrix : maximum values
 		$scope.MaximumMatrix = function(matrix){
-
-				var MatrixProc = [];
-				matrix.forEach(function(line,i){
-						var row = [];
-						line.forEach(function(val,j)
+			var MatrixProc = [];
+			matrix.forEach(function(line,i){
+				var row = [];
+				line.forEach(function(val,j)
+					{
+						if(i==j)
+						{
+							row.push(0);
+						}
+						else if (j>i)
+						{
+							var max;
+							if(matrix[i][j] > matrix[j][i])
 							{
-								if(i==j)
-								{
-									row.push(0);
-								}
-								else if (j>i)
-								{
-									var max;
-									if(matrix[i][j] > matrix[j][i])
-									{
-										max = matrix[i][j];
-									}
-									else{
-										max = matrix[j][i];
-									}
-									row.push(max);
-								}
-								else
-								{
-									row.push(-1);
-								}
-							})
-							MatrixProc.push(row);
-						})
-					return MatrixProc;
+								max = matrix[i][j];
+							}
+							else{
+								max = matrix[j][i];
+							}
+							row.push(max);
+						}
+						else
+						{
+							row.push(-1);
+						}
+					})
+					MatrixProc.push(row);
+			})
+			return MatrixProc;
 		}
 
 		//Connectivty matrix : minimum values
 		$scope.MinimumMatrix = function(matrix){
-
-				var MatrixProc = [];
-				matrix.forEach(function(line,i){
-						var row = [];
-						line.forEach(function(val,j)
-							{
-								if(i==j)
-								{
-									row.push(0);
-								}
-								else if (j>i)
-								{
-									var max;
-									if(matrix[i][j] < matrix[j][i])
-									{
-										max = matrix[i][j];
-									}
-									else{
-										max = matrix[j][i];
-									}
-									row.push(max);
-								}
-								else
-								{
-									row.push(-1);
-								}
-							})
-							MatrixProc.push(row);
-						})
-					return MatrixProc;
+			var MatrixProc = [];
+			matrix.forEach(function(line,i){
+				var row = [];
+				line.forEach(function(val,j){
+					if(i==j)
+					{
+						row.push(0);
+					}
+					else if (j>i)
+					{
+						var max;
+						if(matrix[i][j] < matrix[j][i])
+						{
+							max = matrix[i][j];
+						}
+						else{
+							max = matrix[j][i];
+						}
+						row.push(max);
+					}
+					else
+					{
+						row.push(-1);
+					}
+				})
+				MatrixProc.push(row);
+			});
+			return MatrixProc;
 		}
 
 
 		//This function create the description object for d3 plotting
 		$scope.CreateDescription = function(JSONInfo, checkbox){
-				 if($scope.plotData)
-		 		 {		 		 	
-		 		 	var matrix = JSONInfo["matrix"];
-		 		 	var MatProcess = [];
-		 		 	//Process matrix 
-		 		 	if(checkbox == "Average")
-		 		 	{
-						MatProcess=$scope.AverageMatrix(matrix)
-		 		 	}
-		 		 	else if (checkbox == "Maximum")
-		 		 	{
-		 		 		MatProcess=$scope.MaximumMatrix(matrix)
-		 		 	}
-		 		 	else
-		 		 	{
-		 		 		MatProcess=$scope.MinimumMatrix(matrix)
-		 		 	}
-		 			var seeds = JSONInfo["listOrdered"];
-		 			var matrixDescription = [];
-                
-                	var sizeMat = seeds.length;
-                	for (var nbseed = 0; nbseed<sizeMat; nbseed++)
-                	{
-                    	var jsonLine = {"name": seeds[nbseed]["name"] };
-                    	var size = [];
-                    	var imports = [];
+			if($scope.plotData)
+			{		 		 	
+	 		 	var matrix = JSONInfo["matrix"];
+	 		 	var MatProcess = [];
+	 		 	//Process matrix 
+	 		 	if(checkbox == "Average")
+	 		 	{
+					MatProcess=$scope.AverageMatrix(matrix)
+	 		 	}
+	 		 	else if (checkbox == "Maximum")
+	 		 	{
+	 		 		MatProcess=$scope.MaximumMatrix(matrix)
+	 		 	}
+	 		 	else
+	 		 	{
+	 		 		MatProcess=$scope.MinimumMatrix(matrix)
+	 		 	}
+	 			var seeds = JSONInfo["listOrdered"];
+	 			var matrixDescription = [];
+            
+            	var sizeMat = seeds.length;
+            	for (var nbseed = 0; nbseed<sizeMat; nbseed++)
+            	{
+                	var jsonLine = {"name": seeds[nbseed]["name"] };
+                	var size = [];
+                	var imports = [];
 
-                    	for (var j = 0; j<sizeMat; j++)
+                	for (var j = 0; j<sizeMat; j++)
+                	{
+                    	if(j != nbseed )
                     	{
-                        	if(j != nbseed )
+                        	if(MatProcess[nbseed][j] > "0")
                         	{
-                            	if(MatProcess[nbseed][j] > "0")
-                            	{
-                                	size.push(parseFloat(MatProcess[nbseed][j]));
-                                	imports.push(seeds[j]);
-                            	}
+                            	size.push(parseFloat(MatProcess[nbseed][j]));
+                            	imports.push(seeds[j]);
                         	}
                     	}
-                    	jsonLine.size = size;
-                    	jsonLine.imports = imports;
-                    	matrixDescription.push(jsonLine);
-               		 }
-               		 $scope.descriptionPlotDone = true;
-		 			return matrixDescription;
-		 		}
+                	}
+                	jsonLine.size = size;
+                	jsonLine.imports = imports;
+                	matrixDescription.push(jsonLine);
+           		 }
+           		 $scope.descriptionPlotDone = true;
+	 			return matrixDescription;
+	 		}
 		 }
 		 
 		 $scope.NewPlot = function(x,y,scale) { 
@@ -1092,9 +1089,9 @@ angular.module('CIVILITY')
 			     	$scope.plotBrainTemplate = false;
 			     }
 
-			 }
 			}
- }
+		}
+	}
 
 	//This function return a color accordinf to a value (size) a a range specified in inputs  
 	$scope.colorHSV = function(size,Min,Max){
@@ -1111,10 +1108,10 @@ angular.module('CIVILITY')
 		    var color = d3.hsl(240-hue,1,0.5);
 		}		  		
 		return color;
-	 }
+		}
 		       
-	//This function return the size of Map (connectivity description) according to a threshold value
-	$scope.sizeMap = function (nodes,threshold) {
+		//This function return the size of Map (connectivity description) according to a threshold value
+		$scope.sizeMap = function (nodes,threshold) {
 		    var size = [];
 		    // Compute a map from name to node.
 		      nodes.forEach(function(d) {
@@ -1128,46 +1125,46 @@ angular.module('CIVILITY')
 		   return size;
 		}
 
-	// Lazily construct the package hierarchy from class names.
-	$scope.packageHierarchy = function (classes) {
-  		var map = {};
-  		function find(name, data) {
-    		var node = map[name], i;
-    		if (!node) {
-      			node = map[name] = data || {name: name, children: []};
-     			 if (name.length) {
-        			node.parent = find(name.substring(0, i = name.lastIndexOf(".")));
-        			node.parent.children.push(node);
-        			node.key = name.substring(i + 1);
-      				}
-    			}
-    		return node;
-  		}
-  		classes.forEach(function(d) {
-    	find(d.name, d);
-  	});
-  	return map[""];
-	}
+		// Lazily construct the package hierarchy from class names.
+		$scope.packageHierarchy = function (classes) {
+	  		var map = {};
+	  		function find(name, data) {
+	    		var node = map[name], i;
+	    		if (!node) {
+	      			node = map[name] = data || {name: name, children: []};
+	     			 if (name.length) {
+	        			node.parent = find(name.substring(0, i = name.lastIndexOf(".")));
+	        			node.parent.children.push(node);
+	        			node.key = name.substring(i + 1);
+	      				}
+	    			}
+	    		return node;
+	  		}
+  			classes.forEach(function(d) {
+	    		find(d.name, d);
+	  		});
+	  		return map[""];
+		}
 
-// Return a list of imports for the given array of nodes.
-$scope.packageImports = function (nodes, threshold) {
-  var map = {},
-      imports = [];
-  // Compute a map from name to node.
-  nodes.forEach(function(d) {
-    map[d.name] = d;
-  });
+		// Return a list of imports for the given array of nodes.
+		$scope.packageImports = function (nodes, threshold) {
+		  var map = {},
+		      imports = [];
+		  // Compute a map from name to node.
+		  nodes.forEach(function(d) {
+		    map[d.name] = d;
+		  });
 
-  // For each import, construct a link from the source to target node.
-  nodes.forEach(function(d) {
-    if (d.imports) d.imports.forEach(function(i,r) {
-      if(d.size[r]>threshold)  {
-      	imports.push({source: map[d.name], target: map[i["name"]]});
-      }
-    });
-  });
-  return imports;
-}
+		  // For each import, construct a link from the source to target node.
+		  nodes.forEach(function(d) {
+		    if (d.imports) d.imports.forEach(function(i,r) {
+		      if(d.size[r]>threshold)  {
+		      	imports.push({source: map[d.name], target: map[i["name"]]});
+		      }
+		    });
+		  });
+		  return imports;
+		}
 
 		
 	//Watch scope variable
@@ -1266,27 +1263,75 @@ $scope.packageImports = function (nodes, threshold) {
 
 		//Checkboxes
 		$scope.$watch("choice.selection", function(){
-		    console.log("HelloWatch choiceSelection", $scope.choice.selection);
+			console.log("HelloWatch choiceSelection", $scope.choice.selection);
 		    $scope.NewPlot();
-		  });
+		});
 
-		$scope.$watch("plotData", function()
-			{
-			if($scope.plotData){
-				$scope.plotParameters.plotData = $scope.plotData;
-				$scope.Plot();
+		//Get parcellation table (json file)
+	    $scope.getParcellationTable = function(job){ 
+			return clusterpostService.getAttachment(job._id, job.outputs[1].name, "json")
+			.then(function(res){
+				return res.data;
+			})
+			.catch(function(e){
+			    console.error("Error getting parcellationTable", e);
+			    throw e;
+			});
+	    };
+	    //Get matrix - output of probtrackx2
+		$scope.getMatrix = function(job){ 
+			return clusterpostService.getAttachment(job._id, job.outputs[0].name,"text")
+			.then(function(res){
+				return res.data;
+			})
+			.catch(function(e){
+	  			console.error("Error getting matrix", e);
+	  			throw e;
+			});
+		};
+		
+		$scope.plotDataCircle = function(job){
+
+			var promarray = [
+				$scope.getMatrix(job),
+				$scope.getParcellationTable(job)
+			];
+
+			return Promise.all(promarray)
+			.then(function(res){
+				
+				var plotData = {};
+				plotData["fdt_matrix"] = res[0];
+				plotData["jsonTableDescripton"] = res[1];
+			    return plotData;
+			    
+				
+			})
+			.catch(function(e){
+				console.error(e);
+				throw e;
+			});      
+		}
+
+		
+		$scope.$watch("data", function(newvalue, oldvalue){
+			if(newvalue){
+				$scope.plotDataCircle(newvalue)
+				.then(function(plotData){
+					$scope.plotData = plotData;
+					$scope.plotParameters.plotData = $scope.plotData;
+					$scope.Plot();
+				});
 			}
-			});		
+		});
 	}
 
-  return {
-    restrict : 'E',
-    scope: {
-    	plotData : "="
-    },
-    link : link,
-    templateUrl: 'views/directives/directiveCirclePlotTemplate.html'
-
-
-  }
+	return {
+		restrict : 'E',
+		link : link,
+		scope: {
+			data: "="
+		},
+		templateUrl: 'views/directives/directiveCirclePlotTemplate.html'
+  	}
 });

@@ -1,20 +1,27 @@
+
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
+    <!-- <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar" href="">CIVILITY</a>
-    </div>
+      <a class="navbar" href="">DCBIA-Ortholab</a>
+    </div> -->
+
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li ><a href="#/home">CIVILITY</a></li>
+        <li ng-if="isAdmin"><a href="#/admin-jobs">Jobs</a></li>
+        <li ng-if="isAdmin"><a href="#/admin-users">Users</a></li>
+      </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{login.name}} <br> <i>{{login.email}}</i><span class="caret"></span></a>
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{login.name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="" ng-click="logout()">Logout</a></li>
           </ul>

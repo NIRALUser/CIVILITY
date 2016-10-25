@@ -8,20 +8,29 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  
-  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-   <!-- <link href="bower_components/angular-smart-table/dist/smart-table.min.css" rel="stylesheet"/> -->
-  <link rel="stylesheet" href="style/BrainConnectivityStyle.css" type="text/css">
+  <link rel="stylesheet" href="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css" type="text/css">
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" type="text/css">
   <link rel="stylesheet" href="node_modules/clusterpost-list/dist/clusterpost-list.min.css" type="text/css">
-
+  <link rel="stylesheet" href="app.css" type="text/css">
   
   <title>CIVILITY</title>
 
 </head>
 <body ng-app="CIVILITY">
-</span>
   
-  <div ng-view></div>
+  <div class="wrapper">
+      <div class="container-fluid">
+          <div ng-controller="mainController">
+            <div ng-include src="'header/appHeader.html'"></div>
+            <navbar ng-if="showNavBar"></navbar>
+          </div>
+          <div class="col-md-10 col-md-offset-1">
+            <div ng-view class="row"></div>
+          </div>
+      </div>
+      <div class="push"></div>
+  </div>
+  
 
   <!-- In production use: -->
   <!-- <script src="bower_components/angular/angular.min.js"></script>
@@ -29,12 +38,16 @@
   
   <script src="node_modules/angular/angular.min.js"></script>
   <script src="node_modules/angular-route/angular-route.min.js"></script>
-  <script src="node_modules/underscore/underscore-min.js" ></script>
+  <script src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+  <script src="node_modules/jquery/dist/jquery.min.js" ></script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js" ></script>
   <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js" ></script>
+  <script src="node_modules/underscore/underscore-min.js" ></script>
   <script src="node_modules/angular-smart-table/dist/smart-table.min.js" ></script>
 
 <!--   <script src="bower_components/numericjs/numeric-1.2.6.min.js" ></script>
+<<<<<<< Updated upstream
  -->  <script src="node_modules/mathjs/dist/math.min.js" ></script>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -52,7 +65,6 @@
   <script src="services/fileupload.service.js"></script>
   <!-- Controllers --> 
   <script src="scripts/controllers/tractographyApp.js"></script>
-  <script src="scripts/controllers/welcome.js"></script>
     <!-- Directives --> 
   <script src="scripts/directives/directiveCirclePlot.js"></script>
   <script src="scripts/directives/directiveFileModel.js"></script>
@@ -61,10 +73,9 @@
   <script src="scripts/directives/directiveTracto.js"></script>
   <script src="scripts/directives/directiveVisualisation.js"></script>
   <script src="scripts/directives/directiveJobStatus.js"></script>
-  <script src="scripts/directives/directiveNavbar.js"></script>
-  <script src="scripts/directives/directiveAdminUserPrivileges.js"></script>
+  <script src="scripts/directives/directiveNavbar.js"></script>  
   <script src="scripts/directives/directiveComputePCA.js"></script>
-  <script src="scripts/directives/directiveFindJob.js"></script>
+  <!-- // <script src="scripts/directives/directiveFindJob.js"></script> -->
 
   <!-- // <script src="services/cluster.service.js"></script> -->
   <!-- // <script src="services/cluster.auth.js"></script> -->

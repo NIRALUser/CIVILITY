@@ -23,11 +23,13 @@
   "dependencies": {
     "angular": "^1.5.8",
     "angular-route": "^1.5.8",
+    "angular-sanitize": "^1.5.8",
     "angular-smart-table": "^2.1.8",
     "angular-ui-bootstrap": "^2.2.0",
     "bootstrap": "^3.3.7",
     "clusterpost-list": "^1.0.0",
     "d3": "^3.5.12",
+    "jquery": "^3.1.1",
     "jsonformatter": "^0.6.0",
     "jwt-user-login": "^1.0.3",
     "mathjs": "^3.5.3",

@@ -9,6 +9,10 @@ angular.module('CIVILITY')
       $scope.user = res;
     });
 
+    $scope.showPop = function(){
+      $('#buttonpop').popover('show');
+    }
+
     $scope.jobSumitConfirmation = [];
     
     $scope.tools = {
@@ -32,7 +36,7 @@ angular.module('CIVILITY')
       url: 'data/jsonDescriptionTableTemplate.txt'
     })
     .then(function(res){
-      $scope.jsonTemplate = res.data;
+      $scope.jsonTemplate = res.data.replace(/\\n/g, "&#13;&#10;");
     });
 
     //Probtrackx
@@ -44,7 +48,7 @@ angular.module('CIVILITY')
       url: 'data/probtrackx2Help-FSL-5.0.8.txt'
     })
     .then(function(res){
-      $scope.tools.probtrackx2.help = res.data;
+      $scope.tools.probtrackx2.help = res.data.replace(/\n/g, '<br>');
     });
 
     
@@ -194,6 +198,7 @@ angular.module('CIVILITY')
         $scope.submitTractoButton = true;
         var job = {};
 
+        job.name = $scope.Parameters.subject;
         job.executable ="tractographyScriptApp.sh";
 
         job.parameters = [];
@@ -343,11 +348,7 @@ angular.module('CIVILITY')
         console.log("HelloWatch tools.bedpostx.modify", $scope.tools.bedpostx.modify);
         $scope.usableInputBedpostx($scope.tools.bedpostx);
       });
-
-    $scope.$watch("tools.probtrackx2.modify", function(){
-        console.log("HelloWatch tools.probtrackx2.modify", $scope.tools.probtrackx2.modify);
-        $scope.usableInputBedpostx($scope.tools.probtrackx2);
-      });
+    
 };
 return {
     restrict : 'E',

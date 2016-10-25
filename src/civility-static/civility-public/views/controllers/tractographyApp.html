@@ -1,39 +1,24 @@
 <div ng-controller="tractographyAppController"> 
 
-  <navbar></navbar>
-
-  <div ng-include src="'header/appHeader.html'"></div>
   
 <!-- Tabs -->
-   <uib-tabset active="activePill" type="pills" class="tabsetAppMenu">
+   <uib-tabset active="activeTab">
 
-    <uib-tab index="1" heading="Tractography" ng-if="login.scope.indexOf('clusterpost') > -1" active="true"> 
-      <div> <submit-tracto  > </submit-tracto> </div>  
+    <uib-tab index="1" heading="Tractography" active="true"> 
+      <submit-tracto> </submit-tracto>
     </uib-tab>
 
-    <uib-tab index="2" heading="Jobs" ng-if="login.scope.indexOf('clusterpost') > -1">
-      <find-job> </find-job>    
+    <uib-tab index="2" heading="Jobs">
+      <clusterpost-app job-callback="jobCallback" app-name="'tractographyScriptApp.sh'"></clusterpost-app>
     </uib-tab>
 
-    <uib-tab index="3" heading="Visualization" ng-if="login.scope.indexOf('default') > -1">
+    <uib-tab index="3" heading="View">
+      <circle-plot data="job"></circle-plot>
+    </uib-tab>
+
+    <uib-tab index="4" heading="Visualization">
       <connectivity-visualisation > </connectivity-visualisation>
     </uib-tab>
-
-    <uib-tab index="4" heading="Jobs Database - Admin" ng-if="login.scope.indexOf('admin') > -1">
-      <clusterpost-jobs></clusterpost-jobs>
-    </uib-tab>
-
-    <uib-tab index="5" heading="Users Database - Admin" ng-if="login.scope.indexOf('admin') > -1">
-      <admin-user-privileges> </admin-user-privileges>
-    </uib-tab>
-
-    <!-- <uib-tab index="5" heading="Compute PCA - Admin" ng-if="isAdmin">
-     <compute-pca> </compute-pca> 
-    </uib-tab> -->
-
-<!--     <uib-tab index="5" heading="TEST" >
-     <test-dir> </test-dir> 
-    </uib-tab> -->
 
   </uib-tabset> 
 
