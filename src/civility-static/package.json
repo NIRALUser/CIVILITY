@@ -4,7 +4,7 @@
   "description": "This is the client side of Cloud Based Interractive Visualization of Tractography Brain Connectome (CIVILITY) application",
   "main": "index",
   "scripts": {
-    "postinstall" : "cd civility; bower install",
+    "postinstall" : "cd civility; npm install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
