@@ -1,10 +1,23 @@
 
 angular.module('CIVILITY')
-.controller('tractographyAppController', function($scope, $http, clusterpostService) {
+.controller('tractographyAppController', function($routeParams, $scope, $http, $route, clusterpostService) {
+
+	$scope.routeParams = {};
+	if($routeParams.activeTab){
+		$scope.routeParams.activeTab = parseInt($routeParams.activeTab);
+	}
+	if($routeParams._id){
+		clusterpostService.getJob($routeParams._id)
+		.then(function(res){
+			$scope.job = res.data;
+		});
+	}
+	
 
 	$scope.jobCallback = function(job){
 		$scope.job = job;
-		$scope.activeTab = 3;
+		$scope.routeParams.activeTab = 3;
+		$scope.routeParams._id = job._id;
 	}
 
 	$scope.downloadCallback = function(job){
@@ -31,5 +44,8 @@ angular.module('CIVILITY')
 		}
 	}
 
+	$scope.$watch('routeParams', function(){
+		$route.updateParams($scope.routeParams);
+	}, true);
 });
 

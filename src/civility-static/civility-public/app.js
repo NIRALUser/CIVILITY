@@ -17,7 +17,8 @@ config(['$routeProvider', function($routeProvider) {
     templateUrl: 'views/controllers/welcome.html'
   })
   .when('/home', {
-    templateUrl: 'views/controllers/tractographyApp.html'
+    templateUrl: 'views/controllers/tractographyApp.html',
+    reloadOnSearch:false
   })
   .when('/admin-jobs', {
     templateUrl: 'views/controllers/admin-jobs.html'
