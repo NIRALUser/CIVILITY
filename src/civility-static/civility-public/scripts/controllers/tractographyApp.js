@@ -36,7 +36,7 @@ angular.module('CIVILITY')
 				pom.dataset.downloadurl = ['application/octet-stream', pom.download, pom.href].join(':');
 				pom.draggable = true; 
 				pom.classList.add('dragout');
-
+				document.body.appendChild(pom);
 				pom.click();
 
 			})
