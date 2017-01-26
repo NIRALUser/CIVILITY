@@ -20,16 +20,16 @@
   
   <div class="wrapper">
       <div class="container-fluid">
-          <div ng-controller="mainController">
-            <div ng-include src="'header/appHeader.html'"></div>
-            <navbar ng-if="showNavBar"></navbar>
-          </div>
           <div class="col-md-10 col-md-offset-1">
-            <div ng-view class="row"></div>
+            <div ng-include src="'header/appHeader.html'" class="row"></div>
+            <div ng-controller="main">
+              <navbar ng-if="showNavBar"></navbar>
+              <div ng-view class="row"></div>
+            </div>
           </div>
       </div>
       <div class="push"></div>
-  </div>
+  </div>  
   
 
   <!-- In production use: -->
@@ -46,9 +46,8 @@
   <script src="node_modules/underscore/underscore-min.js" ></script>
   <script src="node_modules/angular-smart-table/dist/smart-table.min.js" ></script>
 
-<!--   <script src="bower_components/numericjs/numeric-1.2.6.min.js" ></script>
-<<<<<<< Updated upstream
- -->  <script src="node_modules/mathjs/dist/math.min.js" ></script>
+
+ <script src="node_modules/mathjs/dist/math.min.js" ></script>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="node_modules/d3/d3.min.js"></script>
   
@@ -58,6 +57,7 @@
 
   <!-- Application scripts -->
   <script src="app.js"></script>
+  <script src="index.js"></script>
   <!-- Services --> 
   
   

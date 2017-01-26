@@ -6,9 +6,11 @@ angular.module('CIVILITY', [
   'ngSanitize',
   'ui.bootstrap',
   'smart-table',
+  'jwt-user-login',
   'clusterpost-list'
 ]).
-config(['$routeProvider', function($routeProvider) {
+config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+  $locationProvider.hashPrefix('');
   $routeProvider    
   .when('/', {
     redirectTo: '/login'
@@ -34,22 +36,3 @@ config(['$routeProvider', function($routeProvider) {
   })
   .otherwise({redirectTo: '/notFound'});
 }]);
-
-angular.module('CIVILITY')
-.controller('mainController', function($scope, $location){
-  $scope.showNavBar = false;
-
-  if($location.path().indexOf('/login') === -1){
-    $scope.showNavBar = true;
-  }
-
-
-  $scope.$on('$routeChangeStart', function(){
-    if($location.path().indexOf('/login') === -1){
-      $scope.showNavBar = true;
-    }else{
-      $scope.showNavBar = false;
-    }
-  });
-
-});
