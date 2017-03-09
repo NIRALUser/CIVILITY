@@ -3,3 +3,10 @@ bower_components
 all.log
 conf.my.test.json
 conf.my.production.json
+doc/spiePaper/article.aux
+doc/spiePaper/article.bbl
+doc/spiePaper/article.blg
+doc/spiePaper/article.dvi
+doc/spiePaper/article.log
+doc/spiePaper/article.out
+doc/spiePaper/article.ps
