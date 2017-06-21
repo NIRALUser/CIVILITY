@@ -27,7 +27,7 @@
     "angular-smart-table": "^2.1.8",
     "angular-ui-bootstrap": "^2.2.0",
     "bootstrap": "^3.3.7",
-    "clusterpost-list": "^1.0.0",
+    "clusterpost-list": "^2.1.0",
     "d3": "^3.5.12",
     "jquery": "^3.1.1",
     "jsonformatter": "^0.6.0",
