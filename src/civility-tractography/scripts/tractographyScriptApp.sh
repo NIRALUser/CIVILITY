@@ -93,7 +93,6 @@ SURFACES=${SUBJECT}/OutputSurfaces${overlapName}/labelSurfaces
 if [ -d ${SURFACES} ]; then
   echo "Label already created"
 else
-  cd ${SUBJECT}/OutputSurfaces${overlapName}
   if [ "${ignoreLabel}" = "true" ]; then 
     ignoreFlag="--ignoreLabel"
     labelID="${10}"
@@ -108,6 +107,8 @@ else
   else
     echo "Surfaces extraction done!"	
   fi
+
+  mv $var/labelSurfaces $SURFACES ## necessary because ExtractLabelSurfaces outputs to the current directory
  
 fi
 
