@@ -115,7 +115,7 @@ fi
 cd $var 
 #Write seed list 
 rm ${SUBJECT}/seeds.txt
-python /nas02/home/d/a/danaele/tools/bin/writeSeedList.py ${SUBJECT} ${overlapName} ${NEWPARCELLATION_TABLE} ${number_ROIS}
+python /nas02/home/j/p/jprieto/tools/writeSeedList.py ${SUBJECT} ${overlapName} ${NEWPARCELLATION_TABLE} ${number_ROIS}
 if [ ! -e  ${SUBJECT}/seeds.txt ]; then
  echo ERROR_PIPELINE_PROBTRACKBRAINCONNECTIVITY
 else
