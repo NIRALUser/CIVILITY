@@ -1,6 +1,6 @@
 {
   "name": "civility",
-  "version": "1.0.0",
+  "version": "1.4.0",
   "description": "This is the main server of CIVILITY",
   "main": "server.js",
   "directories": {
@@ -14,8 +14,7 @@
   "author": "dana.puechmaille@gmail.com",
   "license": "Apache-2.0",
   "dependencies": {
-    "clusterpost-auth": "^2.0.4",
-    "clusterpost-provider": "^3.0.2",
+    "clusterpost-server": "^2.0.4",
     "civility-static": "^1.0.0"
   },
   "devDependencies": {},
