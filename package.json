@@ -14,7 +14,7 @@
   "author": "dana.puechmaille@gmail.com",
   "license": "Apache-2.0",
   "dependencies": {
-    "clusterpost-server": "^1.0.4",
+    "clusterpost-server": "^1.4.0",
     "civility-static": "^1.0.0"
   },
   "devDependencies": {},

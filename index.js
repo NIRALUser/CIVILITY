@@ -24,8 +24,9 @@ const startServer = function(cluster){
     
     var server = new Hapi.Server();
 
+    var tls = undefined;
     if(conf.tls && conf.tls.key && conf.tls.cert){
-        const tls = {
+        tls = {
           key: fs.readFileSync(conf.tls.key),
           cert: fs.readFileSync(conf.tls.cert)
         };
@@ -49,15 +50,27 @@ const startServer = function(cluster){
     plugins.push({
         register: good,
         options: {
-            reporters: [
-            {
-                reporter: require('good-console'),
-                events: { log: '*', response: '*' }
-            }, {
-                reporter: require('good-file'),
-                events: { ops: '*' },
-                config: 'all.log'
-            }]
+            reporters: {
+                myConsoleReporter: [{
+                    module: 'good-squeeze',
+                    name: 'Squeeze',
+                    args: [{ log: '*', response: '*' }]
+                },
+                {
+                    module: 'good-console'
+                }, 'stdout'],
+                myFileReporter: [{
+                    module: 'good-squeeze',
+                    name: 'Squeeze',
+                    args: [{ ops: '*' }]
+                }, {
+                    module: 'good-squeeze',
+                    name: 'SafeJson'
+                }, {
+                    module: 'good-file',
+                    args: ['all.log']
+                }]
+            }
         }
     });
 
