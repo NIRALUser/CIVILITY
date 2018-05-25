@@ -1,4 +1,4 @@
-#CIVILITY
+# CIVILITY
 
 Cloud Based Interactive Visualization of Tractography Brain Connectome (CIVILITY) is an interactive visualization tool of brain connectome in the web.
 
@@ -23,7 +23,7 @@ The front end of CIVILITY submits tasks to clusterpost and retrieves the results
 See documentation in doc/ directory. 
 
 
-##USAGE for TRACTOGRAPHY 
+## USAGE for TRACTOGRAPHY 
 
 ### 1. Inputs file 
 
@@ -46,7 +46,7 @@ See documentation in doc/ directory.
 27  0  194885  2  0<br/>
 
 
-##USAGE for VISUALIZATION 
+## USAGE for VISUALIZATION 
 
 ### 1. Inputs file 
 
