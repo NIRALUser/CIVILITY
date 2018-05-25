@@ -135,4 +135,5 @@ See documentation in doc/ directory.
 
 ### 2. Output visualization 
 
-![Connectivity matrix visualization](src/civility-static/civility/data/CIVILITY_visualization.png "Connectivity matrix visualization")
+<img src="/doc/spiePaper/images/temp/deviation_1y.png
+" alt="Connectivity matrix visualization"/>
