@@ -135,4 +135,4 @@ See documentation in doc/ directory.
 
 ### 2. Output visualization 
 
-[Connectivity matrix visualization](https://github.com/NIRALUser/CIVILITY/blob/master/doc/spiePaper/images/temp/deviation_1y.png)
+[[https://github.com/NIRALUser/CIVILITY/blob/master/doc/spiePaper/images/temp/deviation_1y.png|Connectivity matrix visualization]]
