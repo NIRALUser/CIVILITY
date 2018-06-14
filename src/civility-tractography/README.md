@@ -1,4 +1,4 @@
-#CIVILITY-TRACTOGRAPHY
+# CIVILITY-TRACTOGRAPHY
 
 This directory contains scripts which must be executable in the computing grid. 
 
