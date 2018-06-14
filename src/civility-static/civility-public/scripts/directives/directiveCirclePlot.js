@@ -749,7 +749,7 @@ angular.module('CIVILITY')
 			      		var targetName = d[sized-1].key;
 			      		var x1,x2,y1,y2;
 
-			      		CoordDescription.forEach(function(c,i){
+			      		_.each(CoordDescription, function(c,i){
 
 			      			var last = c["name"].lastIndexOf(".");
 			               var KeyName = c["name"].substring(last+1);
@@ -794,7 +794,7 @@ angular.module('CIVILITY')
 			      })
 
 
-			       CoordDescription.forEach(function(d,i){
+			       _.each(CoordDescription, function(d,i){
 						var coordX = d["x"]+parseFloat($scope.positionNodes.All.offsetXAll);
 
 						var coordY = -d["y"];
@@ -872,7 +872,7 @@ angular.module('CIVILITY')
 			       	var End2 = targetName.substring(last2+1);
 			      		if( End1 == "L" && End2 == "L" )
 			      		{
-			      			CoordDescription.forEach(function(c,i){
+			      			_.each(CoordDescription, function(c,i){
 
 			      			var last = c["name"].lastIndexOf(".");
 			               var KeyName = c["name"].substring(last+1);
@@ -923,7 +923,7 @@ angular.module('CIVILITY')
 			        				} 		
 			      	})
 
-			     CoordDescription.forEach(function(d,i){
+			     _.each(CoordDescription,function(d,i){
 
 			       	var name = d["name"];
 			       	var last = d["name"].lastIndexOf("_");
@@ -1005,7 +1005,7 @@ angular.module('CIVILITY')
 			       	var End2 = targetName.substring(last2+1);
 			      		if( End1 == "R" && End2 == "R" )
 			      		{
-			      			CoordDescription.forEach(function(c,i){
+			      			_.each(CoordDescription, function(c,i){
 
 			      			var last = c["name"].lastIndexOf(".");
 			               var KeyName = c["name"].substring(last+1);
@@ -1056,7 +1056,7 @@ angular.module('CIVILITY')
 			        	} 		
 			      })
 
-					CoordDescription.forEach(function(d,i){
+					_.each(CoordDescription, function(d,i){
 
 			       	var name = d["name"];
 			       	var last = d["name"].lastIndexOf("_");
