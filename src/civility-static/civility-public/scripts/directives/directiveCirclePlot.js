@@ -61,173 +61,161 @@ angular.module('CIVILITY')
 
 		$scope.plotBrainConnectivity = function(){
 
-		  var error = false;		
-	      $scope.plotView = true;
-	      var data =  $scope.plotData["fdt_matrix"];//$scope.contentM ;
+            var error = false;		
+            $scope.plotView = true;
+            var data =  $scope.plotData["fdt_matrix"];//$scope.contentM ;
 
-	      var table =  $scope.plotData["jsonTableDescripton"];//$scope.contentJ ;
-	  	  var matrix = [];
-	  	  var matrix_norm = [];
-	      if(angular.isString(data))
-	      {
-	      var lines = data.split('\n');
-	      
-	       //GET MATRIX    
-	        for(var line = 0; line < lines.length; line++){      
-	            var rows = [];
-	            var values = lines[line].split('  ');
-	            for(var val = 0; val < values.length; val++){
-	              if(values[val] != ""){
-	                   rows.push(values[val]);
-	                }           
-	              }
-	              if(rows.length>0)
-	              {
-	                  matrix.push(rows);
-	              }
-	            }
-	            for(var line in matrix)
-	             {
-	               if(matrix.length != matrix[line].length)
-	               {
-	                  console.log("Error dimension matrix");
-	                  error = true;
-	               }
-	             }
+            var table =  $scope.plotData["jsonTableDescripton"];//$scope.contentJ ;
+            var matrix = [];
+            var matrix_norm = [];
+            if(angular.isString(data))
+            {
+                var lines = _.compact(data.split('\n'));
 
-	                
-	                var waytotal = [];
-	                //Matrix Normalization  
-	                for(var i in matrix)
-	                 {
-	                   var sum = 0.0;
-	                    for(var j in matrix[i])
-	                    {
-	                        sum = sum + parseFloat(matrix[i][j]);
-	                    }
-	                    waytotal.push(sum);
-	                 }
+                //GET MATRIX    
+                for(var line = 0; line < lines.length; line++){      
+                    var rows = [];
+                    var values = _.compact(lines[line].split(" "));
+                    for(var val = 0; val < values.length; val++){
+                        if(values[val] != ""){
+                            rows.push(values[val]);
+                        }           
+                    }
+                    if(rows.length>0)
+                    {
+                        matrix.push(rows);
+                    }
+                }
+                for(var line in matrix)
+                {
+                    if(matrix.length != matrix[line].length)
+                    {
+                        console.log("Error dimension matrix");
+                        error = true;
+                    }
+                }
 
-	                 for(var i in matrix)
-	                 {
-	                    var vals = [];
-	                    for(var j in matrix[i])
-	                    {
-	                        vals.push(parseFloat(matrix[i][j])/waytotal[i]);
-	                    }
-	                    matrix_norm.push(vals);
-	                 }
-	                 }
-	          else
-	          {
-	          	matrix_norm = data;
-	          }
-	                var table_Matrix = [];
-	                var listFDT = [];
-	                var listVisuOrder = [];
-	                var coordList = {};
-	                var MaxvisuOrder = 0;
 
-	                for(var i=0 ; i < matrix_norm.length ; i++)
-	                {
-	                  listFDT.push({});
-	                }
-	                for ( var seed in table)
-	                {
-	                  var matrixRow = table[seed]["MatrixRow"];
-	                  if(matrixRow != "-1")
-	                  {
-	                    listFDT[matrixRow-1] = table[seed]["VisuHierarchy"] + table[seed]["name"];
-	                    var visuorder = table[seed]["VisuOrder"];
-	                    if(visuorder > MaxvisuOrder )
-	                    {
-	                      MaxvisuOrder = visuorder;
-	                    }
-	                    table_Matrix.push(table[seed]);
-	                  }
-	                  else
-	                  {
-	                    //Don't use
-	                  }
-	                }
+                var waytotal = [];
+                //Matrix Normalization  
+                for(var i in matrix)
+                {
+                    var sum = 0.0;
+                    for(var j in matrix[i])
+                    {
+                        sum = sum + parseFloat(matrix[i][j]);
+                    }
+                    waytotal.push(sum);
+                }
 
-	                for(var i=0 ; i < MaxvisuOrder ; i++)
-	                {
-	                  listVisuOrder.push("");
-	                }
-	                for ( var seed in table_Matrix)
-	                {
-	                  
-	                  var visuOrder = table_Matrix[seed]["VisuOrder"];
-	                  if(visuOrder != "-1")
-	                  {
-	                    var name = table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
-	                    if(table_Matrix[seed]["coord"] != undefined)
-	                    {
-	                      var coordX = table_Matrix[seed]["coord"][0];
-	                      var coordY = table_Matrix[seed]["coord"][1];
-	                      var coordZ = table_Matrix[seed]["coord"][2];
-	                      var seedInfo = {"name" : name,  "x": coordX, "y": coordY, "z": coordZ};
+                for(var i in matrix)
+                {
+                    var vals = [];
+                    for(var j in matrix[i])
+                    {
+                        vals.push(parseFloat(matrix[i][j])/waytotal[i]);
+                    }
+                    matrix_norm.push(vals);
+                }
+            }
+            else
+            {
+                matrix_norm = data;
+            }
+            var table_Matrix = [];
+            var listFDT = [];
+            var listVisuOrder = [];
+            var coordList = {};
+            var MaxvisuOrder = 0;
 
-	                    }
-	                    else 
-	                    {
-	                      var seedInfo = {"name" : name};
-	                    }
-	                    listVisuOrder[visuOrder-1] = seedInfo;
-	                    //listVisuOrder[visuOrder-1]=table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
-	                  } 
-	                  else
-	                  {
-	                    //Don't use
-	                  }  
-	                }
+            for(var i=0 ; i < matrix_norm.length ; i++)
+            {
+                listFDT.push({});
+            }
+            for ( var seed in table)
+            {
+                var matrixRow = table[seed]["MatrixRow"];
+                if(matrixRow != "-1")
+                {
+                    listFDT[matrixRow-1] = table[seed]["VisuHierarchy"] + table[seed]["name"];
+                    var visuorder = table[seed]["VisuOrder"];
+                    if(visuorder > MaxvisuOrder )
+                    {
+                        MaxvisuOrder = visuorder;
+                    }
+                    table_Matrix.push(table[seed]);
+                }
+                else
+                {
+                //Don't use
+                }
+            }
 
-	                var NewMat = [];
-	              
-	                matrix_norm.forEach(function(line,i)
-	                {
-	                   if(listVisuOrder[i] != undefined)
-	                 {
-		                var indexLine = listFDT.indexOf(listVisuOrder[i]["name"])  //1
-		                if(indexLine != -1)
-		                {
-		                  var row=matrix_norm[indexLine];
-		                  var NewRow =[];
-		                  row.forEach(function(val,j)
-		                  {
-		                   if(listVisuOrder[j] != undefined)
-		                   {
-		                    var indexRow = listFDT.indexOf(listVisuOrder[j]["name"]);
-		                    if(indexRow  != -1)
-		                    {
-		                      NewRow.push(row[indexRow]);
-		                    }
-		                   }
-		                   else
-		                   {
-		                   		error = true;
-		                   }      
-		                  });
-		                  NewMat.push(NewRow); 
-		                } 
-	                }
-	                else
-	                {
-	                   	error = true;
-	                }                      
-	             });
-	            
-				if(error)
-				{
-					var returnJSONobject = {"matrix" : 0, "listOrdered" : 0} 
-				}
-				else
-				{
-				    var returnJSONobject = {"matrix" : NewMat, "listOrdered" : listVisuOrder}
-	            }
-	            return returnJSONobject;
-  		}
+            listVisuOrder = {};
+
+            for ( var seed in table_Matrix)
+            {
+
+                var visuOrder = table_Matrix[seed]["VisuOrder"];
+                if(visuOrder != "-1")
+                {
+                    var name = table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
+                    if(table_Matrix[seed]["coord"] != undefined)
+                    {
+                        var coordX = table_Matrix[seed]["coord"][0];
+                        var coordY = table_Matrix[seed]["coord"][1];
+                        var coordZ = table_Matrix[seed]["coord"][2];
+                        var seedInfo = {"name" : name,  "x": coordX, "y": coordY, "z": coordZ};
+
+                    }
+                    else 
+                    {
+                        var seedInfo = {"name" : name};
+                    }
+                    listVisuOrder[visuOrder-1] = seedInfo;
+                //listVisuOrder[visuOrder-1]=table_Matrix[seed]["VisuHierarchy"] + table_Matrix[seed]["name"];
+                } 
+                else
+                {
+                    //Don't use
+                }  
+            }
+
+            var NewMat = [];
+
+            matrix_norm.forEach(function(line,i)
+            {
+                if(listVisuOrder[i] != undefined)
+                {
+                    var indexLine = listFDT.indexOf(listVisuOrder[i]["name"])  //1
+                    if(indexLine != -1)
+                    {
+                        var row=matrix_norm[indexLine];
+                        var NewRow =[];
+                        row.forEach(function(val,j)
+                        {
+                            if(listVisuOrder[j] != undefined)
+                            {
+                                var indexRow = listFDT.indexOf(listVisuOrder[j]["name"]);
+                                if(indexRow  != -1)
+                                {
+                                    NewRow.push(row[indexRow]);
+                                }
+                            }
+                            else
+                            {
+                                error = true;
+                            }      
+                        });
+                        NewMat.push(NewRow); 
+                    } 
+                }                      
+            });
+            
+            var returnJSONobject = {"matrix" : NewMat, "listOrdered" : listVisuOrder}
+            
+            return returnJSONobject;
+		}
 
 
 
@@ -370,27 +358,44 @@ angular.module('CIVILITY')
 	 			var matrixDescription = [];
             
             	var sizeMat = seeds.length;
-            	for (var nbseed = 0; nbseed<sizeMat; nbseed++)
-            	{
-                	var jsonLine = {"name": seeds[nbseed]["name"] };
-                	var size = [];
-                	var imports = [];
+                _.each(seeds, function(seed, nbseed){
+                    var jsonLine = {"name": seed.name };
+                    var size = [];
+                    var imports = [];
 
-                	for (var j = 0; j<sizeMat; j++)
-                	{
-                    	if(j != nbseed )
-                    	{
-                        	if(MatProcess[nbseed][j] > "0")
-                        	{
-                            	size.push(parseFloat(MatProcess[nbseed][j]));
-                            	imports.push(seeds[j]);
-                        	}
-                    	}
-                	}
-                	jsonLine.size = size;
-                	jsonLine.imports = imports;
-                	matrixDescription.push(jsonLine);
-           		 }
+                    _.each(_.keys(seeds), function(j){
+                        if(nbseed < MatProcess.length && j < MatProcess[nbseed].length && MatProcess[nbseed][j] > "0")
+                        {
+                            size.push(parseFloat(MatProcess[nbseed][j]));
+                            imports.push(seeds[j]);
+                        }
+                    });
+                    
+                    jsonLine.size = size;
+                    jsonLine.imports = imports;
+                    matrixDescription.push(jsonLine);
+                })
+            	// for (var nbseed = 0; nbseed<sizeMat; nbseed++)
+            	// {
+             //    	var jsonLine = {"name": seeds[nbseed]["name"] };
+             //    	var size = [];
+             //    	var imports = [];
+
+             //    	for (var j = 0; j<sizeMat; j++)
+             //    	{
+             //        	if(j != nbseed )
+             //        	{
+             //            	if(nbseed < MatProcess.length && j < MatProcess[nbseed].length && MatProcess[nbseed][j] > "0")
+             //            	{
+             //                	size.push(parseFloat(MatProcess[nbseed][j]));
+             //                	imports.push(seeds[j]);
+             //            	}
+             //        	}
+             //    	}
+             //    	jsonLine.size = size;
+             //    	jsonLine.imports = imports;
+             //    	matrixDescription.push(jsonLine);
+           		//  }
            		 $scope.descriptionPlotDone = true;
 	 			return matrixDescription;
 	 		}
@@ -790,33 +795,39 @@ angular.module('CIVILITY')
 
 
 			       CoordDescription.forEach(function(d,i){
-			       	var coordX = d["x"]+parseFloat($scope.positionNodes.All.offsetXAll);
+						var coordX = d["x"]+parseFloat($scope.positionNodes.All.offsetXAll);
 
-			       	var coordY = -d["y"];
-			       	coordY = coordY+parseFloat($scope.positionNodes.All.offsetYAll);
+						var coordY = -d["y"];
+						coordY = coordY+parseFloat($scope.positionNodes.All.offsetYAll);
 
-			       	svgBrain.append("circle")
-			       		.attr("cx", coordX*parseFloat($scope.positionNodes.All.scalePointAll))
-			       		.attr("cy", coordY*parseFloat($scope.positionNodes.All.scalePointAll))
-			       		.attr("r", 4)
-			        	.style("fill", "url(#blueCircle"+ $scope.plotID +")")
-			        	.on("mouseover", function(e,i) {  
-			        		nodeTooltip.transition()    
-			                   .duration(200)    
-			                   .style("opacity", .9);  
-			               var last = d["name"].lastIndexOf(".");
-			               var KeyName = d["name"].substring(last+1);
+						if(!(_.isNaN(coordX) || _.isNaN(coordY))){
 
-			               nodeTooltip.html( "Seed : " + KeyName ) 
-			                   .style("left", (d3.event.pageX) + "px")   
-			                   .style("top", (d3.event.pageY) + "px");  
-			        	})
-			        	.on("mouseout", function(d) {   
-			        			
-			        			nodeTooltip.transition()    
-			                   .duration(500)    
-			                   .style("opacity", 0); 
-			        	});
+							svgBrain.append("circle")
+								.attr("cx", coordX*parseFloat($scope.positionNodes.All.scalePointAll))
+								.attr("cy", coordY*parseFloat($scope.positionNodes.All.scalePointAll))
+								.attr("r", 4)
+								.style("fill", "url(#blueCircle"+ $scope.plotID +")")
+								.on("mouseover", function(e,i) {  
+									nodeTooltip.transition()    
+									.duration(200)    
+									.style("opacity", .9); 
+
+									var last = d["name"].lastIndexOf(".");
+									var KeyName = d["name"].substring(last+1);
+
+									nodeTooltip.html( "Seed : " + KeyName ) 
+									.style("left", (d3.event.pageX) + "px")   
+									.style("top", (d3.event.pageY) + "px");  
+								})
+								.on("mouseout", function(d) {   
+
+									nodeTooltip.transition()    
+									.duration(500)    
+									.style("opacity", 0); 
+								});
+
+						}
+						
 			       })	    	
 
 			       //Left brain template
@@ -1132,12 +1143,12 @@ angular.module('CIVILITY')
 	    		var node = map[name], i;
 	    		if (!node) {
 	      			node = map[name] = data || {name: name, children: []};
-	     			 if (name.length) {
+	     			 if (name && name.length) {
 	        			node.parent = find(name.substring(0, i = name.lastIndexOf(".")));
 	        			node.parent.children.push(node);
 	        			node.key = name.substring(i + 1);
-	      				}
-	    			}
+      				}
+    			}
 	    		return node;
 	  		}
   			classes.forEach(function(d) {
