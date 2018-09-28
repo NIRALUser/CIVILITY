@@ -164,16 +164,33 @@
 
 			<div class="panel panel-default">
 				<div class="panel-heading">
+					<h2 class="panel-title">Output files</h2>
+				</div>
+				<div class="panel-body">
+					<div class="input-group">
+						<span class="input-group-addon">
+					  		<input type="checkbox" name="tar" ng-model="Parameters.createTar" aria-label="...">
+						</span>
+					  	<label class="form-control ng-binding">Create tar.gz file (1GB >)</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
 					<h2 class="panel-title">Select computing grid to run job</h2>
 				</div>
 				<div class="panel-body">
 					<div class="input-group">
 						<div  class="jobOptions">
-							<div class="serverChoice">
+							<div class="col-md-6">
 								<select class="form-control"  id="serverSelect" ng-model="serverselect.selection" ng-options="server.name for server in serverselect.servers"> 
 								</select>
 							</div>
-
+							<div class="col-md-6">
+								<select ng-if="serverselect.selection.info && serverselect.selection.info.queues" class="form-control"  id="serverSelect" ng-model="serverselect.queue" ng-options="queue.name for queue in serverselect.selection.info.queues"> 
+								</select>
+							</div>
 						</div>
 					</div>
 				</div>

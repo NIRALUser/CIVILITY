@@ -74,8 +74,8 @@ angular.module('CIVILITY')
       overlapping: true,
       loopcheck: true,
       bedpostX : $scope.tools.bedpostx.param,
-      probtrackParam : $scope.tools.probtrackx2.param
-
+      probtrackParam : $scope.tools.probtrackx2.param,
+      createTar: true
     };
 
     $scope.usableInputBedpostx = function(toolX){
@@ -190,6 +190,10 @@ angular.module('CIVILITY')
     clusterpostService.getExecutionServers().then(function(res){
       $scope.serverselect.servers = res.data;
       $scope.serverselect.selection = res.data[0];
+      $scope.serverselect.queue = {"name": "week"};
+      if($scope.serverselect.selection.info && $scope.serverselect.selection.info.queues){
+        $scope.serverselect.queue = $scope.serverselect.selection.info.queues[0];
+      }
     });
 
 
@@ -240,10 +244,13 @@ angular.module('CIVILITY')
       param2.name = $scope.Parameters.subject + "/" + $scope.Parameters.Files.parcellationTable.name;
       job.outputs.push(param2);
       //Output 3 : {subject dir} -- all output dir (as tar.gz)
-      var param3 = {}; 
-      param3.type = "tar.gz";
-      param3.name = $scope.Parameters.subject;
-      job.outputs.push(param3);
+      if($scope.Parameters.createTar){
+        var param3 = {}; 
+        param3.type = "tar.gz";
+        param3.name = $scope.Parameters.subject;
+        job.outputs.push(param3);
+      }
+      
       //Output 4 : output of job -- logFile
       var param4 = {}; 
       param4.type = "file";
@@ -263,7 +270,17 @@ angular.module('CIVILITY')
       //Job param 1 : define the queue where is submit the job
       var paramJob1 = {}; 
       paramJob1.flag = "-q";
-      paramJob1.name = "week";
+      
+      if($scope.serverselect.queue && $scope.serverselect.queue.name){
+        paramJob1.name = $scope.serverselect.queue.name;
+      }else{
+        paramJob1.name = "week";
+      }
+      
+
+      job.executionserver = $scope.serverselect.selection.name;
+      
+
       job.jobparameters.push(paramJob1);
       //Job param 2 : number of cpu 
       var paramJob2 = {}; 
