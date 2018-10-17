@@ -1,0 +1,34 @@
+{
+  "name": "civility-util",
+  "version": "1.0.0",
+  "description": "Utilities for the CIVILITY application",
+  "main": "index.js",
+  "scripts": {
+    "test": "lab -v test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/NIRALUser/CIVILITY.git"
+  },
+  "keywords": [
+    "CIVILITY",
+    "connectivity",
+    "diffusion",
+    "MRI",
+    "probtrackx",
+    "bet",
+    "fsl"
+  ],
+  "author": "juanprietob@gmail.com",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/NIRALUser/CIVILITY/issues"
+  },
+  "homepage": "https://github.com/NIRALUser/CIVILITY#readme",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "csvtojson": "^1.1.9",
+    "minimist": "^1.2.0",
+    "underscore": "^1.8.3"
+  }
+}
