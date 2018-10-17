@@ -155,6 +155,8 @@ echo "overlapping $overlapping"
 echo "loopcheck: $loopcheck"
 echo "bedpostx params: $bedpostxParam"
 echo "probtrack params: $probtrackParam"
+echo "write seed lists script: $WRITESEEDLISTSCRIPT"
+echo "plot matrix script: $PLOTMATRIXSCRIPT"
 
 #Maximum number of ROIS in parcellation table
 number_ROIS=150
@@ -194,7 +196,7 @@ echo "Create Diffusion data ..."
 DiffusionData=$SUBJECT/Diffusion/data.nii.gz
 DiffusionBrainMask=$SUBJECT/Diffusion/nodif_brain_mask.nii.gz
 
-if [ -d "$SUBJECT/Diffusion" ];
+if [ ! -d "$SUBJECT/Diffusion" ];
   then
   command="mkdir $SUBJECT/Diffusion"
   echo $command
@@ -219,14 +221,13 @@ fi
 
  
 #Bedpostx
-echo 
-echo "Run bedpostx ...{SUBJECT}/Diffusion ${bedpostxParam}"
+echo
 command="bedpostx ${SUBJECT}/Diffusion ${bedpostxParam}"
 echo $command
 eval $command
 
 #Create labelSurfaces 
-if [ -d "${SUBJECT}/OutputSurfaces${overlapName}" ]; then
+if [ ! -d "${SUBJECT}/OutputSurfaces${overlapName}" ]; then
   mkdir -p "${SUBJECT}/OutputSurfaces${overlapName}"
 fi
 
