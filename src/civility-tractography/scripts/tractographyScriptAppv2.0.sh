@@ -81,7 +81,7 @@ do
                 labelSetName=$var
         fi
 
-        if [ "$previous" == "-ignoreLabel" ] || [ "$previous" == "--ignoreLabel" ];
+        if [ "$previous" == "-ignore_label" ] || [ "$previous" == "--ignore_label" ];
         then
                 ignoreLabel=$var
         fi
