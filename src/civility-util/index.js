@@ -196,6 +196,9 @@ clusterpost.start(path.join(os.homedir(), '.civility.json'))
             }
 
             job.executionserver = argv["executionserver"]? argv["executionserver"] : "killdevil";
+
+            console.log("Submitting job:" job);
+
             return clusterpost.createAndSubmitJob(job, inputfiles);
         }, {concurrency: 1});
     });
