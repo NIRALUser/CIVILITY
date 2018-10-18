@@ -213,13 +213,6 @@ command="DWIConvert --inputVolume ${DWI} --conversionMode NrrdToFSL --outputVolu
 echo $command
 eval $command
 
-if [ ! -e $DiffusionData ] || [ ! -e $DiffusionBrainMask ] || [ ! -e ${SUBJECT}/Diffusion/bvecs ] || [ ! -e ${SUBJECT}/Diffusion/bvals ]; then
-  echo ERROR_PIPELINE_PROBTRACKBRAINCONNECTIVITY
-else 
-  echo "Create diffusion data done !" 
-fi
-
- 
 #Bedpostx
 echo
 command="bedpostx ${SUBJECT}/Diffusion ${bedpostxParam}"
@@ -233,6 +226,9 @@ fi
 
 SURFACES=${SUBJECT}/OutputSurfaces${overlapName}/labelSurfaces
 
+if [ -d "$SURFACES" ]; then
+  rm -rf $SURFACES
+fi
 
 if [ "${ignoreLabel}" != "" ]; then 
   ignoreFlag="--ignoreLabel"
@@ -248,7 +244,7 @@ else
   eval $command
 fi
 
-command"mv $var/labelSurfaces $SURFACES" 
+command="mv $var/labelSurfaces $SURFACES" 
 echo $command
 eval $command
 
