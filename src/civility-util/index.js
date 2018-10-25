@@ -132,6 +132,14 @@ clusterpost.start(path.join(os.homedir(), '.civility.json'))
                     {
                         "type": "file",
                         "name": "stderr.err"
+                    },
+                    {
+                        "type": "file",
+                        "name": civility_params['name'] + "/Network_overlapping_loopcheck/fdt_network_matrix"  
+                    },
+                    {
+                        "type": "file",
+                        "name": civility_params['name'] + "/" + civility_params['table'];
                     }
                 ],
                 "jobparameters" : [
