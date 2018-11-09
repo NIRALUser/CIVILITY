@@ -40,7 +40,7 @@ for j in data:
   if(os.path.isfile(file)):
     j['MatrixRow'] = seedID
     seedID = seedID + 1
-  	seedList.write(filename + "\n")
+    seedList.write(filename + "\n")
      
 seedList.close()
 
