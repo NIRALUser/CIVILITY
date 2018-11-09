@@ -37,7 +37,7 @@ seedID = 0
       #Update JSON file : 'MatrixRow'
 for j in data:
   filename = os.path.join(DIR_Surfaces, str(j["AAL_ID"]) + ".asc")
-  if(os.path.isfile(file)):
+  if(os.path.isfile(filename)):
     j['MatrixRow'] = seedID
     seedID = seedID + 1
     seedList.write(filename + "\n")
