@@ -41,7 +41,30 @@ angular.module('CIVILITY')
 
 			})
 			.catch(console.error);
+		}else{//Try with the fdt_network_matrix
+			var output = _.find(job.outputs, function(output){
+				return output.name.includes("fdt_network_matrix");
+			});
+
+			if(output){
+				clusterpostService.getDownloadAttachmentURL(job._id, output.name)
+				.then(function(res){
+					var pom = document.createElement('a');
+					pom.setAttribute('href', res);
+					pom.setAttribute('download', output.name);
+
+					pom.dataset.downloadurl = ['application/octet-stream', pom.download, pom.href].join(':');
+					pom.draggable = true; 
+					pom.classList.add('dragout');
+					document.body.appendChild(pom);
+					pom.click();
+
+				})
+				.catch(console.error);
+			}	
 		}
+
+		
 	}
 
 	$scope.$watch('routeParams', function(){
