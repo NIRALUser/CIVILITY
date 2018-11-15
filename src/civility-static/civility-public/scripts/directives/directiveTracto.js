@@ -295,7 +295,7 @@ angular.module('CIVILITY')
       //Job param 4 : define memory required to the job
       var paramJob4 = {}; 
       paramJob4.flag = "-M";
-      paramJob4.name = "10";
+      paramJob4.name = "20";
       job.jobparameters.push(paramJob4);
 
       //Select server 

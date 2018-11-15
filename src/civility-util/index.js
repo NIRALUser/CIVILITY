@@ -153,7 +153,7 @@ clusterpost.start(path.join(os.homedir(), '.civility.json'))
                     },
                     {
                         flag: "-M",
-                        name: "10"
+                        name: "20"
                     }, 
                     {
                         flag: "-q",
