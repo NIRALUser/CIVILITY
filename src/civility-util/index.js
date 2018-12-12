@@ -131,7 +131,7 @@ clusterpost.start(path.join(os.homedir(), '.civility.json'))
                     },
                     {
                         "type": "file",
-                        "name": civility_params['name'] + "/" + civility_params['table']
+                        "name": civility_params['name'] + "/" + path.basename(civility_params['table'])
                     },
                     {
                         "type": "file",
