@@ -199,128 +199,124 @@ angular.module('CIVILITY')
 
     //Create job object / document and then upload file and submit 
     $scope.createJobObject = function(){
-        $scope.submitTractoButton = true;
-        var job = {};
+      $scope.submitTractoButton = true;
+          
+      var job = {
+          "type": "job",
+          "name": $scope.Parameters.subject,
+          "executable": "tractographyScriptAppv2.0.sh",
+          "parameters": [
+              {
+                  "flag": "--subject",
+                  "name": $scope.Parameters.subject
+              },
+              {
+                  "flag": "--dwi",
+                  "name": $scope.Parameters.Files.DWI.name
+              },
+              {
+                  "flag": "--t1",
+                  "name": $scope.Parameters.Files.T1.name
+              },
+              {
+                  "flag": "--mask",
+                  "name": $scope.Parameters.Files.BrainMask.name
+              },
+              {
+                  "flag": "--table",
+                  "name": $scope.Parameters.Files.parcellationTable.name
+              },
+              {
+                  "flag": "--surface",
+                  "name": $scope.Parameters.Files.innerSurface.name
+              },
+              {
+                  "flag": "--label_name",
+                  "name": $scope.Parameters.labelsetName
+              },
+              {
+                  "flag": "--bedpostxParam",
+                  "name": $scope.Parameters.bedpostX
+              },
+              {
+                  "flag": "--probtrackParam",
+                  "name": $scope.Parameters.probtrackParam
+              }
+          ],
+          "inputs": [
+              {
+                  "name": $scope.Parameters.Files.DWI.name
+              },
+              {
+                  "name": $scope.Parameters.Files.T1.name
+              },
+              {
+                  "name": $scope.Parameters.Files.BrainMask.name
+              },
+              {
+                  "name": $scope.Parameters.Files.parcellationTable.name
+              },
+              {
+                  "name": $scope.Parameters.Files.innerSurface.name
+              }
+          ],
+          "outputs": [
+              {
+                  "type": "file",
+                  "name": $scope.Parameters.subject + "/Network_overlapping_loopcheck/fdt_network_matrix"
+              },
+              {
+                  "type": "file",
+                  "name": $scope.Parameters.subject + "/" + $scope.Parameters.Files.parcellationTable.name
+              },
+              {
+                  "type": "file",
+                  "name": "stdout.out"
+              },
+              {
+                  "type": "file",
+                  "name": "stderr.err"
+              }
+          ],
+          "jobparameters" : [
+              {
+                  flag: "-N",
+                  name: "1"
+              },
+              {
+                  flag:"-t",
+                  name: "14-00:00:00"
+              },
+              {
+                  flag: "--mem",
+                  name: "20"
+              },
+              {
+                  flag: "-p",
+                  name:  $scope.serverselect && $scope.serverselect.queue && $scope.serverselect.queue.name? $scope.serverselect.queue.name : "general"
+              }
+          ],
+          "userEmail": $scope.user.email
+      };  
 
-        job.name = $scope.Parameters.subject;
-        job.executable ="tractographyScriptApp.sh";
 
-        job.parameters = [];
-       _.each($scope.Parameters, function(value, key){
-          if(key != "Files")
-          {
-            var param = {}; 
-            param.flag = "";
-            param.name = value.toString();
-            job.parameters.push(param);
-          }
-          else if (key=="Files")
-          {
-            _.each($scope.Parameters.Files, function(value, key){
-              var param = {}; 
-              param.flag = "";
-              param.name = value.name;
-              job.parameters.push(param);
-            });
-          }
-        });
+      //Create Job   
+      // clusterpostService.createJob(job)
+      // .then(function(res){
+      //   //Upload data
+      //   var doc = res.data;
+      //   var val = $scope.readFilesAndSubmit(doc.id); 
+      // })
+      // .catch(function(e){
+      //   console.log(e);
+      // });
 
-      job.inputs = [];
-      _.each($scope.Parameters.Files, function(value, key){
-      var input = {}; 
-          input.name = value.name;
-          job.inputs.push(input);
+      var filesArray = _.map($scope.Parameters.Files);
+      clusterpostService.createAndSubmitJob(job, _.pluck(filesArray, 'name'), filesArray)
+      .catch(function(e){
+        console.log(e);
       });
-
-      job.outputs = [];
-      //Output 1 : matrix file
-      var param1 = {}; 
-      param1.type = "file";
-      param1.name = $scope.Parameters.subject + "/Network_overlapping_loopcheck/fdt_network_matrix";
-      job.outputs.push(param1);
-      //Output 2 : parcellation description table (json file)
-      var param2 = {}; 
-      param2.type = "file";
-      param2.name = $scope.Parameters.subject + "/" + $scope.Parameters.Files.parcellationTable.name;
-      job.outputs.push(param2);
-      //Output 3 : {subject dir} -- all output dir (as tar.gz)
-      if($scope.Parameters.createTar){
-        var param3 = {}; 
-        param3.type = "tar.gz";
-        param3.name = $scope.Parameters.subject;
-        job.outputs.push(param3);
-      }
-      
-      //Output 4 : output of job -- logFile
-      var param4 = {}; 
-      param4.type = "file";
-      param4.name = "stdout.out";
-      job.outputs.push(param4);
-      //Output 5 :  output error of job -- logErrorFile
-      var param5 = {}; 
-      param5.type = "file";
-      param5.name = "stderr.err";
-      job.outputs.push(param5);
-
-      job.type = "job"; 
-      job.userEmail = $scope.user.email;
-      //job.executionserver =  "testserver";
-
-      job.jobparameters = [];
-      //Job param 1 : define the queue where is submit the job
-      var paramJob1 = {}; 
-      paramJob1.flag = "-q";
-      
-      if($scope.serverselect.queue && $scope.serverselect.queue.name){
-        paramJob1.name = $scope.serverselect.queue.name;
-      }else{
-        paramJob1.name = "week";
-      }
-      
-
-      job.executionserver = $scope.serverselect.selection.name;
-      
-
-      job.jobparameters.push(paramJob1);
-      //Job param 2 : number of cpu 
-      var paramJob2 = {}; 
-      paramJob2.flag = "-n";
-      paramJob2.name = "1";
-      job.jobparameters.push(paramJob2);   
-      //Job param 3 : request job on same host 
-      var paramJob3 = {}; 
-      paramJob3.flag = "-R";
-      paramJob3.name = "span[hosts=1]";
-      job.jobparameters.push(paramJob3);
-      //Job param 4 : define memory required to the job
-      var paramJob4 = {}; 
-      paramJob4.flag = "-M";
-      paramJob4.name = "20";
-      job.jobparameters.push(paramJob4);
-
-      //Select server 
-      if($scope.serverselect.selection == "" || $scope.serverselect.selection == null)
-      {
-          alert("No server specified - you must choose one server to run a job on it");
-      }
-      else
-      {
-          job.executionserver = $scope.serverselect.selection.name;
-      }
-      var job_id = "";
-
-    //Create Job   
-    clusterpostService.createJob(job)
-    .then(function(res){
-      //Upload data
-      var doc = res.data;
-      job_id = doc.id;
-      var val = $scope.readFilesAndSubmit(job_id); 
-    })
-    .catch(function(e){
-      console.log(e);
-    });
- };
+   };
 
   $scope.submitJobX = function(jobid,force){
     clusterpostService.submitJob(jobid,force).then(function(res){
