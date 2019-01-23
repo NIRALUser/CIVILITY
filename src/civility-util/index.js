@@ -12,7 +12,7 @@ var csvtojson = require('csvtojson');
 var help = function(){
     console.error("help: To execute the program you must provide a csv file with columns 'name,dwi,t1,mask,table,surface,surface_color,labelname,ignore_label,overlapping,loopcheck,create_tar'")
     console.error(process.argv[0], process.argv[1], "--csv <csvfilename>");
-    console.error("--execution_server <default killdevil>");
+    console.error("--execution_server <default longleaf>");
     console.error("--queue <default fortnight>");
     console.error("--email <default None, to set the jobs email (for admin only users)>");
 }
@@ -100,11 +100,11 @@ clusterpost.start(path.join(os.homedir(), '.civility.json'))
                     },
                     {
                         "flag": "--bedpostxParam",
-                        "name": '-n 2'
+                        "name": '"-n 2"'
                     },
                     {
                         "flag": "--probtrackParam",
-                        "name": '-P 3000 --steplength=0.75 --sampvox=0.5'
+                        "name": '"-P 3000 --steplength=0.75 --sampvox=0.5"'
                     }
                 ],
                 "inputs": [
@@ -144,20 +144,20 @@ clusterpost.start(path.join(os.homedir(), '.civility.json'))
                 ],
                 "jobparameters" : [
                     {
-                        flag: "-n",
+                        flag: "-N",
                         name: "1"
                     },
                     {
-                        flag:"-R",
-                        name: "span[hosts=1]"
+                        flag:"-t",
+                        name: "10-00:00:00"
                     },
                     {
-                        flag: "-M",
-                        name: "20"
+                        flag: "",
+                        name: "--mem=20g"
                     }, 
                     {
-                        flag: "-q",
-                        name:  argv["queue"]? argv["queue"] : "fortnight"
+                        flag: "-p",
+                        name:  argv["queue"]? argv["queue"] : "general"
                     }
                 ],
                 "userEmail": argv["email"]? argv["email"] : res.email
@@ -203,7 +203,7 @@ clusterpost.start(path.join(os.homedir(), '.civility.json'))
                 });
             }
 
-            job.executionserver = argv["executionserver"]? argv["executionserver"] : "killdevil";
+            job.executionserver = argv["executionserver"]? argv["executionserver"] : "longleaf";
 
             console.log("Submitting job:", job);
 

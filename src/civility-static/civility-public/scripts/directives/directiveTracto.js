@@ -236,11 +236,11 @@ angular.module('CIVILITY')
               },
               {
                   "flag": "--bedpostxParam",
-                  "name": $scope.Parameters.bedpostX
+                  "name": "\"" + $scope.Parameters.bedpostX + "\""
               },
               {
                   "flag": "--probtrackParam",
-                  "name": $scope.Parameters.probtrackParam
+                  "name": "\"" + $scope.Parameters.probtrackParam + "\""
               }
           ],
           "inputs": [
@@ -285,7 +285,7 @@ angular.module('CIVILITY')
               },
               {
                   flag:"-t",
-                  name: "14-00:00:00"
+                  name: "10-00:00:00"
               },
               {
                   flag: "--mem",
