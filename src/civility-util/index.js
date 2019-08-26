@@ -100,7 +100,7 @@ clusterpost.start(path.join(os.homedir(), '.civility.json'))
                     },
                     {
                         "flag": "--bedpostxParam",
-                        "name": '"-n 2"'
+                        "name": civility_params['bedpostxParam']? civility_params['bedpostxParam'] : '"-n 2"'
                     },
                     {
                         "flag": "--probtrackParam",
