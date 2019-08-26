@@ -104,7 +104,7 @@ clusterpost.start(path.join(os.homedir(), '.civility.json'))
                     },
                     {
                         "flag": "--probtrackParam",
-                        "name": '"-P 3000 --steplength=0.75 --sampvox=0.5"'
+                        "name": civility_params['probtrackParam']? civility_params['probtrackParam'] : '"-P 3000 --steplength=0.75 --sampvox=0.5"'
                     }
                 ],
                 "inputs": [
