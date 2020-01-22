@@ -153,7 +153,7 @@ clusterpost.start(path.join(os.homedir(), '.civility.json'))
                     },
                     {
                         flag: "",
-                        name: "--mem=20g"
+                        name: civility_params['memory']? civility_params['memory'] : "--mem=20g"
                     }, 
                     {
                         flag: "-p",
