@@ -168,6 +168,9 @@ clusterpost.start(path.join(os.homedir(), '.civility.json'))
                     "flag": "--extra_surface",
                     "name": path.basename(civility_params['surface_color'])
                 })
+                job.inputs.push({
+                    "name": path.basename(civility_params['surface_color'])
+                })
             }
 
             if(civility_params['ignore_label']){
