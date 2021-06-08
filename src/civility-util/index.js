@@ -148,8 +148,16 @@ clusterpost.start(path.join(os.homedir(), '.civility.json'))
                         name: "1"
                     },
                     {
-                        flag:"-t",
-                        name: "10-00:00:00"
+                        flag: "-t",
+                        name: "20-00:00:00"
+                    },
+                    {   
+                        flag: "-c",
+                        name: civility_params['cpus-per-task']? civility_params['cpus-per-task'] : "1"
+                    },
+                    {   
+                        flag: "-n",
+                        name: civility_params['ntasks']? civility_params['ntasks'] : "1"
                     },
                     {
                         flag: "",
